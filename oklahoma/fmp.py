@@ -73,3 +73,23 @@ def screen(
     if not isinstance(rows, list):
         raise FMPError(f"Unexpected screener response for {exchange}: {rows!r}")
     return rows
+
+
+def historical_prices(
+    symbol: str, start: str, end: str, api_key: str
+) -> list[dict]:
+    """Adjusted end-of-day bars for one symbol, oldest first.
+
+    Uses the dividend-adjusted endpoint: its `adjClose` is corrected for
+    both splits and dividends, which is what makes returns comparable
+    across time. The plain `full` endpoint has no adjusted column at all.
+    """
+    rows = _request(
+        "historical-price-eod/dividend-adjusted",
+        {"symbol": symbol, "from": start, "to": end},
+        api_key,
+    )
+    if not isinstance(rows, list):
+        raise FMPError(f"Unexpected history response for {symbol}: {rows!r}")
+    # The API returns newest first; every consumer wants chronological order.
+    return sorted(rows, key=lambda row: row["date"])

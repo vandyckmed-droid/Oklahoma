@@ -10,18 +10,20 @@ pinned to 50 — see [Growing the universe](#growing-the-universe).
 ## Layout
 
 ```
-oklahoma/config.py     selection rules (size, exchanges, market-cap ladder)
+oklahoma/config.py     selection rules (size, exchanges, market-cap ladder, history window)
 oklahoma/fmp.py        Financial Modeling Prep client, standard library only
 oklahoma/universe.py   build / rank / save / load
+oklahoma/history.py    end-of-day adjusted price history
 oklahoma/ui.py         renders the universe into a self-contained page
 oklahoma/__main__.py   the CLI
 data/universe.json     the committed universe
+data/history/          one price file per ticker, plus index.json
 web/template.html      page source (fragment: title, styles, markup, script)
 web/index.html         generated standalone page — open it in a browser
 tests/                 offline tests; no network, no API key
 ```
 
-No third-party dependencies. Python 3.9+.
+No third-party dependencies. Python 3.10+ (CI runs 3.10 and 3.13).
 
 ## Usage
 
@@ -32,8 +34,10 @@ written to disk or into any generated file.
 export FMP_API_KEY=...
 
 python -m oklahoma refresh     # pull from FMP, rewrite data/universe.json + web/index.html
-python -m oklahoma show        # print the universe and its sector breakdown
+python -m oklahoma history     # pull price history for every name in the universe
+python -m oklahoma show        # print the universe, sectors and history coverage
 python -m oklahoma build-ui    # regenerate web/index.html from the saved data
+python -m oklahoma export-csv  # ticker,date,adj_close rows on stdout
 ```
 
 Then open `web/index.html` — it is one self-contained file with the data
@@ -74,6 +78,60 @@ The file itself records `schema_version`, `generated_at`, the `source`, and the
   the others are recorded in `share_classes`. Pass
   `--keep-all-share-classes` to give each class its own slot instead.
 
+## Price history
+
+`python -m oklahoma history` pulls end-of-day bars for every name in the
+universe and writes one file per ticker under `data/history/`, plus an
+`index.json` recording what each ticker actually covers.
+
+**`adj_close` is the canonical series.** It comes from FMP's
+`historical-price-eod/dividend-adjusted` endpoint and is corrected for both
+splits and dividends, so returns computed across it are comparable over
+time. The plain `historical-price-eod/full` endpoint carries no adjusted
+column at all, which is why it isn't used.
+
+Each file is a flat, sorted series:
+
+```json
+{
+  "schema_version": 1,
+  "ticker": "AAPL",
+  "price_field": "adj_close",
+  "count": 301,
+  "bars": [
+    { "date": "2025-06-20", "adj_close": 200.03, "volume": 96813542 }
+  ]
+}
+```
+
+Bars are chronological, de-duplicated, and every one carries a date and an
+adjusted close. `export-csv` derives the long `ticker,date,adj_close` format
+from these files on demand, so there is no second copy to drift.
+
+### Coverage
+
+The target is `TRADING_DAYS_TARGET` (252) sessions per name. Markets trade
+about 252 of 365 days, so the build requests a wider calendar window —
+`calendar_days_for()` — and takes what comes back. In practice that yields
+~300 trading days per name.
+
+A name can legitimately fall short: a company that IPO'd four months ago has
+no year of history to fetch. Those names are kept in the universe (it is
+defined by market cap, not by data availability), marked
+`"sufficient": false` in the index, and flagged in the UI rather than
+silently dropped. `show` lists them:
+
+```
+Price history: 49/50 names have >= 252 trading days
+  SPCX: 55 days from 2026-06-12
+```
+
+Change the window with `--trading-days N` or `HISTORY_TRADING_DAYS`.
+
+One file per ticker is what makes this expandable: growing the universe adds
+files instead of rewriting one large one, and a single failed symbol never
+corrupts the rest — failures are collected in the index, not raised.
+
 ## Growing the universe
 
 Size is a parameter, not a constant. Three ways to change it:
@@ -92,12 +150,24 @@ comfortably larger than the target, so a bigger universe needs no other
 change. `UNIVERSE_EXCHANGES` (or `config.exchanges`) widens the venue list the
 same way.
 
-## Tests
+## Tests and CI
 
 ```bash
 python -m unittest discover -s tests
 ```
 
-The tests run offline against fixtures, and additionally assert invariants on
-the committed `data/universe.json`: every name has a ticker, a company name
-and a sector; tickers are unique; ranks are dense; market caps descend.
+The tests run offline against fixtures — **no network and no API key** — so
+CI verifies the core system on every pull request without secrets.
+`.github/workflows/ci.yml` runs the suite on Python 3.10 and 3.13, and
+separately rebuilds `web/index.html` from the committed data to prove the
+generated page has not drifted from the data it claims to show.
+
+Beyond the fixtures, the suite asserts invariants on the committed data:
+
+- **Universe** — every name has a ticker, a company name and a sector;
+  tickers are unique; ranks are dense; market caps descend.
+- **History** — every universe name has a history file; bars are
+  chronological, de-duplicated and positively priced; each file's count
+  matches the index; nothing failed to load; `adj_close` is the canonical
+  field; and all but at most two names cover the full window, so a
+  widespread shortfall fails the build instead of passing quietly.

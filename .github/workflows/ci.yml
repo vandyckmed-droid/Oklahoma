@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # The suite runs against fixtures and the committed data files, so it
+      # needs no API key and no network. Nothing to install.
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+  generated-ui-is-current:
+    name: Generated UI matches the data
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # web/index.html is generated from web/template.html plus the data
+      # files. Rebuilding it must be a no-op, or the committed page has
+      # drifted from the data it claims to show.
+      - name: Rebuild the page from committed data
+        run: python -m oklahoma build-ui
+
+      - name: Fail if the page changed
+        run: |
+          if ! git diff --quiet -- web/index.html; then
+            echo "web/index.html is out of date. Run: python -m oklahoma build-ui"
+            git diff --stat -- web/index.html
+            exit 1
+          fi
+          echo "web/index.html is up to date."
