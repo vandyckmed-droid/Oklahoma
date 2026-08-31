@@ -11,6 +11,9 @@
     --line: #dee5e3;
     --accent: #0c6b5f;
     --accent-soft: #e1efec;
+    --up: #1a7f52;
+    --down: #b4443c;
+    --warn: #9a6a17;
     --shadow: 0 1px 2px rgba(16, 25, 23, .06), 0 8px 24px -16px rgba(16, 25, 23, .3);
   }
   :root:not([data-theme="light"]) {
@@ -28,6 +31,9 @@
       --line: #22302d;
       --accent: #48c6b0;
       --accent-soft: #16302c;
+      --up: #4fbe86;
+      --down: #e2796f;
+      --warn: #d9a445;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
     }
   }
@@ -42,6 +48,9 @@
     --line: #22302d;
     --accent: #48c6b0;
     --accent-soft: #16302c;
+    --up: #4fbe86;
+    --down: #e2796f;
+    --warn: #d9a445;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
   }
 
@@ -94,7 +103,7 @@
 
   .summary {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -119,6 +128,71 @@
     font-weight: 500;
     font-variant-numeric: tabular-nums;
     letter-spacing: -.02em;
+  }
+
+  .note {
+    margin: 10px 2px 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .note b {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------- price history ---------- */
+
+  .spark {
+    display: block;
+    width: 54px;
+    height: 18px;
+    margin-top: 3px;
+    margin-left: auto;
+    overflow: visible;
+  }
+
+  .chg {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+  }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--muted); }
+
+  .warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--warn);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  .detail .series {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+  }
+  .detail .series svg {
+    display: block;
+    width: 100%;
+    height: 56px;
+    overflow: visible;
+  }
+  .detail .axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--faint);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    margin-top: 3px;
   }
 
   /* ---------- controls ---------- */
@@ -377,6 +451,7 @@
 </style>
 
 <script id="universe-data" type="application/json">__UNIVERSE_JSON__</script>
+<script id="history-data" type="application/json">__HISTORY_JSON__</script>
 
 <div class="shell">
   <header class="masthead">
@@ -389,7 +464,11 @@
     <div class="stat"><dt>Names</dt><dd id="stat-count">&mdash;</dd></div>
     <div class="stat"><dt>Market cap</dt><dd id="stat-cap">&mdash;</dd></div>
     <div class="stat"><dt>Sectors</dt><dd id="stat-sectors">&mdash;</dd></div>
+    <div class="stat" id="stat-history-tile" hidden>
+      <dt id="stat-history-label">History</dt><dd id="stat-history">&mdash;</dd>
+    </div>
   </dl>
+  <p class="note" id="history-note" hidden></p>
 
   <div class="controls">
     <label class="search">
@@ -419,6 +498,13 @@
     var universe = JSON.parse(document.getElementById("universe-data").textContent);
     var rows = universe.constituents || [];
 
+    var history = JSON.parse(document.getElementById("history-data").textContent);
+    var coverage = {};
+    ((history && history.coverage) || []).forEach(function (entry) {
+      coverage[entry.ticker] = entry;
+    });
+    var hasHistory = Boolean(history && history.coverage && history.coverage.length);
+
     var SECTOR_COLORS = {
       "Technology": "#3f8ecf",
       "Communication Services": "#7a6ed0",
@@ -444,6 +530,70 @@
       return "$" + value.toLocaleString();
     }
 
+    function pct(value) {
+      if (value == null) return "—";
+      return (value > 0 ? "+" : "") + value.toFixed(2) + "%";
+    }
+
+    function direction(value) {
+      if (value == null) return "flat";
+      if (value > 0.005) return "up";
+      if (value < -0.005) return "down";
+      return "flat";
+    }
+
+    var SVG = "http://www.w3.org/2000/svg";
+
+    function sparkPoints(series, width, height) {
+      var lo = Math.min.apply(null, series);
+      var hi = Math.max.apply(null, series);
+      var span = hi - lo || 1;
+      var step = series.length > 1 ? width / (series.length - 1) : 0;
+      return series.map(function (value, i) {
+        return [i * step, height - ((value - lo) / span) * height];
+      });
+    }
+
+    function spark(series, width, height, stroke, withFill) {
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("aria-hidden", "true");
+      if (!series || series.length < 2) return svg;
+
+      var pts = sparkPoints(series, width, height);
+      var d = pts.map(function (p, i) {
+        return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
+      }).join(" ");
+
+      if (withFill) {
+        var area = document.createElementNS(SVG, "path");
+        area.setAttribute("fill", stroke);
+        area.setAttribute("fill-opacity", "0.16");
+        area.setAttribute("d", d + " L" + width + " " + height + " L0 " + height + " Z");
+        svg.appendChild(area);
+      }
+
+      var line = document.createElementNS(SVG, "path");
+      line.setAttribute("d", d);
+      line.setAttribute("fill", "none");
+      line.setAttribute("stroke-width", "1.4");
+      line.setAttribute("stroke", stroke);
+      line.setAttribute("stroke-linecap", "round");
+      line.setAttribute("stroke-linejoin", "round");
+      svg.appendChild(line);
+
+      // The endpoint is where the price actually is; mark it.
+      var end = pts[pts.length - 1];
+      var dot = document.createElementNS(SVG, "circle");
+      dot.setAttribute("cx", end[0].toFixed(2));
+      dot.setAttribute("cy", end[1].toFixed(2));
+      dot.setAttribute("r", "1.7");
+      dot.setAttribute("fill", stroke);
+      svg.appendChild(dot);
+      return svg;
+    }
+
     function asOf(iso) {
       var d = new Date(iso);
       if (isNaN(d)) return iso;
@@ -467,11 +617,40 @@
     document.getElementById("stat-cap").textContent = money(totalCap);
     document.getElementById("stat-sectors").textContent = sectors.length;
 
+    if (hasHistory) {
+      var target = history.criteria.trading_days_target;
+      document.getElementById("stat-history-tile").hidden = false;
+      document.getElementById("stat-history-label").textContent = target + "d history";
+      document.getElementById("stat-history").textContent =
+        history.sufficient_count + "/" + history.count;
+
+      var short = history.coverage.filter(function (e) { return !e.sufficient; });
+      var note = document.getElementById("history-note");
+      note.hidden = false;
+      if (short.length) {
+        note.innerHTML =
+          "Adjusted close through " + asOf(history.generated_at) + ". " +
+          short.length + " name" + (short.length > 1 ? "s have" : " has") +
+          " less than " + target + " trading days of history: " +
+          short.map(function (e) {
+            return "<b>" + e.ticker + "</b> (" + e.trading_days + "d)";
+          }).join(", ") + ".";
+      } else {
+        note.innerHTML =
+          "Adjusted close through " + asOf(history.generated_at) +
+          ". Every name covers at least " + target + " trading days.";
+      }
+    }
+
     var source = universe.source || {};
     document.getElementById("footer").innerHTML =
       "Data from " + (source.provider || "the configured provider") +
       ", <code>" + (source.endpoint || "") + "</code>. Universe size and exchanges are set in " +
-      "<code>oklahoma/config.py</code>; run <code>python -m oklahoma refresh --size N</code> to grow it.";
+      "<code>oklahoma/config.py</code>; run <code>python -m oklahoma refresh --size N</code> to grow it." +
+      (hasHistory
+        ? " Prices are split- and dividend-adjusted closes; the page carries a thinned " +
+          "series per name, the full history lives in <code>data/history/</code>."
+        : "");
 
     /* ----- state ----- */
 
@@ -543,6 +722,27 @@
       if (r.share_classes && r.share_classes.length > 1) {
         pairs.push(["Share classes", r.share_classes.join(", ")]);
       }
+
+      var cov = coverage[r.ticker];
+      if (cov) {
+        pairs.push(["Trading days", cov.trading_days + (cov.sufficient ? "" : " — short")]);
+        pairs.push(["Loaded", cov.start_date + " \u2192 " + cov.end_date]);
+        if (cov.last_adj_close != null) {
+          pairs.push(["Last adj. close", "$" + cov.last_adj_close.toLocaleString()]);
+        }
+        if (cov.window_return_pct != null) {
+          pairs.push([
+            cov.window_trading_days + "-day return",
+            pct(cov.window_return_pct)
+          ]);
+        }
+        if (cov.window_low != null) {
+          pairs.push([
+            "Adj. close range",
+            "$" + cov.window_low.toLocaleString() + " – $" + cov.window_high.toLocaleString()
+          ]);
+        }
+      }
       pairs.forEach(function (pair) {
         var dt = document.createElement("dt");
         dt.textContent = pair[0];
@@ -551,6 +751,24 @@
         dl.appendChild(dt);
         dl.appendChild(dd);
       });
+
+      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+        var wrap = document.createElement("div");
+        wrap.className = "series";
+        var stroke = getComputedStyle(document.documentElement)
+          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
+        wrap.appendChild(spark(cov.sparkline, 300, 56, stroke, true));
+        var axis = document.createElement("div");
+        axis.className = "axis";
+        var from = document.createElement("span");
+        from.textContent = cov.window_start_date || cov.start_date;
+        var to = document.createElement("span");
+        to.textContent = cov.end_date;
+        axis.appendChild(from);
+        axis.appendChild(to);
+        wrap.appendChild(axis);
+        dl.appendChild(wrap);
+      }
       return dl;
     }
 
@@ -558,6 +776,7 @@
       var li = document.createElement("li");
       var color = sectorColor(r.sector);
       var isOpen = state.open === r.ticker;
+      var cov = coverage[r.ticker];
 
       var button = document.createElement("button");
       button.type = "button";
@@ -574,6 +793,21 @@
       var ticker = document.createElement("span");
       ticker.className = "ticker";
       ticker.textContent = r.ticker;
+      if (cov && cov.window_return_pct != null) {
+        var chg = document.createElement("span");
+        chg.className = "chg " + direction(cov.window_return_pct);
+        chg.textContent = " " + pct(cov.window_return_pct);
+        ticker.appendChild(chg);
+      }
+      if (cov && !cov.sufficient) {
+        var warn = document.createElement("span");
+        warn.className = "warn";
+        warn.textContent = cov.trading_days + "d";
+        warn.title = "Only " + cov.trading_days + " trading days of history";
+        ticker.appendChild(document.createTextNode(" "));
+        ticker.appendChild(warn);
+      }
+
       var company = document.createElement("span");
       company.className = "company";
       company.textContent = r.name;
@@ -584,13 +818,22 @@
       cap.className = "cap";
       var capValue = document.createElement("b");
       capValue.textContent = money(r.market_cap);
-      var bar = document.createElement("span");
-      bar.className = "weight";
-      var fill = document.createElement("i");
-      fill.style.width = Math.max(4, (r.market_cap / largestCap) * 100) + "%";
-      bar.appendChild(fill);
       cap.appendChild(capValue);
-      cap.appendChild(bar);
+
+      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+        var stroke = getComputedStyle(document.documentElement)
+          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
+        var mini = spark(cov.sparkline, 54, 18, stroke, false);
+        mini.setAttribute("class", "spark");
+        cap.appendChild(mini);
+      } else {
+        var bar = document.createElement("span");
+        bar.className = "weight";
+        var fill = document.createElement("i");
+        fill.style.width = Math.max(4, (r.market_cap / largestCap) * 100) + "%";
+        bar.appendChild(fill);
+        cap.appendChild(bar);
+      }
 
       button.appendChild(rank);
       button.appendChild(main);

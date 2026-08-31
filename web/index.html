@@ -16,6 +16,9 @@
     --line: #dee5e3;
     --accent: #0c6b5f;
     --accent-soft: #e1efec;
+    --up: #1a7f52;
+    --down: #b4443c;
+    --warn: #9a6a17;
     --shadow: 0 1px 2px rgba(16, 25, 23, .06), 0 8px 24px -16px rgba(16, 25, 23, .3);
   }
   :root:not([data-theme="light"]) {
@@ -33,6 +36,9 @@
       --line: #22302d;
       --accent: #48c6b0;
       --accent-soft: #16302c;
+      --up: #4fbe86;
+      --down: #e2796f;
+      --warn: #d9a445;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
     }
   }
@@ -47,6 +53,9 @@
     --line: #22302d;
     --accent: #48c6b0;
     --accent-soft: #16302c;
+    --up: #4fbe86;
+    --down: #e2796f;
+    --warn: #d9a445;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
   }
 
@@ -99,7 +108,7 @@
 
   .summary {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -124,6 +133,71 @@
     font-weight: 500;
     font-variant-numeric: tabular-nums;
     letter-spacing: -.02em;
+  }
+
+  .note {
+    margin: 10px 2px 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .note b {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------- price history ---------- */
+
+  .spark {
+    display: block;
+    width: 54px;
+    height: 18px;
+    margin-top: 3px;
+    margin-left: auto;
+    overflow: visible;
+  }
+
+  .chg {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+  }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--muted); }
+
+  .warn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--warn);
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  .detail .series {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+  }
+  .detail .series svg {
+    display: block;
+    width: 100%;
+    height: 56px;
+    overflow: visible;
+  }
+  .detail .axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: var(--faint);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    margin-top: 3px;
   }
 
   /* ---------- controls ---------- */
@@ -384,6 +458,7 @@
 </head>
 <body>
 <script id="universe-data" type="application/json">{"schema_version":1,"generated_at":"2026-08-31T20:56:45Z","source":{"provider":"Financial Modeling Prep","endpoint":"stable/company-screener"},"criteria":{"size":50,"exchanges":["NASDAQ","NYSE","AMEX"],"country":"US","dedupe_share_classes":true},"count":50,"constituents":[{"ticker":"NVDA","name":"NVIDIA Corporation","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":5340730500000,"price":220.5,"avg_volume":140227025,"share_classes":["NVDA"],"rank":1},{"ticker":"AAPL","name":"Apple Inc.","sector":"Technology","industry":"Consumer Electronics","exchange":"NASDAQ","market_cap":4653688748600,"price":316.85,"avg_volume":54939019,"share_classes":["AAPL"],"rank":2},{"ticker":"GOOGL","name":"Alphabet Inc.","sector":"Communication Services","industry":"Internet Content & Information","exchange":"NASDAQ","market_cap":4106851464904,"price":339.35,"avg_volume":31574739,"share_classes":["GOOG","GOOGL"],"rank":3},{"ticker":"MSFT","name":"Microsoft Corporation","sector":"Technology","industry":"Software - Infrastructure","exchange":"NASDAQ","market_cap":3766907259500,"price":507.29,"avg_volume":38141796,"share_classes":["MSFT"],"rank":4},{"ticker":"AMZN","name":"Amazon.com, Inc.","sector":"Consumer Cyclical","industry":"Specialty Retail","exchange":"NASDAQ","market_cap":2794371867000,"price":259.77,"avg_volume":49073576,"share_classes":["AMZN"],"rank":5},{"ticker":"SPCX","name":"Space Exploration Technologies Corp.","sector":"Industrials","industry":"Aerospace & Defense","exchange":"NASDAQ","market_cap":1879655657288,"price":143.75,"avg_volume":113629159,"share_classes":["SPCX"],"rank":6},{"ticker":"AVGO","name":"Broadcom Inc.","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":1761922177200,"price":370.34,"avg_volume":25813855,"share_classes":["AVGO"],"rank":7},{"ticker":"META","name":"Meta Platforms, Inc.","sector":"Communication Services","industry":"Internet Content & Information","exchange":"NASDAQ","market_cap":1458028463474,"price":572.34,"avg_volume":18494604,"share_classes":["META"],"rank":8},{"ticker":"TSLA","name":"Tesla, Inc.","sector":"Consumer Cyclical","industry":"Auto - Manufacturers","exchange":"NASDAQ","market_cap":1453472936466,"price":368.01,"avg_volume":41278333,"share_classes":["TSLA"],"rank":9},{"ticker":"LLY","name":"Eli Lilly and Company","sector":"Healthcare","industry":"Drug Manufacturers - General","exchange":"NYSE","market_cap":1090375982030,"price":1157.83,"avg_volume":2883534,"share_classes":["LLY"],"rank":10},{"ticker":"BRK-B","name":"Berkshire Hathaway Inc.","sector":"Financial Services","industry":"Insurance - Diversified","exchange":"NYSE","market_cap":1087118917488,"price":504.03,"avg_volume":4715677,"share_classes":["BRK-A","BRK-B"],"rank":11},{"ticker":"MU","name":"Micron Technology, Inc.","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":1082780074700,"price":958.73,"avg_volume":45365950,"share_classes":["MU"],"rank":12},{"ticker":"JPM","name":"JPMorgan Chase & Co.","sector":"Financial Services","industry":"Banks - Diversified","exchange":"NYSE","market_cap":953959150200,"price":356.02,"avg_volume":8380647,"share_classes":["JPM"],"rank":13},{"ticker":"WMT","name":"Walmart Inc.","sector":"Consumer Defensive","industry":"Discount Stores","exchange":"NASDAQ","market_cap":834563849600,"price":104.87,"avg_volume":24647114,"share_classes":["WMT"],"rank":14},{"ticker":"AMD","name":"Advanced Micro Devices, Inc.","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":767556032000,"price":470.72,"avg_volume":27545658,"share_classes":["AMD"],"rank":15},{"ticker":"V","name":"Visa Inc.","sector":"Financial Services","industry":"Financial - Credit Services","exchange":"NYSE","market_cap":708301700437,"price":379.37,"avg_volume":7943044,"share_classes":["V"],"rank":16},{"ticker":"XOM","name":"Exxon Mobil Corporation","sector":"Energy","industry":"Oil & Gas Integrated","exchange":"NYSE","market_cap":667175170800,"price":160.98,"avg_volume":15562890,"share_classes":["XOM"],"rank":17},{"ticker":"JNJ","name":"Johnson & Johnson","sector":"Healthcare","industry":"Drug Manufacturers - General","exchange":"NYSE","market_cap":640671493894,"price":265.85,"avg_volume":7845769,"share_classes":["JNJ"],"rank":18},{"ticker":"MA","name":"Mastercard Incorporated","sector":"Financial Services","industry":"Financial - Credit Services","exchange":"NYSE","market_cap":516846085160,"price":589.31,"avg_volume":3472028,"share_classes":["MA"],"rank":19},{"ticker":"ABBV","name":"AbbVie Inc.","sector":"Healthcare","industry":"Drug Manufacturers - General","exchange":"NYSE","market_cap":452970343448,"price":256.38,"avg_volume":6530098,"share_classes":["ABBV"],"rank":20},{"ticker":"INTC","name":"Intel Corp.","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":451488417354,"price":89.51,"avg_volume":117017876,"share_classes":["INTC"],"rank":21},{"ticker":"BAC","name":"Bank of America Corporation","sector":"Financial Services","industry":"Banks - Diversified","exchange":"NYSE","market_cap":439562784600,"price":61.94,"avg_volume":33413079,"share_classes":["BAC"],"rank":22},{"ticker":"CSCO","name":"Cisco Systems, Inc.","sector":"Technology","industry":"Communication Equipment","exchange":"NASDAQ","market_cap":435489116136,"price":110.49,"avg_volume":22802384,"share_classes":["CSCO"],"rank":23},{"ticker":"ORCL","name":"Oracle Corporation","sector":"Technology","industry":"Software - Infrastructure","exchange":"NYSE","market_cap":429391662900,"price":149.07,"avg_volume":32100328,"share_classes":["ORCL"],"rank":24},{"ticker":"PLTR","name":"Palantir Technologies Inc.","sector":"Technology","industry":"Software - Infrastructure","exchange":"NASDAQ","market_cap":427941526600,"price":186.38,"avg_volume":41851117,"share_classes":["PLTR"],"rank":25},{"ticker":"COST","name":"Costco Wholesale Corporation","sector":"Consumer Defensive","industry":"Discount Stores","exchange":"NASDAQ","market_cap":418595393310,"price":943.89,"avg_volume":2204823,"share_classes":["COST"],"rank":26},{"ticker":"CVX","name":"Chevron Corporation","sector":"Energy","industry":"Oil & Gas Integrated","exchange":"NYSE","market_cap":410568340000,"price":206.15,"avg_volume":8366680,"share_classes":["CVX"],"rank":27},{"ticker":"KO","name":"The Coca-Cola Company","sector":"Consumer Defensive","industry":"Beverages - Non-Alcoholic","exchange":"NYSE","market_cap":381507013978,"price":88.67,"avg_volume":17373223,"share_classes":["KO"],"rank":28},{"ticker":"LRCX","name":"Lam Research Corporation","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":377034349300,"price":301.49,"avg_volume":11367949,"share_classes":["LRCX"],"rank":29},{"ticker":"CAT","name":"Caterpillar Inc.","sector":"Industrials","industry":"Agricultural - Machinery","exchange":"NYSE","market_cap":367344188390,"price":797.47,"avg_volume":3186014,"share_classes":["CAT"],"rank":30},{"ticker":"MRK","name":"Merck & Co., Inc.","sector":"Healthcare","industry":"Drug Manufacturers - General","exchange":"NYSE","market_cap":364940603200,"price":147.76,"avg_volume":10803268,"share_classes":["MRK"],"rank":31},{"ticker":"AMAT","name":"Applied Materials, Inc.","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":363942866010,"price":458.39,"avg_volume":9562936,"share_classes":["AMAT"],"rank":32},{"ticker":"UNH","name":"UnitedHealth Group Incorporated","sector":"Healthcare","industry":"Medical - Healthcare Plans","exchange":"NYSE","market_cap":353640512362,"price":389.41,"avg_volume":5620930,"share_classes":["UNH"],"rank":33},{"ticker":"GE","name":"GE Aerospace","sector":"Industrials","industry":"Aerospace & Defense","exchange":"NYSE","market_cap":348320111239,"price":335.71,"avg_volume":4240012,"share_classes":["GE"],"rank":34},{"ticker":"PG","name":"The Procter & Gamble Company","sector":"Consumer Defensive","industry":"Household & Personal Products","exchange":"NYSE","market_cap":344980560937,"price":145.12,"avg_volume":9091958,"share_classes":["PG"],"rank":35},{"ticker":"NFLX","name":"Netflix, Inc.","sector":"Communication Services","industry":"Entertainment","exchange":"NASDAQ","market_cap":337487336919,"price":81.05,"avg_volume":42330680,"share_classes":["NFLX"],"rank":36},{"ticker":"MS","name":"Morgan Stanley","sector":"Financial Services","industry":"Financial - Capital Markets","exchange":"NYSE","market_cap":336654643200,"price":213.44,"avg_volume":5525819,"share_classes":["MS"],"rank":37},{"ticker":"HD","name":"The Home Depot, Inc.","sector":"Consumer Cyclical","industry":"Home Improvement","exchange":"NYSE","market_cap":326884866110,"price":327.83,"avg_volume":4286300,"share_classes":["HD"],"rank":38},{"ticker":"PANW","name":"Palo Alto Networks, Inc.","sector":"Technology","industry":"Software - Infrastructure","exchange":"NASDAQ","market_cap":311435950000,"price":382.13,"avg_volume":7075949,"share_classes":["PANW"],"rank":39},{"ticker":"DELL","name":"Dell Technologies Inc.","sector":"Technology","industry":"Computer Hardware","exchange":"NYSE","market_cap":303821738819,"price":457.39,"avg_volume":7373415,"share_classes":["DELL"],"rank":40},{"ticker":"GS","name":"The Goldman Sachs Group, Inc.","sector":"Financial Services","industry":"Financial - Capital Markets","exchange":"NYSE","market_cap":302647681300,"price":1025.9,"avg_volume":2113325,"share_classes":["GS"],"rank":41},{"ticker":"PM","name":"Philip Morris International Inc.","sector":"Consumer Defensive","industry":"Tobacco","exchange":"NYSE","market_cap":291927653000,"price":187.3,"avg_volume":4964911,"share_classes":["PM"],"rank":42},{"ticker":"RTX","name":"RTX Corporation","sector":"Industrials","industry":"Aerospace & Defense","exchange":"NYSE","market_cap":279969790321,"price":207.73,"avg_volume":4990911,"share_classes":["RTX"],"rank":43},{"ticker":"WFC","name":"Wells Fargo & Company","sector":"Financial Services","industry":"Banks - Diversified","exchange":"NYSE","market_cap":261243360000,"price":86.39,"avg_volume":14595360,"share_classes":["WFC"],"rank":44},{"ticker":"ANET","name":"Arista Networks, Inc.","sector":"Technology","industry":"Computer Hardware","exchange":"NYSE","market_cap":246406867322,"price":195.69,"avg_volume":7793204,"share_classes":["ANET"],"rank":45},{"ticker":"GEV","name":"GE Vernova Inc.","sector":"Industrials","industry":"Industrial - Machinery","exchange":"NYSE","market_cap":239308729608,"price":898.53,"avg_volume":2739085,"share_classes":["GEV"],"rank":46},{"ticker":"TXN","name":"Texas Instruments Incorporated","sector":"Technology","industry":"Semiconductors","exchange":"NASDAQ","market_cap":238165864032,"price":260.79,"avg_volume":8234404,"share_classes":["TXN"],"rank":47},{"ticker":"CRWD","name":"CrowdStrike Holdings, Inc.","sector":"Technology","industry":"Software - Infrastructure","exchange":"NASDAQ","market_cap":235217893680,"price":231,"avg_volume":10772971,"share_classes":["CRWD"],"rank":48},{"ticker":"SNDK","name":"Sandisk Corporation","sector":"Technology","industry":"Computer Hardware","exchange":"NASDAQ","market_cap":232012211325,"price":1566.7,"avg_volume":13758758,"share_classes":["SNDK"],"rank":49},{"ticker":"AMGN","name":"Amgen Inc.","sector":"Healthcare","industry":"Drug Manufacturers - General","exchange":"NASDAQ","market_cap":232009675040,"price":429.88,"avg_volume":2686907,"share_classes":["AMGN"],"rank":50}]}</script>
+<script id="history-data" type="application/json">{"schema_version":1,"generated_at":"2026-08-31T22:11:52Z","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","criteria":{"trading_days_target":252,"calendar_days_requested":438,"requested_from":"2025-06-19","requested_to":"2026-08-31"},"count":50,"sufficient_count":49,"failures":[],"coverage":[{"ticker":"AAPL","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":316.85,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":36.99,"window_low":225.96,"window_high":339.79,"sparkline":[200.03,200.11,208.94,207.62,211.46,213.02,201.94,228.8,229.71,228.47,237.59,225.96,238.11,251.38,254.51,257.11,248.42,257.5,270.4,268.78,272.21,265.53,278.09,278.02,277.52,272.93,273.02,261.65,260.34,246.98,257.58,275.16,261.26,264.11,263.71,257.0,249.67,247.55,248.36,258.4,258.74,272.56,270.23,283.67,294.55,298.71,310.58,309.99,291.33,295.69,274.91,308.36,315.05,333.45,336.62,303.16,308.26,305.59,310.34,316.85]},{"ticker":"ABBV","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":256.42,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":25.65,"window_low":195.98,"window_high":265.97,"sparkline":[178.19,175.31,180.43,184.17,179.29,182.85,192.58,192.67,199.99,202.09,205.49,205.28,214.17,213.37,237.03,224.29,221.0,223.4,222.94,213.99,226.93,224.16,222.45,220.86,218.17,221.59,225.56,218.76,215.66,212.86,217.08,215.69,224.04,221.39,228.55,226.61,216.34,201.95,206.21,203.54,203.33,202.27,196.29,204.65,206.39,212.25,213.88,215.59,223.36,219.67,241.42,259.22,246.33,254.49,256.91,245.1,247.97,250.33,264.52,256.42]},{"ticker":"AMAT","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":458.39,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":186.73,"window_low":155.39,"window_high":722.23,"sparkline":[168.04,181.67,189.18,195.45,190.99,188.67,177.65,186.87,160.86,163.6,155.39,162.52,177.14,200.33,216.54,216.31,226.32,219.34,231.26,232.24,222.0,219.44,251.35,267.04,258.28,255.49,262.11,294.95,303.78,324.08,340.12,302.9,327.22,374.51,371.44,323.99,340.74,356.23,336.39,351.8,394.81,390.71,380.23,409.87,430.2,405.97,447.77,500.23,496.48,592.29,667.29,602.39,601.86,529.09,516.34,517.66,521.56,534.74,484.19,458.39]},{"ticker":"AMD","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":470.72,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":189.44,"window_low":151.14,"window_high":580.91,"sparkline":[128.24,143.81,134.8,146.24,157.0,173.66,174.31,174.95,166.55,166.62,162.13,159.54,159.16,160.88,164.01,235.56,238.6,230.23,254.84,237.7,247.96,206.02,217.53,217.97,210.78,213.43,215.61,214.35,220.97,249.8,252.18,192.5,205.94,200.15,200.21,192.43,193.39,201.33,201.99,220.18,246.83,274.95,323.21,355.26,448.29,414.05,495.54,542.52,452.4,512.48,532.57,517.82,557.89,495.76,494.95,484.64,469.56,506.0,456.75,470.72]},{"ticker":"AMGN","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":429.88,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":53.56,"window_low":263.86,"window_high":443.84,"sparkline":[279.25,267.48,282.75,286.68,285.56,290.8,289.63,275.05,285.26,281.76,276.19,270.99,267.3,271.68,290.44,286.67,289.3,287.99,284.12,307.07,326.93,327.0,338.54,323.28,311.37,320.82,323.02,323.55,317.8,336.71,336.07,360.43,358.86,369.78,383.01,364.63,361.35,343.19,344.15,338.03,345.18,345.52,335.07,325.22,331.83,328.83,334.11,336.25,335.77,339.67,350.77,371.98,361.28,364.16,374.07,376.67,414.78,416.94,443.84,429.88]},{"ticker":"AMZN","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":259.77,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":13.44,"window_low":198.79,"window_high":284.02,"sparkline":[209.69,223.3,223.47,225.69,229.3,232.79,213.75,221.47,228.01,228.71,225.99,230.33,231.62,220.21,220.63,225.22,215.57,217.95,222.86,243.04,237.58,217.14,233.22,229.53,226.19,227.35,232.07,240.93,242.6,231.31,241.73,222.69,199.6,210.11,210.0,213.21,207.67,205.37,199.34,212.79,239.89,248.28,259.7,273.55,265.82,259.34,271.85,250.02,238.0,237.5,227.01,242.67,245.34,247.23,231.39,284.02,278.09,261.31,262.07,259.77]},{"ticker":"ANET","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":195.69,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":43.31,"window_low":116.13,"window_high":210.5,"sparkline":[86.25,99.39,101.47,108.37,111.61,117.55,118.12,141.25,132.78,134.27,137.38,150.72,142.84,142.64,149.27,157.36,143.38,146.59,158.44,134.02,130.3,119.59,130.68,128.59,124.76,131.12,134.15,132.58,129.93,127.29,148.15,128.67,135.12,132.79,133.5,132.89,133.57,131.22,120.77,126.25,152.02,166.85,165.29,170.22,142.54,141.58,154.31,174.37,151.76,164.93,165.45,159.99,186.96,168.61,170.76,184.89,191.52,201.8,188.15,195.69]},{"ticker":"AVGO","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":370.34,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":25.44,"window_low":292.95,"window_high":480.81,"sparkline":[248.17,267.39,272.18,273.59,286.11,292.16,290.8,310.55,292.76,295.84,300.19,366.88,343.65,337.42,331.53,343.57,349.37,338.4,374.37,353.61,338.08,344.88,400.71,388.06,357.92,338.46,348.11,342.51,353.31,327.59,329.52,309.37,329.95,331.43,318.38,329.27,320.98,309.37,300.2,313.93,379.15,399.0,399.2,426.68,418.64,410.42,421.19,478.47,371.51,392.28,378.91,360.45,399.97,370.83,383.22,392.23,422.4,392.43,358.76,370.34]},{"ticker":"BAC","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":61.94,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":24.73,"window_low":46.48,"window_high":64.81,"sparkline":[44.53,46.11,47.62,46.07,46.47,47.2,44.59,46.49,47.05,49.18,48.99,49.33,50.58,50.88,49.88,49.05,51.45,50.29,52.19,52.44,52.03,50.19,52.8,53.37,54.54,54.67,54.75,56.63,53.95,51.51,52.5,54.34,51.95,52.48,49.29,48.39,46.48,46.92,46.73,49.8,53.07,53.67,52.39,52.85,50.52,50.44,50.84,52.13,54.54,56.53,58.19,58.73,59.67,61.27,62.13,62.48,63.86,63.89,62.33,61.94]},{"ticker":"BRK-B","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":504.03,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":0.21,"window_low":465.4,"window_high":529.42,"sparkline":[484.85,485.68,478.03,476.31,474.41,481.7,464.19,470.39,485.31,492.21,501.49,490.08,492.33,497.09,498.2,499.84,496.39,491.81,478.52,493.15,513.11,501.12,513.81,504.34,499.52,494.53,501.05,499.05,495.24,483.83,476.79,503.89,500.01,498.2,504.95,498.98,490.03,480.94,468.49,476.38,480.19,472.08,478.16,465.52,484.96,480.46,479.92,475.37,483.68,491.28,487.81,507.78,493.71,490.91,497.18,513.14,529.42,498.23,504.32,504.03]},{"ticker":"CAT","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":797.47,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":92.03,"window_low":411.41,"window_high":1062.93,"sparkline":[355.99,379.87,386.59,400.67,406.4,429.07,430.35,409.02,412.37,427.4,411.41,419.13,446.63,465.59,476.52,497.63,529.28,510.79,579.6,566.32,550.18,542.81,572.26,599.5,594.25,572.72,575.19,619.3,632.66,642.96,662.75,675.77,755.45,756.89,740.04,678.35,691.39,678.33,692.79,718.54,788.76,796.92,816.36,902.92,910.45,858.56,908.25,924.47,854.58,954.15,1055.05,961.75,950.65,878.65,873.28,830.03,837.58,881.65,811.02,797.47]},{"ticker":"COST","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":943.89,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":0.64,"window_low":846.26,"window_high":1092.58,"sparkline":[973.26,978.08,985.07,973.88,940.77,927.29,938.16,985.5,975.16,935.88,944.27,950.74,957.44,939.79,912.02,909.49,949.45,939.2,914.84,919.52,921.01,889.36,909.57,890.74,880.58,851.86,864.02,885.19,937.79,978.54,948.7,986.28,995.82,982.27,1007.72,995.07,1005.36,969.37,980.87,1015.45,977.87,994.81,990.98,1014.8,1020.26,1092.58,1002.09,960.3,981.81,964.05,940.74,950.16,914.8,939.38,951.58,954.08,952.75,953.5,971.4,943.89]},{"ticker":"CRWD","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":231.0,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":118.07,"window_low":87.56,"window_high":231.0,"sparkline":[119.08,124.83,126.37,119.05,120.4,118.05,110.44,108.95,104.65,104.4,103.3,106.22,111.38,119.08,124.99,127.49,122.26,125.03,134.67,133.13,132.45,125.33,127.29,128.01,126.2,120.32,118.98,114.58,117.01,111.47,111.16,94.29,102.89,97.15,93.0,107.25,110.45,102.25,92.4,99.65,100.56,108.29,113.75,119.13,136.54,154.22,161.34,186.9,161.94,170.74,169.66,193.98,187.18,203.08,180.11,202.54,225.16,213.9,190.68,231.0]},{"ticker":"CSCO","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":110.49,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":63.25,"window_low":65.18,"window_high":129.52,"sparkline":[64.58,66.85,67.53,66.44,66.95,66.54,66.15,69.93,65.4,67.0,66.29,66.74,66.34,65.95,67.35,69.32,68.52,69.64,71.86,70.02,76.26,74.35,75.83,76.85,76.68,77.29,76.67,74.54,74.78,73.02,77.72,81.61,74.32,78.48,78.74,77.92,77.62,76.94,79.19,80.14,82.04,87.38,86.54,93.95,98.92,114.95,119.22,126.03,118.36,116.89,118.53,112.27,121.31,111.94,114.57,115.86,122.57,112.9,110.23,110.49]},{"ticker":"CVX","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":206.15,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":33.42,"window_low":142.76,"window_high":207.43,"sparkline":[142.3,136.82,140.25,144.3,142.42,148.7,145.62,146.95,146.24,151.39,152.07,151.81,154.02,153.15,148.72,147.91,146.34,149.67,147.7,147.14,149.68,146.23,147.03,145.93,145.92,143.74,146.89,152.29,159.42,162.2,166.54,174.36,177.45,180.69,183.47,186.59,193.35,198.17,207.43,195.35,188.4,180.02,185.04,189.24,182.67,195.54,180.82,188.07,188.16,176.04,170.75,167.74,174.87,185.76,188.36,191.51,193.22,200.95,203.09,206.15]},{"ticker":"DELL","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":457.39,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":279.26,"window_low":110.54,"window_high":494.51,"sparkline":[117.38,121.92,122.69,123.58,126.81,132.17,128.83,139.85,133.49,129.33,122.45,122.88,128.69,130.42,147.79,162.45,151.76,148.76,159.54,147.82,132.72,116.33,132.13,137.64,128.79,125.27,126.3,122.8,118.57,112.72,117.93,114.84,112.28,121.69,147.38,145.78,150.9,156.92,170.99,172.36,188.89,203.27,205.59,215.96,238.55,234.87,304.82,420.39,369.22,418.63,408.77,393.67,434.25,395.69,426.91,429.02,457.88,479.81,433.19,457.39]},{"ticker":"GE","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":335.71,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":22.61,"window_low":272.91,"window_high":381.22,"sparkline":[237.82,252.86,247.39,261.02,261.53,269.24,270.75,278.22,264.59,272.56,274.54,281.98,288.04,298.78,299.72,301.4,298.97,296.75,309.56,304.1,303.0,289.5,297.3,282.85,298.66,306.03,310.74,326.66,326.35,317.64,298.06,305.55,312.05,342.3,341.34,322.24,299.32,286.43,282.46,288.33,311.51,303.22,288.84,286.32,297.08,284.93,316.82,314.25,318.31,356.59,370.9,377.05,359.27,348.83,361.61,368.93,366.7,369.43,341.84,335.71]},{"ticker":"GEV","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":898.53,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":46.92,"window_low":546.95,"window_high":1174.86,"sparkline":[485.65,518.27,528.86,553.55,564.64,646.2,648.26,655.96,601.77,624.5,575.74,642.11,613.41,627.55,604.79,624.04,614.56,574.94,573.01,549.16,557.14,557.0,598.67,630.16,670.47,657.07,662.24,685.57,651.37,667.15,716.59,736.71,815.65,829.42,872.63,788.35,804.13,850.64,852.72,896.9,990.61,989.68,1088.37,1094.65,1071.43,1011.28,1031.36,958.87,866.65,1048.86,1085.47,1113.11,1091.57,1057.84,996.57,1006.76,990.85,1079.0,942.1,898.53]},{"ticker":"GOOGL","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":339.35,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":59.84,"window_low":210.75,"window_high":402.38,"sparkline":[166.17,178.02,176.29,181.04,189.56,192.03,194.12,202.76,201.0,206.55,230.0,238.7,249.04,246.66,244.42,244.14,250.54,251.2,280.93,284.19,278.02,288.88,319.55,320.64,308.88,306.76,313.15,313.93,335.53,327.95,337.81,330.82,308.6,314.57,311.35,298.13,302.1,300.82,274.18,299.81,321.12,337.22,349.57,388.2,387.12,387.43,388.6,358.78,356.38,363.79,343.71,359.91,357.18,346.77,326.56,373.51,357.52,344.0,348.06,339.35]},{"ticker":"GS","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":1025.9,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":39.68,"window_low":719.97,"window_high":1152.07,"sparkline":[628.15,677.17,696.9,699.22,692.06,709.37,706.68,728.71,707.14,734.17,719.97,758.43,782.71,780.95,774.13,765.26,756.8,733.81,778.71,776.17,793.83,762.49,814.07,846.36,879.44,884.9,883.62,946.3,929.14,943.86,931.09,881.86,895.87,913.39,851.32,817.81,778.78,809.96,799.37,862.25,886.88,937.61,922.48,914.86,941.75,924.66,992.1,1041.02,1001.29,1099.14,1065.09,1021.0,1055.18,1065.22,1048.23,1027.06,1034.51,1051.31,1036.28,1025.9]},{"ticker":"HD","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":327.83,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-17.26,"window_low":295.3,"window_high":414.79,"sparkline":[340.56,359.19,358.12,360.52,354.61,367.46,375.43,385.74,396.65,396.98,397.15,404.81,408.51,401.42,388.93,375.97,380.39,381.05,371.82,361.55,360.57,325.61,349.65,349.64,354.61,340.16,342.58,344.39,374.42,379.25,366.6,377.01,384.75,376.89,375.38,352.9,336.51,318.36,319.26,324.22,338.62,348.38,326.61,313.07,308.15,300.19,315.48,310.64,318.92,327.48,345.0,357.9,343.3,338.87,336.09,340.02,350.78,337.88,337.43,327.83]},{"ticker":"INTC","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":89.51,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":267.6,"window_low":24.0,"window_high":140.94,"sparkline":[21.08,22.69,22.0,23.3,23.26,20.68,20.19,21.81,25.31,24.35,24.0,24.77,24.9,31.22,35.94,37.43,37.15,36.92,40.16,37.24,35.91,33.62,40.56,41.41,37.81,36.82,36.68,40.04,47.29,54.25,48.66,48.24,46.48,44.11,45.61,43.42,45.77,43.87,43.13,50.78,65.18,65.7,84.52,108.15,120.61,110.8,121.77,112.71,107.04,121.1,132.87,120.35,109.84,95.04,91.67,91.0,97.52,103.49,87.26,89.51]},{"ticker":"JNJ","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":265.85,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":53.43,"window_low":170.32,"window_high":273.14,"sparkline":[145.42,147.97,150.74,152.25,159.57,161.37,165.76,167.74,172.62,172.6,174.08,171.92,173.3,172.8,181.95,185.51,186.96,188.69,184.89,182.85,190.95,198.6,203.65,198.74,208.23,203.11,204.28,201.55,210.27,214.56,223.69,234.03,240.68,238.65,245.8,237.86,238.96,232.88,237.91,238.42,235.44,228.25,225.38,223.2,221.89,227.57,230.15,222.14,237.32,233.05,243.68,261.75,255.72,251.8,264.64,253.16,260.53,261.08,271.7,265.85]},{"ticker":"JPM","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":356.02,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":20.37,"window_low":280.14,"window_high":365.18,"sparkline":[268.55,280.37,286.5,283.29,285.52,292.69,285.91,287.36,285.21,292.97,293.9,294.91,305.91,307.55,304.89,299.78,301.42,290.0,305.11,309.04,305.15,294.21,308.7,310.64,314.07,312.78,319.22,331.42,307.93,299.16,303.5,307.2,299.75,307.83,297.44,286.72,280.74,283.83,280.14,294.13,312.27,315.57,310.05,308.01,303.51,294.38,297.94,299.5,307.75,331.96,333.62,332.97,336.47,341.1,356.2,352.64,359.79,360.96,356.39,356.02]},{"ticker":"KO","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":88.67,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":32.15,"window_low":64.36,"window_high":91.99,"sparkline":[66.95,68.4,69.06,67.56,68.15,66.22,67.15,68.77,68.2,66.84,67.1,65.96,65.7,65.12,65.45,64.8,65.74,69.4,67.6,67.68,69.65,69.79,71.66,69.08,69.59,69.14,69.24,66.95,70.3,71.06,72.47,77.48,77.96,78.79,80.49,76.03,76.84,74.27,75.22,76.73,75.92,75.0,77.85,77.98,79.52,81.39,81.1,78.25,83.05,79.93,80.42,84.14,83.49,81.56,84.07,86.86,86.87,86.98,91.99,88.67]},{"ticker":"LLY","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":1157.83,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":59.05,"window_low":710.1,"window_high":1280.34,"sparkline":[756.28,768.89,766.33,792.58,755.73,801.27,759.47,634.02,698.79,731.41,733.2,749.88,755.36,737.19,820.24,840.41,821.38,807.33,839.2,931.55,1016.45,1038.26,1070.29,1005.44,1022.56,1066.28,1074.25,1058.91,1072.0,1073.32,1019.2,1015.92,1033.27,1006.34,1048.68,987.21,981.98,903.84,875.47,924.14,926.62,917.0,871.25,985.76,986.75,1019.95,1081.37,1077.24,1134.74,1110.41,1126.08,1212.17,1186.88,1177.42,1195.82,1119.76,1230.18,1183.16,1246.93,1157.83]},{"ticker":"LRCX","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":301.49,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":202.7,"window_low":96.49,"window_high":433.33,"sparkline":[89.99,96.66,97.6,99.07,101.18,98.07,96.15,104.7,99.78,103.06,97.2,106.77,121.23,127.87,142.28,142.04,144.27,140.75,160.44,161.62,152.78,139.1,155.45,158.4,160.22,171.94,175.54,206.57,213.97,227.96,247.7,212.91,230.85,244.46,233.45,199.19,212.05,228.2,211.26,220.5,267.13,262.98,251.05,275.61,289.04,273.19,318.71,343.47,321.57,374.18,401.82,351.41,350.33,313.3,291.61,294.61,306.4,343.84,310.17,301.49]},{"ticker":"MA","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":589.31,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-0.39,"window_low":470.76,"window_high":599.86,"sparkline":[528.95,546.17,560.86,549.6,551.22,564.76,562.54,570.63,581.89,587.95,589.61,575.79,594.92,565.29,570.22,572.87,560.06,568.57,550.98,550.58,552.86,525.3,547.84,542.86,569.14,569.44,575.08,577.51,543.14,525.78,541.89,550.02,525.67,524.63,515.46,520.57,496.3,494.64,482.6,499.8,507.73,515.79,506.77,496.25,498.98,498.87,494.21,470.76,488.26,492.16,488.1,538.49,526.74,543.6,551.71,570.97,563.17,562.26,599.86,589.31]},{"ticker":"META","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":572.34,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-22.27,"window_low":525.24,"window_high":777.71,"sparkline":[680.13,731.24,716.01,718.57,710.65,715.29,760.97,787.42,749.03,751.64,734.65,749.53,773.19,758.69,715.48,715.98,715.69,731.51,664.74,617.34,608.31,587.62,646.27,671.68,642.56,657.6,657.52,659.44,629.97,611.87,737.0,669.02,648.65,654.49,647.03,643.71,612.62,593.11,525.24,572.49,633.95,670.29,670.72,604.4,602.45,602.05,634.67,622.4,570.45,567.58,542.87,582.9,669.21,646.01,593.87,590.24,594.92,568.97,559.02,572.34]},{"ticker":"MRK","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":147.76,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":81.52,"window_low":75.83,"window_high":156.45,"sparkline":[76.5,76.54,78.28,80.96,76.74,81.34,78.18,77.7,82.18,82.24,81.46,81.31,79.29,77.85,88.07,84.43,82.19,85.61,84.31,83.82,90.81,92.8,102.44,97.44,98.01,99.63,105.08,107.3,106.7,109.5,106.77,118.02,117.52,120.49,122.03,114.12,113.94,113.36,118.78,119.99,119.29,116.26,109.24,112.34,111.57,113.42,119.38,113.88,118.24,115.44,125.45,129.56,123.54,127.5,130.76,127.77,130.92,135.97,150.66,147.76]},{"ticker":"MS","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":213.44,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":45.06,"window_low":144.8,"window_high":227.3,"sparkline":[128.86,136.61,139.57,139.8,136.4,138.43,137.34,144.02,140.87,145.66,145.23,150.7,153.91,154.37,153.41,152.19,159.04,154.61,161.59,160.77,162.92,156.12,166.91,173.65,175.51,174.11,177.02,184.7,179.79,180.34,179.44,173.94,166.24,173.52,164.71,158.54,153.2,159.73,156.68,164.75,179.18,188.64,188.3,188.21,190.83,188.54,200.51,208.99,205.53,223.73,219.83,212.76,221.06,214.32,213.39,211.23,215.33,218.21,214.08,213.44]},{"ticker":"MSFT","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":507.29,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":0.94,"window_low":352.17,"window_high":537.64,"sparkline":[472.73,491.08,492.85,498.1,505.07,507.48,522.58,524.06,504.78,497.94,501.22,496.28,505.85,505.98,515.46,520.56,509.24,516.29,521.46,493.04,499.18,475.41,488.91,480.11,475.51,482.85,484.03,475.49,467.7,441.31,430.76,391.19,399.3,395.63,391.15,407.31,393.95,380.33,355.33,371.37,382.82,416.38,427.52,409.72,406.12,415.73,411.89,426.54,396.61,378.2,352.17,389.76,384.38,393.08,388.37,486.73,505.11,479.45,487.31,507.29]},{"ticker":"MU","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":958.73,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":706.88,"window_low":118.29,"window_high":1213.37,"sparkline":[123.29,124.44,119.73,118.42,113.05,111.07,108.89,127.55,121.86,116.32,118.53,139.78,159.74,161.45,181.86,196.35,191.76,198.28,223.8,238.1,236.72,201.18,236.26,236.99,240.91,265.67,294.21,343.24,337.94,388.89,435.55,382.68,413.74,427.93,412.14,370.09,425.89,422.66,357.02,377.7,426.5,448.35,504.21,640.1,766.47,698.64,928.27,1079.41,891.74,1043.03,1213.37,975.41,979.3,848.95,900.2,829.5,861.0,1011.75,910.43,958.73]},{"ticker":"NFLX","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":81.05,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-32.92,"window_low":67.6,"window_high":126.33,"sparkline":[123.14,132.31,128.96,126.2,123.33,117.46,114.79,122.53,121.42,122.61,122.62,124.77,122.85,120.4,117.09,121.43,120.33,111.64,108.9,109.7,115.42,105.67,107.58,100.24,95.19,94.39,94.15,90.65,90.32,85.36,83.16,80.87,75.86,78.67,96.24,99.02,95.31,91.82,93.43,98.93,103.16,94.83,92.27,87.89,87.66,89.33,87.35,81.52,82.0,76.96,70.9,77.65,73.37,68.95,70.4,73.33,76.29,76.02,80.01,81.05]},{"ticker":"NVDA","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":220.78,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":26.92,"window_low":164.98,"window_high":235.47,"sparkline":[143.66,157.54,158.03,163.86,171.16,176.52,178.03,182.92,175.41,181.53,170.4,177.1,170.08,176.75,187.01,188.88,179.61,180.06,202.64,187.85,186.63,180.42,176.78,182.19,174.81,180.77,188.0,187.02,185.59,183.1,192.28,171.68,186.72,189.59,176.98,177.61,180.04,172.5,167.33,177.43,189.09,201.83,212.92,196.27,220.52,220.35,212.35,214.5,200.42,204.65,195.74,194.83,210.96,202.81,196.51,206.64,217.55,225.01,208.48,220.78]},{"ticker":"ORCL","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":149.12,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-33.3,"window_low":114.99,"window_high":324.61,"sparkline":[202.41,207.41,229.14,226.68,240.78,244.9,252.77,250.98,231.96,231.56,220.92,324.61,298.0,304.97,285.74,285.36,300.71,270.04,254.42,241.46,215.48,208.67,200.01,215.49,188.15,190.13,193.5,191.89,200.88,172.67,167.83,135.53,155.39,147.05,144.39,151.9,154.03,148.64,138.69,144.53,155.08,176.96,165.38,184.71,186.18,180.83,190.3,229.53,200.56,182.89,151.93,139.78,140.64,126.41,119.9,141.85,151.05,146.65,142.45,149.12]},{"ticker":"PANW","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":382.13,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":100.57,"window_low":141.67,"window_high":396.0,"sparkline":[199.24,200.57,201.42,190.72,199.88,204.5,169.09,175.4,181.56,184.23,191.53,197.33,203.12,200.7,206.8,217.79,206.7,212.42,218.27,211.37,204.77,185.07,190.13,198.84,191.69,186.88,186.85,185.86,190.85,181.47,176.2,154.77,162.81,148.7,148.92,165.05,167.02,162.95,147.02,161.95,162.51,169.56,180.99,183.98,215.6,240.13,248.47,280.43,263.22,282.13,293.09,348.06,325.91,358.68,317.32,347.13,385.04,375.76,350.9,382.13]},{"ticker":"PG","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":145.12,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":-4.88,"window_low":135.04,"window_high":164.72,"sparkline":[153.5,154.25,154.87,148.36,150.61,152.63,146.22,150.67,153.88,151.52,153.66,152.86,155.76,148.07,148.81,146.39,143.22,147.86,146.33,142.95,144.74,144.97,144.94,140.33,139.73,141.32,141.43,136.87,141.1,142.88,147.68,156.26,158.82,158.4,164.72,151.35,148.42,142.14,140.6,140.65,141.45,142.35,148.06,143.82,142.84,140.25,146.4,139.15,147.94,149.44,147.4,150.29,145.95,148.87,148.63,144.97,146.44,143.12,146.6,145.12]},{"ticker":"PLTR","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":186.38,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":18.93,"window_low":107.27,"window_high":207.18,"sparkline":[137.3,130.74,139.12,149.15,151.79,157.88,173.27,186.97,157.75,160.87,154.9,166.74,168.33,179.56,184.95,183.56,179.62,175.49,194.55,175.05,172.14,155.75,168.45,181.76,183.57,193.38,184.18,179.71,178.96,165.33,151.86,130.01,129.13,135.24,137.19,157.16,150.95,150.68,143.06,147.93,132.37,145.89,141.18,135.91,136.0,135.26,132.51,142.2,130.21,130.63,107.27,129.3,126.79,132.38,131.53,125.65,175.23,172.55,175.89,186.38]},{"ticker":"PM","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":187.3,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":16.13,"window_low":140.59,"window_high":200.17,"sparkline":[175.56,174.7,174.87,174.43,174.17,152.25,158.4,162.71,162.87,160.85,157.51,159.53,160.49,157.3,155.24,151.25,153.65,152.8,141.99,146.02,151.13,151.62,153.4,143.98,149.67,152.78,159.19,152.53,163.04,165.95,174.87,178.91,185.74,180.29,183.66,167.1,171.7,161.77,162.2,159.02,161.41,156.25,164.53,168.07,185.39,190.0,180.54,174.49,181.45,177.96,178.93,182.27,181.62,192.98,195.66,187.41,186.0,184.52,191.46,187.3]},{"ticker":"RTX","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":207.73,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":32.91,"window_low":149.54,"window_high":225.49,"sparkline":[143.87,141.93,143.16,146.46,148.7,153.12,153.38,152.55,151.42,157.24,155.8,152.74,156.0,159.03,164.76,166.11,154.71,175.38,174.83,172.55,171.42,170.21,173.04,169.27,176.75,180.06,182.44,188.36,192.0,195.38,197.74,193.87,198.99,203.4,201.11,208.2,203.0,196.69,188.3,196.93,199.91,194.33,174.37,171.58,177.56,173.19,176.01,171.98,176.82,191.94,185.97,198.59,195.28,192.87,217.7,215.93,223.38,221.64,209.22,207.73]},{"ticker":"SNDK","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":1566.7,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":2885.9,"window_low":51.07,"window_high":2335.0,"sparkline":[46.58,47.15,45.22,42.48,41.61,41.89,41.93,46.83,44.58,47.35,53.01,73.92,93.97,99.83,121.12,131.88,144.3,146.95,195.82,207.69,243.57,195.96,223.28,228.47,206.18,237.61,244.25,349.63,389.81,501.29,539.3,576.2,630.29,649.97,635.36,527.33,661.62,709.71,615.83,724.63,952.5,913.02,1002.35,1406.32,1452.02,1383.29,1589.94,1831.5,1643.23,1958.8,2335.0,1745.0,1915.92,1354.82,1278.23,1288.03,1237.92,1786.85,1493.12,1566.7]},{"ticker":"SPCX","trading_days":55,"sufficient":false,"start_date":"2026-06-12","end_date":"2026-08-31","last_adj_close":143.69,"window_trading_days":55,"window_start_date":"2026-06-12","window_return_pct":-10.72,"window_low":108.27,"window_high":201.8,"sparkline":[160.95,192.5,201.8,191.82,185.0,154.6,156.11,154.54,153.0,153.23,164.19,170.86,157.54,162.0,160.42,149.47,148.3,152.16,145.3,139.14,136.08,135.27,131.11,123.99,119.85,123.54,115.26,118.24,115.07,113.5,116.41,112.55,112.2,108.37,114.53,125.33,108.27,114.92,133.11,138.74,133.29,146.15,141.29,140.0,146.23,143.34,139.65,134.0,136.97,135.0,137.95,139.63,140.87,141.5,143.69]},{"ticker":"TSLA","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":367.95,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":10.21,"window_low":298.32,"window_high":489.88,"sparkline":[322.16,323.63,293.94,316.9,328.49,325.59,308.72,340.84,329.31,351.67,334.09,347.79,425.86,442.79,459.46,438.69,435.15,438.97,440.1,445.91,401.99,395.23,430.17,455.0,458.96,481.2,459.64,432.96,447.2,431.44,416.56,397.21,417.07,411.82,402.51,396.73,391.2,367.96,361.83,352.82,352.42,392.5,376.02,389.37,433.45,404.11,440.36,423.7,381.59,396.38,375.12,393.45,407.76,380.84,309.22,322.08,330.88,339.3,348.95,367.95]},{"ticker":"TXN","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":260.91,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":32.19,"window_low":150.8,"window_high":330.59,"sparkline":[191.81,200.4,206.53,212.96,207.65,183.15,180.72,188.1,191.0,200.78,190.8,179.37,175.75,179.79,175.84,177.02,170.85,166.4,156.46,158.71,159.55,150.8,165.49,179.52,176.45,173.38,172.79,188.92,185.41,191.2,215.35,221.72,220.75,217.51,209.97,191.28,188.85,185.3,188.41,197.4,214.52,231.34,262.32,279.57,293.67,300.77,315.83,307.02,280.57,300.34,310.22,291.59,309.87,282.57,277.99,269.04,280.44,282.91,258.94,260.91]},{"ticker":"UNH","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":389.41,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":29.03,"window_low":257.55,"window_high":436.35,"sparkline":[294.15,301.06,295.8,292.75,274.79,274.77,244.46,254.76,296.32,292.61,299.86,337.75,334.81,344.81,341.37,362.55,353.96,354.29,337.89,315.16,325.9,305.34,323.2,324.32,337.28,323.06,324.56,344.32,329.48,343.11,288.39,264.97,280.58,286.13,289.36,282.66,280.49,274.02,257.55,279.76,311.22,321.64,364.69,361.8,394.14,387.03,381.83,374.86,405.15,399.53,415.53,425.36,424.62,426.09,417.64,415.36,408.74,395.62,398.76,389.41]},{"ticker":"V","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":379.37,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":8.71,"window_low":294.36,"window_high":384.14,"sparkline":[335.29,345.24,353.19,347.11,347.54,352.03,334.16,334.07,339.73,348.39,348.08,335.44,343.45,335.99,345.07,348.57,342.95,342.62,342.29,334.28,334.08,321.84,332.45,329.27,345.76,347.17,352.5,355.43,325.93,323.34,329.82,327.17,322.91,319.69,318.89,316.12,305.94,300.44,294.36,302.14,308.18,312.71,308.09,320.77,325.82,329.3,327.0,311.82,322.36,329.77,329.91,361.46,348.32,357.9,361.86,364.99,360.65,358.84,382.41,379.37]},{"ticker":"WFC","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":86.39,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":7.42,"window_low":73.0,"window_high":94.83,"sparkline":[73.35,77.34,80.11,81.17,78.1,80.82,75.84,77.78,75.87,79.77,78.79,78.58,80.72,82.31,79.14,78.02,84.61,82.09,84.15,84.2,83.33,81.07,84.46,88.38,91.26,91.5,92.99,94.83,92.05,84.73,89.17,90.52,85.31,87.69,80.52,79.51,73.26,76.72,76.31,80.92,85.65,81.04,80.57,78.98,74.75,74.12,75.68,78.23,81.5,83.33,84.26,85.02,86.66,87.01,86.77,87.39,87.52,87.54,84.72,86.39]},{"ticker":"WMT","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":104.87,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":9.05,"window_low":96.17,"window_high":133.88,"sparkline":[95.09,96.23,98.29,94.75,94.65,96.56,98.25,102.51,100.44,95.24,98.6,99.57,103.39,101.87,101.1,102.04,108.11,106.24,101.37,100.83,101.68,106.21,109.58,114.14,115.96,113.63,111.81,113.61,119.59,118.6,116.66,126.13,132.79,122.21,127.14,123.01,125.72,118.51,122.36,126.24,124.03,127.37,127.04,130.23,130.04,133.88,118.25,116.61,120.3,117.85,115.5,111.57,113.63,113.96,111.47,110.45,112.39,114.06,106.49,104.87]},{"ticker":"XOM","trading_days":301,"sufficient":true,"start_date":"2025-06-20","end_date":"2026-08-31","last_adj_close":160.98,"window_trading_days":252,"window_start_date":"2025-08-29","window_return_pct":44.94,"window_low":106.15,"window_high":169.21,"sparkline":[110.44,105.32,106.98,109.69,104.03,107.3,103.25,102.19,104.39,108.35,108.75,109.33,112.04,111.33,108.83,110.8,108.46,111.48,111.46,111.27,115.44,114.72,113.64,114.25,116.48,114.39,118.16,118.67,124.05,130.98,137.75,143.21,147.96,145.34,150.49,149.22,154.07,157.57,168.74,161.22,150.63,145.74,148.58,152.84,148.65,161.5,146.95,151.55,149.65,139.84,136.67,136.21,137.99,146.41,153.77,154.06,158.76,161.46,164.05,160.98]}]}</script>
 
 <div class="shell">
   <header class="masthead">
@@ -396,7 +471,11 @@
     <div class="stat"><dt>Names</dt><dd id="stat-count">&mdash;</dd></div>
     <div class="stat"><dt>Market cap</dt><dd id="stat-cap">&mdash;</dd></div>
     <div class="stat"><dt>Sectors</dt><dd id="stat-sectors">&mdash;</dd></div>
+    <div class="stat" id="stat-history-tile" hidden>
+      <dt id="stat-history-label">History</dt><dd id="stat-history">&mdash;</dd>
+    </div>
   </dl>
+  <p class="note" id="history-note" hidden></p>
 
   <div class="controls">
     <label class="search">
@@ -426,6 +505,13 @@
     var universe = JSON.parse(document.getElementById("universe-data").textContent);
     var rows = universe.constituents || [];
 
+    var history = JSON.parse(document.getElementById("history-data").textContent);
+    var coverage = {};
+    ((history && history.coverage) || []).forEach(function (entry) {
+      coverage[entry.ticker] = entry;
+    });
+    var hasHistory = Boolean(history && history.coverage && history.coverage.length);
+
     var SECTOR_COLORS = {
       "Technology": "#3f8ecf",
       "Communication Services": "#7a6ed0",
@@ -451,6 +537,70 @@
       return "$" + value.toLocaleString();
     }
 
+    function pct(value) {
+      if (value == null) return "—";
+      return (value > 0 ? "+" : "") + value.toFixed(2) + "%";
+    }
+
+    function direction(value) {
+      if (value == null) return "flat";
+      if (value > 0.005) return "up";
+      if (value < -0.005) return "down";
+      return "flat";
+    }
+
+    var SVG = "http://www.w3.org/2000/svg";
+
+    function sparkPoints(series, width, height) {
+      var lo = Math.min.apply(null, series);
+      var hi = Math.max.apply(null, series);
+      var span = hi - lo || 1;
+      var step = series.length > 1 ? width / (series.length - 1) : 0;
+      return series.map(function (value, i) {
+        return [i * step, height - ((value - lo) / span) * height];
+      });
+    }
+
+    function spark(series, width, height, stroke, withFill) {
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("aria-hidden", "true");
+      if (!series || series.length < 2) return svg;
+
+      var pts = sparkPoints(series, width, height);
+      var d = pts.map(function (p, i) {
+        return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
+      }).join(" ");
+
+      if (withFill) {
+        var area = document.createElementNS(SVG, "path");
+        area.setAttribute("fill", stroke);
+        area.setAttribute("fill-opacity", "0.16");
+        area.setAttribute("d", d + " L" + width + " " + height + " L0 " + height + " Z");
+        svg.appendChild(area);
+      }
+
+      var line = document.createElementNS(SVG, "path");
+      line.setAttribute("d", d);
+      line.setAttribute("fill", "none");
+      line.setAttribute("stroke-width", "1.4");
+      line.setAttribute("stroke", stroke);
+      line.setAttribute("stroke-linecap", "round");
+      line.setAttribute("stroke-linejoin", "round");
+      svg.appendChild(line);
+
+      // The endpoint is where the price actually is; mark it.
+      var end = pts[pts.length - 1];
+      var dot = document.createElementNS(SVG, "circle");
+      dot.setAttribute("cx", end[0].toFixed(2));
+      dot.setAttribute("cy", end[1].toFixed(2));
+      dot.setAttribute("r", "1.7");
+      dot.setAttribute("fill", stroke);
+      svg.appendChild(dot);
+      return svg;
+    }
+
     function asOf(iso) {
       var d = new Date(iso);
       if (isNaN(d)) return iso;
@@ -474,11 +624,40 @@
     document.getElementById("stat-cap").textContent = money(totalCap);
     document.getElementById("stat-sectors").textContent = sectors.length;
 
+    if (hasHistory) {
+      var target = history.criteria.trading_days_target;
+      document.getElementById("stat-history-tile").hidden = false;
+      document.getElementById("stat-history-label").textContent = target + "d history";
+      document.getElementById("stat-history").textContent =
+        history.sufficient_count + "/" + history.count;
+
+      var short = history.coverage.filter(function (e) { return !e.sufficient; });
+      var note = document.getElementById("history-note");
+      note.hidden = false;
+      if (short.length) {
+        note.innerHTML =
+          "Adjusted close through " + asOf(history.generated_at) + ". " +
+          short.length + " name" + (short.length > 1 ? "s have" : " has") +
+          " less than " + target + " trading days of history: " +
+          short.map(function (e) {
+            return "<b>" + e.ticker + "</b> (" + e.trading_days + "d)";
+          }).join(", ") + ".";
+      } else {
+        note.innerHTML =
+          "Adjusted close through " + asOf(history.generated_at) +
+          ". Every name covers at least " + target + " trading days.";
+      }
+    }
+
     var source = universe.source || {};
     document.getElementById("footer").innerHTML =
       "Data from " + (source.provider || "the configured provider") +
       ", <code>" + (source.endpoint || "") + "</code>. Universe size and exchanges are set in " +
-      "<code>oklahoma/config.py</code>; run <code>python -m oklahoma refresh --size N</code> to grow it.";
+      "<code>oklahoma/config.py</code>; run <code>python -m oklahoma refresh --size N</code> to grow it." +
+      (hasHistory
+        ? " Prices are split- and dividend-adjusted closes; the page carries a thinned " +
+          "series per name, the full history lives in <code>data/history/</code>."
+        : "");
 
     /* ----- state ----- */
 
@@ -550,6 +729,27 @@
       if (r.share_classes && r.share_classes.length > 1) {
         pairs.push(["Share classes", r.share_classes.join(", ")]);
       }
+
+      var cov = coverage[r.ticker];
+      if (cov) {
+        pairs.push(["Trading days", cov.trading_days + (cov.sufficient ? "" : " — short")]);
+        pairs.push(["Loaded", cov.start_date + " \u2192 " + cov.end_date]);
+        if (cov.last_adj_close != null) {
+          pairs.push(["Last adj. close", "$" + cov.last_adj_close.toLocaleString()]);
+        }
+        if (cov.window_return_pct != null) {
+          pairs.push([
+            cov.window_trading_days + "-day return",
+            pct(cov.window_return_pct)
+          ]);
+        }
+        if (cov.window_low != null) {
+          pairs.push([
+            "Adj. close range",
+            "$" + cov.window_low.toLocaleString() + " – $" + cov.window_high.toLocaleString()
+          ]);
+        }
+      }
       pairs.forEach(function (pair) {
         var dt = document.createElement("dt");
         dt.textContent = pair[0];
@@ -558,6 +758,24 @@
         dl.appendChild(dt);
         dl.appendChild(dd);
       });
+
+      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+        var wrap = document.createElement("div");
+        wrap.className = "series";
+        var stroke = getComputedStyle(document.documentElement)
+          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
+        wrap.appendChild(spark(cov.sparkline, 300, 56, stroke, true));
+        var axis = document.createElement("div");
+        axis.className = "axis";
+        var from = document.createElement("span");
+        from.textContent = cov.window_start_date || cov.start_date;
+        var to = document.createElement("span");
+        to.textContent = cov.end_date;
+        axis.appendChild(from);
+        axis.appendChild(to);
+        wrap.appendChild(axis);
+        dl.appendChild(wrap);
+      }
       return dl;
     }
 
@@ -565,6 +783,7 @@
       var li = document.createElement("li");
       var color = sectorColor(r.sector);
       var isOpen = state.open === r.ticker;
+      var cov = coverage[r.ticker];
 
       var button = document.createElement("button");
       button.type = "button";
@@ -581,6 +800,21 @@
       var ticker = document.createElement("span");
       ticker.className = "ticker";
       ticker.textContent = r.ticker;
+      if (cov && cov.window_return_pct != null) {
+        var chg = document.createElement("span");
+        chg.className = "chg " + direction(cov.window_return_pct);
+        chg.textContent = " " + pct(cov.window_return_pct);
+        ticker.appendChild(chg);
+      }
+      if (cov && !cov.sufficient) {
+        var warn = document.createElement("span");
+        warn.className = "warn";
+        warn.textContent = cov.trading_days + "d";
+        warn.title = "Only " + cov.trading_days + " trading days of history";
+        ticker.appendChild(document.createTextNode(" "));
+        ticker.appendChild(warn);
+      }
+
       var company = document.createElement("span");
       company.className = "company";
       company.textContent = r.name;
@@ -591,13 +825,22 @@
       cap.className = "cap";
       var capValue = document.createElement("b");
       capValue.textContent = money(r.market_cap);
-      var bar = document.createElement("span");
-      bar.className = "weight";
-      var fill = document.createElement("i");
-      fill.style.width = Math.max(4, (r.market_cap / largestCap) * 100) + "%";
-      bar.appendChild(fill);
       cap.appendChild(capValue);
-      cap.appendChild(bar);
+
+      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+        var stroke = getComputedStyle(document.documentElement)
+          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
+        var mini = spark(cov.sparkline, 54, 18, stroke, false);
+        mini.setAttribute("class", "spark");
+        cap.appendChild(mini);
+      } else {
+        var bar = document.createElement("span");
+        bar.className = "weight";
+        var fill = document.createElement("i");
+        fill.style.width = Math.max(4, (r.market_cap / largestCap) * 100) + "%";
+        bar.appendChild(fill);
+        cap.appendChild(bar);
+      }
 
       button.appendChild(rank);
       button.appendChild(main);
