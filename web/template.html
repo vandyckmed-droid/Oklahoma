@@ -152,9 +152,6 @@
     margin-left: auto;
     overflow: visible;
   }
-  .spark path { fill: none; stroke-width: 1.4; }
-  .spark .fill { stroke: none; opacity: .16; }
-  .spark circle { stroke: none; }
 
   .chg {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -571,14 +568,16 @@
 
       if (withFill) {
         var area = document.createElementNS(SVG, "path");
-        area.setAttribute("class", "fill");
         area.setAttribute("fill", stroke);
+        area.setAttribute("fill-opacity", "0.16");
         area.setAttribute("d", d + " L" + width + " " + height + " L0 " + height + " Z");
         svg.appendChild(area);
       }
 
       var line = document.createElementNS(SVG, "path");
       line.setAttribute("d", d);
+      line.setAttribute("fill", "none");
+      line.setAttribute("stroke-width", "1.4");
       line.setAttribute("stroke", stroke);
       line.setAttribute("stroke-linecap", "round");
       line.setAttribute("stroke-linejoin", "round");
