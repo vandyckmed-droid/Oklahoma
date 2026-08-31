@@ -1,0 +1,723 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-31T20:56:45Z",
+  "source": {
+    "provider": "Financial Modeling Prep",
+    "endpoint": "stable/company-screener"
+  },
+  "criteria": {
+    "size": 50,
+    "exchanges": [
+      "NASDAQ",
+      "NYSE",
+      "AMEX"
+    ],
+    "country": "US",
+    "dedupe_share_classes": true
+  },
+  "count": 50,
+  "constituents": [
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 5340730500000,
+      "price": 220.5,
+      "avg_volume": 140227025,
+      "share_classes": [
+        "NVDA"
+      ],
+      "rank": 1
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "sector": "Technology",
+      "industry": "Consumer Electronics",
+      "exchange": "NASDAQ",
+      "market_cap": 4653688748600,
+      "price": 316.85,
+      "avg_volume": 54939019,
+      "share_classes": [
+        "AAPL"
+      ],
+      "rank": 2
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "sector": "Communication Services",
+      "industry": "Internet Content & Information",
+      "exchange": "NASDAQ",
+      "market_cap": 4106851464904,
+      "price": 339.35,
+      "avg_volume": 31574739,
+      "share_classes": [
+        "GOOG",
+        "GOOGL"
+      ],
+      "rank": 3
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "exchange": "NASDAQ",
+      "market_cap": 3766907259500,
+      "price": 507.29,
+      "avg_volume": 38141796,
+      "share_classes": [
+        "MSFT"
+      ],
+      "rank": 4
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Specialty Retail",
+      "exchange": "NASDAQ",
+      "market_cap": 2794371867000,
+      "price": 259.77,
+      "avg_volume": 49073576,
+      "share_classes": [
+        "AMZN"
+      ],
+      "rank": 5
+    },
+    {
+      "ticker": "SPCX",
+      "name": "Space Exploration Technologies Corp.",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "exchange": "NASDAQ",
+      "market_cap": 1879655657288,
+      "price": 143.75,
+      "avg_volume": 113629159,
+      "share_classes": [
+        "SPCX"
+      ],
+      "rank": 6
+    },
+    {
+      "ticker": "AVGO",
+      "name": "Broadcom Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 1761922177200,
+      "price": 370.34,
+      "avg_volume": 25813855,
+      "share_classes": [
+        "AVGO"
+      ],
+      "rank": 7
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "sector": "Communication Services",
+      "industry": "Internet Content & Information",
+      "exchange": "NASDAQ",
+      "market_cap": 1458028463474,
+      "price": 572.34,
+      "avg_volume": 18494604,
+      "share_classes": [
+        "META"
+      ],
+      "rank": 8
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto - Manufacturers",
+      "exchange": "NASDAQ",
+      "market_cap": 1453472936466,
+      "price": 368.01,
+      "avg_volume": 41278333,
+      "share_classes": [
+        "TSLA"
+      ],
+      "rank": 9
+    },
+    {
+      "ticker": "LLY",
+      "name": "Eli Lilly and Company",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "exchange": "NYSE",
+      "market_cap": 1090375982030,
+      "price": 1157.83,
+      "avg_volume": 2883534,
+      "share_classes": [
+        "LLY"
+      ],
+      "rank": 10
+    },
+    {
+      "ticker": "BRK-B",
+      "name": "Berkshire Hathaway Inc.",
+      "sector": "Financial Services",
+      "industry": "Insurance - Diversified",
+      "exchange": "NYSE",
+      "market_cap": 1087118917488,
+      "price": 504.03,
+      "avg_volume": 4715677,
+      "share_classes": [
+        "BRK-A",
+        "BRK-B"
+      ],
+      "rank": 11
+    },
+    {
+      "ticker": "MU",
+      "name": "Micron Technology, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 1082780074700,
+      "price": 958.73,
+      "avg_volume": 45365950,
+      "share_classes": [
+        "MU"
+      ],
+      "rank": 12
+    },
+    {
+      "ticker": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "sector": "Financial Services",
+      "industry": "Banks - Diversified",
+      "exchange": "NYSE",
+      "market_cap": 953959150200,
+      "price": 356.02,
+      "avg_volume": 8380647,
+      "share_classes": [
+        "JPM"
+      ],
+      "rank": 13
+    },
+    {
+      "ticker": "WMT",
+      "name": "Walmart Inc.",
+      "sector": "Consumer Defensive",
+      "industry": "Discount Stores",
+      "exchange": "NASDAQ",
+      "market_cap": 834563849600,
+      "price": 104.87,
+      "avg_volume": 24647114,
+      "share_classes": [
+        "WMT"
+      ],
+      "rank": 14
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 767556032000,
+      "price": 470.72,
+      "avg_volume": 27545658,
+      "share_classes": [
+        "AMD"
+      ],
+      "rank": 15
+    },
+    {
+      "ticker": "V",
+      "name": "Visa Inc.",
+      "sector": "Financial Services",
+      "industry": "Financial - Credit Services",
+      "exchange": "NYSE",
+      "market_cap": 708301700437,
+      "price": 379.37,
+      "avg_volume": 7943044,
+      "share_classes": [
+        "V"
+      ],
+      "rank": 16
+    },
+    {
+      "ticker": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "sector": "Energy",
+      "industry": "Oil & Gas Integrated",
+      "exchange": "NYSE",
+      "market_cap": 667175170800,
+      "price": 160.98,
+      "avg_volume": 15562890,
+      "share_classes": [
+        "XOM"
+      ],
+      "rank": 17
+    },
+    {
+      "ticker": "JNJ",
+      "name": "Johnson & Johnson",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "exchange": "NYSE",
+      "market_cap": 640671493894,
+      "price": 265.85,
+      "avg_volume": 7845769,
+      "share_classes": [
+        "JNJ"
+      ],
+      "rank": 18
+    },
+    {
+      "ticker": "MA",
+      "name": "Mastercard Incorporated",
+      "sector": "Financial Services",
+      "industry": "Financial - Credit Services",
+      "exchange": "NYSE",
+      "market_cap": 516846085160,
+      "price": 589.31,
+      "avg_volume": 3472028,
+      "share_classes": [
+        "MA"
+      ],
+      "rank": 19
+    },
+    {
+      "ticker": "ABBV",
+      "name": "AbbVie Inc.",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "exchange": "NYSE",
+      "market_cap": 452970343448,
+      "price": 256.38,
+      "avg_volume": 6530098,
+      "share_classes": [
+        "ABBV"
+      ],
+      "rank": 20
+    },
+    {
+      "ticker": "INTC",
+      "name": "Intel Corp.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 451488417354,
+      "price": 89.51,
+      "avg_volume": 117017876,
+      "share_classes": [
+        "INTC"
+      ],
+      "rank": 21
+    },
+    {
+      "ticker": "BAC",
+      "name": "Bank of America Corporation",
+      "sector": "Financial Services",
+      "industry": "Banks - Diversified",
+      "exchange": "NYSE",
+      "market_cap": 439562784600,
+      "price": 61.94,
+      "avg_volume": 33413079,
+      "share_classes": [
+        "BAC"
+      ],
+      "rank": 22
+    },
+    {
+      "ticker": "CSCO",
+      "name": "Cisco Systems, Inc.",
+      "sector": "Technology",
+      "industry": "Communication Equipment",
+      "exchange": "NASDAQ",
+      "market_cap": 435489116136,
+      "price": 110.49,
+      "avg_volume": 22802384,
+      "share_classes": [
+        "CSCO"
+      ],
+      "rank": 23
+    },
+    {
+      "ticker": "ORCL",
+      "name": "Oracle Corporation",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "exchange": "NYSE",
+      "market_cap": 429391662900,
+      "price": 149.07,
+      "avg_volume": 32100328,
+      "share_classes": [
+        "ORCL"
+      ],
+      "rank": 24
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "exchange": "NASDAQ",
+      "market_cap": 427941526600,
+      "price": 186.38,
+      "avg_volume": 41851117,
+      "share_classes": [
+        "PLTR"
+      ],
+      "rank": 25
+    },
+    {
+      "ticker": "COST",
+      "name": "Costco Wholesale Corporation",
+      "sector": "Consumer Defensive",
+      "industry": "Discount Stores",
+      "exchange": "NASDAQ",
+      "market_cap": 418595393310,
+      "price": 943.89,
+      "avg_volume": 2204823,
+      "share_classes": [
+        "COST"
+      ],
+      "rank": 26
+    },
+    {
+      "ticker": "CVX",
+      "name": "Chevron Corporation",
+      "sector": "Energy",
+      "industry": "Oil & Gas Integrated",
+      "exchange": "NYSE",
+      "market_cap": 410568340000,
+      "price": 206.15,
+      "avg_volume": 8366680,
+      "share_classes": [
+        "CVX"
+      ],
+      "rank": 27
+    },
+    {
+      "ticker": "KO",
+      "name": "The Coca-Cola Company",
+      "sector": "Consumer Defensive",
+      "industry": "Beverages - Non-Alcoholic",
+      "exchange": "NYSE",
+      "market_cap": 381507013978,
+      "price": 88.67,
+      "avg_volume": 17373223,
+      "share_classes": [
+        "KO"
+      ],
+      "rank": 28
+    },
+    {
+      "ticker": "LRCX",
+      "name": "Lam Research Corporation",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 377034349300,
+      "price": 301.49,
+      "avg_volume": 11367949,
+      "share_classes": [
+        "LRCX"
+      ],
+      "rank": 29
+    },
+    {
+      "ticker": "CAT",
+      "name": "Caterpillar Inc.",
+      "sector": "Industrials",
+      "industry": "Agricultural - Machinery",
+      "exchange": "NYSE",
+      "market_cap": 367344188390,
+      "price": 797.47,
+      "avg_volume": 3186014,
+      "share_classes": [
+        "CAT"
+      ],
+      "rank": 30
+    },
+    {
+      "ticker": "MRK",
+      "name": "Merck & Co., Inc.",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "exchange": "NYSE",
+      "market_cap": 364940603200,
+      "price": 147.76,
+      "avg_volume": 10803268,
+      "share_classes": [
+        "MRK"
+      ],
+      "rank": 31
+    },
+    {
+      "ticker": "AMAT",
+      "name": "Applied Materials, Inc.",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 363942866010,
+      "price": 458.39,
+      "avg_volume": 9562936,
+      "share_classes": [
+        "AMAT"
+      ],
+      "rank": 32
+    },
+    {
+      "ticker": "UNH",
+      "name": "UnitedHealth Group Incorporated",
+      "sector": "Healthcare",
+      "industry": "Medical - Healthcare Plans",
+      "exchange": "NYSE",
+      "market_cap": 353640512362,
+      "price": 389.41,
+      "avg_volume": 5620930,
+      "share_classes": [
+        "UNH"
+      ],
+      "rank": 33
+    },
+    {
+      "ticker": "GE",
+      "name": "GE Aerospace",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "exchange": "NYSE",
+      "market_cap": 348320111239,
+      "price": 335.71,
+      "avg_volume": 4240012,
+      "share_classes": [
+        "GE"
+      ],
+      "rank": 34
+    },
+    {
+      "ticker": "PG",
+      "name": "The Procter & Gamble Company",
+      "sector": "Consumer Defensive",
+      "industry": "Household & Personal Products",
+      "exchange": "NYSE",
+      "market_cap": 344980560937,
+      "price": 145.12,
+      "avg_volume": 9091958,
+      "share_classes": [
+        "PG"
+      ],
+      "rank": 35
+    },
+    {
+      "ticker": "NFLX",
+      "name": "Netflix, Inc.",
+      "sector": "Communication Services",
+      "industry": "Entertainment",
+      "exchange": "NASDAQ",
+      "market_cap": 337487336919,
+      "price": 81.05,
+      "avg_volume": 42330680,
+      "share_classes": [
+        "NFLX"
+      ],
+      "rank": 36
+    },
+    {
+      "ticker": "MS",
+      "name": "Morgan Stanley",
+      "sector": "Financial Services",
+      "industry": "Financial - Capital Markets",
+      "exchange": "NYSE",
+      "market_cap": 336654643200,
+      "price": 213.44,
+      "avg_volume": 5525819,
+      "share_classes": [
+        "MS"
+      ],
+      "rank": 37
+    },
+    {
+      "ticker": "HD",
+      "name": "The Home Depot, Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Home Improvement",
+      "exchange": "NYSE",
+      "market_cap": 326884866110,
+      "price": 327.83,
+      "avg_volume": 4286300,
+      "share_classes": [
+        "HD"
+      ],
+      "rank": 38
+    },
+    {
+      "ticker": "PANW",
+      "name": "Palo Alto Networks, Inc.",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "exchange": "NASDAQ",
+      "market_cap": 311435950000,
+      "price": 382.13,
+      "avg_volume": 7075949,
+      "share_classes": [
+        "PANW"
+      ],
+      "rank": 39
+    },
+    {
+      "ticker": "DELL",
+      "name": "Dell Technologies Inc.",
+      "sector": "Technology",
+      "industry": "Computer Hardware",
+      "exchange": "NYSE",
+      "market_cap": 303821738819,
+      "price": 457.39,
+      "avg_volume": 7373415,
+      "share_classes": [
+        "DELL"
+      ],
+      "rank": 40
+    },
+    {
+      "ticker": "GS",
+      "name": "The Goldman Sachs Group, Inc.",
+      "sector": "Financial Services",
+      "industry": "Financial - Capital Markets",
+      "exchange": "NYSE",
+      "market_cap": 302647681300,
+      "price": 1025.9,
+      "avg_volume": 2113325,
+      "share_classes": [
+        "GS"
+      ],
+      "rank": 41
+    },
+    {
+      "ticker": "PM",
+      "name": "Philip Morris International Inc.",
+      "sector": "Consumer Defensive",
+      "industry": "Tobacco",
+      "exchange": "NYSE",
+      "market_cap": 291927653000,
+      "price": 187.3,
+      "avg_volume": 4964911,
+      "share_classes": [
+        "PM"
+      ],
+      "rank": 42
+    },
+    {
+      "ticker": "RTX",
+      "name": "RTX Corporation",
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense",
+      "exchange": "NYSE",
+      "market_cap": 279969790321,
+      "price": 207.73,
+      "avg_volume": 4990911,
+      "share_classes": [
+        "RTX"
+      ],
+      "rank": 43
+    },
+    {
+      "ticker": "WFC",
+      "name": "Wells Fargo & Company",
+      "sector": "Financial Services",
+      "industry": "Banks - Diversified",
+      "exchange": "NYSE",
+      "market_cap": 261243360000,
+      "price": 86.39,
+      "avg_volume": 14595360,
+      "share_classes": [
+        "WFC"
+      ],
+      "rank": 44
+    },
+    {
+      "ticker": "ANET",
+      "name": "Arista Networks, Inc.",
+      "sector": "Technology",
+      "industry": "Computer Hardware",
+      "exchange": "NYSE",
+      "market_cap": 246406867322,
+      "price": 195.69,
+      "avg_volume": 7793204,
+      "share_classes": [
+        "ANET"
+      ],
+      "rank": 45
+    },
+    {
+      "ticker": "GEV",
+      "name": "GE Vernova Inc.",
+      "sector": "Industrials",
+      "industry": "Industrial - Machinery",
+      "exchange": "NYSE",
+      "market_cap": 239308729608,
+      "price": 898.53,
+      "avg_volume": 2739085,
+      "share_classes": [
+        "GEV"
+      ],
+      "rank": 46
+    },
+    {
+      "ticker": "TXN",
+      "name": "Texas Instruments Incorporated",
+      "sector": "Technology",
+      "industry": "Semiconductors",
+      "exchange": "NASDAQ",
+      "market_cap": 238165864032,
+      "price": 260.79,
+      "avg_volume": 8234404,
+      "share_classes": [
+        "TXN"
+      ],
+      "rank": 47
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike Holdings, Inc.",
+      "sector": "Technology",
+      "industry": "Software - Infrastructure",
+      "exchange": "NASDAQ",
+      "market_cap": 235217893680,
+      "price": 231,
+      "avg_volume": 10772971,
+      "share_classes": [
+        "CRWD"
+      ],
+      "rank": 48
+    },
+    {
+      "ticker": "SNDK",
+      "name": "Sandisk Corporation",
+      "sector": "Technology",
+      "industry": "Computer Hardware",
+      "exchange": "NASDAQ",
+      "market_cap": 232012211325,
+      "price": 1566.7,
+      "avg_volume": 13758758,
+      "share_classes": [
+        "SNDK"
+      ],
+      "rank": 49
+    },
+    {
+      "ticker": "AMGN",
+      "name": "Amgen Inc.",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "exchange": "NASDAQ",
+      "market_cap": 232009675040,
+      "price": 429.88,
+      "avg_volume": 2686907,
+      "share_classes": [
+        "AMGN"
+      ],
+      "rank": 50
+    }
+  ]
+}
