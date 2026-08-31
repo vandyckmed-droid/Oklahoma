@@ -105,18 +105,19 @@ class UiTests(unittest.TestCase):
             ),
         }
 
-    def test_fragment_embeds_the_universe(self):
-        fragment = ui.render_fragment(self.universe)
-        self.assertNotIn(ui.PLACEHOLDER, fragment)
-        payload = fragment.split('type="application/json">')[1].split("</script>")[0]
+    def test_page_embeds_the_universe(self):
+        page = ui.render(self.universe)
+        self.assertNotIn(ui.UNIVERSE_PLACEHOLDER, page)
+        self.assertNotIn(ui.HISTORY_PLACEHOLDER, page)
+        payload = page.split('type="application/json">')[1].split("</script>")[0]
         self.assertEqual(json.loads(payload.replace("<\\/", "</"))["count"], 3)
 
-    def test_document_is_a_complete_page(self):
-        document = ui.render_document(self.universe)
-        self.assertTrue(document.startswith("<!doctype html>"))
+    def test_page_is_a_complete_document(self):
+        page = ui.render(self.universe)
+        self.assertTrue(page.startswith("<!doctype html>"))
         for tag in ("<head>", "</head>", "<body>", "</body>", "</html>"):
-            self.assertIn(tag, document)
-        self.assertEqual(document.count("<title>"), 1)
+            self.assertIn(tag, page)
+        self.assertEqual(page.count("<title>"), 1)
 
 
 class RealUniverseTests(unittest.TestCase):

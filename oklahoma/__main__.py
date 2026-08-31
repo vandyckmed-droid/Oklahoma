@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import sys
 
 from .config import (
@@ -15,7 +16,7 @@ from .config import (
     UniverseConfig,
 )
 from .fmp import FMPError
-from . import history as history_mod, ui, universe as universe_mod
+from . import history as history_mod, metrics, ui, universe as universe_mod
 
 
 def _millions(value: int) -> str:
@@ -82,6 +83,18 @@ def cmd_history(args: argparse.Namespace) -> int:
 
     if not args.no_ui:
         print(f"Wrote UI to {ui.build(universe, index)}")
+    return 0
+
+
+def cmd_export_returns(args: argparse.Namespace) -> int:
+    universe = universe_mod.load(args.output)
+    tickers = [record["ticker"] for record in universe["constituents"]]
+    writer = csv.writer(sys.stdout)
+    writer.writerow(["ticker", "date", "cum_return_pct"])
+    for ticker in tickers:
+        bars = history_mod.load_series(ticker)["bars"]
+        for point in metrics.cumulative_returns(bars):
+            writer.writerow([ticker, point["date"], point["cum_return_pct"]])
     return 0
 
 
@@ -175,12 +188,24 @@ def main(argv: list[str] | None = None) -> int:
         help="write the whole history as ticker,date,adj_close rows on stdout",
     ).set_defaults(func=cmd_export_csv)
 
+    subparsers.add_parser(
+        "export-returns",
+        help="write 12-month daily cumulative returns as "
+        "ticker,date,cum_return_pct rows on stdout",
+    ).set_defaults(func=cmd_export_returns)
+
     args = parser.parse_args(argv)
     try:
         return args.func(args)
     except FMPError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
+    except BrokenPipeError:
+        # The reader (e.g. `head`) closed the pipe; that is not an error.
+        # Point stdout at devnull so the interpreter's shutdown flush
+        # doesn't raise a second time.
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
+        return 0
 
 
 if __name__ == "__main__":
