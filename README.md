@@ -113,10 +113,12 @@ Each file is a flat, sorted series:
 
 Bars are chronological, de-duplicated, and every one carries a date and an
 adjusted close. Files are written **one bar per line**, so a daily refresh
-diffs as an appended line rather than a rewritten file and git's delta
-compression keeps the repository from growing by the size of the dataset
-every day. `export-csv` derives the long `ticker,date,adj_close` format
-from these files on demand, so there is no second copy to drift.
+shows up in review as the bar it appended rather than an opaque rewrite of
+a single 20 KB line. Repository size is unaffected — git's delta
+compression is byte-oriented and packs both layouts identically — but a
+diff you can read is a correction you can catch. `export-csv` derives the
+long `ticker,date,adj_close` format from these files on demand, so there
+is no second copy to drift.
 
 ### Coverage
 

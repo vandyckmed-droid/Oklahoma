@@ -110,10 +110,10 @@ def thin(values: list[float], points: int) -> list[float]:
 def save_series(ticker: str, bars: list[dict], directory: str = HISTORY_DIR) -> str:
     """Write one ticker's series: envelope first, then one bar per line.
 
-    These files are rewritten by every daily refresh, and git delta-compresses
-    line-by-line. One bar per line makes an ordinary day's refresh diff as a
-    single appended line instead of a full-file rewrite, which keeps the
-    repository from growing by the size of the dataset every day.
+    One bar per line makes a daily refresh reviewable: the diff shows the
+    bar that landed (and any restatement) instead of an opaque rewrite of
+    one long line. Repository size is unaffected either way — git's delta
+    compression is byte-oriented and packs both layouts identically.
     """
     os.makedirs(directory, exist_ok=True)
     envelope = {

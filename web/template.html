@@ -882,6 +882,10 @@
             var input = document.getElementById("search");
             input.value = row.ticker;
             state.query = row.ticker;
+            // The chip names one specific ticker; an active sector filter
+            // would only hide it, so clear the filter with the chips' UI.
+            state.sector = null;
+            renderFilters();
             renderList();
             listEl.scrollIntoView({ behavior: "smooth", block: "start" });
           });

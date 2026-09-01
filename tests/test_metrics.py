@@ -100,6 +100,20 @@ class DisplayPayloadTests(unittest.TestCase):
         self.assertEqual(cross["leaders"][0]["return_pct"], max(returns.values()))
         self.assertEqual(cross["laggards"][0]["return_pct"], min(returns.values()))
 
+    def test_coverage_name_missing_from_universe_fails_the_build(self):
+        # Drift between the index and the universe must fail loudly, not
+        # render a phantom sector of unreachable names.
+        universe = universe_mod.load()
+        broken = dict(
+            universe,
+            constituents=[
+                r for r in universe["constituents"] if r["ticker"] != "AAPL"
+            ],
+        )
+        with self.assertRaises(ValueError) as ctx:
+            ui._display(broken, self.index)
+        self.assertIn("AAPL", str(ctx.exception))
+
     def test_every_covered_name_gets_a_series(self):
         for row in self.display["coverage"]:
             self.assertGreater(len(row.get("cum_return_spark", [])), 1)

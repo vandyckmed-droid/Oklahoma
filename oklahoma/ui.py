@@ -34,6 +34,16 @@ def _display(universe: dict, history_index: dict) -> dict:
     sectors = {
         record["ticker"]: record["sector"] for record in universe["constituents"]
     }
+    # A coverage name absent from the universe means the index and the
+    # universe were built from different runs. Minting a fallback sector
+    # would render a plausible row full of unreachable names; failing the
+    # build (it runs in CI) makes the drift visible and the fix obvious.
+    missing = {row["ticker"] for row in history_index["coverage"]} - sectors.keys()
+    if missing:
+        raise ValueError(
+            f"coverage names absent from the universe: {sorted(missing)}; "
+            "re-run `python -m oklahoma refresh` and `history` together"
+        )
     payload["coverage"] = []
     for entry in history_index["coverage"]:
         bars = load_series(entry["ticker"])["bars"]
@@ -61,7 +71,7 @@ def _display(universe: dict, history_index: dict) -> dict:
     full_window = [
         {
             "ticker": row["ticker"],
-            "sector": sectors.get(row["ticker"], "Unclassified"),
+            "sector": sectors[row["ticker"]],
             "return_pct": row["window_return_pct"],
         }
         for row in payload["coverage"]

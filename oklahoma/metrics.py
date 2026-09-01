@@ -7,6 +7,8 @@ demand so there is no second copy to drift.
 
 from __future__ import annotations
 
+from statistics import median
+
 from .config import TRADING_DAYS_TARGET
 
 
@@ -38,8 +40,6 @@ def sector_summary(rows: list[dict]) -> list[dict]:
     of names positive — guards the median: a sector can post a healthy
     median on three winners and seventeen losers, and breadth says so.
     """
-    from statistics import median
-
     by_sector: dict[str, list[float]] = {}
     for row in rows:
         by_sector.setdefault(row["sector"], []).append(row["return_pct"])
@@ -60,11 +60,18 @@ def sector_summary(rows: list[dict]) -> list[dict]:
 
 
 def rank_by_return(rows: list[dict], count: int = 5) -> dict:
-    """The window's extremes: best and worst `count` names by return."""
+    """The window's extremes: best and worst `count` names by return.
+
+    With fewer than `2 * count` rows the two lists overlap — a single row
+    is simultaneously the leader and the laggard. Callers passing a small
+    slice (one sector's names, say) should expect that.
+    """
+
+    def trim(row: dict) -> dict:
+        return {key: row[key] for key in ("ticker", "sector", "return_pct")}
+
     ordered = sorted(rows, key=lambda row: row["return_pct"], reverse=True)
-    keep = ["ticker", "sector", "return_pct"]
-    trim = lambda row: {key: row[key] for key in keep}
     return {
         "leaders": [trim(row) for row in ordered[:count]],
-        "laggards": [trim(row) for row in list(reversed(ordered))[:count]],
+        "laggards": [trim(row) for row in ordered[::-1][:count]],
     }
