@@ -66,6 +66,10 @@ TRADING_DAYS_TARGET = 252
 # from a stale 12-month winner coasting on old gains.
 TRADING_DAYS_QUARTER = 63
 
+# The shortest lens: ~one month of trading. What the name did lately,
+# before the quarter and the year have their say.
+TRADING_DAYS_MONTH = 21
+
 # How many points the UI carries per name. The full series lives in
 # data/history/; the page only needs enough to show a shape.
 SPARKLINE_POINTS = 60

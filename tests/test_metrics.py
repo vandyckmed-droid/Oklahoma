@@ -177,6 +177,18 @@ class DisplayPayloadTests(unittest.TestCase):
             else:
                 self.assertNotIn("return_3m_pct", row)
 
+    def test_one_month_return_matches_the_bars(self):
+        for row in self.display["coverage"]:
+            bars = history.load_series(row["ticker"])["bars"]
+            if len(bars) >= config.TRADING_DAYS_MONTH:
+                month = metrics.cumulative_returns(bars, config.TRADING_DAYS_MONTH)
+                self.assertEqual(
+                    row["return_1m_pct"],
+                    round(month[-1]["cum_return_pct"], 2),
+                )
+            else:
+                self.assertNotIn("return_1m_pct", row)
+
     def test_trend_fields_match_the_bars(self):
         for row in self.display["coverage"]:
             bars = history.load_series(row["ticker"])["bars"]

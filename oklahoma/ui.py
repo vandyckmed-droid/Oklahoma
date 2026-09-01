@@ -14,6 +14,7 @@ from math import exp
 
 from .config import (
     SPARKLINE_POINTS,
+    TRADING_DAYS_MONTH,
     TRADING_DAYS_QUARTER,
     UI_OUTPUT_PATH,
     UI_TEMPLATE_PATH,
@@ -75,6 +76,9 @@ def _display(universe: dict, history_index: dict) -> dict:
             if len(bars) >= TRADING_DAYS_QUARTER:
                 quarter = cumulative_returns(bars, TRADING_DAYS_QUARTER)
                 row["return_3m_pct"] = round(quarter[-1]["cum_return_pct"], 2)
+            if len(bars) >= TRADING_DAYS_MONTH:
+                month = cumulative_returns(bars, TRADING_DAYS_MONTH)
+                row["return_1m_pct"] = round(month[-1]["cum_return_pct"], 2)
             trend = log_trend(bars, target)
             if trend is not None:
                 row["trend_ann_pct"] = trend["trend_ann_pct"]
