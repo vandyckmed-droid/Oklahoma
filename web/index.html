@@ -215,6 +215,18 @@
 
   /* ---------- cross-section ---------- */
 
+  .xs-head {
+    display: grid;
+    grid-template-columns: 1fr auto 72px;
+    gap: 10px;
+    padding: 0 12px 6px;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .xs-head span:nth-child(2) { text-align: right; }
+  .xs-head span:nth-child(3) { text-align: right; }
   .xs {
     list-style: none;
     margin: 0;
@@ -398,6 +410,10 @@
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--faint);
+  }
+  .resultline .linebuttons {
+    display: inline-flex;
+    gap: 14px;
   }
   .resultline button {
     border: 0;
@@ -594,6 +610,9 @@
 
   <section id="cross" hidden aria-label="12-month cross-section">
     <div class="resultline"><span id="cross-title"></span></div>
+    <div class="xs-head" aria-hidden="true">
+      <span>Sector</span><span>Median return</span><span>% of names up</span>
+    </div>
     <ul class="xs" id="xs-sectors"></ul>
     <div class="xtreme"><span class="xlabel">Leaders</span><span id="xs-leaders" class="xchips"></span></div>
     <div class="xtreme"><span class="xlabel">Laggards</span><span id="xs-laggards" class="xchips"></span></div>
@@ -612,7 +631,10 @@
 
   <div class="resultline">
     <span id="resultcount"></span>
-    <button id="groupToggle" type="button" aria-pressed="false">Group by sector</button>
+    <span class="linebuttons">
+      <button id="sortToggle" type="button">Sort: cap</button>
+      <button id="groupToggle" type="button" aria-pressed="false">Group by sector</button>
+    </span>
   </div>
 
   <ul class="list" id="list"></ul>
@@ -908,7 +930,24 @@
 
     /* ----- state ----- */
 
-    var state = { query: "", sector: null, grouped: false };
+    var state = { query: "", sector: null, grouped: false, sort: "cap" };
+
+    // The universe arrives ranked by market cap, so "cap" keeps the given
+    // order. Return sorts use the 12-month figure; names without one
+    // (too little history) always sink to the bottom.
+    function ordered(rows_) {
+      if (state.sort === "cap") return rows_;
+      var sign = state.sort === "ret-asc" ? 1 : -1;
+      return rows_.slice().sort(function (a, b) {
+        var ca = coverage[a.ticker], cb = coverage[b.ticker];
+        var ra = ca && ca.window_return_pct != null ? ca.window_return_pct : null;
+        var rb = cb && cb.window_return_pct != null ? cb.window_return_pct : null;
+        if (ra == null && rb == null) return 0;
+        if (ra == null) return 1;
+        if (rb == null) return -1;
+        return sign * (ra - rb);
+      });
+    }
     var openRow = { ticker: null, li: null };
 
     function closeOpenRow() {
@@ -1172,7 +1211,7 @@
 
     function renderList() {
       closeOpenRow();
-      var shown = visible();
+      var shown = ordered(visible());
       listEl.textContent = "";
       resultEl.textContent =
         shown.length === rows.length
@@ -1210,6 +1249,21 @@
       state.query = event.target.value;
       clearTimeout(searchTimer);
       searchTimer = setTimeout(renderList, 120);
+    });
+
+    var SORT_STATES = [
+      { key: "cap", label: "Sort: cap" },
+      { key: "ret-desc", label: "Sort: return \u2193" },
+      { key: "ret-asc", label: "Sort: return \u2191" }
+    ];
+    var sortBtn = document.getElementById("sortToggle");
+    sortBtn.addEventListener("click", function () {
+      var next =
+        (SORT_STATES.findIndex(function (s_) { return s_.key === state.sort; }) + 1) %
+        SORT_STATES.length;
+      state.sort = SORT_STATES[next].key;
+      sortBtn.textContent = SORT_STATES[next].label;
+      renderList();
     });
 
     groupBtn.addEventListener("click", function () {
