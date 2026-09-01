@@ -27,34 +27,34 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --ground: #0c1211;
-      --surface: #141d1b;
-      --surface-sunk: #101817;
-      --ink: #e7eeec;
-      --muted: #93a6a2;
-      --faint: #6d807c;
-      --line: #22302d;
-      --accent: #48c6b0;
-      --accent-soft: #16302c;
-      --up: #4fbe86;
-      --down: #e2796f;
+      --ground: #000000;
+      --surface: #0e0e0e;
+      --surface-sunk: #070707;
+      --ink: #f5f5f5;
+      --muted: #9c9c9c;
+      --faint: #6e6e6e;
+      --line: #1f1f1f;
+      --accent: #00c805;
+      --accent-soft: #06290e;
+      --up: #00c805;
+      --down: #ff5000;
       --warn: #d9a445;
       --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --ground: #0c1211;
-    --surface: #141d1b;
-    --surface-sunk: #101817;
-    --ink: #e7eeec;
-    --muted: #93a6a2;
-    --faint: #6d807c;
-    --line: #22302d;
-    --accent: #48c6b0;
-    --accent-soft: #16302c;
-    --up: #4fbe86;
-    --down: #e2796f;
+    --ground: #000000;
+    --surface: #0e0e0e;
+    --surface-sunk: #070707;
+    --ink: #f5f5f5;
+    --muted: #9c9c9c;
+    --faint: #6e6e6e;
+    --line: #1f1f1f;
+    --accent: #00c805;
+    --accent-soft: #06290e;
+    --up: #00c805;
+    --down: #ff5000;
     --warn: #d9a445;
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
   }
@@ -462,12 +462,27 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
+    border: 0;
     padding: 9px 14px;
     background: var(--surface-sunk);
+    font-family: inherit;
     font-size: 11px;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--muted);
+    text-align: left;
+    cursor: pointer;
+  }
+  .sector-head:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .sector-head .chev {
+    color: var(--faint);
+    font-size: 10px;
+    width: 10px;
+    flex: none;
   }
   .sector-head .n {
     margin-left: auto;
@@ -530,6 +545,13 @@
   .cap {
     text-align: right;
   }
+  .ret-sub {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 10.5px;
+    margin-top: 1px;
+  }
   .cap b {
     display: block;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -580,6 +602,32 @@
     margin: 0;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
+  }
+
+  .watch-tools[hidden] { display: none; }
+  .watch-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 2px 8px;
+  }
+  .watch-tools button {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 7px;
+    padding: 5px 10px;
+    font: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+  }
+  .watch-tools button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .watch-tools-note {
+    font-size: 10.5px;
+    color: var(--faint);
   }
 
   .empty {
@@ -658,6 +706,12 @@
       <button id="sortToggle" type="button">Sort: cap</button>
       <button id="groupToggle" type="button" aria-pressed="false">Group by sector</button>
     </span>
+  </div>
+
+  <div class="watch-tools" id="watch-tools" hidden>
+    <button id="watch-export" type="button">Copy tickers</button>
+    <button id="watch-import" type="button">Paste tickers</button>
+    <span class="watch-tools-note">moves your list between devices</span>
   </div>
 
   <ul class="list" id="list"></ul>
@@ -959,6 +1013,7 @@
     /* ----- state ----- */
 
     var state = { query: "", sector: null, grouped: false, sort: "cap", watchOnly: false };
+    var collapsedSectors = new Set();
 
     // The watchlist lives in this browser only (localStorage) — a personal
     // shortlist, not synced state. Storage can be unavailable (private
@@ -984,11 +1039,12 @@
     // (too little history) always sink to the bottom.
     function ordered(rows_) {
       if (state.sort === "cap") return rows_;
-      var sign = state.sort === "ret-asc" ? 1 : -1;
+      var field = state.sort.indexOf("3m") === 0 ? "return_3m_pct" : "window_return_pct";
+      var sign = state.sort.slice(-3) === "asc" ? 1 : -1;
       return rows_.slice().sort(function (a, b) {
         var ca = coverage[a.ticker], cb = coverage[b.ticker];
-        var ra = ca && ca.window_return_pct != null ? ca.window_return_pct : null;
-        var rb = cb && cb.window_return_pct != null ? cb.window_return_pct : null;
+        var ra = ca && ca[field] != null ? ca[field] : null;
+        var rb = cb && cb[field] != null ? cb[field] : null;
         if (ra == null && rb == null) return 0;
         if (ra == null) return 1;
         if (rb == null) return -1;
@@ -1114,6 +1170,13 @@
           pct(cov.window_return_pct),
           direction(cov.window_return_pct)
         ]);
+        if (cov.return_3m_pct != null) {
+          pairs.push([
+            "3-month return",
+            pct(cov.return_3m_pct),
+            direction(cov.return_3m_pct)
+          ]);
+        }
         // Context that answers "why is this one interesting": how the name
         // stands against its own sector, and where it sits in its range.
         var med = medianBySector[r.sector];
@@ -1318,6 +1381,12 @@
         capValue.textContent = money(r.market_cap);
       }
       cap.appendChild(capValue);
+      if (cov && cov.return_3m_pct != null) {
+        var sub = document.createElement("span");
+        sub.className = "ret-sub " + direction(cov.return_3m_pct);
+        sub.textContent = "3m " + pct(cov.return_3m_pct);
+        cap.appendChild(sub);
+      }
 
       if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
         var stroke = getComputedStyle(document.documentElement)
@@ -1354,25 +1423,38 @@
 
     function sectorHeader(name, count) {
       var li = document.createElement("li");
-      li.className = "sector-head";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "sector-head";
+      var collapsed = collapsedSectors.has(name);
+      btn.setAttribute("aria-expanded", String(!collapsed));
+      var chev = document.createElement("span");
+      chev.className = "chev";
+      chev.textContent = collapsed ? "\u25b8" : "\u25be";
       var dot = document.createElement("span");
       dot.className = "dot";
-      dot.style.setProperty("--sector", sectorColor(name));
-      dot.style.width = "7px";
-      dot.style.height = "7px";
-      dot.style.borderRadius = "50%";
-      dot.style.background = sectorColor(name);
-      li.appendChild(dot);
-      li.appendChild(document.createTextNode(name));
+      dot.style.cssText =
+        "width:7px;height:7px;border-radius:50%;flex:none;background:" +
+        sectorColor(name);
+      btn.appendChild(chev);
+      btn.appendChild(dot);
+      btn.appendChild(document.createTextNode(name));
       var n = document.createElement("span");
       n.className = "n";
       n.textContent = count;
-      li.appendChild(n);
+      btn.appendChild(n);
+      btn.addEventListener("click", function () {
+        if (collapsedSectors.has(name)) collapsedSectors.delete(name);
+        else collapsedSectors.add(name);
+        renderList();
+      });
+      li.appendChild(btn);
       return li;
     }
 
     function renderList() {
       closeOpenRow();
+      document.getElementById("watch-tools").hidden = !state.watchOnly;
       var shown = ordered(visible());
       listEl.textContent = "";
       resultEl.textContent =
@@ -1398,6 +1480,7 @@
           var group = shown.filter(function (r) { return r.sector === s; });
           if (!group.length) return;
           items.push({ header: s, count: group.length });
+          if (collapsedSectors.has(s)) return;
           group.forEach(function (r) { items.push({ row: r }); });
         });
       } else {
@@ -1417,10 +1500,50 @@
       searchTimer = setTimeout(renderList, 120);
     });
 
+    document.getElementById("watch-export").addEventListener("click", function (event) {
+      var text = Array.from(watch).sort().join(", ");
+      var btn = event.target;
+      function done(label) {
+        btn.textContent = label;
+        setTimeout(function () { btn.textContent = "Copy tickers"; }, 1500);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { done("Copied"); },
+          function () { window.prompt("Copy your watchlist:", text); done("Copy tickers"); }
+        );
+      } else {
+        window.prompt("Copy your watchlist:", text);
+      }
+    });
+
+    document.getElementById("watch-import").addEventListener("click", function () {
+      var input = window.prompt("Paste tickers (comma or space separated):", "");
+      if (!input) return;
+      var added = 0, unknown = [];
+      input.toUpperCase().split(/[^A-Z0-9.\-]+/).forEach(function (t) {
+        if (!t) return;
+        if (rowByTicker[t]) {
+          if (!watch.has(t)) { watch.add(t); added++; }
+        } else {
+          unknown.push(t);
+        }
+      });
+      saveWatch();
+      var count = document.getElementById("watch-count");
+      if (count) count.textContent = watch.size;
+      renderList();
+      if (unknown.length) {
+        window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
+      }
+    });
+
     var SORT_STATES = [
       { key: "cap", label: "Sort: cap" },
-      { key: "ret-desc", label: "Sort: return \u2193" },
-      { key: "ret-asc", label: "Sort: return \u2191" }
+      { key: "ret-desc", label: "Sort: 12m \u2193" },
+      { key: "ret-asc", label: "Sort: 12m \u2191" },
+      { key: "3m-desc", label: "Sort: 3m \u2193" },
+      { key: "3m-asc", label: "Sort: 3m \u2191" }
     ];
     var sortBtn = document.getElementById("sortToggle");
     sortBtn.addEventListener("click", function () {
