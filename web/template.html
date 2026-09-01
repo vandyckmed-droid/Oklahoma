@@ -60,6 +60,7 @@
   }
 
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
 
   body {
     margin: 0;
@@ -405,18 +406,13 @@
   .resultline {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: 12px;
-    margin: 18px 2px 8px;
+    margin: 18px 2px 6px;
     font-size: 11px;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--faint);
-  }
-  .resultline .linebuttons {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
   }
   .sort-wrap {
     display: inline-flex;
@@ -446,7 +442,8 @@
     text-transform: none;
     cursor: pointer;
   }
-  .resultline button {
+  .resultline button,
+  .toolbar button {
     border: 0;
     background: none;
     padding: 0;
@@ -456,13 +453,42 @@
     color: var(--accent);
     cursor: pointer;
   }
-  .resultline button:focus-visible {
+  .resultline button:focus-visible,
+  .toolbar button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
   #groupToggle[aria-pressed="true"] {
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin: 0 2px 8px;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .viewswitch {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    overflow: hidden;
+  }
+  .resultline .viewswitch button {
+    padding: 3px 9px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    font-size: 10.5px;
+  }
+  .resultline .viewswitch button + button { border-left: 1px solid var(--line); }
+  .resultline .viewswitch button[aria-pressed="true"] {
+    background: var(--accent-soft);
+    color: var(--ink);
   }
 
   /* ---------- list ---------- */
@@ -563,38 +589,43 @@
     font-size: 11px;
     color: var(--faint);
   }
+  /* The right-hand cluster of a card: the shape of the year, then one
+     labeled figure chosen from the Show menu. */
   .cap {
-    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .ret-sub {
-    display: block;
+  .cap .spark { margin: 0; }
+  .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .pill {
+    display: inline-block;
+    min-width: 72px;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 7px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    font-size: 10.5px;
-    margin-top: 1px;
-  }
-  .cap b {
-    display: block;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 14px;
+    font-size: 12.5px;
     font-weight: 500;
-    font-variant-numeric: tabular-nums;
+    background: var(--surface-sunk);
+    color: var(--ink);
   }
-  .weight {
-    display: block;
-    margin-top: 4px;
-    margin-left: auto;
-    width: 46px;
-    height: 3px;
-    border-radius: 2px;
-    background: var(--line);
-    overflow: hidden;
+  .pill.up { background: color-mix(in srgb, var(--up) 16%, transparent); color: var(--up); }
+  .pill.down { background: color-mix(in srgb, var(--down) 16%, transparent); color: var(--down); }
+  .pill-cap {
+    font-size: 9.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
   }
-  .weight i {
-    display: block;
-    height: 100%;
-    border-radius: 2px;
-    background: var(--sector, var(--accent));
+  @media (max-width: 359px) {
+    .cap .spark { display: none; }
   }
   .tag {
     display: inline-flex;
@@ -624,7 +655,7 @@
   }
   .stat-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -635,7 +666,7 @@
     display: flex;
     flex-direction: column;
     gap: 3px;
-    padding: 9px 12px 10px;
+    padding: 8px 10px 9px;
     background: var(--surface-sunk);
   }
   .stat-cell .xl,
@@ -649,7 +680,7 @@
   .stat-val {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
   }
   .stat-sub {
@@ -782,6 +813,9 @@
   .ep-card {
     width: 100%;
     max-width: 560px;
+    max-height: 85vh;
+    max-height: 85dvh;
+    overflow-y: auto;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 14px 14px 0 0;
@@ -825,6 +859,209 @@
   .ep-card button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+  }
+
+  #ep-list {
+    margin: 0 0 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  #ep-list dt {
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  #ep-list dd {
+    margin: 2px 0 0;
+    color: var(--muted);
+  }
+  #ep-list dd code {
+    display: block;
+    margin: 4px 0 0;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--ink);
+  }
+
+  /* ---------- detail sheet ---------- */
+
+  #detail-pop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0, 0, 0, .5);
+  }
+  .dp-card {
+    width: 100%;
+    max-width: 560px;
+    max-height: 88vh;
+    max-height: 88dvh;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px 14px 0 0;
+    padding: 14px 16px 24px;
+    box-shadow: var(--shadow);
+  }
+  .dp-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .dp-ticker {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .dp-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .dp-close {
+    border: 1px solid var(--line);
+    background: var(--surface-sunk);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 5px 11px;
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .dp-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .dp-card .detail { padding: 0; }
+  html.sheet-open { overflow: hidden; }
+
+  /* ---------- table view ---------- */
+
+  /* The table scrolls inside its own region: a sticky header and a
+     sticky ticker column only hold inside the element that scrolls,
+     so this wrapper, not the page, is the scroller. */
+  .table-wrap {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    overflow: auto;
+    max-height: 78vh;
+    max-height: 78dvh;
+    -webkit-overflow-scrolling: touch;
+  }
+  .grid {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 100%;
+  }
+  .grid th,
+  .grid td {
+    padding: 8px 10px;
+    white-space: nowrap;
+    text-align: right;
+    border-bottom: 1px solid var(--line);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+  .grid thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--surface-sunk);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .grid th:first-child,
+  .grid td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    text-align: left;
+    background: var(--surface);
+    box-shadow: 1px 0 0 var(--line);
+  }
+  .grid thead th:first-child {
+    z-index: 3;
+    background: var(--surface-sunk);
+  }
+  .grid th:nth-child(2),
+  .grid td:nth-child(2) { text-align: left; }
+  .grid .tsector {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    color: var(--muted);
+  }
+  .grid .tsector .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+  .th-sort {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .th-sort:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .grid th[aria-sort] .th-sort { color: var(--ink); }
+  .grid tbody tr { cursor: pointer; }
+  .tcell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .tcell:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .tcell .ticker { font-size: 13px; }
+  .tcell .tname {
+    max-width: 118px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 10.5px;
+    color: var(--faint);
+  }
+  .grid td.empty {
+    text-align: center;
+    white-space: normal;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
   }
 
   footer {
@@ -892,18 +1129,17 @@
 
   <div class="resultline">
     <span id="resultcount" aria-live="polite"></span>
-    <span class="linebuttons">
-      <label class="sort-wrap">
-        <select id="sortKey" aria-label="Sort by">
-          <option value="cap">Market cap</option>
-          <option value="ret12">12-mo return</option>
-          <option value="ret3">3-mo return</option>
-          <option value="quality">Quality momentum</option>
-        </select>
-      </label>
-      <button id="sortDir" type="button" aria-label="Sort direction: descending">↓</button>
-      <button id="groupToggle" type="button" aria-pressed="false" aria-label="Group by sector">Group</button>
+    <span class="viewswitch" role="group" aria-label="View">
+      <button type="button" data-view="cards" aria-pressed="true">Cards</button>
+      <button type="button" data-view="table" aria-pressed="false">Table</button>
     </span>
+  </div>
+  <div class="toolbar">
+    <label class="sort-wrap"><span>Sort</span><select id="sortKey" aria-label="Sort by"></select></label>
+    <button id="sortDir" type="button" aria-label="Sort direction: descending">↓</button>
+    <label class="sort-wrap" id="display-wrap"><span>Show</span><select id="displayKey" aria-label="Figure shown on each card"></select></label>
+    <button id="groupToggle" type="button" aria-pressed="false" aria-label="Group by sector">Group</button>
+    <button id="columnsHelp" type="button" hidden>About the columns</button>
   </div>
 
   <div class="watch-tools" id="watch-tools" hidden>
@@ -912,7 +1148,13 @@
     <span class="watch-tools-note">moves your list between devices</span>
   </div>
 
-  <ul class="list" id="list"></ul>
+  <ul class="list" id="list" tabindex="-1"></ul>
+  <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
+    <table class="grid" aria-label="Universe table">
+      <thead><tr id="grid-head"></tr></thead>
+      <tbody id="grid-body"></tbody>
+    </table>
+  </div>
 
   <footer id="footer"></footer>
 </div>
@@ -922,7 +1164,19 @@
     <h2 id="ep-title"></h2>
     <p id="ep-body"></p>
     <code id="ep-formula"></code>
+    <dl id="ep-list" hidden></dl>
     <button id="ep-close" type="button">Close</button>
+  </div>
+</div>
+
+<div id="detail-pop" hidden role="dialog" aria-modal="true" aria-labelledby="dp-ticker">
+  <div class="dp-card">
+    <div class="dp-head">
+      <span class="dp-ticker" id="dp-ticker"></span>
+      <span class="dp-name" id="dp-name"></span>
+      <button id="dp-close" type="button" class="dp-close">Close</button>
+    </div>
+    <div id="dp-body"></div>
   </div>
 </div>
 
@@ -1073,7 +1327,6 @@
     }
 
     var totalCap = rows.reduce(function (sum, r) { return sum + r.market_cap; }, 0);
-    var largestCap = rows.reduce(function (max, r) { return Math.max(max, r.market_cap); }, 0);
 
     var sectorCounts = {};
     rows.forEach(function (r) {
@@ -1236,9 +1489,31 @@
 
     var state = {
       query: "", sector: null, grouped: false,
-      sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false
+      sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
+      view: "cards", display: "ret12"
     };
     var collapsedSectors = new Set();
+
+    // View, shown figure and sort survive a reload on this device. They
+    // are conveniences: an unreadable store just means the defaults.
+    var PREFS_KEY = "oklahoma-prefs";
+    function loadPrefs() {
+      var p;
+      try { p = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch (e) { return; }
+      if (!p || typeof p !== "object") return;
+      if (p.view === "table" || p.view === "cards") state.view = p.view;
+      if (METRICS[p.display]) state.display = p.display;
+      if (METRICS[p.sortKey]) state.sortKey = p.sortKey;
+      if (typeof p.sortDesc === "boolean") state.sortDesc = p.sortDesc;
+    }
+    function savePrefs() {
+      try {
+        localStorage.setItem(PREFS_KEY, JSON.stringify({
+          view: state.view, display: state.display,
+          sortKey: state.sortKey, sortDesc: state.sortDesc
+        }));
+      } catch (e) { /* per-viewer convenience only */ }
+    }
 
     // The watchlist lives in this browser only (localStorage) — a personal
     // shortlist, not synced state. Storage can be unavailable (private
@@ -1259,45 +1534,85 @@
     watch.forEach(function (t) { if (!rowByTicker[t]) watch.delete(t); });
     saveWatch();
 
-    // The universe arrives ranked by market cap, so "cap" keeps the given
-    // order. Return sorts use the 12-month figure; names without one
-    // (too little history) always sink to the bottom.
-    var SORT_FIELDS = {
-      ret12: "window_return_pct",
-      ret3: "return_3m_pct",
-      quality: "quality_pct"
+    /* ----- metrics ----- */
+
+    // One registry drives the sort menu, the card pill and the table
+    // columns, so a figure means the same thing wherever it appears.
+    // `value` returns null wherever the figure would not be honest: the
+    // full-window metrics for a name with less than a year of bars, or
+    // any metric whose window the name cannot fill. A null shows as a
+    // dash and sinks in every sort, whichever direction.
+    function fullOnly(field) {
+      return function (r, cov) {
+        return cov && cov.sufficient && cov[field] != null ? cov[field] : null;
+      };
+    }
+    function anyWindow(field) {
+      return function (r, cov) {
+        return cov && cov[field] != null ? cov[field] : null;
+      };
+    }
+    var METRICS = {
+      cap: { label: "Market cap", short: "Cap", neutral: true,
+        value: function (r) { return r.market_cap; }, fmt: money },
+      ret12: { label: "12-mo return", short: "12-mo", explain: "ret12",
+        value: fullOnly("window_return_pct"), fmt: pct },
+      ret3: { label: "3-mo return", short: "3-mo", explain: "ret3",
+        value: anyWindow("return_3m_pct"), fmt: pct },
+      ret1: { label: "1-mo return", short: "1-mo", explain: "ret1",
+        value: anyWindow("return_1m_pct"), fmt: pct },
+      offhigh: { label: "Off 1y high", short: "Off high", explain: "offhigh",
+        value: function (r, cov) {
+          if (!cov || !cov.sufficient || cov.window_high == null ||
+              cov.last_adj_close == null) return null;
+          return (cov.last_adj_close / cov.window_high - 1) * 100;
+        },
+        fmt: function (v) { return v > -0.5 ? "at high" : v.toFixed(1) + "%"; },
+        cls: function (v) { return v > -0.5 ? "up" : direction(v); } },
+      vsmedian: { label: "Vs sector median", short: "Vs sector", explain: "vsmedian",
+        value: function (r, cov) {
+          var med = medianBySector[r.sector];
+          if (med == null || !cov || !cov.sufficient ||
+              cov.window_return_pct == null) return null;
+          return cov.window_return_pct - med;
+        },
+        fmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; } },
+      trend: { label: "Trend (log slope)", short: "Trend", explain: "trend",
+        value: anyWindow("trend_ann_pct"),
+        fmt: function (v) { return pct(v) + "/yr"; } },
+      r2: { label: "R\u00b2 of trend", short: "R\u00b2", explain: "r2", neutral: true,
+        value: anyWindow("trend_r2"), fmt: function (v) { return v.toFixed(2); } },
+      quality: { label: "Quality momentum", short: "Quality", explain: "quality",
+        value: anyWindow("quality_pct"),
+        fmt: function (v) { return pct(v) + "/yr"; } },
+      last: { label: "Last close", short: "Last", neutral: true,
+        value: anyWindow("last_adj_close"),
+        fmt: function (v) { return "$" + v.toLocaleString(); } }
     };
+    var METRIC_ORDER = ["cap", "ret12", "ret3", "ret1", "offhigh", "vsmedian",
+      "trend", "r2", "quality", "last"];
+    var TABLE_COLUMNS = ["cap", "ret12", "ret3", "ret1", "offhigh", "vsmedian",
+      "trend", "r2", "quality"];
+    function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
+    function metricText(key, v) { return v == null ? "\u2014" : METRICS[key].fmt(v); }
+    function metricClass(key, v) {
+      var m = METRICS[key];
+      if (v == null || m.neutral) return "";
+      return m.cls ? m.cls(v) : direction(v);
+    }
+
     function ordered(rows_) {
-      if (state.sortKey === "cap") {
-        return state.sortDesc ? rows_ : rows_.slice().reverse();
-      }
-      var field = SORT_FIELDS[state.sortKey];
+      var key = state.sortKey;
       var sign = state.sortDesc ? -1 : 1;
-      // A 54-day return must not rank inside a 12-month ordering; the
-      // 3-month and quality fields are absent below their own windows,
-      // but window_return_pct exists for any span and needs the gate.
-      var needsFull = state.sortKey === "ret12";
+      var vals = {};
+      rows_.forEach(function (r) { vals[r.ticker] = metricValue(key, r); });
       return rows_.slice().sort(function (a, b) {
-        var ca = coverage[a.ticker], cb = coverage[b.ticker];
-        var ra = ca && ca[field] != null && (!needsFull || ca.sufficient) ? ca[field] : null;
-        var rb = cb && cb[field] != null && (!needsFull || cb.sufficient) ? cb[field] : null;
+        var ra = vals[a.ticker], rb = vals[b.ticker];
         if (ra == null && rb == null) return 0;
         if (ra == null) return 1;
         if (rb == null) return -1;
-        return sign * (ra - rb);
+        return sign * (ra - rb) || a.rank - b.rank;
       });
-    }
-    var openRow = { ticker: null, li: null };
-
-    function closeOpenRow() {
-      if (openRow.li) {
-        var detail = openRow.li.querySelector(".detail");
-        if (detail) detail.remove();
-        var btn = openRow.li.querySelector(".row");
-        if (btn) btn.setAttribute("aria-expanded", "false");
-      }
-      openRow.ticker = null;
-      openRow.li = null;
     }
 
     // 503 rows is too many to build in one synchronous pass on a phone,
@@ -1305,9 +1620,9 @@
     // instant and the rest streams in. A newer paint cancels an older one.
     var paintToken = 0;
     var afterPaint = null;
-    function paintList(items, makeNode) {
+    function paintInto(container, items, makeNode) {
       var token = ++paintToken;
-      listEl.textContent = "";
+      container.textContent = "";
       var i = 0;
       function step() {
         if (token !== paintToken) return;
@@ -1315,7 +1630,7 @@
         for (var end = Math.min(i + 80, items.length); i < end; i++) {
           frag.appendChild(makeNode(items[i]));
         }
-        listEl.appendChild(frag);
+        container.appendChild(frag);
         if (i < items.length) {
           requestAnimationFrame(step);
         } else if (afterPaint) {
@@ -1333,6 +1648,50 @@
     var listEl = document.getElementById("list");
     var resultEl = document.getElementById("resultcount");
     var groupBtn = document.getElementById("groupToggle");
+    var tableWrap = document.getElementById("table-wrap");
+    var gridHead = document.getElementById("grid-head");
+    var gridBody = document.getElementById("grid-body");
+    var sortSelect = document.getElementById("sortKey");
+    var sortDirBtn = document.getElementById("sortDir");
+    var displaySelect = document.getElementById("displayKey");
+    var displayWrap = document.getElementById("display-wrap");
+    var columnsBtn = document.getElementById("columnsHelp");
+
+    function starMark() {
+      var mark = document.createElement("span");
+      mark.className = "star-mark";
+      mark.textContent = " \u2605";
+      mark.setAttribute("role", "img");
+      mark.setAttribute("aria-label", "on watchlist");
+      return mark;
+    }
+    // The ticker as both views show it: the symbol, a star if watched,
+    // and the honest badge for a name short of a year's bars.
+    function tickerSpan(r) {
+      var cov = coverage[r.ticker];
+      var tick = document.createElement("span");
+      tick.className = "ticker";
+      tick.textContent = r.ticker;
+      if (watch.has(r.ticker)) tick.appendChild(starMark());
+      if (cov && !cov.sufficient) {
+        var warn = document.createElement("span");
+        warn.className = "warn";
+        warn.textContent = cov.trading_days + "d";
+        warn.title = "Only " + cov.trading_days + " trading days of history";
+        tick.appendChild(document.createTextNode(" "));
+        tick.appendChild(warn);
+      }
+      return tick;
+    }
+    function syncStars(ticker) {
+      var r = rowByTicker[ticker];
+      if (!r) return;
+      document.querySelectorAll(
+        '[data-ticker="' + CSS.escape(ticker) + '"] .ticker'
+      ).forEach(function (tick) {
+        tick.replaceWith(tickerSpan(r));
+      });
+    }
 
     function chip(label, value, count, color) {
       var b = document.createElement("button");
@@ -1442,11 +1801,15 @@
           grid.appendChild(statCell("ret3", "3-mo return",
             pct(cov.return_3m_pct), direction(cov.return_3m_pct)));
         }
+        if (cov.return_1m_pct != null) {
+          grid.appendChild(statCell("ret1", "1-mo return",
+            pct(cov.return_1m_pct), direction(cov.return_1m_pct)));
+        }
         if (cov.window_high != null && cov.last_adj_close != null) {
           var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
           grid.appendChild(statCell(cov.sufficient ? "offhigh" : null,
             cov.sufficient ? "Off 1y high" : "Off " + cov.window_trading_days + "-day high",
-            offHigh > -0.5 ? "at its high" : offHigh.toFixed(1) + "%",
+            offHigh > -0.5 ? "at high" : offHigh.toFixed(1) + "%",
             offHigh > -0.5 ? "up" : direction(offHigh)));
         }
         var med = medianBySector[r.sector];
@@ -1455,6 +1818,10 @@
           grid.appendChild(statCell("vsmedian", "Vs sector",
             (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts",
             direction(delta), "median " + pct(med)));
+        }
+        if (cov.last_adj_close != null) {
+          grid.appendChild(statCell(null, "Last close",
+            "$" + cov.last_adj_close.toLocaleString(), ""));
         }
         dl.appendChild(grid);
       }
@@ -1568,25 +1935,10 @@
         paintWatch();
         var count = document.getElementById("watch-count");
         if (count) count.textContent = watch.size;
-        if (state.watchOnly) {
-          var chipEl = document.getElementById("watch-chip");
-          if (chipEl) chipEl.focus();
-          renderList();
-          return;
-        }
-        var tick = openRow.li && openRow.li.querySelector(".ticker");
-        if (tick) {
-          var existing = tick.querySelector(".star-mark");
-          if (existing) existing.remove();
-          if (watch.has(r.ticker)) {
-            var mark = document.createElement("span");
-            mark.className = "star-mark";
-            mark.textContent = " \u2605";
-            mark.setAttribute("role", "img");
-            mark.setAttribute("aria-label", "on watchlist");
-            tick.appendChild(mark);
-          }
-        }
+        syncStars(r.ticker);
+        // With the watchlist filter on, the list behind the sheet must
+        // drop or keep this name; the sheet itself stays where it is.
+        if (state.watchOnly) renderList();
       });
       paintWatch();
       watchRow.appendChild(watchBtn);
@@ -1604,9 +1956,6 @@
           bits.push("range $" + cov.window_low.toLocaleString() +
             "\u2013$" + cov.window_high.toLocaleString());
         }
-        if (cov.last_adj_close != null) {
-          bits.push("last adj. close $" + cov.last_adj_close.toLocaleString());
-        }
         meta.textContent = bits.join(" \u00b7 ");
         dl.appendChild(meta);
       }
@@ -1621,7 +1970,7 @@
       var button = document.createElement("button");
       button.type = "button";
       button.className = "row";
-      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-haspopup", "dialog");
       button.style.setProperty("--sector", color);
 
       var rank = document.createElement("span");
@@ -1630,25 +1979,7 @@
 
       var main = document.createElement("span");
       main.className = "name-cell";
-      var ticker = document.createElement("span");
-      ticker.className = "ticker";
-      ticker.textContent = r.ticker;
-      if (watch.has(r.ticker)) {
-        var mark = document.createElement("span");
-        mark.className = "star-mark";
-        mark.textContent = " \u2605";
-        mark.setAttribute("role", "img");
-        mark.setAttribute("aria-label", "on watchlist");
-        ticker.appendChild(mark);
-      }
-      if (cov && !cov.sufficient) {
-        var warn = document.createElement("span");
-        warn.className = "warn";
-        warn.textContent = cov.trading_days + "d";
-        warn.title = "Only " + cov.trading_days + " trading days of history";
-        ticker.appendChild(document.createTextNode(" "));
-        ticker.appendChild(warn);
-      }
+      var ticker = tickerSpan(r);
 
       var company = document.createElement("span");
       company.className = "company";
@@ -1665,50 +1996,32 @@
 
       var cap = document.createElement("span");
       cap.className = "cap";
-      var capValue = document.createElement("b");
-      if (cov && cov.window_return_pct != null) {
-        capValue.className = direction(cov.window_return_pct);
-        capValue.textContent = pct(cov.window_return_pct);
-      } else {
-        capValue.textContent = money(r.market_cap);
-      }
-      cap.appendChild(capValue);
-      if (cov && cov.return_3m_pct != null) {
-        var sub = document.createElement("span");
-        sub.className = "ret-sub " + direction(cov.return_3m_pct);
-        sub.textContent = "3m " + pct(cov.return_3m_pct);
-        cap.appendChild(sub);
-      }
-
       if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
         var stroke = getComputedStyle(document.documentElement)
           .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
         var mini = spark(cov.cum_return_spark, 54, 18, stroke, false);
         mini.setAttribute("class", "spark");
         cap.appendChild(mini);
-      } else {
-        var bar = document.createElement("span");
-        bar.className = "weight";
-        var fill = document.createElement("i");
-        fill.style.width = Math.max(4, (r.market_cap / largestCap) * 100) + "%";
-        bar.appendChild(fill);
-        cap.appendChild(bar);
       }
+      var metric = document.createElement("span");
+      metric.className = "metric";
+      var shownValue = metricValue(state.display, r);
+      var pill = document.createElement("span");
+      pill.className = "pill " + metricClass(state.display, shownValue);
+      pill.textContent = metricText(state.display, shownValue);
+      var pillCap = document.createElement("span");
+      pillCap.className = "pill-cap";
+      pillCap.textContent = METRICS[state.display].short;
+      metric.appendChild(pill);
+      metric.appendChild(pillCap);
+      cap.appendChild(metric);
 
       button.appendChild(rank);
       button.appendChild(main);
       button.appendChild(cap);
-      button.addEventListener("click", function () {
-        var wasOpen = openRow.ticker === r.ticker;
-        closeOpenRow();
-        if (!wasOpen) {
-          button.setAttribute("aria-expanded", "true");
-          li.appendChild(detailList(r));
-          openRow.ticker = r.ticker;
-          openRow.li = li;
-        }
-      });
+      button.addEventListener("click", function () { openDetail(r, button); });
 
+      li.setAttribute("data-ticker", r.ticker);
       li.appendChild(button);
       return li;
     }
@@ -1754,24 +2067,53 @@
       return li;
     }
 
+    function emptyMessage() {
+      return state.watchOnly && !watch.size
+        ? "Your watchlist is empty. Open a name and tap \u2606 Add to watchlist."
+        : state.watchOnly
+          ? "No watchlist name matches. The \u2605 Watchlist filter is on."
+          : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+    }
+
     function renderList() {
-      closeOpenRow();
+      var isTable = state.view === "table";
       document.getElementById("watch-tools").hidden = !state.watchOnly;
+      listEl.hidden = isTable;
+      tableWrap.hidden = !isTable;
+      groupBtn.hidden = isTable;
+      displayWrap.hidden = isTable;
+      columnsBtn.hidden = !isTable;
       var shown = ordered(visible());
-      listEl.textContent = "";
       resultEl.textContent =
         shown.length === rows.length
           ? "All " + rows.length + " names"
           : shown.length + " of " + rows.length + " names";
+      if (isTable) renderTable(shown);
+      else renderCards(shown);
+    }
 
+    function renderTable(shown) {
+      tableWrap.scrollTop = 0;
+      if (!shown.length) {
+        gridBody.textContent = "";
+        var tr = document.createElement("tr");
+        var td = document.createElement("td");
+        td.className = "empty";
+        td.colSpan = TABLE_COLUMNS.length + 2;
+        td.textContent = emptyMessage();
+        tr.appendChild(td);
+        gridBody.appendChild(tr);
+        return;
+      }
+      paintInto(gridBody, shown, tableRow);
+    }
+
+    function renderCards(shown) {
+      listEl.textContent = "";
       if (!shown.length) {
         var li = document.createElement("li");
         li.className = "empty";
-        li.textContent = state.watchOnly && !watch.size
-          ? "Your watchlist is empty. Open a name and tap \u2606 Add to watchlist."
-          : state.watchOnly
-            ? "No watchlist name matches. The \u2605 Watchlist filter is on."
-            : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        li.textContent = emptyMessage();
         listEl.appendChild(li);
         return;
       }
@@ -1788,11 +2130,98 @@
       } else {
         shown.forEach(function (r) { items.push({ row: r }); });
       }
-      paintList(items, function (item) {
+      paintInto(listEl, items, function (item) {
         return item.header
           ? sectorHeader(item.header, item.count)
           : rowItem(item.row);
       });
+    }
+
+    /* ----- table view ----- */
+
+    function renderTableHead() {
+      gridHead.textContent = "";
+      var first = document.createElement("th");
+      first.scope = "col";
+      first.textContent = "Name";
+      gridHead.appendChild(first);
+      var sectorTh = document.createElement("th");
+      sectorTh.scope = "col";
+      sectorTh.textContent = "Sector";
+      gridHead.appendChild(sectorTh);
+      TABLE_COLUMNS.forEach(function (key) {
+        var th = document.createElement("th");
+        th.scope = "col";
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "th-sort";
+        b.setAttribute("data-sort", key);
+        b.appendChild(document.createTextNode(METRICS[key].short));
+        var arrow = document.createElement("span");
+        arrow.className = "th-arrow";
+        arrow.setAttribute("aria-hidden", "true");
+        b.appendChild(arrow);
+        th.appendChild(b);
+        gridHead.appendChild(th);
+      });
+      paintTableSortState();
+    }
+    function paintTableSortState() {
+      gridHead.querySelectorAll("th").forEach(function (th) {
+        var b = th.querySelector(".th-sort");
+        if (!b) return;
+        var active = b.getAttribute("data-sort") === state.sortKey;
+        if (active) th.setAttribute("aria-sort", state.sortDesc ? "descending" : "ascending");
+        else th.removeAttribute("aria-sort");
+        b.querySelector(".th-arrow").textContent =
+          active ? (state.sortDesc ? " \u2193" : " \u2191") : "";
+      });
+    }
+    gridHead.addEventListener("click", function (event) {
+      var b = event.target.closest ? event.target.closest(".th-sort") : null;
+      if (!b) return;
+      var key = b.getAttribute("data-sort");
+      setSort(key, key === state.sortKey ? !state.sortDesc : true);
+    });
+
+    function tableRow(r) {
+      var tr = document.createElement("tr");
+      tr.setAttribute("data-ticker", r.ticker);
+
+      var nameCell = document.createElement("td");
+      var open = document.createElement("button");
+      open.type = "button";
+      open.className = "tcell";
+      open.setAttribute("aria-haspopup", "dialog");
+      open.appendChild(tickerSpan(r));
+      var nm = document.createElement("span");
+      nm.className = "tname";
+      nm.textContent = r.name;
+      open.appendChild(nm);
+      nameCell.appendChild(open);
+      tr.appendChild(nameCell);
+
+      var sectorCell = document.createElement("td");
+      sectorCell.className = "tsector";
+      sectorCell.title = r.sector;
+      var dot = document.createElement("span");
+      dot.className = "dot";
+      dot.style.background = sectorColor(r.sector);
+      sectorCell.appendChild(dot);
+      sectorCell.appendChild(document.createTextNode(r.sector));
+      tr.appendChild(sectorCell);
+
+      TABLE_COLUMNS.forEach(function (key) {
+        var td = document.createElement("td");
+        var v = metricValue(key, r);
+        td.className = metricClass(key, v);
+        td.textContent = metricText(key, v);
+        tr.appendChild(td);
+      });
+      // The whole row is the target; the button inside is the keyboard
+      // path, and its click bubbles here rather than opening twice.
+      tr.addEventListener("click", function () { openDetail(r, open); });
+      return tr;
     }
 
     var searchTimer;
@@ -1840,18 +2269,45 @@
       }
     });
 
-    document.getElementById("sortKey").addEventListener("change", function (event) {
-      state.sortKey = event.target.value;
-      renderList();
-    });
-    var sortDirBtn = document.getElementById("sortDir");
-    sortDirBtn.addEventListener("click", function () {
-      state.sortDesc = !state.sortDesc;
-      sortDirBtn.textContent = state.sortDesc ? "\u2193" : "\u2191";
+    // One path for every sort control: the menu, the direction button
+    // and the table headers all end here, so they can never disagree.
+    function setSort(key, desc) {
+      state.sortKey = key;
+      state.sortDesc = desc;
+      sortSelect.value = key;
+      sortDirBtn.textContent = desc ? "\u2193" : "\u2191";
       sortDirBtn.setAttribute("aria-label",
-        "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
+        "Sort direction: " + (desc ? "descending" : "ascending"));
+      paintTableSortState();
+      savePrefs();
+      renderList();
+    }
+    sortSelect.addEventListener("change", function (event) {
+      setSort(event.target.value, state.sortDesc);
+    });
+    sortDirBtn.addEventListener("click", function () {
+      setSort(state.sortKey, !state.sortDesc);
+    });
+
+    function setView(view) {
+      state.view = view;
+      document.querySelectorAll(".viewswitch button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view));
+      });
+      savePrefs();
+      renderList();
+    }
+    document.querySelectorAll(".viewswitch button").forEach(function (b) {
+      b.addEventListener("click", function () { setView(b.getAttribute("data-view")); });
+    });
+
+    displaySelect.addEventListener("change", function (event) {
+      state.display = event.target.value;
+      savePrefs();
       renderList();
     });
+
+    columnsBtn.addEventListener("click", function () { openColumns(columnsBtn); });
 
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
@@ -1869,6 +2325,9 @@
       ret3: ["3-month return",
         "Total change in the adjusted close over the last 63 trading days — about one quarter. Fresh momentum, against the 12-month figure's longer memory.",
         "close today \u00f7 first close of the 63-session window \u2212 1"],
+      ret1: ["1-month return",
+        "Total change in the adjusted close over the last 21 trading days — about one month. The shortest lens: what the name did lately, before the quarter and the year have their say.",
+        "close today \u00f7 first close of the 21-session window \u2212 1"],
       offhigh: ["Off 1-year high",
         "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
         "close today \u00f7 year's highest close \u2212 1"],
@@ -1892,22 +2351,117 @@
         "names with positive 12m return \u00f7 names in sector"]
     };
 
+    // ----- sheets -----
+    // Both bottom sheets (a name's detail, an explanation) share one set
+    // of mechanics: focus moves in, Tab cycles inside, Esc or the
+    // backdrop closes, and focus returns to whatever opened it. The
+    // explanation can open on top of the detail; Esc peels the top one.
     var epPop = document.getElementById("explain-pop");
+    var epBody = document.getElementById("ep-body");
+    var epFormula = document.getElementById("ep-formula");
+    var epList = document.getElementById("ep-list");
     var epOpener = null;
+    var dpPop = document.getElementById("detail-pop");
+    var dpBody = document.getElementById("dp-body");
+    var dpOpener = null;
+
+    function lockScroll() {
+      document.documentElement.classList.toggle(
+        "sheet-open", !epPop.hidden || !dpPop.hidden);
+    }
+    function focusablesIn(el) {
+      return Array.prototype.filter.call(
+        el.querySelectorAll("button, [href], select, input, [tabindex]:not([tabindex='-1'])"),
+        function (n) { return !n.disabled && n.offsetParent !== null; });
+    }
+    function trapTab(event, card) {
+      var items = focusablesIn(card);
+      if (!items.length) { event.preventDefault(); return; }
+      var first = items[0], last = items[items.length - 1];
+      var current = document.activeElement;
+      if (!card.contains(current)) { event.preventDefault(); first.focus(); }
+      else if (event.shiftKey && current === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && current === last) { event.preventDefault(); first.focus(); }
+    }
+    function returnFocus(opener) {
+      if (opener && document.body.contains(opener)) { opener.focus(); return; }
+      // The opener was repainted away (a watchlist change re-rendered
+      // the list); land on the view itself rather than nowhere.
+      (state.view === "table" ? tableWrap : listEl).focus();
+    }
+
     function openExplain(key, opener) {
       var entry = EXPLAIN[key];
       if (!entry) return;
       document.getElementById("ep-title").textContent = entry[0];
-      document.getElementById("ep-body").textContent = entry[1];
-      document.getElementById("ep-formula").textContent = entry[2];
+      epBody.textContent = entry[1];
+      epFormula.textContent = entry[2];
+      epBody.hidden = false;
+      epFormula.hidden = false;
+      epList.hidden = true;
       epOpener = opener;
       epPop.hidden = false;
+      lockScroll();
+      document.getElementById("ep-close").focus();
+    }
+    function openColumns(opener) {
+      document.getElementById("ep-title").textContent = "What the columns mean";
+      epBody.textContent = "Tap a column heading to sort by it; tap again to flip " +
+        "the direction. A dash means the figure would need more history than " +
+        "the name has, so it is left out rather than measured over less.";
+      epBody.hidden = false;
+      epFormula.hidden = true;
+      epList.textContent = "";
+      TABLE_COLUMNS.forEach(function (key) {
+        var m = METRICS[key];
+        var entry = m.explain && EXPLAIN[m.explain];
+        var dt = document.createElement("dt");
+        dt.textContent = m.label;
+        var dd = document.createElement("dd");
+        dd.textContent = entry ? entry[1]
+          : "Shares outstanding times price, from the provider's quote.";
+        if (entry) {
+          var code = document.createElement("code");
+          code.textContent = entry[2];
+          dd.appendChild(code);
+        }
+        epList.appendChild(dt);
+        epList.appendChild(dd);
+      });
+      epList.hidden = false;
+      epOpener = opener;
+      epPop.hidden = false;
+      lockScroll();
       document.getElementById("ep-close").focus();
     }
     function closeExplain() {
       epPop.hidden = true;
-      if (epOpener) { epOpener.focus(); epOpener = null; }
+      lockScroll();
+      var back = epOpener;
+      epOpener = null;
+      returnFocus(back);
     }
+
+    function openDetail(r, opener) {
+      document.getElementById("dp-ticker").textContent = r.ticker;
+      document.getElementById("dp-name").textContent = r.name;
+      dpBody.textContent = "";
+      dpBody.appendChild(detailList(r));
+      dpOpener = opener;
+      dpPop.hidden = false;
+      dpPop.firstElementChild.scrollTop = 0;
+      lockScroll();
+      document.getElementById("dp-close").focus();
+    }
+    function closeDetail() {
+      dpPop.hidden = true;
+      dpBody.textContent = "";
+      lockScroll();
+      var back = dpOpener;
+      dpOpener = null;
+      returnFocus(back);
+    }
+
     document.addEventListener("click", function (event) {
       var label = event.target.closest ? event.target.closest(".xl") : null;
       if (label) { openExplain(label.getAttribute("data-explain"), label); }
@@ -1915,13 +2469,20 @@
     epPop.addEventListener("click", function (event) {
       if (event.target === epPop) closeExplain();
     });
+    dpPop.addEventListener("click", function (event) {
+      if (event.target === dpPop) closeDetail();
+    });
     document.getElementById("ep-close").addEventListener("click", closeExplain);
+    document.getElementById("dp-close").addEventListener("click", closeDetail);
     document.addEventListener("keydown", function (event) {
-      if (epPop.hidden) return;
-      if (event.key === "Escape") closeExplain();
-      // Close is the sheet's only focusable stop, so holding focus there
-      // is what makes the aria-modal claim true.
-      if (event.key === "Tab") event.preventDefault();
+      var top = !epPop.hidden ? epPop : !dpPop.hidden ? dpPop : null;
+      if (!top) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        if (top === epPop) closeExplain(); else closeDetail();
+      } else if (event.key === "Tab") {
+        trapTab(event, top.firstElementChild);
+      }
     });
 
     function explainLabel(key, text) {
@@ -1941,6 +2502,25 @@
       return b;
     }
 
+    METRIC_ORDER.forEach(function (key) {
+      [sortSelect, displaySelect].forEach(function (sel) {
+        var option = document.createElement("option");
+        option.value = key;
+        option.textContent = METRICS[key].label;
+        sel.appendChild(option);
+      });
+    });
+    loadPrefs();
+    if (!hasHistory) state.display = "cap";
+    displaySelect.value = state.display;
+    sortSelect.value = state.sortKey;
+    sortDirBtn.textContent = state.sortDesc ? "\u2193" : "\u2191";
+    sortDirBtn.setAttribute("aria-label",
+      "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
+    document.querySelectorAll(".viewswitch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === state.view));
+    });
+    renderTableHead();
     renderFilters();
     renderList();
   })();
