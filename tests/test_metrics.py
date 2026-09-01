@@ -75,6 +75,55 @@ class CrossSectionTests(unittest.TestCase):
         self.assertEqual(len(ranked["laggards"]), 1)
 
 
+class LogTrendTests(unittest.TestCase):
+    @staticmethod
+    def exponential(daily, n=252, start=100.0):
+        import math
+        return [
+            {"date": str(i), "adj_close": start * math.exp(daily * i)}
+            for i in range(n)
+        ]
+
+    def test_exact_exponential_recovers_its_rate(self):
+        import math
+        trend = metrics.log_trend(self.exponential(0.001), 252)
+        self.assertAlmostEqual(trend["slope_daily"], 0.001, places=12)
+        self.assertEqual(trend["r2"], 1.0)
+        self.assertEqual(
+            trend["trend_ann_pct"], round((math.exp(0.252) - 1) * 100, 2)
+        )
+
+    def test_flat_series_is_zero_trend_full_fit(self):
+        flat = [{"date": str(i), "adj_close": 50.0} for i in range(252)]
+        trend = metrics.log_trend(flat, 252)
+        self.assertEqual(trend["trend_ann_pct"], 0.0)
+        self.assertEqual(trend["r2"], 1.0)
+
+    def test_declining_series_has_negative_trend(self):
+        trend = metrics.log_trend(self.exponential(-0.002), 252)
+        self.assertLess(trend["trend_ann_pct"], 0)
+        self.assertEqual(trend["r2"], 1.0)
+
+    def test_quality_is_trend_damped_by_r2(self):
+        trend = metrics.log_trend(self.exponential(0.001), 252)
+        self.assertEqual(
+            trend["quality_pct"], round(trend["trend_ann_pct"] * trend["r2"], 2)
+        )
+
+    def test_short_series_yields_none(self):
+        self.assertIsNone(metrics.log_trend(self.exponential(0.001, n=100), 252))
+
+    def test_only_the_window_participates(self):
+        # A wild year before the window must not bend the fit.
+        import math
+        noise = [{"date": "a%d" % i, "adj_close": 5000.0 if i % 2 else 1.0}
+                 for i in range(50)]
+        clean = self.exponential(0.001)
+        trend = metrics.log_trend(noise + clean, 252)
+        self.assertAlmostEqual(trend["slope_daily"], 0.001, places=12)
+        self.assertEqual(trend["r2"], 1.0)
+
+
 class DisplayPayloadTests(unittest.TestCase):
     """What the page inlines must agree with the calculation it came from."""
 
@@ -127,6 +176,38 @@ class DisplayPayloadTests(unittest.TestCase):
                 )
             else:
                 self.assertNotIn("return_3m_pct", row)
+
+    def test_trend_fields_match_the_bars(self):
+        for row in self.display["coverage"]:
+            bars = history.load_series(row["ticker"])["bars"]
+            trend = metrics.log_trend(bars, self.target)
+            if trend is None:
+                self.assertNotIn("trend_ann_pct", row)
+                self.assertNotIn("fit_spark", row)
+                continue
+            self.assertEqual(row["trend_ann_pct"], trend["trend_ann_pct"])
+            self.assertEqual(row["trend_r2"], trend["r2"])
+            self.assertEqual(row["quality_pct"], trend["quality_pct"])
+            self.assertEqual(
+                len(row["fit_spark"]), len(row["cum_return_spark"])
+            )
+
+    def test_fit_spark_is_the_fitted_curve_in_chart_space(self):
+        import math
+        row = next(
+            r for r in self.display["coverage"] if r["ticker"] == "AAPL"
+        )
+        bars = history.load_series("AAPL")["bars"]
+        trend = metrics.log_trend(bars, self.target)
+        window = bars[-self.target:]
+        base = window[0]["adj_close"]
+        indices = history.thin_indices(self.target, len(row["fit_spark"]))
+        for got, i in zip(row["fit_spark"], indices):
+            expected = (
+                math.exp(trend["intercept"] + trend["slope_daily"] * i)
+                / base - 1
+            ) * 100
+            self.assertEqual(got, round(expected, 2))
 
     def test_every_covered_name_gets_a_series(self):
         for row in self.display["coverage"]:

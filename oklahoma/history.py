@@ -95,16 +95,21 @@ def prune(tickers: list[str], directory: str = HISTORY_DIR) -> list[str]:
     return removed
 
 
+def thin_indices(length: int, points: int) -> list[int]:
+    """The evenly spaced indices thin() keeps, endpoints always included."""
+    if length <= points:
+        return list(range(length))
+    step = (length - 1) / (points - 1)
+    return [round(i * step) for i in range(points)]
+
+
 def thin(values: list[float], points: int) -> list[float]:
     """Evenly thin a series down to `points` values for display.
 
     Both endpoints are always kept so the shape starts and ends where the
     data does.
     """
-    if len(values) <= points:
-        return list(values)
-    step = (len(values) - 1) / (points - 1)
-    return [values[round(i * step)] for i in range(points)]
+    return [values[i] for i in thin_indices(len(values), points)]
 
 
 def save_series(ticker: str, bars: list[dict], directory: str = HISTORY_DIR) -> str:

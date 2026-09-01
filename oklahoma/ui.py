@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+from math import exp
 
 from .config import (
     SPARKLINE_POINTS,
@@ -17,9 +18,9 @@ from .config import (
     UI_OUTPUT_PATH,
     UI_TEMPLATE_PATH,
 )
-from .history import load_series, thin
+from .history import load_series, thin, thin_indices
 from .universe import load_changes
-from .metrics import cumulative_returns, rank_by_return, sector_summary
+from .metrics import cumulative_returns, log_trend, rank_by_return, sector_summary
 
 UNIVERSE_PLACEHOLDER = "__UNIVERSE_JSON__"
 HISTORY_PLACEHOLDER = "__HISTORY_JSON__"
@@ -74,6 +75,23 @@ def _display(universe: dict, history_index: dict) -> dict:
             if len(bars) >= TRADING_DAYS_QUARTER:
                 quarter = cumulative_returns(bars, TRADING_DAYS_QUARTER)
                 row["return_3m_pct"] = round(quarter[-1]["cum_return_pct"], 2)
+            trend = log_trend(bars, target)
+            if trend is not None:
+                row["trend_ann_pct"] = trend["trend_ann_pct"]
+                row["trend_r2"] = trend["r2"]
+                row["quality_pct"] = trend["quality_pct"]
+                # The fitted line, mapped into the chart's cumulative-return
+                # space at the same thinned indices as the price series, so
+                # the two curves align point for point. Straight in
+                # log-price space, gently curved here — that is the honest
+                # geometry of an exponential trend on a linear axis.
+                window = bars[-len(series):]
+                base = window[0]["adj_close"]
+                row["fit_spark"] = [
+                    round((exp(trend["intercept"] + trend["slope_daily"] * i)
+                           / base - 1) * 100, 2)
+                    for i in thin_indices(len(series), SPARKLINE_POINTS)
+                ]
         payload["coverage"].append(row)
 
     # Cross-section over names with a full window: mixing a 55-day return
