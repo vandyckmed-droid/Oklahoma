@@ -1553,7 +1553,7 @@
       };
     }
     var METRICS = {
-      cap: { label: "Market cap", short: "Cap", neutral: true,
+      cap: { label: "Market cap", short: "Cap", explain: "cap", neutral: true,
         value: function (r) { return r.market_cap; }, fmt: money },
       ret12: { label: "12-mo return", short: "12-mo", explain: "ret12",
         value: fullOnly("window_return_pct"), fmt: pct },
@@ -1608,7 +1608,9 @@
       rows_.forEach(function (r) { vals[r.ticker] = metricValue(key, r); });
       return rows_.slice().sort(function (a, b) {
         var ra = vals[a.ticker], rb = vals[b.ticker];
-        if (ra == null && rb == null) return 0;
+        // Names without an honest figure sink together, in rank order,
+        // so the dash block is deterministic here rather than by luck.
+        if (ra == null && rb == null) return a.rank - b.rank;
         if (ra == null) return 1;
         if (rb == null) return -1;
         return sign * (ra - rb) || a.rank - b.rank;
@@ -2319,6 +2321,9 @@
     // Every underlined label opens one shared sheet: a plain sentence and
     // the formula, instead of fine print scattered through the page.
     var EXPLAIN = {
+      cap: ["Market cap",
+        "Share price times shares outstanding, from the provider's quote — the market's total price for the whole company. It sets the default order and each name's share of the universe. This is full market cap, not the free-float weighting the index itself uses.",
+        "price \u00d7 shares outstanding"],
       ret12: ["12-month return",
         "Total change in the adjusted close over the last 252 trading days — about one year of sessions. Adjusted closes fold in dividends and splits, so this is total return.",
         "close today \u00f7 first close of the 252-session window \u2212 1"],
@@ -2415,16 +2420,16 @@
       TABLE_COLUMNS.forEach(function (key) {
         var m = METRICS[key];
         var entry = m.explain && EXPLAIN[m.explain];
+        // A column without an explainer is left out rather than given a
+        // borrowed description: silence is never wrong.
+        if (!entry) return;
         var dt = document.createElement("dt");
         dt.textContent = m.label;
         var dd = document.createElement("dd");
-        dd.textContent = entry ? entry[1]
-          : "Shares outstanding times price, from the provider's quote.";
-        if (entry) {
-          var code = document.createElement("code");
-          code.textContent = entry[2];
-          dd.appendChild(code);
-        }
+        dd.textContent = entry[1];
+        var code = document.createElement("code");
+        code.textContent = entry[2];
+        dd.appendChild(code);
         epList.appendChild(dt);
         epList.appendChild(dd);
       });
