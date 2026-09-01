@@ -976,6 +976,8 @@
       } catch (e) { /* per-viewer convenience only */ }
     }
     var watch = loadWatch();
+    watch.forEach(function (t) { if (!rowByTicker[t]) watch.delete(t); });
+    saveWatch();
 
     // The universe arrives ranked by market cap, so "cap" keeps the given
     // order. Return sorts use the 12-month figure; names without one
@@ -1128,7 +1130,7 @@
           pairs.push([
             "Off 1y high",
             offHigh > -0.5 ? "at its high" : offHigh.toFixed(1) + "%",
-            offHigh > -0.5 ? "up" : "flat"
+            offHigh > -0.5 ? "up" : direction(offHigh)
           ]);
         }
         if (cov.window_low != null) {
@@ -1216,6 +1218,8 @@
         var count = document.getElementById("watch-count");
         if (count) count.textContent = watch.size;
         if (state.watchOnly) {
+          var chipEl = document.getElementById("watch-chip");
+          if (chipEl) chipEl.focus();
           renderList();
           return;
         }
@@ -1227,6 +1231,7 @@
             var mark = document.createElement("span");
             mark.className = "star-mark";
             mark.textContent = " \u2605";
+            mark.setAttribute("role", "img");
             mark.setAttribute("aria-label", "on watchlist");
             tick.appendChild(mark);
           }
@@ -1277,6 +1282,7 @@
         var mark = document.createElement("span");
         mark.className = "star-mark";
         mark.textContent = " \u2605";
+        mark.setAttribute("role", "img");
         mark.setAttribute("aria-label", "on watchlist");
         ticker.appendChild(mark);
       }
@@ -1377,7 +1383,11 @@
       if (!shown.length) {
         var li = document.createElement("li");
         li.className = "empty";
-        li.textContent = "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        li.textContent = state.watchOnly && !watch.size
+          ? "Your watchlist is empty. Open a name and tap \u2606 Add to watchlist."
+          : state.watchOnly
+            ? "No watchlist name matches. The \u2605 Watchlist filter is on."
+            : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
         listEl.appendChild(li);
         return;
       }
