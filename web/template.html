@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oklahoma Universe</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
 <style>
@@ -185,6 +190,13 @@
     width: 100%;
     height: 56px;
     overflow: visible;
+  }
+  .detail .caption {
+    margin-bottom: 5px;
+  }
+  .detail .caption span:first-child {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    color: var(--muted);
   }
   .detail .axis {
     display: flex;
@@ -450,6 +462,8 @@
   }
 </style>
 
+</head>
+<body>
 <script id="universe-data" type="application/json">__UNIVERSE_JSON__</script>
 <script id="history-data" type="application/json">__HISTORY_JSON__</script>
 
@@ -544,34 +558,56 @@
 
     var SVG = "http://www.w3.org/2000/svg";
 
-    function sparkPoints(series, width, height) {
+    function sparkPoints(series, width, height, baseline) {
       var lo = Math.min.apply(null, series);
       var hi = Math.max.apply(null, series);
+      if (baseline != null) {
+        lo = Math.min(lo, baseline);
+        hi = Math.max(hi, baseline);
+      }
       var span = hi - lo || 1;
       var step = series.length > 1 ? width / (series.length - 1) : 0;
-      return series.map(function (value, i) {
+      var pts = series.map(function (value, i) {
         return [i * step, height - ((value - lo) / span) * height];
       });
+      pts.baselineY = baseline == null
+        ? height
+        : height - ((baseline - lo) / span) * height;
+      return pts;
     }
 
-    function spark(series, width, height, stroke, withFill) {
+    function spark(series, width, height, stroke, withFill, baseline) {
       var svg = document.createElementNS(SVG, "svg");
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
       svg.setAttribute("preserveAspectRatio", "none");
       svg.setAttribute("aria-hidden", "true");
       if (!series || series.length < 2) return svg;
 
-      var pts = sparkPoints(series, width, height);
+      var pts = sparkPoints(series, width, height, baseline);
       var d = pts.map(function (p, i) {
         return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
       }).join(" ");
+      var floor = pts.baselineY.toFixed(2);
 
       if (withFill) {
         var area = document.createElementNS(SVG, "path");
         area.setAttribute("fill", stroke);
         area.setAttribute("fill-opacity", "0.16");
-        area.setAttribute("d", d + " L" + width + " " + height + " L0 " + height + " Z");
+        area.setAttribute("d", d + " L" + width + " " + floor + " L0 " + floor + " Z");
         svg.appendChild(area);
+      }
+
+      if (baseline != null) {
+        var rule = document.createElementNS(SVG, "line");
+        rule.setAttribute("x1", "0");
+        rule.setAttribute("x2", String(width));
+        rule.setAttribute("y1", floor);
+        rule.setAttribute("y2", floor);
+        rule.setAttribute("stroke-width", "1");
+        rule.setAttribute("stroke-dasharray", "3 4");
+        rule.style.stroke = "var(--faint)";
+        rule.style.opacity = ".55";
+        svg.appendChild(rule);
       }
 
       var line = document.createElementNS(SVG, "path");
@@ -752,12 +788,26 @@
         dl.appendChild(dd);
       });
 
-      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+      var cumSeries = cov && cov.cum_return_spark;
+      if (cumSeries && cumSeries.length > 1) {
         var wrap = document.createElement("div");
         wrap.className = "series";
+
+        var caption = document.createElement("div");
+        caption.className = "axis caption";
+        var label = document.createElement("span");
+        label.textContent = "Cumulative return, " + cov.window_trading_days + " trading days";
+        var final_ = document.createElement("span");
+        final_.className = direction(cov.window_return_pct);
+        final_.textContent = pct(cov.window_return_pct);
+        caption.appendChild(label);
+        caption.appendChild(final_);
+        wrap.appendChild(caption);
+
         var stroke = getComputedStyle(document.documentElement)
           .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
-        wrap.appendChild(spark(cov.sparkline, 300, 56, stroke, true));
+        wrap.appendChild(spark(cumSeries, 300, 56, stroke, true, 0));
+
         var axis = document.createElement("div");
         axis.className = "axis";
         var from = document.createElement("span");
@@ -912,3 +962,5 @@
     renderList();
   })();
 </script>
+</body>
+</html>

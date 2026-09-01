@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T20:56:45Z",
+  "generated_at": "2026-08-31T23:56:49Z",
   "source": {
     "provider": "Financial Modeling Prep",
     "endpoint": "stable/company-screener"
@@ -23,8 +23,8 @@
       "sector": "Technology",
       "industry": "Semiconductors",
       "exchange": "NASDAQ",
-      "market_cap": 5340730500000,
-      "price": 220.5,
+      "market_cap": 5347512380000,
+      "price": 220.78,
       "avg_volume": 140227025,
       "share_classes": [
         "NVDA"
@@ -94,8 +94,8 @@
       "sector": "Industrials",
       "industry": "Aerospace & Defense",
       "exchange": "NASDAQ",
-      "market_cap": 1879655657288,
-      "price": 143.75,
+      "market_cap": 1878871105361,
+      "price": 143.69,
       "avg_volume": 113629159,
       "share_classes": [
         "SPCX"
@@ -136,8 +136,8 @@
       "sector": "Consumer Cyclical",
       "industry": "Auto - Manufacturers",
       "exchange": "NASDAQ",
-      "market_cap": 1453472936466,
-      "price": 368.01,
+      "market_cap": 1453235963622,
+      "price": 367.95,
       "avg_volume": 41278333,
       "share_classes": [
         "TSLA"
@@ -669,8 +669,8 @@
       "sector": "Technology",
       "industry": "Semiconductors",
       "exchange": "NASDAQ",
-      "market_cap": 238165864032,
-      "price": 260.79,
+      "market_cap": 238275453754,
+      "price": 260.91,
       "avg_volume": 8234404,
       "share_classes": [
         "TXN"

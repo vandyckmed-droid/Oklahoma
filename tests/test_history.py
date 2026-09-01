@@ -100,27 +100,19 @@ class SummarizeTests(unittest.TestCase):
         self.assertIsNone(summary["last_adj_close"])
 
 
-class SparklineTests(unittest.TestCase):
+class ThinTests(unittest.TestCase):
     def test_short_series_passes_through(self):
-        bars = history.normalize_series("TEST", [bar("2026-01-01", 1), bar("2026-01-02", 2)])
-        self.assertEqual(history.sparkline(bars, 60), [1.0, 2.0])
+        self.assertEqual(history.thin([1.0, 2.0], 60), [1.0, 2.0])
 
     def test_long_series_is_thinned_to_the_point_count(self):
-        bars = history.normalize_series(
-            "TEST", [bar("2026-%02d-%02d" % (m + 1, d + 1), m * 28 + d)
-                     for m in range(12) for d in range(28)]
-        )
-        thinned = history.sparkline(bars, 60)
-        self.assertEqual(len(thinned), 60)
+        values = [float(i) for i in range(336)]
+        self.assertEqual(len(history.thin(values, 60)), 60)
 
     def test_endpoints_are_preserved(self):
-        bars = history.normalize_series(
-            "TEST", [bar("2026-%02d-%02d" % (m + 1, d + 1), m * 28 + d)
-                     for m in range(12) for d in range(28)]
-        )
-        thinned = history.sparkline(bars, 60)
-        self.assertEqual(thinned[0], bars[0]["adj_close"])
-        self.assertEqual(thinned[-1], bars[-1]["adj_close"])
+        values = [float(i) for i in range(336)]
+        thinned = history.thin(values, 60)
+        self.assertEqual(thinned[0], values[0])
+        self.assertEqual(thinned[-1], values[-1])
 
 
 class StorageTests(unittest.TestCase):
@@ -192,6 +184,17 @@ class CommittedHistoryTests(unittest.TestCase):
     def test_sparklines_are_present_for_the_ui(self):
         for entry in self.index["coverage"]:
             self.assertGreater(len(entry.get("sparkline", [])), 1)
+
+    def test_cumulative_return_sparks_match_the_stated_return(self):
+        # The thinned series keeps its endpoints, so its last value must be
+        # the same number the index reports as the window return.
+        for entry in self.index["coverage"]:
+            spark = entry.get("cum_return_spark", [])
+            self.assertGreater(len(spark), 1)
+            self.assertEqual(spark[0], 0.0)
+            self.assertAlmostEqual(
+                spark[-1], entry["window_return_pct"], places=2
+            )
 
 
 if __name__ == "__main__":

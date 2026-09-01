@@ -14,11 +14,13 @@ oklahoma/config.py     selection rules (size, exchanges, market-cap ladder, hist
 oklahoma/fmp.py        Financial Modeling Prep client, standard library only
 oklahoma/universe.py   build / rank / save / load
 oklahoma/history.py    end-of-day adjusted price history
+oklahoma/metrics.py    calculations over the history (cumulative returns)
 oklahoma/ui.py         renders the universe into a self-contained page
 oklahoma/__main__.py   the CLI
 data/universe.json     the committed universe
 data/history/          one price file per ticker, plus index.json
-web/template.html      page source (fragment: title, styles, markup, script)
+web/template.html      page source, a complete HTML document with two
+                       JSON placeholders
 web/index.html         generated standalone page — open it in a browser
 tests/                 offline tests; no network, no API key
 ```
@@ -37,7 +39,8 @@ python -m oklahoma refresh     # pull from FMP, rewrite data/universe.json + web
 python -m oklahoma history     # pull price history for every name in the universe
 python -m oklahoma show        # print the universe, sectors and history coverage
 python -m oklahoma build-ui    # regenerate web/index.html from the saved data
-python -m oklahoma export-csv  # ticker,date,adj_close rows on stdout
+python -m oklahoma export-csv      # ticker,date,adj_close rows on stdout
+python -m oklahoma export-returns  # ticker,date,cum_return_pct rows on stdout
 ```
 
 Then open `web/index.html` — it is one self-contained file with the data
@@ -131,6 +134,32 @@ Change the window with `--trading-days N` or `HISTORY_TRADING_DAYS`.
 One file per ticker is what makes this expandable: growing the universe adds
 files instead of rewriting one large one, and a single failed symbol never
 corrupts the rest — failures are collected in the index, not raised.
+
+## Calculations
+
+`oklahoma/metrics.py` holds calculations over the stored history. It reads
+and computes; it never fetches or stores, so derived numbers are recomputed
+from `data/history/` on demand and there is no second copy to drift.
+
+The first metric is **daily cumulative return over the 12-month window**:
+each day's total return since the window's first close, starting at 0%.
+`export-returns` emits the full daily series; the history index carries a
+thinned copy per name for the page, where each name's detail shows the
+series against a 0% baseline. A name with less than a full year of history
+is measured over what it has, with `window_trading_days` recording the span.
+
+## Automated refresh
+
+`.github/workflows/refresh.yml` refreshes the dataset every weekday evening
+(01:30 UTC Tue-Sat, after each U.S. session) and can be run by hand from the
+Actions tab. It pulls the universe and history, runs the offline test suite
+against the freshly written files — so bad data from the API fails the run
+instead of landing on `main` — and commits the result directly to `main`
+only when something changed.
+
+It needs one repository secret: **`FMP_API_KEY`** (Settings → Secrets and
+variables → Actions). Until the secret exists, scheduled runs fail at the
+fetch step and the data simply stays at its last committed state.
 
 ## Growing the universe
 

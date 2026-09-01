@@ -24,6 +24,7 @@ from .config import (
     HistoryConfig,
 )
 from .fmp import FMPError, get_api_key, historical_prices
+from .metrics import cumulative_returns
 
 SOURCE = {
     "provider": "Financial Modeling Prep",
@@ -89,16 +90,16 @@ def summarize(ticker: str, bars: list[dict], trading_days: int) -> dict:
     return summary
 
 
-def sparkline(bars: list[dict], points: int) -> list[float]:
-    """Evenly thin the series down to `points` values for display.
+def thin(values: list[float], points: int) -> list[float]:
+    """Evenly thin a series down to `points` values for display.
 
-    The last bar is always kept so the shape ends where the price ends.
+    Both endpoints are always kept so the shape starts and ends where the
+    data does.
     """
-    closes = [bar["adj_close"] for bar in bars]
-    if len(closes) <= points:
-        return closes
-    step = (len(closes) - 1) / (points - 1)
-    return [closes[round(i * step)] for i in range(points)]
+    if len(values) <= points:
+        return list(values)
+    step = (len(values) - 1) / (points - 1)
+    return [values[round(i * step)] for i in range(points)]
 
 
 def save_series(ticker: str, bars: list[dict], directory: str = HISTORY_DIR) -> str:
@@ -168,7 +169,16 @@ def build(
         save_series(ticker, bars, directory)
         entry = summarize(ticker, bars, config.trading_days)
         if sparkline_points:
-            entry["sparkline"] = sparkline(bars, sparkline_points)
+            entry["sparkline"] = thin(
+                [bar["adj_close"] for bar in bars], sparkline_points
+            )
+            entry["cum_return_spark"] = thin(
+                [
+                    point["cum_return_pct"]
+                    for point in cumulative_returns(bars, config.trading_days)
+                ],
+                sparkline_points,
+            )
         coverage.append(entry)
 
     coverage.sort(key=lambda entry: entry["ticker"])
