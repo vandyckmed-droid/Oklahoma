@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from oklahoma import history, metrics, universe as universe_mod
+from oklahoma import history, metrics, ui, universe as universe_mod
 
 
 def bars(*closes):
@@ -46,23 +46,36 @@ class CumulativeReturnTests(unittest.TestCase):
         self.assertEqual(metrics.cumulative_returns([], trading_days=252), [])
 
 
-class CommittedDataTests(unittest.TestCase):
-    """The calculation must agree with the committed index."""
+class DisplayPayloadTests(unittest.TestCase):
+    """What the page inlines must agree with the calculation it came from."""
 
-    def test_final_cumulative_return_matches_the_index(self):
-        index = history.load_index()
-        target = index["criteria"]["trading_days_target"]
-        for entry in index["coverage"]:
+    @classmethod
+    def setUpClass(cls):
+        cls.index = history.load_index()
+        cls.display = ui._display(cls.index)
+        cls.target = cls.index["criteria"]["trading_days_target"]
+
+    def test_every_covered_name_gets_a_series(self):
+        for row in self.display["coverage"]:
+            self.assertGreater(len(row.get("cum_return_spark", [])), 1)
+
+    def test_display_matches_the_metric(self):
+        for row in self.display["coverage"]:
             series = metrics.cumulative_returns(
-                history.load_series(entry["ticker"])["bars"], target
+                history.load_series(row["ticker"])["bars"], self.target
             )
-            with self.subTest(ticker=entry["ticker"]):
-                self.assertEqual(len(series), entry["window_trading_days"])
-                self.assertEqual(series[0]["date"], entry["window_start_date"])
+            with self.subTest(ticker=row["ticker"]):
+                self.assertEqual(len(series), row["window_trading_days"])
+                self.assertEqual(series[0]["date"], row["window_start_date"])
+                self.assertEqual(row["cum_return_spark"][0], 0.0)
                 self.assertAlmostEqual(
+                    row["cum_return_spark"][-1],
                     series[-1]["cum_return_pct"],
-                    entry["window_return_pct"],
                     places=2,
+                )
+                self.assertEqual(
+                    row["window_return_pct"],
+                    round(series[-1]["cum_return_pct"], 2),
                 )
 
 

@@ -49,30 +49,28 @@ def _request(path: str, params: dict, api_key: str, retries: int = 3) -> list | 
     raise FMPError(f"Request failed: {safe_url}: {last_error}")
 
 
-def screen(
-    exchange: str,
-    market_cap_more_than: int,
-    limit: int,
-    api_key: str,
-    country: str = "US",
-) -> list[dict]:
-    """Return actively traded common stocks on one exchange, largest first."""
-    rows = _request(
-        "company-screener",
-        {
-            "exchange": exchange,
-            "country": country,
-            "marketCapMoreThan": market_cap_more_than,
-            "isEtf": "false",
-            "isFund": "false",
-            "isActivelyTrading": "true",
-            "limit": limit,
-        },
-        api_key,
-    )
-    if not isinstance(rows, list):
-        raise FMPError(f"Unexpected screener response for {exchange}: {rows!r}")
+def sp500_constituents(api_key: str) -> list[dict]:
+    """Current S&P 500 membership: symbol, name, sector, sub-sector, CIK."""
+    rows = _request("sp500-constituent", {}, api_key)
+    if not isinstance(rows, list) or not rows:
+        raise FMPError(f"Unexpected constituent response: {rows!r}")
     return rows
+
+
+def batch_quotes(symbols: list[str], api_key: str, chunk: int = 100) -> dict[str, dict]:
+    """Latest quote (price, market cap, exchange) for many symbols at once."""
+    quotes: dict[str, dict] = {}
+    for start in range(0, len(symbols), chunk):
+        rows = _request(
+            "batch-quote",
+            {"symbols": ",".join(symbols[start : start + chunk])},
+            api_key,
+        )
+        if not isinstance(rows, list):
+            raise FMPError(f"Unexpected batch-quote response: {rows!r}")
+        for row in rows:
+            quotes[row["symbol"]] = row
+    return quotes
 
 
 def historical_prices(

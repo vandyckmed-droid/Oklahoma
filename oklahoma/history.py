@@ -24,7 +24,6 @@ from .config import (
     HistoryConfig,
 )
 from .fmp import FMPError, get_api_key, historical_prices
-from .metrics import cumulative_returns
 
 SOURCE = {
     "provider": "Financial Modeling Prep",
@@ -63,31 +62,37 @@ def normalize_series(ticker: str, rows: list[dict]) -> list[dict]:
 
 
 def summarize(ticker: str, bars: list[dict], trading_days: int) -> dict:
-    """Coverage and headline numbers for one ticker.
+    """Coverage facts for one ticker — nothing derivable lives here.
 
     `sufficient` answers the question the universe actually cares about: is
-    there enough history here to run a `trading_days`-long calculation?
+    there enough history to run a `trading_days`-long calculation? Returns,
+    ranges and display series are computed from the bar files on demand
+    (see oklahoma.metrics and oklahoma.ui), so the index cannot disagree
+    with the data it points at.
     """
-    summary = {
+    return {
         "ticker": ticker,
         "trading_days": len(bars),
         "sufficient": len(bars) >= trading_days,
         "start_date": bars[0]["date"] if bars else None,
         "end_date": bars[-1]["date"] if bars else None,
-        "last_adj_close": bars[-1]["adj_close"] if bars else None,
     }
-    if len(bars) >= 2:
-        window = bars[-trading_days:] if len(bars) >= trading_days else bars
-        first, last = window[0]["adj_close"], window[-1]["adj_close"]
-        summary["window_trading_days"] = len(window)
-        summary["window_start_date"] = window[0]["date"]
-        summary["window_return_pct"] = (
-            round((last / first - 1) * 100, 2) if first else None
-        )
-        closes = [bar["adj_close"] for bar in window]
-        summary["window_low"] = min(closes)
-        summary["window_high"] = max(closes)
-    return summary
+
+
+def prune(tickers: list[str], directory: str = HISTORY_DIR) -> list[str]:
+    """Delete series files for tickers no longer in the universe.
+
+    The files are a cache of the vendor's data keyed to current membership;
+    without this, every departure leaves an orphan behind forever.
+    """
+    keep = {os.path.basename(path_for(t)) for t in tickers} | {"index.json"}
+    removed = []
+    if os.path.isdir(directory):
+        for name in sorted(os.listdir(directory)):
+            if name.endswith(".json") and name not in keep:
+                os.remove(os.path.join(directory, name))
+                removed.append(name)
+    return removed
 
 
 def thin(values: list[float], points: int) -> list[float]:
@@ -146,7 +151,6 @@ def build(
     config: HistoryConfig | None = None,
     api_key: str | None = None,
     directory: str = HISTORY_DIR,
-    sparkline_points: int = 0,
 ) -> dict:
     """Fetch every ticker's history, write one file each, return the index."""
     config = config or HistoryConfig.from_env()
@@ -167,19 +171,7 @@ def build(
             failures.append({"ticker": ticker, "error": error})
             continue
         save_series(ticker, bars, directory)
-        entry = summarize(ticker, bars, config.trading_days)
-        if sparkline_points:
-            entry["sparkline"] = thin(
-                [bar["adj_close"] for bar in bars], sparkline_points
-            )
-            entry["cum_return_spark"] = thin(
-                [
-                    point["cum_return_pct"]
-                    for point in cumulative_returns(bars, config.trading_days)
-                ],
-                sparkline_points,
-            )
-        coverage.append(entry)
+        coverage.append(summarize(ticker, bars, config.trading_days))
 
     coverage.sort(key=lambda entry: entry["ticker"])
     covered = [entry for entry in coverage if entry["sufficient"]]

@@ -10,7 +10,6 @@ import sys
 from .config import (
     HISTORY_DIR,
     HISTORY_INDEX_PATH,
-    SPARKLINE_POINTS,
     UNIVERSE_PATH,
     HistoryConfig,
     UniverseConfig,
@@ -30,8 +29,8 @@ def cmd_refresh(args: argparse.Namespace) -> int:
     config = UniverseConfig.from_env()
     if args.size:
         config.size = args.size
-    if args.keep_all_share_classes:
-        config.dedupe_share_classes = False
+    if args.collapse_share_classes:
+        config.collapse_share_classes = True
 
     data = universe_mod.build(config)
     universe_mod.save(data, args.output)
@@ -62,10 +61,10 @@ def cmd_history(args: argparse.Namespace) -> int:
     if args.trading_days:
         config.trading_days = args.trading_days
 
-    index = history_mod.build(
-        tickers, config, sparkline_points=SPARKLINE_POINTS
-    )
+    index = history_mod.build(tickers, config)
     history_mod.save_index(index)
+    for removed in history_mod.prune(tickers):
+        print(f"  pruned departed name: {removed}")
     print(
         f"Wrote {index['count']} histories to {HISTORY_DIR} "
         f"({index['sufficient_count']} with >= {config.trading_days} trading days)"
@@ -150,12 +149,12 @@ def main(argv: list[str] | None = None) -> int:
         "refresh", help="pull the universe from FMP and rewrite the data file"
     )
     refresh.add_argument(
-        "--size", type=int, help="how many names to keep (default 50)"
+        "--size", type=int, help="keep only the largest N names (default: whole index)"
     )
     refresh.add_argument(
-        "--keep-all-share-classes",
+        "--collapse-share-classes",
         action="store_true",
-        help="give each share class its own slot instead of one row per company",
+        help="one row per company (by CIK) instead of mirroring the index's listings",
     )
     refresh.add_argument(
         "--no-ui", action="store_true", help="skip regenerating web/index.html"

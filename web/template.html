@@ -647,8 +647,9 @@
       return sectorCounts[b] - sectorCounts[a] || a.localeCompare(b);
     });
 
+    var sourceName = (universe.source && universe.source.index) || "U.S.-listed companies";
     document.getElementById("subtitle").textContent =
-      universe.count + " largest U.S.-listed companies by market cap · as of " + asOf(universe.generated_at);
+      universe.count + " " + sourceName + " constituents by market cap · as of " + asOf(universe.generated_at);
     document.getElementById("stat-count").textContent = universe.count;
     document.getElementById("stat-cap").textContent = money(totalCap);
     document.getElementById("stat-sectors").textContent = sectors.length;
@@ -681,8 +682,8 @@
     var source = universe.source || {};
     document.getElementById("footer").innerHTML =
       "Data from " + (source.provider || "the configured provider") +
-      ", <code>" + (source.endpoint || "") + "</code>. Universe size and exchanges are set in " +
-      "<code>oklahoma/config.py</code>; run <code>python -m oklahoma refresh --size N</code> to grow it." +
+      ", <code>" + (source.endpoint || "") + "</code>. The universe mirrors current " +
+      sourceName + " membership; <code>python -m oklahoma refresh</code> updates it." +
       (hasHistory
         ? " Prices are split- and dividend-adjusted closes; the page carries a thinned " +
           "series per name, the full history lives in <code>data/history/</code>."
@@ -690,7 +691,39 @@
 
     /* ----- state ----- */
 
-    var state = { query: "", sector: null, grouped: false, open: null };
+    var state = { query: "", sector: null, grouped: false };
+    var openRow = { ticker: null, li: null };
+
+    function closeOpenRow() {
+      if (openRow.li) {
+        var detail = openRow.li.querySelector(".detail");
+        if (detail) detail.remove();
+        var btn = openRow.li.querySelector(".row");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
+      openRow.ticker = null;
+      openRow.li = null;
+    }
+
+    // 503 rows is too many to build in one synchronous pass on a phone,
+    // so the list paints in frame-sized chunks: the first screenful is
+    // instant and the rest streams in. A newer paint cancels an older one.
+    var paintToken = 0;
+    function paintList(items, makeNode) {
+      var token = ++paintToken;
+      listEl.textContent = "";
+      var i = 0;
+      function step() {
+        if (token !== paintToken) return;
+        var frag = document.createDocumentFragment();
+        for (var end = Math.min(i + 80, items.length); i < end; i++) {
+          frag.appendChild(makeNode(items[i]));
+        }
+        listEl.appendChild(frag);
+        if (i < items.length) requestAnimationFrame(step);
+      }
+      step();
+    }
 
     var filtersEl = document.getElementById("filters");
     var listEl = document.getElementById("list");
@@ -715,7 +748,6 @@
       b.appendChild(n);
       b.addEventListener("click", function () {
         state.sector = state.sector === value ? null : value;
-        state.open = null;
         renderFilters();
         renderList();
       });
@@ -825,13 +857,12 @@
     function rowItem(r) {
       var li = document.createElement("li");
       var color = sectorColor(r.sector);
-      var isOpen = state.open === r.ticker;
       var cov = coverage[r.ticker];
 
       var button = document.createElement("button");
       button.type = "button";
       button.className = "row";
-      button.setAttribute("aria-expanded", String(isOpen));
+      button.setAttribute("aria-expanded", "false");
       button.style.setProperty("--sector", color);
 
       var rank = document.createElement("span");
@@ -870,10 +901,10 @@
       capValue.textContent = money(r.market_cap);
       cap.appendChild(capValue);
 
-      if (cov && cov.sparkline && cov.sparkline.length > 1) {
+      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
         var stroke = getComputedStyle(document.documentElement)
           .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
-        var mini = spark(cov.sparkline, 54, 18, stroke, false);
+        var mini = spark(cov.cum_return_spark, 54, 18, stroke, false);
         mini.setAttribute("class", "spark");
         cap.appendChild(mini);
       } else {
@@ -889,12 +920,17 @@
       button.appendChild(main);
       button.appendChild(cap);
       button.addEventListener("click", function () {
-        state.open = isOpen ? null : r.ticker;
-        renderList();
+        var wasOpen = openRow.ticker === r.ticker;
+        closeOpenRow();
+        if (!wasOpen) {
+          button.setAttribute("aria-expanded", "true");
+          li.appendChild(detailList(r));
+          openRow.ticker = r.ticker;
+          openRow.li = li;
+        }
       });
 
       li.appendChild(button);
-      if (isOpen) li.appendChild(detailList(r));
       return li;
     }
 
@@ -918,6 +954,7 @@
     }
 
     function renderList() {
+      closeOpenRow();
       var shown = visible();
       listEl.textContent = "";
       resultEl.textContent =
@@ -933,22 +970,29 @@
         return;
       }
 
+      var items = [];
       if (state.grouped) {
         sectors.forEach(function (s) {
           var group = shown.filter(function (r) { return r.sector === s; });
           if (!group.length) return;
-          listEl.appendChild(sectorHeader(s, group.length));
-          group.forEach(function (r) { listEl.appendChild(rowItem(r)); });
+          items.push({ header: s, count: group.length });
+          group.forEach(function (r) { items.push({ row: r }); });
         });
       } else {
-        shown.forEach(function (r) { listEl.appendChild(rowItem(r)); });
+        shown.forEach(function (r) { items.push({ row: r }); });
       }
+      paintList(items, function (item) {
+        return item.header
+          ? sectorHeader(item.header, item.count)
+          : rowItem(item.row);
+      });
     }
 
+    var searchTimer;
     document.getElementById("search").addEventListener("input", function (event) {
       state.query = event.target.value;
-      state.open = null;
-      renderList();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(renderList, 120);
     });
 
     groupBtn.addEventListener("click", function () {

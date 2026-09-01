@@ -64,6 +64,8 @@ class NormalizeTests(unittest.TestCase):
 
 
 class SummarizeTests(unittest.TestCase):
+    """The index carries coverage facts only; returns live in metrics."""
+
     def setUp(self):
         self.bars = history.normalize_series(
             "TEST",
@@ -74,30 +76,27 @@ class SummarizeTests(unittest.TestCase):
         summary = history.summarize("TEST", self.bars, trading_days=5)
         self.assertTrue(summary["sufficient"])
         self.assertEqual(summary["trading_days"], 10)
+        self.assertEqual(summary["start_date"], "2026-01-01")
+        self.assertEqual(summary["end_date"], "2026-01-10")
 
     def test_flags_a_series_that_is_too_short(self):
         summary = history.summarize("TEST", self.bars, trading_days=252)
         self.assertFalse(summary["sufficient"])
 
-    def test_return_is_measured_over_the_target_window(self):
-        # Last 5 bars run 105 -> 109.
+    def test_carries_no_derivable_numbers(self):
+        # Anything computable from the bars belongs to metrics/ui, so the
+        # index can never disagree with the data it points at.
         summary = history.summarize("TEST", self.bars, trading_days=5)
-        self.assertEqual(summary["window_trading_days"], 5)
-        self.assertEqual(summary["window_start_date"], "2026-01-06")
-        self.assertAlmostEqual(summary["window_return_pct"], (109 / 105 - 1) * 100, places=2)
-        self.assertEqual(summary["window_low"], 105)
-        self.assertEqual(summary["window_high"], 109)
-
-    def test_a_short_series_is_measured_over_what_it_has(self):
-        summary = history.summarize("TEST", self.bars, trading_days=252)
-        self.assertEqual(summary["window_trading_days"], 10)
-        self.assertAlmostEqual(summary["window_return_pct"], (109 / 100 - 1) * 100, places=2)
+        self.assertEqual(
+            sorted(summary),
+            ["end_date", "start_date", "sufficient", "ticker", "trading_days"],
+        )
 
     def test_empty_series_does_not_explode(self):
         summary = history.summarize("TEST", [], trading_days=252)
         self.assertEqual(summary["trading_days"], 0)
         self.assertFalse(summary["sufficient"])
-        self.assertIsNone(summary["last_adj_close"])
+        self.assertIsNone(summary["start_date"])
 
 
 class ThinTests(unittest.TestCase):
@@ -113,6 +112,20 @@ class ThinTests(unittest.TestCase):
         thinned = history.thin(values, 60)
         self.assertEqual(thinned[0], values[0])
         self.assertEqual(thinned[-1], values[-1])
+
+
+class PruneTests(unittest.TestCase):
+    def test_removes_files_for_departed_tickers_only(self):
+        bars_ = history.normalize_series("TEST", [bar("2026-01-01", 1.0)])
+        with tempfile.TemporaryDirectory() as tmp:
+            history.save_series("KEEP", bars_, tmp)
+            history.save_series("GONE", bars_, tmp)
+            with open(os.path.join(tmp, "index.json"), "w") as handle:
+                handle.write("{}")
+            removed = history.prune(["KEEP"], tmp)
+            self.assertEqual(removed, ["GONE.json"])
+            self.assertTrue(os.path.exists(history.path_for("KEEP", tmp)))
+            self.assertTrue(os.path.exists(os.path.join(tmp, "index.json")))
 
 
 class StorageTests(unittest.TestCase):
@@ -156,6 +169,12 @@ class CommittedHistoryTests(unittest.TestCase):
     def test_target_window_is_at_least_252_trading_days(self):
         self.assertGreaterEqual(self.index["criteria"]["trading_days_target"], 252)
 
+    def test_no_orphaned_files(self):
+        tickers = {r["ticker"] for r in self.universe["constituents"]}
+        for name in os.listdir(os.path.dirname(history.path_for("X"))):
+            if name != "index.json":
+                self.assertIn(name[:-5], tickers, f"orphan history file: {name}")
+
     def test_series_are_clean(self):
         target = self.index["criteria"]["trading_days_target"]
         for entry in self.index["coverage"]:
@@ -175,26 +194,12 @@ class CommittedHistoryTests(unittest.TestCase):
                 self.assertEqual(entry["sufficient"], len(bars) >= target)
 
     def test_almost_every_name_covers_the_full_window(self):
-        # A recent IPO legitimately cannot; a widespread shortfall means the
-        # request window shrank and is a real regression.
+        # A recent listing (an index-added spinoff, say) legitimately cannot;
+        # a widespread shortfall means the request window shrank and is a
+        # real regression. Allow up to 2%.
         self.assertGreaterEqual(
-            self.index["sufficient_count"], self.index["count"] - 2
+            self.index["sufficient_count"], int(self.index["count"] * 0.98)
         )
-
-    def test_sparklines_are_present_for_the_ui(self):
-        for entry in self.index["coverage"]:
-            self.assertGreater(len(entry.get("sparkline", [])), 1)
-
-    def test_cumulative_return_sparks_match_the_stated_return(self):
-        # The thinned series keeps its endpoints, so its last value must be
-        # the same number the index reports as the window return.
-        for entry in self.index["coverage"]:
-            spark = entry.get("cum_return_spark", [])
-            self.assertGreater(len(spark), 1)
-            self.assertEqual(spark[0], 0.0)
-            self.assertAlmostEqual(
-                spark[-1], entry["window_return_pct"], places=2
-            )
 
 
 if __name__ == "__main__":

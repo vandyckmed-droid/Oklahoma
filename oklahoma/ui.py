@@ -11,10 +11,46 @@ from __future__ import annotations
 import json
 import os
 
-from .config import UI_OUTPUT_PATH, UI_TEMPLATE_PATH
+from .config import SPARKLINE_POINTS, UI_OUTPUT_PATH, UI_TEMPLATE_PATH
+from .history import load_series, thin
+from .metrics import cumulative_returns
 
 UNIVERSE_PLACEHOLDER = "__UNIVERSE_JSON__"
 HISTORY_PLACEHOLDER = "__HISTORY_JSON__"
+
+
+def _display(history_index: dict) -> dict:
+    """The page's history payload, computed from the bar files.
+
+    The index on disk is a coverage manifest; everything derivable — the
+    window return, range, and the thinned cumulative-return series — is
+    recomputed here from the bars, so the page can never disagree with the
+    data it claims to show.
+    """
+    target = history_index["criteria"]["trading_days_target"]
+    payload = {k: v for k, v in history_index.items() if k != "coverage"}
+    payload["coverage"] = []
+    for entry in history_index["coverage"]:
+        bars = load_series(entry["ticker"])["bars"]
+        row = dict(entry)
+        if bars:
+            row["last_adj_close"] = bars[-1]["adj_close"]
+        series = cumulative_returns(bars, target)
+        if len(series) >= 2:
+            values = [point["cum_return_pct"] for point in series]
+            closes = bars[-len(series):]
+            row["window_trading_days"] = len(series)
+            row["window_start_date"] = series[0]["date"]
+            row["window_return_pct"] = round(values[-1], 2)
+            row["window_low"] = min(bar["adj_close"] for bar in closes)
+            row["window_high"] = max(bar["adj_close"] for bar in closes)
+            # Two decimals is below visual resolution for an 18px chart
+            # and keeps half a megabyte of page from growing further.
+            row["cum_return_spark"] = [
+                round(value, 2) for value in thin(values, SPARKLINE_POINTS)
+            ]
+        payload["coverage"].append(row)
+    return payload
 
 
 def _inline(payload) -> str:
@@ -32,8 +68,9 @@ def render(
     for placeholder in (UNIVERSE_PLACEHOLDER, HISTORY_PLACEHOLDER):
         if placeholder not in template:
             raise ValueError(f"{template_path} is missing {placeholder}")
+    display = _display(history_index) if history_index else None
     return template.replace(UNIVERSE_PLACEHOLDER, _inline(universe)).replace(
-        HISTORY_PLACEHOLDER, _inline(history_index)
+        HISTORY_PLACEHOLDER, _inline(display)
     )
 
 
