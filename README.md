@@ -145,7 +145,21 @@ corrupts the rest — failures are collected in the index, not raised.
 and computes; it never fetches or stores, so derived numbers are recomputed
 from `data/history/` on demand and there is no second copy to drift.
 
-The first metric is **daily cumulative return over the 12-month window**:
+**Log trend.** A least-squares line through ln(adjusted close) over the
+12-month window. On a log scale steady compounding is a straight line, so
+the slope reads as the steady growth rate the year implies (shown
+annualized) and R² measures how much of the year's path that one trend
+explains. **Quality momentum** damps the trend by its reliability —
+`trend %/yr × R²` — the classic quality-adjusted momentum score, and a
+sort key on the page. The fitted line can be overlaid on each name's
+chart; it renders gently curved there because the chart's axis is linear
+while the fit is straight in log space.
+
+Every figure on the page is **tap-to-explain**: underlined labels open a
+sheet with a plain-language sentence and the formula, instead of fine
+print scattered through the layout.
+
+The other headline metric is **daily cumulative return over the 12-month window**:
 each day's total return since the window's first close, starting at 0%.
 `export-returns` emits the full daily series; the page computes its thinned
 copy per name at build time and shows each name's series against a 0%

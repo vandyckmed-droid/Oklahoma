@@ -158,7 +158,6 @@
 
   .star-mark { color: var(--warn); font-size: 11px; }
   .watch-row {
-    grid-column: 1 / -1;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -187,28 +186,17 @@
     color: var(--muted);
   }
   .detail-meta {
-    grid-column: 1 / -1;
-    margin-top: 8px;
+    margin-top: 0;
     font-size: 10.5px;
     line-height: 1.5;
     color: var(--faint);
   }
-  .detail .series {
-    grid-column: 1 / -1;
-    margin-top: 6px;
-  }
+  .detail .series { margin-top: 2px; }
   .detail .series svg {
     display: block;
     width: 100%;
     height: 56px;
     overflow: visible;
-  }
-  .detail .caption {
-    margin-bottom: 5px;
-  }
-  .detail .caption span:first-child {
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    color: var(--muted);
   }
   .detail .axis {
     display: flex;
@@ -427,7 +415,36 @@
   }
   .resultline .linebuttons {
     display: inline-flex;
-    gap: 14px;
+    align-items: center;
+    gap: 10px;
+  }
+  .sort-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--faint);
+  }
+  .sort-wrap select {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 7px;
+    padding: 3px 4px;
+    font: inherit;
+    font-size: 11px;
+    max-width: 118px;
+  }
+  #sortDir {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 7px;
+    padding: 2px 8px;
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: pointer;
   }
   .resultline button {
     border: 0;
@@ -592,16 +609,109 @@
 
   .detail {
     padding: 0 14px 14px 52px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 4px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     font-size: 12.5px;
   }
-  .detail dt { color: var(--faint); }
-  .detail dd {
-    margin: 0;
+  .fact-line {
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .stat-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 9px 12px 10px;
+    background: var(--surface-sunk);
+  }
+  .stat-cell .xl {
+    align-self: flex-start;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .stat-val {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .stat-sub {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    color: var(--faint);
+  }
+
+  .trend-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px 12px;
+    background: var(--surface-sunk);
+  }
+  .tc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .tc-title {
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .fit-toggle {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font: inherit;
+    font-size: 10.5px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .fit-toggle[aria-pressed="true"] {
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+  .fit-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .tc-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-bottom: 8px;
+  }
+  .tc-stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .tc-stat .xl {
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .tc-val {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
   }
 
   .watch-tools[hidden] { display: none; }
@@ -635,6 +745,81 @@
     text-align: center;
     color: var(--muted);
     font-size: 13.5px;
+  }
+
+  .xl {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    border-bottom: 1px dotted var(--faint);
+  }
+  .xl:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  #explain-pop {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0, 0, 0, .5);
+  }
+  #explain-pop[hidden] { display: none; }
+  .ep-card {
+    width: 100%;
+    max-width: 560px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px 14px 0 0;
+    padding: 18px 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .ep-card h2 {
+    margin: 0 0 6px;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .ep-card p {
+    margin: 0 0 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .ep-card code {
+    display: block;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--surface-sunk);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 8px 10px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+  }
+  .ep-card button {
+    border: 1px solid var(--line);
+    background: var(--surface-sunk);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .ep-card button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
   footer {
@@ -679,8 +864,8 @@
       <thead>
         <tr>
           <th scope="col">Sector</th>
-          <th scope="col">Median return</th>
-          <th scope="col">% of names up</th>
+          <th scope="col"><button type="button" class="xl" data-explain="median">Median return</button></th>
+          <th scope="col"><button type="button" class="xl" data-explain="breadth">% of names up</button></th>
         </tr>
       </thead>
       <tbody id="xs-sectors"></tbody>
@@ -703,8 +888,16 @@
   <div class="resultline">
     <span id="resultcount" aria-live="polite"></span>
     <span class="linebuttons">
-      <button id="sortToggle" type="button">Sort: cap</button>
-      <button id="groupToggle" type="button" aria-pressed="false">Group by sector</button>
+      <label class="sort-wrap">
+        <select id="sortKey" aria-label="Sort by">
+          <option value="cap">Market cap</option>
+          <option value="ret12">12-mo return</option>
+          <option value="ret3">3-mo return</option>
+          <option value="quality">Quality momentum</option>
+        </select>
+      </label>
+      <button id="sortDir" type="button" aria-label="Sort direction: descending">↓</button>
+      <button id="groupToggle" type="button" aria-pressed="false" aria-label="Group by sector">Group</button>
     </span>
   </div>
 
@@ -717,6 +910,15 @@
   <ul class="list" id="list"></ul>
 
   <footer id="footer"></footer>
+</div>
+
+<div id="explain-pop" hidden role="dialog" aria-modal="true" aria-labelledby="ep-title">
+  <div class="ep-card">
+    <h2 id="ep-title"></h2>
+    <p id="ep-body"></p>
+    <code id="ep-formula"></code>
+    <button id="ep-close" type="button">Close</button>
+  </div>
 </div>
 
 <script>
@@ -772,9 +974,9 @@
 
     var SVG = "http://www.w3.org/2000/svg";
 
-    function sparkPoints(series, width, height, baseline) {
-      var lo = Math.min.apply(null, series);
-      var hi = Math.max.apply(null, series);
+    function sparkPoints(series, width, height, baseline, domain) {
+      var lo = Math.min.apply(null, domain || series);
+      var hi = Math.max.apply(null, domain || series);
       if (baseline != null) {
         lo = Math.min(lo, baseline);
         hi = Math.max(hi, baseline);
@@ -790,14 +992,15 @@
       return pts;
     }
 
-    function spark(series, width, height, stroke, withFill, baseline) {
+    function spark(series, width, height, stroke, withFill, baseline, overlay) {
       var svg = document.createElementNS(SVG, "svg");
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
       svg.setAttribute("preserveAspectRatio", "none");
       svg.setAttribute("aria-hidden", "true");
       if (!series || series.length < 2) return svg;
 
-      var pts = sparkPoints(series, width, height, baseline);
+      var domain = overlay ? series.concat(overlay) : null;
+      var pts = sparkPoints(series, width, height, baseline, domain);
       var d = pts.map(function (p, i) {
         return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
       }).join(" ");
@@ -832,6 +1035,20 @@
       line.setAttribute("stroke-linecap", "round");
       line.setAttribute("stroke-linejoin", "round");
       svg.appendChild(line);
+
+      if (overlay && overlay.length > 1) {
+        var opts = sparkPoints(overlay, width, height, baseline, domain);
+        var od = opts.map(function (p, i) {
+          return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
+        }).join(" ");
+        var fitLine = document.createElementNS(SVG, "path");
+        fitLine.setAttribute("d", od);
+        fitLine.setAttribute("fill", "none");
+        fitLine.setAttribute("stroke-width", "1.3");
+        fitLine.setAttribute("stroke-dasharray", "4 3");
+        fitLine.style.stroke = "var(--warn)";
+        svg.appendChild(fitLine);
+      }
 
       // The endpoint is where the price actually is; mark it.
       var end = pts[pts.length - 1];
@@ -1012,7 +1229,10 @@
 
     /* ----- state ----- */
 
-    var state = { query: "", sector: null, grouped: false, sort: "cap", watchOnly: false };
+    var state = {
+      query: "", sector: null, grouped: false,
+      sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false
+    };
     var collapsedSectors = new Set();
 
     // The watchlist lives in this browser only (localStorage) — a personal
@@ -1037,10 +1257,17 @@
     // The universe arrives ranked by market cap, so "cap" keeps the given
     // order. Return sorts use the 12-month figure; names without one
     // (too little history) always sink to the bottom.
+    var SORT_FIELDS = {
+      ret12: "window_return_pct",
+      ret3: "return_3m_pct",
+      quality: "quality_pct"
+    };
     function ordered(rows_) {
-      if (state.sort === "cap") return rows_;
-      var field = state.sort.indexOf("3m") === 0 ? "return_3m_pct" : "window_return_pct";
-      var sign = state.sort.slice(-3) === "asc" ? 1 : -1;
+      if (state.sortKey === "cap") {
+        return state.sortDesc ? rows_ : rows_.slice().reverse();
+      }
+      var field = SORT_FIELDS[state.sortKey];
+      var sign = state.sortDesc ? -1 : 1;
       return rows_.slice().sort(function (a, b) {
         var ca = coverage[a.ticker], cb = coverage[b.ticker];
         var ra = ca && ca[field] != null ? ca[field] : null;
@@ -1164,86 +1391,126 @@
     }
 
     function detailList(r) {
-      var dl = document.createElement("dl");
+      var dl = document.createElement("div");
       dl.className = "detail";
       var cov = coverage[r.ticker];
-      var pairs = [
-        ["Sector", r.sector],
-        ["Industry", r.industry || "—"],
-        ["Market cap", money(r.market_cap) + " · " +
-          ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe"]
-      ];
-      if (cov && cov.window_return_pct != null) {
-        pairs.push([
-          cov.window_trading_days + "-day return",
-          pct(cov.window_return_pct),
-          direction(cov.window_return_pct)
-        ]);
-        if (cov.return_3m_pct != null) {
-          pairs.push([
-            "3-month return",
-            pct(cov.return_3m_pct),
-            direction(cov.return_3m_pct)
-          ]);
+
+      // Identity in one quiet line; the numbers get the structure.
+      var facts = document.createElement("div");
+      facts.className = "fact-line";
+      var bits = [r.sector, r.industry,
+        money(r.market_cap) + " (" + ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe)"];
+      if (r.share_classes && r.share_classes.length > 1) {
+        bits.push("classes " + r.share_classes.join(" + "));
+      }
+      facts.textContent = bits.filter(Boolean).join(" \u00b7 ");
+      dl.appendChild(facts);
+
+      function statCell(key, label, value, cls, sub) {
+        var cell = document.createElement("div");
+        cell.className = "stat-cell";
+        cell.appendChild(explainLabel(key, label));
+        var v = document.createElement("span");
+        v.className = "stat-val" + (cls ? " " + cls : "");
+        v.textContent = value;
+        cell.appendChild(v);
+        if (sub) {
+          var sb = document.createElement("span");
+          sb.className = "stat-sub";
+          sb.textContent = sub;
+          cell.appendChild(sb);
         }
-        // Context that answers "why is this one interesting": how the name
-        // stands against its own sector, and where it sits in its range.
-        var med = medianBySector[r.sector];
-        if (med != null && cov.sufficient) {
-          var delta = cov.window_return_pct - med;
-          pairs.push([
-            "Vs sector median",
-            (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts (median " + pct(med) + ")",
-            direction(delta)
-          ]);
+        return cell;
+      }
+
+      if (cov && cov.window_return_pct != null) {
+        var grid = document.createElement("div");
+        grid.className = "stat-grid";
+        grid.appendChild(statCell("ret12", "12-mo return",
+          pct(cov.window_return_pct), direction(cov.window_return_pct)));
+        if (cov.return_3m_pct != null) {
+          grid.appendChild(statCell("ret3", "3-mo return",
+            pct(cov.return_3m_pct), direction(cov.return_3m_pct)));
         }
         if (cov.window_high != null && cov.last_adj_close != null) {
           var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
-          pairs.push([
-            "Off 1y high",
+          grid.appendChild(statCell("offhigh", "Off 1y high",
             offHigh > -0.5 ? "at its high" : offHigh.toFixed(1) + "%",
-            offHigh > -0.5 ? "up" : direction(offHigh)
-          ]);
+            offHigh > -0.5 ? "up" : direction(offHigh)));
         }
-        if (cov.window_low != null) {
-          pairs.push([
-            "Adj. close range",
-            "$" + cov.window_low.toLocaleString() + " – $" + cov.window_high.toLocaleString()
-          ]);
+        var med = medianBySector[r.sector];
+        if (med != null && cov.sufficient) {
+          var delta = cov.window_return_pct - med;
+          grid.appendChild(statCell("vsmedian", "Vs sector",
+            (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts",
+            direction(delta), "median " + pct(med)));
         }
+        dl.appendChild(grid);
       }
-      if (r.share_classes && r.share_classes.length > 1) {
-        pairs.push(["Share classes", r.share_classes.join(", ")]);
-      }
-      pairs.forEach(function (pair) {
-        var dt = document.createElement("dt");
-        dt.textContent = pair[0];
-        var dd = document.createElement("dd");
-        dd.textContent = pair[1];
-        if (pair[2]) dd.className = pair[2];
-        dl.appendChild(dt);
-        dl.appendChild(dd);
-      });
 
       var cumSeries = cov && cov.cum_return_spark;
       if (cumSeries && cumSeries.length > 1) {
-        var wrap = document.createElement("div");
-        wrap.className = "series";
+        var card = document.createElement("div");
+        card.className = "trend-card";
 
-        var caption = document.createElement("div");
-        caption.className = "axis caption";
-        var label = document.createElement("span");
-        label.textContent = "Cumulative return, " + cov.window_trading_days + " trading days";
-        var final_ = document.createElement("span");
-        final_.className = direction(cov.window_return_pct);
-        final_.textContent = pct(cov.window_return_pct);
-        caption.appendChild(label);
-        caption.appendChild(final_);
-        wrap.appendChild(caption);
+        var head = document.createElement("div");
+        head.className = "tc-head";
+        var title = document.createElement("span");
+        title.className = "tc-title";
+        title.textContent = "Price path, " + cov.window_trading_days + " trading days";
+        head.appendChild(title);
+        card.appendChild(head);
 
-        var stroke = getComputedStyle(document.documentElement)
-          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
-        wrap.appendChild(spark(cumSeries, 300, 56, stroke, true, 0));
+        var hasFit = cov.fit_spark && cov.fit_spark.length > 1;
+        if (hasFit) {
+          var stats = document.createElement("div");
+          stats.className = "tc-stats";
+          function tcStat(key, label, value, cls) {
+            var wrap = document.createElement("span");
+            wrap.className = "tc-stat";
+            wrap.appendChild(explainLabel(key, label));
+            var v = document.createElement("span");
+            v.className = "tc-val" + (cls ? " " + cls : "");
+            v.textContent = value;
+            wrap.appendChild(v);
+            return wrap;
+          }
+          stats.appendChild(tcStat("trend", "Trend",
+            pct(cov.trend_ann_pct) + "/yr", direction(cov.trend_ann_pct)));
+          stats.appendChild(tcStat("r2", "R\u00b2", cov.trend_r2.toFixed(2)));
+          stats.appendChild(tcStat("quality", "Quality",
+            pct(cov.quality_pct) + "/yr", direction(cov.quality_pct)));
+          card.appendChild(stats);
+
+          var toggle = document.createElement("button");
+          toggle.type = "button";
+          toggle.className = "fit-toggle";
+          head.appendChild(toggle);
+        }
+
+        var chartHolder = document.createElement("div");
+        chartHolder.className = "series";
+        card.appendChild(chartHolder);
+        function renderChart() {
+          chartHolder.textContent = "";
+          var stroke = getComputedStyle(document.documentElement)
+            .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
+          chartHolder.appendChild(spark(
+            cumSeries, 300, 56, stroke, true, 0,
+            hasFit && state.showTrend ? cov.fit_spark : null
+          ));
+          if (hasFit) {
+            toggle.textContent = state.showTrend ? "Hide trend line" : "Show trend line";
+            toggle.setAttribute("aria-pressed", String(state.showTrend));
+          }
+        }
+        if (hasFit) {
+          toggle.addEventListener("click", function () {
+            state.showTrend = !state.showTrend;
+            renderChart();
+          });
+        }
+        renderChart();
 
         var axis = document.createElement("div");
         axis.className = "axis";
@@ -1253,12 +1520,13 @@
         to.textContent = cov.end_date;
         axis.appendChild(from);
         axis.appendChild(to);
-        wrap.appendChild(axis);
-        dl.appendChild(wrap);
+        card.appendChild(axis);
+        dl.appendChild(card);
       }
 
       var watchRow = document.createElement("div");
       watchRow.className = "watch-row";
+      watchRow.style.marginTop = "0";
       var watchBtn = document.createElement("button");
       watchBtn.type = "button";
       watchBtn.className = "watch-btn";
@@ -1321,6 +1589,10 @@
         if (r.exchange) bits.push(r.exchange);
         bits.push(cov.trading_days + " trading days, " +
           cov.start_date + " \u2192 " + cov.end_date);
+        if (cov.window_low != null) {
+          bits.push("range $" + cov.window_low.toLocaleString() +
+            "\u2013$" + cov.window_high.toLocaleString());
+        }
         if (cov.last_adj_close != null) {
           bits.push("last adj. close $" + cov.last_adj_close.toLocaleString());
         }
@@ -1557,29 +1829,95 @@
       }
     });
 
-    var SORT_STATES = [
-      { key: "cap", label: "Sort: cap" },
-      { key: "ret-desc", label: "Sort: 12m \u2193" },
-      { key: "ret-asc", label: "Sort: 12m \u2191" },
-      { key: "3m-desc", label: "Sort: 3m \u2193" },
-      { key: "3m-asc", label: "Sort: 3m \u2191" }
-    ];
-    var sortBtn = document.getElementById("sortToggle");
-    sortBtn.addEventListener("click", function () {
-      var next =
-        (SORT_STATES.findIndex(function (s_) { return s_.key === state.sort; }) + 1) %
-        SORT_STATES.length;
-      state.sort = SORT_STATES[next].key;
-      sortBtn.textContent = SORT_STATES[next].label;
+    document.getElementById("sortKey").addEventListener("change", function (event) {
+      state.sortKey = event.target.value;
+      renderList();
+    });
+    var sortDirBtn = document.getElementById("sortDir");
+    sortDirBtn.addEventListener("click", function () {
+      state.sortDesc = !state.sortDesc;
+      sortDirBtn.textContent = state.sortDesc ? "\u2193" : "\u2191";
+      sortDirBtn.setAttribute("aria-label",
+        "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
       renderList();
     });
 
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
       groupBtn.setAttribute("aria-pressed", String(state.grouped));
-      groupBtn.textContent = state.grouped ? "Ungroup" : "Group by sector";
+      groupBtn.textContent = state.grouped ? "Ungroup" : "Group";
       renderList();
     });
+
+    // ----- tap-to-explain -----
+    // Every underlined label opens one shared sheet: a plain sentence and
+    // the formula, instead of fine print scattered through the page.
+    var EXPLAIN = {
+      ret12: ["12-month return",
+        "Total change in the adjusted close over the last 252 trading days — about one year of sessions. Adjusted closes fold in dividends and splits, so this is total return.",
+        "close today \u00f7 close 252 sessions ago \u2212 1"],
+      ret3: ["3-month return",
+        "Total change in the adjusted close over the last 63 trading days — about one quarter. Fresh momentum, against the 12-month figure's longer memory.",
+        "close today \u00f7 close 63 sessions ago \u2212 1"],
+      offhigh: ["Off 1-year high",
+        "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
+        "close today \u00f7 year's highest close \u2212 1"],
+      vsmedian: ["Vs sector median",
+        "This name's 12-month return minus the median 12-month return of its sector, in percentage points. Separates a genuine standout from a name merely riding a strong sector.",
+        "name's 12m return \u2212 sector median 12m return"],
+      trend: ["12-month log trend",
+        "A straight line fitted to the logarithm of the daily adjusted closes over the past year. On a log scale, steady compounding is a straight line — so the slope reads as the steady growth rate the year implies, shown annualized. The dashed line on the chart is this fit.",
+        "slope of best-fit line through ln(close) vs day, compounded over 252 days"],
+      r2: ["R\u00b2",
+        "How much of the year's path the straight trend line explains, from 0 to 1. Near 1: the name ground steadily along its trend. Near 0: the outcome came from swings the trend does not describe.",
+        "1 \u2212 variance of residuals \u00f7 variance of ln(close)"],
+      quality: ["Quality momentum",
+        "The trend's growth rate damped by how reliable the trend was. A steep but chaotic year scores lower than a steady climb — the classic quality-adjusted momentum score.",
+        "trend %/yr \u00d7 R\u00b2"],
+      median: ["Median return",
+        "The middle 12-month return among the sector's names — half did better, half worse. Resistant to one huge winner dragging the average.",
+        "middle value of the sector's 12-month returns"],
+      breadth: ["% of names up",
+        "The share of the sector's names whose 12-month return is positive. The guard on the median: a sector can look healthy on three winners, and breadth says so.",
+        "names with positive 12m return \u00f7 names in sector"]
+    };
+
+    var epPop = document.getElementById("explain-pop");
+    var epOpener = null;
+    function openExplain(key, opener) {
+      var entry = EXPLAIN[key];
+      if (!entry) return;
+      document.getElementById("ep-title").textContent = entry[0];
+      document.getElementById("ep-body").textContent = entry[1];
+      document.getElementById("ep-formula").textContent = entry[2];
+      epOpener = opener;
+      epPop.hidden = false;
+      document.getElementById("ep-close").focus();
+    }
+    function closeExplain() {
+      epPop.hidden = true;
+      if (epOpener) { epOpener.focus(); epOpener = null; }
+    }
+    document.addEventListener("click", function (event) {
+      var label = event.target.closest ? event.target.closest(".xl") : null;
+      if (label) { openExplain(label.getAttribute("data-explain"), label); }
+    });
+    epPop.addEventListener("click", function (event) {
+      if (event.target === epPop) closeExplain();
+    });
+    document.getElementById("ep-close").addEventListener("click", closeExplain);
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !epPop.hidden) closeExplain();
+    });
+
+    function explainLabel(key, text) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "xl";
+      b.setAttribute("data-explain", key);
+      b.textContent = text;
+      return b;
+    }
 
     renderFilters();
     renderList();

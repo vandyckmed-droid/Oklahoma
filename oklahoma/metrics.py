@@ -75,3 +75,48 @@ def rank_by_return(rows: list[dict], count: int = 5) -> dict:
         "leaders": [trim(row) for row in ordered[:count]],
         "laggards": [trim(row) for row in ordered[::-1][:count]],
     }
+
+
+def log_trend(bars: list[dict], trading_days: int = TRADING_DAYS_TARGET) -> dict | None:
+    """Least-squares line through ln(adjusted close) over the window.
+
+    Fitting the log makes a constant growth rate a straight line, so the
+    slope is the compound daily growth and R² measures how much of the
+    year's path one steady trend explains. Returns None when the series
+    is shorter than the window — a 54-day fit is not a 12-month trend.
+
+    Closed-form OLS: b = cov(x, y) / var(x), a = mean(y) - b * mean(x),
+    with x the trading-day index and y = ln(adj_close).
+    """
+    from math import exp, log
+
+    if len(bars) < trading_days:
+        return None
+    window = bars[-trading_days:]
+    ys = [log(bar["adj_close"]) for bar in window]
+    n = len(ys)
+    mean_x = (n - 1) / 2
+    mean_y = sum(ys) / n
+    var_x = sum((i - mean_x) ** 2 for i in range(n))
+    cov_xy = sum((i - mean_x) * (y - mean_y) for i, y in enumerate(ys))
+    slope = cov_xy / var_x
+    intercept = mean_y - slope * mean_x
+
+    ss_total = sum((y - mean_y) ** 2 for y in ys)
+    ss_residual = sum(
+        (y - (intercept + slope * i)) ** 2 for i, y in enumerate(ys)
+    )
+    # A flat series has no variance to explain; float summation leaves
+    # ss_total at ~1e-30 rather than 0, so the guard must be a tolerance.
+    r2 = 1.0 if ss_total < 1e-18 * n else 1 - ss_residual / ss_total
+
+    annual_pct = (exp(slope * 252) - 1) * 100
+    return {
+        "slope_daily": slope,
+        "intercept": intercept,
+        "trend_ann_pct": round(annual_pct, 2),
+        "r2": round(r2, 3),
+        # Slope damped by fit quality: the classic quality-adjusted
+        # momentum score, in the same %/yr units as the trend itself.
+        "quality_pct": round(annual_pct * r2, 2),
+    }
