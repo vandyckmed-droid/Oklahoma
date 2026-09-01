@@ -104,37 +104,6 @@
     font-size: 13px;
   }
 
-  /* ---------- summary ---------- */
-
-  .summary {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .stat {
-    background: var(--surface);
-    padding: 12px 12px 13px;
-  }
-  .stat dt {
-    margin: 0 0 4px;
-    font-size: 10px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .stat dd {
-    margin: 0;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 19px;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -.02em;
-  }
-
   .note {
     margin: 10px 2px 0;
     font-size: 12px;
@@ -187,6 +156,43 @@
     white-space: nowrap;
   }
 
+  .star-mark { color: var(--warn); font-size: 11px; }
+  .watch-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .watch-btn {
+    border: 1px solid var(--line);
+    background: var(--surface-sunk);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .watch-btn[aria-pressed="true"] {
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+  .watch-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .watch-ctx {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .detail-meta {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    font-size: 10.5px;
+    line-height: 1.5;
+    color: var(--faint);
+  }
   .detail .series {
     grid-column: 1 / -1;
     margin-top: 6px;
@@ -503,12 +509,23 @@
     min-width: 0;
   }
   .company {
-    display: block;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
     font-size: 12.5px;
     color: var(--muted);
+  }
+  .company-name {
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .cap-sub {
+    flex: none;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--faint);
   }
   .cap {
     text-align: right;
@@ -604,14 +621,6 @@
     <p id="subtitle"></p>
   </header>
 
-  <dl class="summary">
-    <div class="stat"><dt>Names</dt><dd id="stat-count">&mdash;</dd></div>
-    <div class="stat"><dt>Market cap</dt><dd id="stat-cap">&mdash;</dd></div>
-    <div class="stat"><dt>Sectors</dt><dd id="stat-sectors">&mdash;</dd></div>
-    <div class="stat" id="stat-history-tile" hidden>
-      <dt id="stat-history-label">History</dt><dd id="stat-history">&mdash;</dd>
-    </div>
-  </dl>
   <p class="note stale" id="stale-note" hidden></p>
   <p class="note" id="history-note" hidden></p>
   <p class="note" id="changes-note" hidden></p>
@@ -800,11 +809,8 @@
 
     var sourceName = (universe.source && universe.source.index) || "U.S.-listed companies";
     document.getElementById("subtitle").textContent =
-      universe.count + " " + sourceName + " constituents by market cap · as of " + asOf(universe.generated_at);
-    document.getElementById("stat-count").textContent = universe.count;
-    document.getElementById("stat-cap").textContent = money(totalCap);
-    document.getElementById("stat-sectors").textContent = sectors.length;
-
+      universe.count + " " + sourceName + " constituents · " + money(totalCap) +
+      " · " + sectors.length + " sectors · as of " + asOf(universe.generated_at);
     var ageDays = (Date.now() - new Date(universe.generated_at)) / 86400000;
     if (ageDays > 5) {
       var stale = document.getElementById("stale-note");
@@ -816,11 +822,6 @@
 
     if (hasHistory) {
       var target = history.criteria.trading_days_target;
-      document.getElementById("stat-history-tile").hidden = false;
-      document.getElementById("stat-history-label").textContent = target + "d history";
-      document.getElementById("stat-history").textContent =
-        history.sufficient_count + "/" + history.count;
-
       var short = history.coverage.filter(function (e) { return !e.sufficient; });
       var note = document.getElementById("history-note");
       note.hidden = false;
@@ -855,6 +856,12 @@
     }
 
     var cross = history && history.cross_section;
+    var rowByTicker = {};
+    rows.forEach(function (r) { rowByTicker[r.ticker] = r; });
+    var medianBySector = {};
+    ((cross && cross.sectors) || []).forEach(function (row) {
+      medianBySector[row.sector] = row.median_return_pct;
+    });
     if (cross) {
       document.getElementById("cross").hidden = false;
       document.getElementById("cross-title").textContent =
@@ -951,7 +958,26 @@
 
     /* ----- state ----- */
 
-    var state = { query: "", sector: null, grouped: false, sort: "cap" };
+    var state = { query: "", sector: null, grouped: false, sort: "cap", watchOnly: false };
+
+    // The watchlist lives in this browser only (localStorage) — a personal
+    // shortlist, not synced state. Storage can be unavailable (private
+    // windows, blocked site data), so every touch is guarded and the page
+    // works identically with nothing stored.
+    var WATCH_KEY = "oklahoma-watchlist";
+    function loadWatch() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(WATCH_KEY) || "[]"));
+      } catch (e) { return new Set(); }
+    }
+    function saveWatch() {
+      try {
+        localStorage.setItem(WATCH_KEY, JSON.stringify(Array.from(watch)));
+      } catch (e) { /* per-viewer convenience only */ }
+    }
+    var watch = loadWatch();
+    watch.forEach(function (t) { if (!rowByTicker[t]) watch.delete(t); });
+    saveWatch();
 
     // The universe arrives ranked by market cap, so "cap" keeps the given
     // order. Return sorts use the 12-month figure; names without one
@@ -1034,6 +1060,24 @@
     function renderFilters() {
       filtersEl.textContent = "";
       filtersEl.appendChild(chip("All", null, rows.length, null));
+
+      var wchip = document.createElement("button");
+      wchip.type = "button";
+      wchip.className = "chip";
+      wchip.id = "watch-chip";
+      wchip.setAttribute("aria-pressed", String(state.watchOnly));
+      wchip.appendChild(document.createTextNode("\u2605 Watchlist"));
+      var wn = document.createElement("span");
+      wn.className = "n";
+      wn.id = "watch-count";
+      wn.textContent = watch.size;
+      wchip.appendChild(wn);
+      wchip.addEventListener("click", function () {
+        state.watchOnly = !state.watchOnly;
+        renderFilters();
+        renderList();
+      });
+      filtersEl.appendChild(wchip);
       sectors.forEach(function (s) {
         filtersEl.appendChild(chip(s, s, sectorCounts[s], sectorColor(s)));
       });
@@ -1042,6 +1086,7 @@
     function visible() {
       var q = state.query.trim().toLowerCase();
       return rows.filter(function (r) {
+        if (state.watchOnly && !watch.has(r.ticker)) return false;
         if (state.sector && r.sector !== state.sector) return false;
         if (!q) return true;
         return (
@@ -1056,29 +1101,36 @@
     function detailList(r) {
       var dl = document.createElement("dl");
       dl.className = "detail";
+      var cov = coverage[r.ticker];
       var pairs = [
         ["Sector", r.sector],
         ["Industry", r.industry || "—"],
-        ["Exchange", r.exchange || "—"],
-        ["Market cap", "$" + r.market_cap.toLocaleString()],
-        ["Share of universe", ((r.market_cap / totalCap) * 100).toFixed(2) + "%"]
+        ["Market cap", money(r.market_cap) + " · " +
+          ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe"]
       ];
-      if (r.price != null) pairs.push(["Last price", "$" + r.price.toLocaleString()]);
-      if (r.share_classes && r.share_classes.length > 1) {
-        pairs.push(["Share classes", r.share_classes.join(", ")]);
-      }
-
-      var cov = coverage[r.ticker];
-      if (cov) {
-        pairs.push(["Trading days", cov.trading_days + (cov.sufficient ? "" : " — short")]);
-        pairs.push(["Loaded", cov.start_date + " \u2192 " + cov.end_date]);
-        if (cov.last_adj_close != null) {
-          pairs.push(["Last adj. close", "$" + cov.last_adj_close.toLocaleString()]);
-        }
-        if (cov.window_return_pct != null) {
+      if (cov && cov.window_return_pct != null) {
+        pairs.push([
+          cov.window_trading_days + "-day return",
+          pct(cov.window_return_pct),
+          direction(cov.window_return_pct)
+        ]);
+        // Context that answers "why is this one interesting": how the name
+        // stands against its own sector, and where it sits in its range.
+        var med = medianBySector[r.sector];
+        if (med != null && cov.sufficient) {
+          var delta = cov.window_return_pct - med;
           pairs.push([
-            cov.window_trading_days + "-day return",
-            pct(cov.window_return_pct)
+            "Vs sector median",
+            (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts (median " + pct(med) + ")",
+            direction(delta)
+          ]);
+        }
+        if (cov.window_high != null && cov.last_adj_close != null) {
+          var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
+          pairs.push([
+            "Off 1y high",
+            offHigh > -0.5 ? "at its high" : offHigh.toFixed(1) + "%",
+            offHigh > -0.5 ? "up" : direction(offHigh)
           ]);
         }
         if (cov.window_low != null) {
@@ -1088,11 +1140,15 @@
           ]);
         }
       }
+      if (r.share_classes && r.share_classes.length > 1) {
+        pairs.push(["Share classes", r.share_classes.join(", ")]);
+      }
       pairs.forEach(function (pair) {
         var dt = document.createElement("dt");
         dt.textContent = pair[0];
         var dd = document.createElement("dd");
         dd.textContent = pair[1];
+        if (pair[2]) dd.className = pair[2];
         dl.appendChild(dt);
         dl.appendChild(dd);
       });
@@ -1128,6 +1184,77 @@
         wrap.appendChild(axis);
         dl.appendChild(wrap);
       }
+
+      var watchRow = document.createElement("div");
+      watchRow.className = "watch-row";
+      var watchBtn = document.createElement("button");
+      watchBtn.type = "button";
+      watchBtn.className = "watch-btn";
+      var watchCtx = document.createElement("span");
+      watchCtx.className = "watch-ctx";
+      function paintWatch() {
+        var on = watch.has(r.ticker);
+        watchBtn.textContent = on ? "\u2605 On watchlist" : "\u2606 Add to watchlist";
+        watchBtn.setAttribute("aria-pressed", String(on));
+        // Distinctness at a glance: what the shortlist already holds, and
+        // how much of it sits in this same sector.
+        var inSector = 0;
+        watch.forEach(function (t) {
+          if (t === r.ticker) return;
+          var rec = rowByTicker[t];
+          if (rec && rec.sector === r.sector) inSector++;
+        });
+        watchCtx.textContent = !watch.size
+          ? ""
+          : "Watching " + watch.size + (inSector
+              ? " \u00b7 " + inSector + " already in " + r.sector
+              : " \u00b7 none in " + r.sector);
+      }
+      watchBtn.addEventListener("click", function () {
+        if (watch.has(r.ticker)) watch.delete(r.ticker);
+        else watch.add(r.ticker);
+        saveWatch();
+        paintWatch();
+        var count = document.getElementById("watch-count");
+        if (count) count.textContent = watch.size;
+        if (state.watchOnly) {
+          var chipEl = document.getElementById("watch-chip");
+          if (chipEl) chipEl.focus();
+          renderList();
+          return;
+        }
+        var tick = openRow.li && openRow.li.querySelector(".ticker");
+        if (tick) {
+          var existing = tick.querySelector(".star-mark");
+          if (existing) existing.remove();
+          if (watch.has(r.ticker)) {
+            var mark = document.createElement("span");
+            mark.className = "star-mark";
+            mark.textContent = " \u2605";
+            mark.setAttribute("role", "img");
+            mark.setAttribute("aria-label", "on watchlist");
+            tick.appendChild(mark);
+          }
+        }
+      });
+      paintWatch();
+      watchRow.appendChild(watchBtn);
+      watchRow.appendChild(watchCtx);
+      dl.appendChild(watchRow);
+
+      if (cov) {
+        var meta = document.createElement("div");
+        meta.className = "detail-meta";
+        var bits = [];
+        if (r.exchange) bits.push(r.exchange);
+        bits.push(cov.trading_days + " trading days, " +
+          cov.start_date + " \u2192 " + cov.end_date);
+        if (cov.last_adj_close != null) {
+          bits.push("last adj. close $" + cov.last_adj_close.toLocaleString());
+        }
+        meta.textContent = bits.join(" \u00b7 ");
+        dl.appendChild(meta);
+      }
       return dl;
     }
 
@@ -1151,11 +1278,13 @@
       var ticker = document.createElement("span");
       ticker.className = "ticker";
       ticker.textContent = r.ticker;
-      if (cov && cov.window_return_pct != null) {
-        var chg = document.createElement("span");
-        chg.className = "chg " + direction(cov.window_return_pct);
-        chg.textContent = " " + pct(cov.window_return_pct);
-        ticker.appendChild(chg);
+      if (watch.has(r.ticker)) {
+        var mark = document.createElement("span");
+        mark.className = "star-mark";
+        mark.textContent = " \u2605";
+        mark.setAttribute("role", "img");
+        mark.setAttribute("aria-label", "on watchlist");
+        ticker.appendChild(mark);
       }
       if (cov && !cov.sufficient) {
         var warn = document.createElement("span");
@@ -1168,14 +1297,26 @@
 
       var company = document.createElement("span");
       company.className = "company";
-      company.textContent = r.name;
+      var companyName = document.createElement("span");
+      companyName.className = "company-name";
+      companyName.textContent = r.name;
+      var capSub = document.createElement("span");
+      capSub.className = "cap-sub";
+      capSub.textContent = money(r.market_cap);
+      company.appendChild(companyName);
+      company.appendChild(capSub);
       main.appendChild(ticker);
       main.appendChild(company);
 
       var cap = document.createElement("span");
       cap.className = "cap";
       var capValue = document.createElement("b");
-      capValue.textContent = money(r.market_cap);
+      if (cov && cov.window_return_pct != null) {
+        capValue.className = direction(cov.window_return_pct);
+        capValue.textContent = pct(cov.window_return_pct);
+      } else {
+        capValue.textContent = money(r.market_cap);
+      }
       cap.appendChild(capValue);
 
       if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
@@ -1242,7 +1383,11 @@
       if (!shown.length) {
         var li = document.createElement("li");
         li.className = "empty";
-        li.textContent = "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        li.textContent = state.watchOnly && !watch.size
+          ? "Your watchlist is empty. Open a name and tap \u2606 Add to watchlist."
+          : state.watchOnly
+            ? "No watchlist name matches. The \u2605 Watchlist filter is on."
+            : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
         listEl.appendChild(li);
         return;
       }
