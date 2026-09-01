@@ -218,6 +218,19 @@ shows a warning banner when the data is more than five days old (long
 weekends stay quiet), so a silently failing refresh looks broken instead
 of current.
 
+## The page
+
+The page is built around three questions: which names are worth a look
+(cross-section, sort, filters), why a given name is interesting (per-name
+detail: return vs its sector's median, distance from its 1-year high, the
+cumulative-return chart), and whether it adds something the shortlist
+doesn't already have (the watchlist).
+
+The **watchlist** is stored in the browser (`localStorage`) — a personal
+shortlist on that device, not synced state. Starred names show a marker in
+the list, a Watchlist filter chip shows only them, and each name's detail
+notes how much of the current watchlist already sits in the same sector.
+
 ## Tests and CI
 
 ```bash
