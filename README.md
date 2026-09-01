@@ -2,7 +2,9 @@
 
 A U.S. equity universe: the current **S&P 500 membership**, pulled from
 Financial Modeling Prep, enriched with live quotes and a year of adjusted
-price history, with a phone-first page for inspecting it.
+price history, with a phone-first page for inspecting it — live at
+**<https://vandyckmed-droid.github.io/Oklahoma/web/>** (GitHub Pages serves
+`main`, so every merged refresh updates the page).
 
 Defining the universe as the index delegates membership to S&P's committee,
 whose entry/exit buffer rules provide turnover hysteresis for free — no
