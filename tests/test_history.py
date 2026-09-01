@@ -129,6 +129,29 @@ class PruneTests(unittest.TestCase):
 
 
 class StorageTests(unittest.TestCase):
+    def test_file_is_one_bar_per_line(self):
+        # The format that makes a daily refresh reviewable: the diff shows
+        # the appended bar instead of rewriting one long line.
+        bars = history.normalize_series(
+            "TEST", [bar("2026-01-0%d" % i, float(i)) for i in (1, 2, 3)]
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            path = history.save_series("TEST", bars, tmp)
+            with open(path, encoding="utf-8") as handle:
+                lines = handle.read().splitlines()
+            self.assertEqual(len(lines), len(bars) + 2)
+            for line, expected in zip(lines[1:-1], bars):
+                self.assertEqual(json.loads(line.rstrip(",")), expected)
+
+    def test_empty_series_still_parses(self):
+        # Zero bars is 3 lines (envelope, a blank bar block, the close) —
+        # pinned so the line-count contract is explicit about the edge.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = history.save_series("TEST", [], tmp)
+            with open(path, encoding="utf-8") as handle:
+                self.assertEqual(len(handle.read().splitlines()), 3)
+            self.assertEqual(history.load_series("TEST", tmp)["bars"], [])
+
     def test_round_trip_and_long_format_rows(self):
         bars = history.normalize_series(
             "TEST", [bar("2026-01-01", 1.0), bar("2026-01-02", 2.0)]
