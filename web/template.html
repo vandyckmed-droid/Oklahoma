@@ -141,6 +141,12 @@
     line-height: 1.5;
     color: var(--muted);
   }
+  .note.stale {
+    border: 1px solid var(--warn);
+    border-radius: 8px;
+    padding: 9px 12px;
+    color: var(--warn);
+  }
   .note b {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-weight: 500;
@@ -482,7 +488,9 @@
       <dt id="stat-history-label">History</dt><dd id="stat-history">&mdash;</dd>
     </div>
   </dl>
+  <p class="note stale" id="stale-note" hidden></p>
   <p class="note" id="history-note" hidden></p>
+  <p class="note" id="changes-note" hidden></p>
 
   <div class="controls">
     <label class="search">
@@ -654,6 +662,15 @@
     document.getElementById("stat-cap").textContent = money(totalCap);
     document.getElementById("stat-sectors").textContent = sectors.length;
 
+    var ageDays = (Date.now() - new Date(universe.generated_at)) / 86400000;
+    if (ageDays > 5) {
+      var stale = document.getElementById("stale-note");
+      stale.hidden = false;
+      stale.textContent =
+        "This data is " + Math.floor(ageDays) + " days old. The daily refresh " +
+        "may be failing \u2014 check the repository's Actions tab.";
+    }
+
     if (hasHistory) {
       var target = history.criteria.trading_days_target;
       document.getElementById("stat-history-tile").hidden = false;
@@ -677,6 +694,21 @@
           "Adjusted close through " + asOf(history.generated_at) +
           ". Every name covers at least " + target + " trading days.";
       }
+    }
+
+    var changes = (history && history.recent_changes) || [];
+    if (changes.length) {
+      var parts = [];
+      changes.slice().reverse().forEach(function (event) {
+        var bits = [];
+        event.joined.forEach(function (r) { bits.push("+" + r.ticker); });
+        event.left.forEach(function (r) { bits.push("\u2212" + r.ticker); });
+        event.renamed.forEach(function (r) { bits.push(r.from_ticker + "\u2192" + r.to_ticker); });
+        parts.push(asOf(event.observed_at) + ": <b>" + bits.join("</b>, <b>") + "</b>");
+      });
+      var changesNote = document.getElementById("changes-note");
+      changesNote.hidden = false;
+      changesNote.innerHTML = "Membership changes \u2014 " + parts.join(" \u00b7 ");
     }
 
     var source = universe.source || {};

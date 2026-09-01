@@ -172,3 +172,70 @@ class RealUniverseTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def member(ticker, name, cik):
+    return {"ticker": ticker, "name": name, "cik": cik}
+
+
+def membership(*members):
+    return {"constituents": list(members)}
+
+
+class MembershipDiffTests(unittest.TestCase):
+    def test_no_change_is_empty(self):
+        old = membership(member("AAA", "Alpha", "1"))
+        diff = universe_mod.diff_membership(old, old)
+        self.assertEqual(diff, {"joined": [], "left": [], "renamed": []})
+
+    def test_join_and_leave(self):
+        diff = universe_mod.diff_membership(
+            membership(member("AAA", "Alpha", "1"), member("BBB", "Beta", "2")),
+            membership(member("AAA", "Alpha", "1"), member("CCC", "Gamma", "3")),
+        )
+        self.assertEqual([r["ticker"] for r in diff["joined"]], ["CCC"])
+        self.assertEqual([r["ticker"] for r in diff["left"]], ["BBB"])
+        self.assertEqual(diff["renamed"], [])
+
+    def test_ticker_rename_is_a_rename_not_a_swap(self):
+        # Same CIK, new symbol: the company stayed; only its ticker moved.
+        diff = universe_mod.diff_membership(
+            membership(member("FB", "Meta Platforms", "1326801")),
+            membership(member("META", "Meta Platforms", "1326801")),
+        )
+        self.assertEqual(diff["joined"], [])
+        self.assertEqual(diff["left"], [])
+        self.assertEqual(
+            diff["renamed"],
+            [{"cik": "1326801", "name": "Meta Platforms",
+              "from_ticker": "FB", "to_ticker": "META"}],
+        )
+
+
+class ChangeLogTests(unittest.TestCase):
+    def test_records_only_real_changes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "changes.json")
+            empty = {"joined": [], "left": [], "renamed": []}
+            self.assertFalse(universe_mod.record_changes(empty, "2026-01-01T00:00:00Z", path))
+            self.assertFalse(os.path.exists(path))
+
+            diff = {"joined": [member("CCC", "Gamma", "3")], "left": [], "renamed": []}
+            self.assertTrue(universe_mod.record_changes(diff, "2026-01-02T00:00:00Z", path))
+            log = universe_mod.load_changes(path)
+            self.assertEqual(len(log["events"]), 1)
+            self.assertEqual(log["events"][0]["observed_at"], "2026-01-02T00:00:00Z")
+            self.assertEqual(log["events"][0]["joined"][0]["ticker"], "CCC")
+
+    def test_log_is_append_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "changes.json")
+            diff = {"joined": [member("CCC", "Gamma", "3")], "left": [], "renamed": []}
+            universe_mod.record_changes(diff, "2026-01-02T00:00:00Z", path)
+            universe_mod.record_changes(diff, "2026-01-03T00:00:00Z", path)
+            self.assertEqual(len(universe_mod.load_changes(path)["events"]), 2)
+
+    def test_missing_log_loads_empty(self):
+        self.assertEqual(
+            universe_mod.load_changes("/nonexistent/changes.json")["events"], []
+        )

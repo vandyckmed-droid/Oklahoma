@@ -32,9 +32,24 @@ def cmd_refresh(args: argparse.Namespace) -> int:
     if args.collapse_share_classes:
         config.collapse_share_classes = True
 
+    try:
+        previous = universe_mod.load(args.output)
+    except FileNotFoundError:
+        previous = None
+
     data = universe_mod.build(config)
     universe_mod.save(data, args.output)
     print(f"Wrote {data['count']} names to {args.output}")
+
+    if previous is not None:
+        diff = universe_mod.diff_membership(previous, data)
+        if universe_mod.record_changes(diff, data["generated_at"]):
+            for record in diff["joined"]:
+                print(f"  joined: {record['ticker']} ({record['name']})")
+            for record in diff["left"]:
+                print(f"  left:   {record['ticker']} ({record['name']})")
+            for record in diff["renamed"]:
+                print(f"  renamed: {record['from_ticker']} -> {record['to_ticker']} ({record['name']})")
     if not args.no_ui:
         print(f"Wrote UI to {ui.build(data, _history_index())}")
     return 0

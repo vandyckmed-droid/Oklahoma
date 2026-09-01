@@ -13,6 +13,7 @@ import os
 
 from .config import SPARKLINE_POINTS, UI_OUTPUT_PATH, UI_TEMPLATE_PATH
 from .history import load_series, thin
+from .universe import load_changes
 from .metrics import cumulative_returns
 
 UNIVERSE_PLACEHOLDER = "__UNIVERSE_JSON__"
@@ -29,6 +30,7 @@ def _display(history_index: dict) -> dict:
     """
     target = history_index["criteria"]["trading_days_target"]
     payload = {k: v for k, v in history_index.items() if k != "coverage"}
+    payload["recent_changes"] = load_changes()["events"][-5:]
     payload["coverage"] = []
     for entry in history_index["coverage"]:
         bars = load_series(entry["ticker"])["bars"]

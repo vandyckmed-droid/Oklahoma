@@ -12,6 +12,7 @@ from dataclasses import dataclass
 # Where the universe file and the generated UI are written.
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNIVERSE_PATH = os.path.join(ROOT, "data", "universe.json")
+CHANGES_PATH = os.path.join(ROOT, "data", "changes.json")
 HISTORY_DIR = os.path.join(ROOT, "data", "history")
 HISTORY_INDEX_PATH = os.path.join(HISTORY_DIR, "index.json")
 UI_TEMPLATE_PATH = os.path.join(ROOT, "web", "template.html")
