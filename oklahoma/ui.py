@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+from math import exp
 
 from .config import (
     SPARKLINE_POINTS,
@@ -84,7 +85,6 @@ def _display(universe: dict, history_index: dict) -> dict:
                 # the two curves align point for point. Straight in
                 # log-price space, gently curved here — that is the honest
                 # geometry of an exponential trend on a linear axis.
-                from math import exp
                 window = bars[-len(series):]
                 base = window[0]["adj_close"]
                 row["fit_spark"] = [

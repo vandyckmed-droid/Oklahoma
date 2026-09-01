@@ -7,6 +7,7 @@ demand so there is no second copy to drift.
 
 from __future__ import annotations
 
+from math import exp, log
 from statistics import median
 
 from .config import TRADING_DAYS_TARGET
@@ -88,8 +89,6 @@ def log_trend(bars: list[dict], trading_days: int = TRADING_DAYS_TARGET) -> dict
     Closed-form OLS: b = cov(x, y) / var(x), a = mean(y) - b * mean(x),
     with x the trading-day index and y = ln(adj_close).
     """
-    from math import exp, log
-
     if len(bars) < trading_days:
         return None
     window = bars[-trading_days:]

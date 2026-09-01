@@ -460,6 +460,10 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
+  #groupToggle[aria-pressed="true"] {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
   /* ---------- list ---------- */
 
@@ -634,7 +638,8 @@
     padding: 9px 12px 10px;
     background: var(--surface-sunk);
   }
-  .stat-cell .xl {
+  .stat-cell .xl,
+  .stat-cell .xl-static {
     align-self: flex-start;
     font-size: 10px;
     letter-spacing: .08em;
@@ -1268,10 +1273,14 @@
       }
       var field = SORT_FIELDS[state.sortKey];
       var sign = state.sortDesc ? -1 : 1;
+      // A 54-day return must not rank inside a 12-month ordering; the
+      // 3-month and quality fields are absent below their own windows,
+      // but window_return_pct exists for any span and needs the gate.
+      var needsFull = state.sortKey === "ret12";
       return rows_.slice().sort(function (a, b) {
         var ca = coverage[a.ticker], cb = coverage[b.ticker];
-        var ra = ca && ca[field] != null ? ca[field] : null;
-        var rb = cb && cb[field] != null ? cb[field] : null;
+        var ra = ca && ca[field] != null && (!needsFull || ca.sufficient) ? ca[field] : null;
+        var rb = cb && cb[field] != null && (!needsFull || cb.sufficient) ? cb[field] : null;
         if (ra == null && rb == null) return 0;
         if (ra == null) return 1;
         if (rb == null) return -1;
@@ -1426,7 +1435,8 @@
       if (cov && cov.window_return_pct != null) {
         var grid = document.createElement("div");
         grid.className = "stat-grid";
-        grid.appendChild(statCell("ret12", "12-mo return",
+        grid.appendChild(statCell(cov.sufficient ? "ret12" : null,
+          cov.sufficient ? "12-mo return" : cov.window_trading_days + "-day return",
           pct(cov.window_return_pct), direction(cov.window_return_pct)));
         if (cov.return_3m_pct != null) {
           grid.appendChild(statCell("ret3", "3-mo return",
@@ -1434,7 +1444,8 @@
         }
         if (cov.window_high != null && cov.last_adj_close != null) {
           var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
-          grid.appendChild(statCell("offhigh", "Off 1y high",
+          grid.appendChild(statCell(cov.sufficient ? "offhigh" : null,
+            cov.sufficient ? "Off 1y high" : "Off " + cov.window_trading_days + "-day high",
             offHigh > -0.5 ? "at its high" : offHigh.toFixed(1) + "%",
             offHigh > -0.5 ? "up" : direction(offHigh)));
         }
@@ -1845,7 +1856,6 @@
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
       groupBtn.setAttribute("aria-pressed", String(state.grouped));
-      groupBtn.textContent = state.grouped ? "Ungroup" : "Group";
       renderList();
     });
 
@@ -1855,10 +1865,10 @@
     var EXPLAIN = {
       ret12: ["12-month return",
         "Total change in the adjusted close over the last 252 trading days — about one year of sessions. Adjusted closes fold in dividends and splits, so this is total return.",
-        "close today \u00f7 close 252 sessions ago \u2212 1"],
+        "close today \u00f7 first close of the 252-session window \u2212 1"],
       ret3: ["3-month return",
         "Total change in the adjusted close over the last 63 trading days — about one quarter. Fresh momentum, against the 12-month figure's longer memory.",
-        "close today \u00f7 close 63 sessions ago \u2212 1"],
+        "close today \u00f7 first close of the 63-session window \u2212 1"],
       offhigh: ["Off 1-year high",
         "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
         "close today \u00f7 year's highest close \u2212 1"],
@@ -1907,10 +1917,22 @@
     });
     document.getElementById("ep-close").addEventListener("click", closeExplain);
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !epPop.hidden) closeExplain();
+      if (epPop.hidden) return;
+      if (event.key === "Escape") closeExplain();
+      // Close is the sheet's only focusable stop, so holding focus there
+      // is what makes the aria-modal claim true.
+      if (event.key === "Tab") event.preventDefault();
     });
 
     function explainLabel(key, text) {
+      // No key means no sheet applies (a short-history name whose label
+      // already says its real window): a plain span, not a dead button.
+      if (!key) {
+        var s = document.createElement("span");
+        s.className = "xl-static";
+        s.textContent = text;
+        return s;
+      }
       var b = document.createElement("button");
       b.type = "button";
       b.className = "xl";
