@@ -1,16 +1,18 @@
 # Oklahoma
 
-A U.S. equity universe: the largest listed companies by market capitalization,
-pulled from Financial Modeling Prep and kept as a small, versioned JSON file
-with a phone-first page for inspecting it.
+A U.S. equity universe: the current **S&P 500 membership**, pulled from
+Financial Modeling Prep, enriched with live quotes and a year of adjusted
+price history, with a phone-first page for inspecting it.
 
-The universe currently holds the **top 50** names. Nothing in the code is
-pinned to 50 — see [Growing the universe](#growing-the-universe).
+Defining the universe as the index delegates membership to S&P's committee,
+whose entry/exit buffer rules provide turnover hysteresis for free — no
+selection logic of our own to flap names in and out on market noise. The
+daily refresh simply mirrors whatever the index currently holds.
 
 ## Layout
 
 ```
-oklahoma/config.py     selection rules (size, exchanges, market-cap ladder, history window)
+oklahoma/config.py     universe source, history window, page settings
 oklahoma/fmp.py        Financial Modeling Prep client, standard library only
 oklahoma/universe.py   build / rank / save / load
 oklahoma/history.py    end-of-day adjusted price history
@@ -70,16 +72,15 @@ Each constituent carries at least the three required fields — `ticker`,
 The file itself records `schema_version`, `generated_at`, the `source`, and the
 `criteria` the build ran under, so a universe file explains how it was made.
 
-### Selection rules
+### Identity
 
-- **Common stock only.** ETFs, funds, and inactive listings are excluded at
-  the screener.
-- **Primary U.S. line only.** Foreign cross-listings of the same company
-  (`NVDA.NE`) are dropped; they are the same company on a different exchange.
-- **One row per company.** Berkshire's A and B shares are one company that
-  would otherwise take two universe slots. The most liquid class is kept and
-  the others are recorded in `share_classes`. Pass
-  `--keep-all-share-classes` to give each class its own slot instead.
+Every row carries the company's **CIK** — the SEC's durable identifier — so
+a ticker rename (FB becoming META) can never sever a company from its own
+history. `date_first_added` records when the index admitted the name.
+
+The index itself lists some companies twice (GOOG and GOOGL, FOX and FOXA);
+mirroring it keeps both. `--collapse-share-classes` opts into one row per
+company instead, grouped by CIK and keeping the most traded class.
 
 ## Price history
 
@@ -118,16 +119,11 @@ about 252 of 365 days, so the build requests a wider calendar window —
 `calendar_days_for()` — and takes what comes back. In practice that yields
 ~300 trading days per name.
 
-A name can legitimately fall short: a company that IPO'd four months ago has
-no year of history to fetch. Those names are kept in the universe (it is
-defined by market cap, not by data availability), marked
+A name can legitimately fall short: a spinoff the committee admits soon
+after listing has no year of history to fetch. Those names are kept in the
+universe (membership is the index's call, not data availability's), marked
 `"sufficient": false` in the index, and flagged in the UI rather than
-silently dropped. `show` lists them:
-
-```
-Price history: 49/50 names have >= 252 trading days
-  SPCX: 55 days from 2026-06-12
-```
+silently dropped. `show` lists them.
 
 Change the window with `--trading-days N` or `HISTORY_TRADING_DAYS`.
 
@@ -143,10 +139,15 @@ from `data/history/` on demand and there is no second copy to drift.
 
 The first metric is **daily cumulative return over the 12-month window**:
 each day's total return since the window's first close, starting at 0%.
-`export-returns` emits the full daily series; the history index carries a
-thinned copy per name for the page, where each name's detail shows the
-series against a 0% baseline. A name with less than a full year of history
-is measured over what it has, with `window_trading_days` recording the span.
+`export-returns` emits the full daily series; the page computes its thinned
+copy per name at build time and shows each name's series against a 0%
+baseline. A name with less than a full year of history is measured over
+what it has, with `window_trading_days` recording the span.
+
+The history index (`data/history/index.json`) is deliberately a coverage
+manifest only — ticker, span, and whether it suffices. Anything derivable
+(returns, ranges, display series) is recomputed from the bar files when the
+page is built, so the index can never disagree with the data it points at.
 
 ## Automated refresh
 
@@ -161,23 +162,16 @@ It needs one repository secret: **`FMP_API_KEY`** (Settings → Secrets and
 variables → Actions). Until the secret exists, scheduled runs fail at the
 fetch step and the data simply stays at its last committed state.
 
-## Growing the universe
+## Changing the universe
 
-Size is a parameter, not a constant. Three ways to change it:
+The universe is whatever `UniverseConfig.source` names — today that is the
+S&P 500 constituents endpoint. A different index (or a screener-based rule)
+is a new fetch function plus a config value; everything downstream keys off
+the constituent list. `--size N` (or `UNIVERSE_SIZE`) keeps only the largest
+N names when a smaller universe is useful for experiments.
 
-```bash
-python -m oklahoma refresh --size 250   # one-off
-UNIVERSE_SIZE=250 python -m oklahoma refresh
-```
-
-...or change the default in `oklahoma/config.py`.
-
-The screener needs a market-cap floor to page against, and a floor that suits
-50 names is far too high for 500. `MARKET_CAP_FLOORS` in `config.py` is a
-descending ladder; the build walks down it until the candidate pool is
-comfortably larger than the target, so a bigger universe needs no other
-change. `UNIVERSE_EXCHANGES` (or `config.exchanges`) widens the venue list the
-same way.
+When a name leaves the index, the next `history` run prunes its price file,
+so departures do not accumulate as orphans.
 
 ## Tests and CI
 
