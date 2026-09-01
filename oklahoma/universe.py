@@ -12,7 +12,7 @@ import datetime as dt
 import json
 import os
 
-from .config import SCHEMA_VERSION, UNIVERSE_PATH, UniverseConfig
+from .config import CHANGES_PATH, SCHEMA_VERSION, UNIVERSE_PATH, UniverseConfig
 from .fmp import batch_quotes, get_api_key, sp500_constituents
 
 UNKNOWN_SECTOR = "Unclassified"
@@ -121,3 +121,62 @@ def sector_breakdown(universe: dict) -> list[tuple[str, int]]:
     for record in universe["constituents"]:
         counts[record["sector"]] = counts.get(record["sector"], 0) + 1
     return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+
+
+def diff_membership(old: dict, new: dict) -> dict:
+    """What changed between two universes, keyed by CIK.
+
+    Comparing by CIK rather than ticker means a symbol change shows up as a
+    rename, not as one company leaving and a stranger arriving.
+    """
+    def by_cik(universe: dict) -> dict[str, dict]:
+        return {
+            record["cik"]: record
+            for record in universe["constituents"]
+            if record.get("cik")
+        }
+
+    old_members, new_members = by_cik(old), by_cik(new)
+
+    def entry(record: dict) -> dict:
+        return {"ticker": record["ticker"], "name": record["name"], "cik": record["cik"]}
+
+    joined = [entry(new_members[cik]) for cik in sorted(new_members.keys() - old_members.keys())]
+    left = [entry(old_members[cik]) for cik in sorted(old_members.keys() - new_members.keys())]
+    renamed = [
+        {
+            "cik": cik,
+            "name": new_members[cik]["name"],
+            "from_ticker": old_members[cik]["ticker"],
+            "to_ticker": new_members[cik]["ticker"],
+        }
+        for cik in sorted(old_members.keys() & new_members.keys())
+        if old_members[cik]["ticker"] != new_members[cik]["ticker"]
+    ]
+    return {"joined": joined, "left": left, "renamed": renamed}
+
+
+def load_changes(path: str = CHANGES_PATH) -> dict:
+    try:
+        with open(path, encoding="utf-8") as handle:
+            return json.load(handle)
+    except FileNotFoundError:
+        return {"schema_version": 1, "events": []}
+
+
+def record_changes(diff: dict, generated_at: str, path: str = CHANGES_PATH) -> bool:
+    """Append one membership event; no-ops when nothing changed.
+
+    The log is append-only: each entry is a committee decision (or a
+    rename) observed at a refresh, which is exactly the record that cannot
+    be reconstructed later from a current-state snapshot.
+    """
+    if not (diff["joined"] or diff["left"] or diff["renamed"]):
+        return False
+    log = load_changes(path)
+    log["events"].append(dict({"observed_at": generated_at}, **diff))
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(log, handle, indent=2)
+        handle.write("\n")
+    return True

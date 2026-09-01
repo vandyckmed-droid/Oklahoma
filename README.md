@@ -22,6 +22,7 @@ oklahoma/metrics.py    calculations over the history (cumulative returns)
 oklahoma/ui.py         renders the universe into a self-contained page
 oklahoma/__main__.py   the CLI
 data/universe.json     the committed universe
+data/changes.json      append-only membership change log
 data/history/          one price file per ticker, plus index.json
 web/template.html      page source, a complete HTML document with two
                        JSON placeholders
@@ -174,6 +175,33 @@ N names when a smaller universe is useful for experiments.
 
 When a name leaves the index, the next `history` run prunes its price file,
 so departures do not accumulate as orphans.
+
+### Membership changes
+
+Each `refresh` compares the new membership against the previous one — by
+CIK, so a ticker rename registers as a rename, never as one company
+leaving and a stranger arriving — and appends any difference to
+`data/changes.json`:
+
+```json
+{
+  "observed_at": "2026-09-02T01:30:00Z",
+  "joined": [{ "ticker": "RDDT", "name": "Reddit, Inc.", "cik": "0001713445" }],
+  "left": [],
+  "renamed": []
+}
+```
+
+The log is append-only: each entry is a committee decision observed at a
+refresh, which is exactly the record a current-state snapshot cannot
+reconstruct later. The page shows the most recent events.
+
+### Staleness
+
+The page compares its embedded timestamp against the viewer's clock and
+shows a warning banner when the data is more than five days old (long
+weekends stay quiet), so a silently failing refresh looks broken instead
+of current.
 
 ## Tests and CI
 
