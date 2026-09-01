@@ -1068,6 +1068,7 @@
     // so the list paints in frame-sized chunks: the first screenful is
     // instant and the rest streams in. A newer paint cancels an older one.
     var paintToken = 0;
+    var afterPaint = null;
     function paintList(items, makeNode) {
       var token = ++paintToken;
       listEl.textContent = "";
@@ -1079,7 +1080,15 @@
           frag.appendChild(makeNode(items[i]));
         }
         listEl.appendChild(frag);
-        if (i < items.length) requestAnimationFrame(step);
+        if (i < items.length) {
+          requestAnimationFrame(step);
+        } else if (afterPaint) {
+          // Chunked painting means a caller cannot touch late rows right
+          // after renderList() returns; this runs once the last chunk lands.
+          var hook = afterPaint;
+          afterPaint = null;
+          hook();
+        }
       }
       step();
     }
@@ -1428,8 +1437,10 @@
       btn.className = "sector-head";
       var collapsed = collapsedSectors.has(name);
       btn.setAttribute("aria-expanded", String(!collapsed));
+      btn.setAttribute("data-sector", name);
       var chev = document.createElement("span");
       chev.className = "chev";
+      chev.setAttribute("aria-hidden", "true");
       chev.textContent = collapsed ? "\u25b8" : "\u25be";
       var dot = document.createElement("span");
       dot.className = "dot";
@@ -1446,6 +1457,14 @@
       btn.addEventListener("click", function () {
         if (collapsedSectors.has(name)) collapsedSectors.delete(name);
         else collapsedSectors.add(name);
+        // The header re-renders in place; put keyboard focus back on it
+        // once the (chunked) repaint has actually created it.
+        afterPaint = function () {
+          var again = listEl.querySelector(
+            '.sector-head[data-sector="' + CSS.escape(name) + '"]'
+          );
+          if (again) again.focus();
+        };
         renderList();
       });
       li.appendChild(btn);
