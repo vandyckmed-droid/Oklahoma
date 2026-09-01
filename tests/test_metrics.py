@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from oklahoma import history, metrics, ui, universe as universe_mod
+from oklahoma import config, history, metrics, ui, universe as universe_mod
 
 
 def bars(*closes):
@@ -113,6 +113,20 @@ class DisplayPayloadTests(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             ui._display(broken, self.index)
         self.assertIn("AAPL", str(ctx.exception))
+
+    def test_three_month_return_matches_the_bars(self):
+        for row in self.display["coverage"]:
+            bars = history.load_series(row["ticker"])["bars"]
+            if len(bars) >= config.TRADING_DAYS_QUARTER:
+                quarter = metrics.cumulative_returns(
+                    bars, config.TRADING_DAYS_QUARTER
+                )
+                self.assertEqual(
+                    row["return_3m_pct"],
+                    round(quarter[-1]["cum_return_pct"], 2),
+                )
+            else:
+                self.assertNotIn("return_3m_pct", row)
 
     def test_every_covered_name_gets_a_series(self):
         for row in self.display["coverage"]:

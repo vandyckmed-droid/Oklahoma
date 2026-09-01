@@ -62,6 +62,10 @@ class UniverseConfig:
 # conventional trading-day count for one year.
 TRADING_DAYS_TARGET = 252
 
+# The short lens: ~one quarter of trading. Distinguishes fresh momentum
+# from a stale 12-month winner coasting on old gains.
+TRADING_DAYS_QUARTER = 63
+
 # How many points the UI carries per name. The full series lives in
 # data/history/; the page only needs enough to show a shape.
 SPARKLINE_POINTS = 60
