@@ -14,13 +14,13 @@ import os
 from .config import SPARKLINE_POINTS, UI_OUTPUT_PATH, UI_TEMPLATE_PATH
 from .history import load_series, thin
 from .universe import load_changes
-from .metrics import cumulative_returns
+from .metrics import cumulative_returns, rank_by_return, sector_summary
 
 UNIVERSE_PLACEHOLDER = "__UNIVERSE_JSON__"
 HISTORY_PLACEHOLDER = "__HISTORY_JSON__"
 
 
-def _display(history_index: dict) -> dict:
+def _display(universe: dict, history_index: dict) -> dict:
     """The page's history payload, computed from the bar files.
 
     The index on disk is a coverage manifest; everything derivable — the
@@ -31,6 +31,9 @@ def _display(history_index: dict) -> dict:
     target = history_index["criteria"]["trading_days_target"]
     payload = {k: v for k, v in history_index.items() if k != "coverage"}
     payload["recent_changes"] = load_changes()["events"][-5:]
+    sectors = {
+        record["ticker"]: record["sector"] for record in universe["constituents"]
+    }
     payload["coverage"] = []
     for entry in history_index["coverage"]:
         bars = load_series(entry["ticker"])["bars"]
@@ -52,6 +55,24 @@ def _display(history_index: dict) -> dict:
                 round(value, 2) for value in thin(values, SPARKLINE_POINTS)
             ]
         payload["coverage"].append(row)
+
+    # Cross-section over names with a full window: mixing a 55-day return
+    # into 252-day sector medians would quietly corrupt the comparison.
+    full_window = [
+        {
+            "ticker": row["ticker"],
+            "sector": sectors.get(row["ticker"], "Unclassified"),
+            "return_pct": row["window_return_pct"],
+        }
+        for row in payload["coverage"]
+        if row["sufficient"] and row.get("window_return_pct") is not None
+    ]
+    if full_window:
+        payload["cross_section"] = dict(
+            rank_by_return(full_window),
+            sectors=sector_summary(full_window),
+            names_used=len(full_window),
+        )
     return payload
 
 
@@ -70,7 +91,7 @@ def render(
     for placeholder in (UNIVERSE_PLACEHOLDER, HISTORY_PLACEHOLDER):
         if placeholder not in template:
             raise ValueError(f"{template_path} is missing {placeholder}")
-    display = _display(history_index) if history_index else None
+    display = _display(universe, history_index) if history_index else None
     return template.replace(UNIVERSE_PLACEHOLDER, _inline(universe)).replace(
         HISTORY_PLACEHOLDER, _inline(display)
     )

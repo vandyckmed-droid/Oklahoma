@@ -46,14 +46,59 @@ class CumulativeReturnTests(unittest.TestCase):
         self.assertEqual(metrics.cumulative_returns([], trading_days=252), [])
 
 
+class CrossSectionTests(unittest.TestCase):
+    ROWS = [
+        {"ticker": "A", "sector": "Tech", "return_pct": 10.0},
+        {"ticker": "B", "sector": "Tech", "return_pct": -5.0},
+        {"ticker": "C", "sector": "Tech", "return_pct": 20.0},
+        {"ticker": "D", "sector": "Energy", "return_pct": 3.0},
+        {"ticker": "E", "sector": "Energy", "return_pct": 7.0},
+    ]
+
+    def test_sector_summary_medians_and_breadth(self):
+        summary = metrics.sector_summary(self.ROWS)
+        self.assertEqual([row["sector"] for row in summary], ["Tech", "Energy"])
+        tech = summary[0]
+        self.assertEqual(tech["count"], 3)
+        self.assertEqual(tech["median_return_pct"], 10.0)
+        self.assertAlmostEqual(tech["breadth_pct"], 66.7)
+        self.assertEqual(summary[1]["breadth_pct"], 100.0)
+
+    def test_rank_by_return_orders_the_extremes(self):
+        ranked = metrics.rank_by_return(self.ROWS, count=2)
+        self.assertEqual([row["ticker"] for row in ranked["leaders"]], ["C", "A"])
+        self.assertEqual([row["ticker"] for row in ranked["laggards"]], ["B", "D"])
+
+    def test_rank_handles_fewer_rows_than_requested(self):
+        ranked = metrics.rank_by_return(self.ROWS[:1], count=5)
+        self.assertEqual(len(ranked["leaders"]), 1)
+        self.assertEqual(len(ranked["laggards"]), 1)
+
+
 class DisplayPayloadTests(unittest.TestCase):
     """What the page inlines must agree with the calculation it came from."""
 
     @classmethod
     def setUpClass(cls):
         cls.index = history.load_index()
-        cls.display = ui._display(cls.index)
+        cls.display = ui._display(universe_mod.load(), cls.index)
         cls.target = cls.index["criteria"]["trading_days_target"]
+
+    def test_cross_section_uses_only_full_window_names(self):
+        cross = self.display["cross_section"]
+        sufficient = sum(1 for row in self.display["coverage"] if row["sufficient"])
+        self.assertEqual(cross["names_used"], sufficient)
+        self.assertEqual(sum(row["count"] for row in cross["sectors"]), sufficient)
+
+    def test_cross_section_extremes_come_from_the_coverage(self):
+        cross = self.display["cross_section"]
+        returns = {
+            row["ticker"]: row["window_return_pct"]
+            for row in self.display["coverage"]
+            if row["sufficient"]
+        }
+        self.assertEqual(cross["leaders"][0]["return_pct"], max(returns.values()))
+        self.assertEqual(cross["laggards"][0]["return_pct"], min(returns.values()))
 
     def test_every_covered_name_gets_a_series(self):
         for row in self.display["coverage"]:

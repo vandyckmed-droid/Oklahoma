@@ -108,19 +108,29 @@ def thin(values: list[float], points: int) -> list[float]:
 
 
 def save_series(ticker: str, bars: list[dict], directory: str = HISTORY_DIR) -> str:
+    """Write one ticker's series: envelope first, then one bar per line.
+
+    These files are rewritten by every daily refresh, and git delta-compresses
+    line-by-line. One bar per line makes an ordinary day's refresh diff as a
+    single appended line instead of a full-file rewrite, which keeps the
+    repository from growing by the size of the dataset every day.
+    """
     os.makedirs(directory, exist_ok=True)
-    payload = {
+    envelope = {
         "schema_version": HISTORY_SCHEMA_VERSION,
         "ticker": ticker,
         "source": SOURCE,
         "price_field": "adj_close",
         "count": len(bars),
-        "bars": bars,
     }
     path = path_for(ticker, directory)
     with open(path, "w", encoding="utf-8") as handle:
-        json.dump(payload, handle, separators=(",", ":"))
-        handle.write("\n")
+        handle.write(json.dumps(envelope, separators=(",", ":"))[:-1])
+        handle.write(',"bars":[\n')
+        handle.write(",\n".join(
+            json.dumps(bar, separators=(",", ":")) for bar in bars
+        ))
+        handle.write("\n]}\n")
     return path
 
 

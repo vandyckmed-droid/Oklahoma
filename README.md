@@ -112,7 +112,10 @@ Each file is a flat, sorted series:
 ```
 
 Bars are chronological, de-duplicated, and every one carries a date and an
-adjusted close. `export-csv` derives the long `ticker,date,adj_close` format
+adjusted close. Files are written **one bar per line**, so a daily refresh
+diffs as an appended line rather than a rewritten file and git's delta
+compression keeps the repository from growing by the size of the dataset
+every day. `export-csv` derives the long `ticker,date,adj_close` format
 from these files on demand, so there is no second copy to drift.
 
 ### Coverage
@@ -151,6 +154,16 @@ The history index (`data/history/index.json`) is deliberately a coverage
 manifest only — ticker, span, and whether it suffices. Anything derivable
 (returns, ranges, display series) is recomputed from the bar files when the
 page is built, so the index can never disagree with the data it points at.
+
+### Cross-section
+
+The page opens with a 12-month cross-section computed at build time from
+the same returns: per-sector **median return** and **breadth** (the share
+of names positive — the guard that keeps a three-winner sector from
+looking healthy on its median alone), plus the window's five leaders and
+laggards, tappable to jump to the name. Only names covering the full
+window participate; mixing a 55-day return into 252-day medians would
+quietly corrupt the comparison.
 
 ## Automated refresh
 
