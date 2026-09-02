@@ -4,433 +4,378 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oklahoma Universe</title>
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#fdfcfa">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" id="theme-color">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Chivo+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* ------------------------------------------------------------------
-   Oklahoma — the universe as an ECG strip.
-   One ruler for everything: --box is the small square (1 mm on paper),
-   --big the heavy square (5 mm). Type sizes, line heights, row heights
-   and the traces' grid are all multiples of it, so figures and traces
-   read against the same scale.
+   Oklahoma — a brokerage-style stocks list, light and dark.
+   One accent (green) for actions and gains, red only for losses.
    ------------------------------------------------------------------ */
 :root {
-  --box: 4px;
-  --big: 20px;
-
-  --paper: #fdfcfa;
-  --paper-2: #f5f2ec;
-  --paper-3: #ebe6dd;
-  --rule: #f0d1c8;
-  --rule-heavy: #e0a191;
-  --hair: #d8cfc1;
-  --ink: #181510;
-  --ink-2: #5c564c;
-  --ink-3: #726a5e;
-  --pen: #1d3f9e;
-  --pen-soft: rgba(29, 63, 158, 0.10);
-  --pencil: #c6432b;
-  --pencil-soft: rgba(198, 67, 43, 0.12);
-  --band: #181510;
-
-  --sans: "Barlow", "Helvetica Neue", Arial, sans-serif;
-  --cond: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Chivo Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-
+  --bg: #ffffff;
+  --bg-2: #f3f4f6;
+  --bg-3: #e8eaed;
+  --line: #eceef0;
+  --line-2: #d4d8dc;
+  --text: #1b1b1b;
+  --text-2: #6b6f74;
+  --text-3: #979b9f;
+  --up: #00c805;
+  --up-text: #00891c;
+  --up-soft: rgba(0, 200, 5, 0.12);
+  --down: #ff5000;
+  --down-text: #d84200;
+  --down-soft: rgba(255, 80, 0, 0.12);
+  --on-pill: #0a1f0c;
+  --on-pill-down: #2a0e00;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.14), 0 1px 0 var(--line-2);
+  --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --shadow-sheet: 0 -8px 28px rgba(24, 21, 16, 0.18), 0 -1px 0 var(--rule-heavy);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000;
+    --bg-2: #161616;
+    --bg-3: #242424;
+    --line: #1f1f1f;
+    --line-2: #333333;
+    --text: #ffffff;
+    --text-2: #a1a5a9;
+    --text-3: #7a7e82;
+    --up-text: #00c805;
+    --down-text: #ff5000;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --bg-2: #161616;
+  --bg-3: #242424;
+  --line: #1f1f1f;
+  --line-2: #333333;
+  --text: #ffffff;
+  --text-2: #a1a5a9;
+  --text-3: #6f7377;
+  --up-text: #00c805;
+  --down-text: #ff5000;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scrollbar-color: var(--ink-3) transparent; scrollbar-width: thin; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); scrollbar-color: var(--line-2) transparent; scrollbar-width: thin; }
 html.sheet-open, html.sheet-open body { overflow: hidden; }
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
   font: 400 15px/20px var(--sans);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
-  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
-::selection { background: var(--rule); color: var(--ink); }
+::selection { background: var(--up-soft); color: var(--text); }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-:focus-visible { outline: 2px solid var(--pen); outline-offset: 2px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+:focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: 0; padding: 0; }
-input::placeholder { color: var(--ink-3); opacity: 1; }
-input[type="search"] { caret-color: var(--pen); }
+input::placeholder { color: var(--text-3); opacity: 1; }
+input[type="search"] { caret-color: var(--up); }
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
-code { font-family: var(--mono); font-size: 12px; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
 b { font-weight: 600; }
 [hidden] { display: none !important; }
 svg { display: block; }
-
-.mono { font-family: var(--mono); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.up { color: var(--up-text); }
+.down { color: var(--down-text); }
 
-.shell {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
+.shell { max-width: 760px; margin: 0 auto; padding: 0 16px; }
 
-/* ----- stale band: the machine's own warning, printed across the top ----- */
+/* ----- stale band ----- */
 .band {
   margin: 0 -16px;
   padding: 10px 16px;
-  background: var(--band);
-  color: var(--paper);
-  font: 500 12px/16px var(--mono);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  background: var(--down);
+  color: var(--on-pill-down);
+  font: 600 13px/18px var(--sans);
 }
 
-/* ----- masthead: the printout header ----- */
-.mast {
-  padding: 20px 0 12px;
-  border-bottom: 2px solid var(--ink);
-}
-.mast h1 {
-  margin: 0;
-  font: 700 44px/44px var(--cond);
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-}
-.mast-line {
-  margin: 8px 0 0;
-  font: 400 12px/16px var(--mono);
-  color: var(--ink-2);
-}
-.mast-cal {
-  margin: 4px 0 0;
-  font: 400 12px/16px var(--mono);
-  color: var(--ink-3);
-}
-@media (min-width: 720px) {
-  .mast { display: grid; grid-template-columns: auto 1fr; column-gap: 24px; align-items: end; }
-  .mast h1 { grid-row: 1 / span 2; font-size: 56px; line-height: 52px; }
-  .mast-line { margin-top: 0; text-align: right; }
-  .mast-cal { text-align: right; }
-}
-
-/* ----- controls: a ruled search line and the lead selector ----- */
-.controls { padding: 16px 0 8px; }
-.search {
+/* ----- title bar ----- */
+.titlebar {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-  border-bottom: 1px solid var(--ink);
-  color: var(--ink-3);
-}
-.search:focus-within { color: var(--pen); border-bottom-color: var(--pen); }
-.search input {
-  flex: 1;
-  min-width: 0;
-  height: 40px;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-  font: 400 16px/40px var(--sans);
-  padding: 0;
-}
-.search input:focus { outline: none; }
-.leads {
-  display: flex;
-  gap: 8px;
-  margin: 12px -16px 0;
-  padding: 0 16px 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.leads::-webkit-scrollbar { display: none; }
-.lead-btn {
-  flex: none;
-  display: inline-flex;
+  justify-content: space-between;
   align-items: baseline;
-  gap: 6px;
-  height: 28px;
-  padding: 0 10px;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  color: var(--ink);
-  white-space: nowrap;
+  padding: 16px 0 4px;
+}
+.titlebar h1 { margin: 0; font: 700 17px/24px var(--sans); letter-spacing: -0.01em; }
+.titlebar span { font: 400 13px/20px var(--sans); color: var(--text-2); }
+
+/* ----- hero ----- */
+.hero { padding: 12px 0 0; }
+.hero-k { font: 500 13px/18px var(--sans); color: var(--text-2); }
+.hero-big { margin: 2px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.hero-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
+.hero-line span { color: var(--text-2); font-weight: 400; }
+.chart { position: relative; width: 100%; aspect-ratio: 358 / 140; margin-top: 8px; }
+@media (min-width: 720px) { .chart { aspect-ratio: 728 / 220; } }
+.chart svg { width: 100%; height: 100%; overflow: visible; }
+.ranges { display: flex; gap: 4px; padding: 10px 0 4px; border-bottom: 1px solid var(--line); }
+.ranges button {
+  flex: 1;
+  height: 36px;
+  border-radius: 18px;
+  font: 600 13px/36px var(--sans);
+  color: var(--text-2);
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
 }
-.lead-btn .code { font: 700 12px/28px var(--mono); letter-spacing: 0.04em; }
-.lead-btn .lname { font: 500 13px/28px var(--cond); text-transform: uppercase; letter-spacing: 0.04em; }
-.lead-btn .n { font: 400 11px/28px var(--mono); color: var(--ink-3); }
-.lead-btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-.lead-btn[aria-pressed="true"] .n { color: var(--paper-3); }
+.ranges button[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
+.ranges button[aria-pressed="true"].neg { background: var(--down); color: var(--on-pill-down); }
+.ranges button .rv { display: block; font: 500 12px/14px var(--sans); margin-top: -8px; padding-bottom: 6px; }
+.ranges.tall button { height: 48px; line-height: 40px; }
 
-/* ----- result line ----- */
-.resultline {
+/* ----- section heads ----- */
+h2.section {
+  margin: 0;
+  padding: 22px 0 8px;
+  font: 700 20px/24px var(--sans);
+  letter-spacing: -0.01em;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
-  padding: 12px 0 8px;
-  font: 500 12px/16px var(--mono);
-  color: var(--ink-2);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
-.resultline .cal { color: var(--ink-3); text-transform: none; letter-spacing: 0; font-weight: 400; }
+h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
+.sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; font: 500 13px/20px var(--sans); color: var(--up-text); }
+.sortwrap svg { width: 12px; height: 12px; }
+.sortwrap select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-/* ----- strips: one name per ruled row ----- */
-.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.list > li { border-bottom: 1px solid var(--hair); }
-.strip {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr) 128px 76px;
-  align-items: center;
-  column-gap: 8px;
-  width: 100%;
-  height: 60px;
-  text-align: left;
-  color: var(--ink);
-  transition: background-color 120ms var(--ease-out);
-}
-@media (hover: hover) { .strip:hover { background: var(--paper-2); } }
-.strip:active { background: var(--paper-3); }
-.strip .rank { font: 400 11px/16px var(--mono); color: var(--ink-3); text-align: right; }
-.name-cell { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.ticker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font: 700 15px/20px var(--mono);
-  letter-spacing: 0.02em;
-}
-.company { display: flex; gap: 6px; min-width: 0; align-items: baseline; }
-.company-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 13px/16px var(--sans); color: var(--ink-2); }
-.cap-sub { flex: none; font: 400 11px/16px var(--mono); color: var(--ink-3); }
-.warn {
-  font: 500 10px/14px var(--mono);
-  color: var(--pen);
-  border: 1px solid var(--pen);
-  border-radius: 2px;
-  padding: 0 4px;
-}
-.figure { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0; }
-.figure .val { font: 500 15px/20px var(--mono); letter-spacing: -0.01em; white-space: nowrap; }
-.figure .val.none { color: var(--ink-3); }
-.figure .lab { font: 400 11px/14px var(--mono); color: var(--ink-3); white-space: nowrap; }
-.strip .extra { display: none; }
-@media (max-width: 719px) { .strip .cap-sub { display: none; } }
-
-/* the trace: a calibrated panel of ruled paper */
-.trace { position: relative; width: 100%; }
-.trace svg { width: 100%; height: 100%; }
-.strip .trace, .strip .trace svg { width: 130px; height: 40px; }
-.trace .gain {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  font: 400 9px/10px var(--mono);
-  color: var(--ink-3);
-  pointer-events: none;
-  white-space: nowrap;
-}
-.lead .gain, .rhythm .gain, .strip .gain { display: none; }
-/* the owner's grease-pencil mark, written on the paper itself */
-.pmark, .trace svg.pmark, .strip .trace svg.pmark { position: absolute; left: 12px; top: 2px; width: 18px; height: 18px; color: var(--pencil); opacity: 0.88; pointer-events: none; }
-/* the mark takes the corner the trace leaves clear of its zero line */
-.trace svg.pmark.low, .strip .trace svg.pmark.low { top: auto; bottom: 2px; }
-.watch-btn svg.pmark { position: static; width: 18px; height: 18px; opacity: 1; }
-.watch-btn[aria-pressed="false"] svg.pmark { color: var(--pencil); opacity: 0.6; }
-.pmark path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.ticker .pmark { position: static; width: 16px; height: 16px; }
-.dp-ticker .pmark { position: static; width: 24px; height: 24px; }
-@media (min-width: 720px) { .trace svg.pmark, .strip .trace svg.pmark { width: 22px; height: 22px; left: 14px; top: 3px; } .trace svg.pmark.low, .strip .trace svg.pmark.low { top: auto; bottom: 3px; } }
-.trace-empty { height: 40px; border-left: 1px solid var(--hair); }
-@media (min-width: 720px) {
-  .strip { grid-template-columns: 32px minmax(160px, 1fr) 250px repeat(3, 84px) 120px; column-gap: 12px; height: 80px; }
-  .strip .trace, .strip .trace svg { width: 250px; height: 60px; }
-  .strip .extra { display: flex; flex-direction: column; align-items: flex-end; }
-  .strip .extra .val { font: 400 13px/20px var(--mono); }
-  .strip .extra .val.none { color: var(--ink-3); }
-  .strip .extra .lab { font: 400 11px/16px var(--mono); color: var(--ink-3); }
-}
-
-/* sector header inside a grouped list: the lead label */
-.lead-head {
+/* ----- search ----- */
+.search {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
-  height: 40px;
-  padding: 0 4px;
-  text-align: left;
-  background: var(--paper-2);
-  color: var(--ink);
+  height: 44px;
+  padding: 0 14px;
+  margin-top: 12px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  color: var(--text-2);
 }
-.lead-head .chev { width: 12px; height: 12px; color: var(--ink-3); transition: transform 160ms var(--ease-out); }
-.lead-head[aria-expanded="false"] .chev { transform: rotate(-90deg); }
-.lead-head .code { font: 700 13px/20px var(--mono); letter-spacing: 0.04em; }
-.lead-head .lname { font: 600 14px/20px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; }
-.lead-head .n { font: 400 12px/20px var(--mono); color: var(--ink-3); margin-left: auto; }
+.search svg { width: 16px; height: 16px; flex: none; }
+.search input { flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; color: var(--text); font: 400 15px/44px var(--sans); padding: 0; }
+.search input:focus { outline: none; }
 
-.empty { padding: 32px 0; font: 400 15px/20px var(--sans); color: var(--ink-2); text-align: center; }
+/* ----- chips ----- */
+.chips { display: flex; gap: 8px; margin: 0 -16px; padding: 4px 16px 12px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  font: 500 13px/30px var(--sans);
+  white-space: nowrap;
+  display: inline-flex;
+  gap: 6px;
+  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out), border-color 120ms var(--ease-out);
+}
+.chip .n { color: var(--text-2); }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.chip[aria-pressed="true"] .n { color: var(--bg); opacity: 0.7; }
 
-/* ----- table view: the measurement table ----- */
-.table-wrap { overflow: auto; max-height: calc(100dvh - 180px); border-top: 1px solid var(--ink); margin: 0 -16px; padding: 0 16px; }
-.grid { border-collapse: collapse; width: 100%; min-width: 760px; font: 400 12px/16px var(--mono); }
-.grid th, .grid td { padding: 0 8px; height: 32px; border-bottom: 1px solid var(--hair); white-space: nowrap; }
-.grid th { position: sticky; top: 0; background: var(--paper); text-align: right; font: 600 11px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); z-index: 1; box-shadow: inset 0 -1px 0 var(--ink); }
-.grid th:first-child, .grid td:first-child { text-align: left; padding-left: 0; position: sticky; left: 0; background: var(--paper); }
+/* ----- rows ----- */
+.list { list-style: none; margin: 0; padding: 0; }
+.list > li { border-bottom: 1px solid var(--line); }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px auto;
+  align-items: center;
+  column-gap: 14px;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  color: var(--text);
+  border-radius: 8px;
+  transition: background-color 120ms var(--ease-out);
+}
+@media (hover: hover) { .row:hover { background: var(--bg-2); margin: 0 -8px; padding: 12px 8px; width: calc(100% + 16px); } }
+.name-cell { min-width: 0; }
+.ticker { display: flex; align-items: center; gap: 6px; font: 600 15px/20px var(--sans); }
+.ticker .star { width: 14px; height: 14px; color: var(--up-text); flex: none; }
+.ticker .warn { font: 500 10px/16px var(--sans); color: var(--text-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 0 6px; }
+.company { display: block; font: 400 13px/18px var(--sans); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.spark { width: 64px; height: 26px; }
+.spark svg { width: 100%; height: 100%; overflow: visible; }
+.spark-empty { width: 64px; height: 26px; border-bottom: 1px dashed var(--line-2); }
+.figure { text-align: right; min-width: 88px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.figure .price { font: 500 15px/20px var(--sans); white-space: nowrap; }
+.figure .price.none { color: var(--text-3); }
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font: 600 12px/18px var(--sans);
+  white-space: nowrap;
+  color: var(--on-pill);
+  background: var(--up);
+}
+.pill.down { background: var(--down); color: var(--on-pill-down); }
+.pill.flat { background: var(--bg-3); color: var(--text); }
+.pill.none { background: transparent; color: var(--text-3); border: 1px solid var(--line-2); }
+.figure .lab { font: 400 11px/14px var(--sans); color: var(--text-3); }
+
+.group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 0 6px;
+  text-align: left;
+  color: var(--text);
+  font: 600 13px/18px var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.group-head .chev { width: 12px; height: 12px; color: var(--text-3); transition: transform 160ms var(--ease-out); }
+.group-head[aria-expanded="false"] .chev { transform: rotate(-90deg); }
+.group-head .n { margin-left: auto; font: 400 13px/18px var(--sans); color: var(--text-2); text-transform: none; letter-spacing: 0; }
+
+.empty { padding: 40px 0; font: 400 15px/22px var(--sans); color: var(--text-2); text-align: center; }
+.resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
+
+/* ----- table view ----- */
+.table-wrap { overflow: auto; max-height: calc(100dvh - 200px); margin: 0 -16px; padding: 0 16px; }
+.grid { border-collapse: collapse; width: 100%; min-width: 780px; font: 400 13px/18px var(--sans); }
+.grid th, .grid td { padding: 0 8px; height: 40px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.grid th { position: sticky; top: 0; background: var(--bg); text-align: right; font: 500 12px/16px var(--sans); color: var(--text-2); z-index: 1; box-shadow: inset 0 -1px 0 var(--line-2); }
+.grid th:first-child, .grid td:first-child { text-align: left; padding-left: 0; position: sticky; left: 0; background: var(--bg); }
 .grid th:nth-child(2), .grid td:nth-child(2) { text-align: left; }
 .grid td { text-align: right; }
-.grid td.none { color: var(--ink-3); }
+.grid td.none { color: var(--text-3); }
 .grid tbody tr { cursor: pointer; }
-@media (hover: hover) { .grid tbody tr:hover td { background: var(--paper-2); } }
-.grid .th-sort { display: inline-flex; gap: 4px; align-items: center; color: inherit; font: inherit; text-transform: inherit; letter-spacing: inherit; }
-.grid th[aria-sort] .th-sort { color: var(--ink); }
+@media (hover: hover) { .grid tbody tr:hover td { background: var(--bg-2); } }
+.grid .th-sort { display: inline-flex; gap: 4px; align-items: center; color: inherit; font: inherit; }
+.grid th[aria-sort] .th-sort { color: var(--text); }
 .grid .th-arrow { width: 10px; height: 10px; }
-.grid .tcell { font: 700 12px/16px var(--mono); letter-spacing: 0.02em; color: var(--ink); text-align: left; }
-.grid .tcell .ticker { font-size: 12px; }
-.grid .tsector { color: var(--ink-2); }
-.grid .tsector abbr { text-decoration: none; font-weight: 500; }
+.grid .tcell { font: 600 13px/18px var(--sans); color: var(--text); text-align: left; }
+.grid .tsector { color: var(--text-2); }
+.grid .tsector abbr { text-decoration: none; }
 
-/* ----- sectors: the 12-lead page ----- */
-.panel-title {
-  margin: 0;
-  padding: 20px 0 12px;
-  border-bottom: 2px solid var(--ink);
-  font: 700 32px/36px var(--cond);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-.panel-title { flex-wrap: wrap; }
-.panel-title .watch-n { font: 400 14px/20px var(--mono); color: var(--ink-3); text-transform: none; letter-spacing: 0; }
-@media (max-width: 719px) { #cross-title { flex-basis: 100%; } }
-.leads-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; }
-.lead {
-  padding: 12px 0 16px;
-  border-bottom: 1px solid var(--hair);
+/* ----- sectors ----- */
+.sector-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  row-gap: 8px;
+  grid-template-columns: minmax(0, 1fr) 64px auto;
+  column-gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
 }
-.lead-top { display: flex; align-items: baseline; gap: 10px; }
-.lead-top .code { font: 700 14px/20px var(--mono); letter-spacing: 0.04em; }
-.lead-top .lname { font: 600 15px/20px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; }
-.lead-top .n { margin-left: auto; font: 400 12px/20px var(--mono); color: var(--ink-3); white-space: nowrap; }
-.lead .trace { height: 80px; }
-.lead-stats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
-.lead-stat { display: flex; flex-direction: column; gap: 2px; }
-.lead-stat .val { font: 500 18px/24px var(--mono); }
-.lead-stat .xl { font: 600 11px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; }
-.breadth { display: flex; align-items: center; gap: 8px; }
-.breadth .track { flex: 1; height: 8px; border: 1px solid var(--ink); background: var(--paper); position: relative; }
-.breadth .track i { display: block; height: 100%; background: var(--ink); }
-.breadth .pct { font: 500 18px/24px var(--mono); min-width: 3.2em; text-align: right; }
-@media (min-width: 720px) {
-  .leads-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; }
-}
-.xtreme { display: grid; grid-template-columns: 84px 1fr; column-gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--hair); }
-.xlabel { font: 600 12px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
+.sector-row .sname { font: 600 15px/20px var(--sans); }
+.sector-row .smeta { font: 400 12px/18px var(--sans); color: var(--text-2); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.breadth { display: inline-flex; align-items: center; gap: 6px; }
+.breadth .track { width: 44px; height: 6px; border-radius: 3px; background: var(--bg-3); overflow: hidden; flex: none; }
+.breadth .track i { display: block; height: 100%; background: var(--up); }
+.xtreme { display: grid; grid-template-columns: 76px 1fr; column-gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.xlabel { font: 600 13px/18px var(--sans); color: var(--text-2); }
 .xchips { display: flex; flex-wrap: wrap; gap: 8px; }
 .xchip {
   display: inline-flex;
   gap: 6px;
-  align-items: baseline;
-  height: 28px;
-  padding: 0 8px;
-  border: 1px solid var(--hair);
-  border-radius: 2px;
-  font: 700 12px/26px var(--mono);
-  color: var(--ink);
-  transition: border-color 120ms var(--ease-out), background-color 120ms var(--ease-out);
+  align-items: center;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 15px;
+  background: var(--bg-2);
+  font: 600 13px/30px var(--sans);
+  color: var(--text);
+  transition: background-color 120ms var(--ease-out);
 }
-.xchip span:last-child { font-weight: 400; color: var(--ink-2); }
-@media (hover: hover) { .xchip:hover { border-color: var(--ink); background: var(--paper-2); } }
+.xchip span:last-child { font-weight: 500; }
+@media (hover: hover) { .xchip:hover { background: var(--bg-3); } }
 
 /* ----- watchlist ----- */
-.watch-tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
-.text-btn { color: var(--pen); font: 500 14px/20px var(--sans); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-.text-btn:hover { text-decoration-thickness: 2px; }
-.watch-tools-note { font: 400 12px/16px var(--sans); color: var(--ink-3); }
-.watch-mix { display: flex; flex-wrap: wrap; gap: 6px 12px; padding: 12px 0 4px; font: 400 12px/16px var(--mono); color: var(--ink-2); }
-.watch-mix .code { font-weight: 700; color: var(--ink); }
+.watch-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 4px 0 12px; }
+.text-btn { color: var(--up-text); font: 600 14px/20px var(--sans); }
+.text-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.watch-tools-note { font: 400 12px/16px var(--sans); color: var(--text-3); }
+.watch-mix { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 8px; }
+.watch-mix span { font: 500 12px/24px var(--sans); color: var(--text-2); background: var(--bg-2); border-radius: 12px; padding: 0 10px; }
+.watch-mix b { color: var(--text); }
 
 /* ----- settings ----- */
-.sgroup { padding: 8px 0 12px; }
-.sgroup-title { margin: 0; padding: 12px 0 4px; font: 600 12px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); }
-.srow { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 8px 0; border-bottom: 1px solid var(--hair); }
+.sgroup { padding: 8px 0 8px; }
+.sgroup-title { margin: 0; padding: 14px 0 4px; font: 600 12px/16px var(--sans); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+.srow { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .slabel { font: 400 15px/20px var(--sans); }
-.srow-btn { width: 100%; text-align: left; color: var(--ink); }
-.srow-btn .chev { width: 14px; height: 14px; color: var(--ink-3); }
-.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--ink); border-radius: 2px; }
-.seg button { height: 28px; padding: 0 12px; border-radius: 1px; font: 500 13px/28px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out); }
-.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.srow-btn { width: 100%; text-align: left; color: var(--text); }
+.srow-btn .chev { width: 14px; height: 14px; color: var(--text-3); }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 18px; background: var(--bg-2); }
+.seg button { height: 30px; padding: 0 12px; border-radius: 15px; font: 500 13px/30px var(--sans); color: var(--text-2); transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out); }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
 .sctl { display: inline-flex; gap: 8px; align-items: center; }
-select {
+select.ctl {
   appearance: none;
   -webkit-appearance: none;
-  height: 32px;
-  padding: 0 28px 0 10px;
-  border: 1px solid var(--ink);
-  border-radius: 2px;
-  background: var(--paper) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23181510' stroke-width='1.5'><path d='M2.5 4.5 6 8l3.5-3.5'/></svg>") no-repeat right 8px center;
-  font: 500 13px/30px var(--mono);
-  color: var(--ink);
+  height: 36px;
+  padding: 0 30px 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  background: var(--bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%236b6f74' stroke-width='1.5'><path d='M2.5 4.5 6 8l3.5-3.5'/></svg>") no-repeat right 10px center;
+  font: 500 13px/34px var(--sans);
+  color: var(--text);
   max-width: 200px;
 }
-.icon-btn { width: 32px; height: 32px; border: 1px solid var(--ink); border-radius: 2px; display: inline-grid; place-items: center; color: var(--ink); }
+.icon-btn { width: 36px; height: 36px; border: 1px solid var(--line-2); border-radius: 18px; display: inline-grid; place-items: center; color: var(--text); }
 .icon-btn svg { width: 14px; height: 14px; }
-.switch { position: relative; width: 44px; height: 24px; border: 1px solid var(--ink); border-radius: 12px; background: var(--paper); transition: background-color 160ms var(--ease-out); }
-.switch .knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); transition: transform 160ms var(--ease-out); }
-.switch[aria-checked="true"] { background: var(--ink); }
-.switch[aria-checked="true"] .knob { background: var(--paper); transform: translateX(20px); }
-.note { margin: 8px 0; font: 400 13px/20px var(--sans); color: var(--ink-2); }
-#footer { margin: 8px 0 0; font: 400 12px/18px var(--sans); color: var(--ink-3); }
+.switch { position: relative; width: 48px; height: 28px; border-radius: 14px; background: var(--bg-3); transition: background-color 160ms var(--ease-out); }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 160ms var(--ease-out); }
+.switch[aria-checked="true"] { background: var(--up); }
+.switch[aria-checked="true"] .knob { transform: translateX(20px); }
+.note { margin: 8px 0; font: 400 13px/20px var(--sans); color: var(--text-2); }
+#footer { margin: 8px 0 0; font: 400 12px/18px var(--sans); color: var(--text-3); }
 
 /* ----- tab bar ----- */
 .tabbar {
   position: fixed;
   left: 0; right: 0; bottom: 0;
-  background: var(--paper);
-  border-top: 1px solid var(--ink);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
   padding-bottom: env(safe-area-inset-bottom);
   z-index: 20;
 }
-.tabbar-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabbar-inner { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
 .tabbar button {
   position: relative;
-  height: 56px;
+  height: 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: var(--ink-3);
-  font: 600 11px/12px var(--cond);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: var(--text-2);
+  font: 500 11px/14px var(--sans);
   transition: color 120ms var(--ease-out);
 }
-.tabbar button svg { width: 22px; height: 22px; }
-.tabbar button[aria-selected="true"] { color: var(--ink); }
-.tabbar button[aria-selected="true"]::after { content: ""; position: absolute; top: -1px; left: 20%; right: 20%; height: 2px; background: var(--ink); }
-.tab-badge { position: absolute; top: 6px; left: calc(50% + 12px); color: var(--pencil); font: 700 12px/16px var(--mono); letter-spacing: 0.02em; }
+.tabbar button svg { width: 24px; height: 24px; }
+.tabbar button[aria-selected="true"] { color: var(--text); font-weight: 600; }
+.tab-badge { position: absolute; top: 8px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--up); color: var(--on-pill); font: 700 10px/16px var(--sans); }
 
-/* ----- sheets: detail and explain ----- */
+/* ----- sheets: the name page and the explain sheet ----- */
 .sheet {
   position: fixed;
   inset: 0;
   z-index: 30;
-  background: rgba(24, 21, 16, 0.38);
+}
+#explain-pop { z-index: 40; }
+.sheet {
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -439,91 +384,85 @@ select {
 .sheet-card {
   width: 100%;
   max-width: 640px;
-  max-height: calc(100dvh - 40px);
+  max-height: calc(100dvh - 24px);
   overflow: auto;
-  background: var(--paper);
-  border-top: 2px solid var(--ink);
-  box-shadow: var(--shadow-sheet);
-  padding: 12px 16px calc(24px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--shadow);
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
   animation: rise 240ms var(--ease-out);
+}
+.sheet-card.page { max-height: 100dvh; height: 100dvh; border-radius: 0; }
+@media (min-width: 720px) {
+  .sheet { align-items: center; }
+  .sheet-card, .sheet-card.page { height: auto; max-height: calc(100dvh - 48px); border-radius: 20px; }
 }
 @keyframes rise { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-.sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--hair); margin: 0 auto 12px; }
-.dp-head { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: start; padding-bottom: 8px; }
-.dp-ticker { display: flex; align-items: center; gap: 8px; font: 700 28px/32px var(--mono); letter-spacing: 0.01em; }
-.dp-name { display: block; font: 400 15px/20px var(--sans); color: var(--ink-2); }
-.dp-close, .ep-close { height: 32px; padding: 0 12px; border: 1px solid var(--ink); border-radius: 2px; font: 500 13px/30px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); }
-.fact-line { font: 400 12px/16px var(--mono); color: var(--ink-3); padding-bottom: 12px; }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line-2); margin: 4px auto 8px; }
+.page-top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
+.back-btn { display: inline-flex; align-items: center; gap: 4px; font: 500 15px/20px var(--sans); color: var(--text-2); }
+.back-btn svg { width: 16px; height: 16px; }
+.star-btn { width: 40px; height: 40px; display: grid; place-items: center; color: var(--text-2); border-radius: 20px; }
+.star-btn svg { width: 22px; height: 22px; }
+.star-btn[aria-pressed="true"] { color: var(--up-text); }
+.dp-k { font: 500 13px/18px var(--sans); color: var(--text-2); }
+.dp-ticker { margin: 2px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.dp-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
+.dp-line span { color: var(--text-2); font-weight: 400; }
 
-/* test-strip bands: adjoining cells of one measurement family */
-.band-row { display: grid; border: 1px solid var(--ink); margin-top: 8px; }
-.band-row.four { grid-template-columns: repeat(4, 1fr); }
-.band-row.three { grid-template-columns: repeat(3, 1fr); }
-.band-row.two { grid-template-columns: repeat(2, 1fr); }
-.band-cell { padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.band-cell + .band-cell { border-left: 1px solid var(--hair); }
-.band-cell .xl, .band-cell .xl-static { font: 600 11px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; }
-.band-cell .val { font: 500 18px/24px var(--mono); letter-spacing: -0.01em; white-space: nowrap; }
-.band-cell .val.none { color: var(--ink-3); }
-.band-cell .sub { font: 400 11px/16px var(--mono); color: var(--ink-3); overflow-wrap: anywhere; }
-.xl {
-  color: var(--pen);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(29, 63, 158, 0.5);
-  text-align: left;
-  font: inherit;
-}
-.xl:hover { text-decoration-color: var(--pen); }
-.xl-static { color: var(--ink-2); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; padding: 14px 0 4px; }
+.stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat .xl, .stat .xl-static { font: 400 13px/18px var(--sans); text-align: left; }
+.stat .val { font: 500 15px/20px var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat .val.none { color: var(--text-3); }
+.stat .sub { font: 400 12px/16px var(--sans); color: var(--text-3); }
+.xl { color: var(--text-2); text-decoration: underline dotted; text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.xl:hover { color: var(--text); text-decoration-color: var(--text-2); }
+.xl-static { color: var(--text-2); }
 
-.rhythm { margin-top: 16px; }
-.rhythm-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 4px; }
-.rhythm-title { font: 600 12px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
-.rhythm .trace { height: auto; aspect-ratio: 260 / 80; }
-.axis { display: flex; justify-content: space-between; gap: 12px; font: 400 11px/16px var(--mono); color: var(--ink-3); padding-top: 4px; }
-.axis span { white-space: nowrap; }
-.fit-toggle { color: var(--pen); font: 500 13px/16px var(--sans); text-decoration: underline; text-underline-offset: 3px; }
-.fit-toggle[aria-pressed="true"] { color: var(--ink); text-decoration: none; }
-.fit-toggle .swatch { display: inline-block; width: 16px; height: 0; border-top: 2px dashed var(--pen); vertical-align: middle; margin-right: 6px; }
+.fit-toggle { font: 500 13px/18px var(--sans); color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
+.fit-toggle .swatch { display: inline-block; width: 16px; height: 0; border-top: 2px dashed var(--text-3); }
+.fit-toggle[aria-pressed="true"] { color: var(--text); }
+.chart-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; font: 400 12px/16px var(--sans); color: var(--text-3); }
+.chart-foot span { white-space: nowrap; }
 
-.watch-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 0 8px; }
 .watch-btn {
+  width: 100%;
+  height: 48px;
+  margin: 14px 0 4px;
+  border-radius: 24px;
+  border: 1.5px solid var(--up);
+  color: var(--up-text);
+  font: 600 15px/45px var(--sans);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  height: 40px;
-  padding: 0 14px;
-  border: 1px solid var(--pencil);
-  border-radius: 2px;
-  color: var(--pencil);
-  font: 500 14px/38px var(--sans);
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
 }
-.watch-btn svg { width: 16px; height: 16px; }
-.watch-btn[aria-pressed="true"] { background: var(--pencil-soft); }
-.watch-ctx { font: 400 12px/16px var(--sans); color: var(--ink-2); }
-.detail-meta { font: 400 12px/18px var(--mono); color: var(--ink-3); padding-top: 8px; }
+.watch-btn svg { width: 18px; height: 18px; }
+.watch-btn[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
+.watch-ctx { display: block; text-align: center; font: 400 13px/18px var(--sans); color: var(--text-2); padding: 4px 0 8px; }
+.about { font: 400 14px/21px var(--sans); color: var(--text-2); margin: 0; }
+.detail-meta { font: 400 12px/18px var(--sans); color: var(--text-3); padding: 8px 0 0; }
 
-.ep-card h2 { margin: 0 0 8px; font: 700 26px/28px var(--cond); text-transform: uppercase; letter-spacing: 0.01em; }
+.ep-card h2 { margin: 6px 0 8px; font: 700 22px/28px var(--sans); letter-spacing: -0.01em; }
 .ep-card p { margin: 0 0 12px; font: 400 15px/22px var(--sans); max-width: 60ch; }
-.ep-card code.formula { display: block; padding: 8px 10px; border: 1px solid var(--hair); background: var(--paper-2); font: 400 12px/18px var(--mono); margin-bottom: 16px; white-space: normal; }
+.ep-card code.formula { display: block; padding: 10px 12px; border-radius: 10px; background: var(--bg-2); font-size: 12px; line-height: 18px; margin-bottom: 16px; white-space: normal; }
 .ep-card dl { margin: 0 0 16px; }
-.ep-card dt { font: 600 13px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; padding-top: 12px; }
-.ep-card dd { margin: 4px 0 0; font: 400 14px/20px var(--sans); color: var(--ink-2); max-width: 60ch; }
-.ep-card dd code { display: block; margin-top: 4px; color: var(--ink-3); }
+.ep-card dt { font: 600 14px/18px var(--sans); padding-top: 12px; }
+.ep-card dd { margin: 4px 0 0; font: 400 14px/20px var(--sans); color: var(--text-2); max-width: 60ch; }
+.ep-card dd code { display: block; margin-top: 4px; color: var(--text-3); }
+.ep-close { height: 44px; width: 100%; border-radius: 22px; background: var(--bg-2); color: var(--text); font: 600 15px/44px var(--sans); }
 
-/* ----- motion discipline ----- */
-/* the stylus writes at paper speed: constant, not eased */
-path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 640ms linear forwards; }
-.pmark path.draw { animation-duration: 320ms; }
+/* ----- motion ----- */
+path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 560ms var(--ease-out) forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .sheet, .sheet-card { animation: none; }
   path.draw { animation: none; stroke-dashoffset: 0; }
-  .lead-head .chev, .switch .knob { transition: none; }
+  .group-head .chev, .switch .knob { transition: none; }
 }
 </style>
 </head>
@@ -533,19 +472,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
 <svg width="0" height="0" aria-hidden="true" style="position:absolute">
   <defs>
-    <!-- The paper: 1 mm rules every small box, a heavy rule every fifth. -->
-    <pattern id="ecg-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M4 0V20M8 0V20M12 0V20M16 0V20M0 4H20M0 8H20M0 12H20M0 16H20" fill="none" style="stroke:var(--rule)" stroke-width="0.6"/>
-      <path d="M0 0.5H20M0.5 0V20" fill="none" style="stroke:var(--rule-heavy)" stroke-width="1"/>
-    </pattern>
-    <symbol id="i-star-o" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-    <symbol id="i-strips" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 7l1.5-2 1.5 2M12 12l1.5-2.5 1.5 2.5M9 17l1.5-2 1.5 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
-    <symbol id="i-leads" viewBox="0 0 24 24"><path d="M3 4h18v16H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 4v16M15 4v16M3 12h18" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
-    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="15" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
-    <symbol id="i-chev" viewBox="0 0 12 12"><path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-chev-r" viewBox="0 0 12 12"><path d="M4.5 3 7.5 6l-3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star-f" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="currentColor"/></symbol>
+    <symbol id="i-stocks" viewBox="0 0 24 24"><path d="M3 17l5-6 4 3 4-6 5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-sectors" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 12 12"><path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 12 12"><path d="M4.5 3 7.5 6l-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 12 12"><path d="M7.5 3 4.5 6l3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 12 12"><path d="M6 2v8M3 7l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5 14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -553,28 +489,32 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
   <p class="band" id="stale-note" hidden></p>
 
   <section class="tab-panel" id="tab-universe" role="tabpanel" aria-labelledby="tabbtn-universe">
-    <header class="mast">
+    <header class="titlebar">
       <h1>Oklahoma</h1>
-      <p class="mast-line" id="subtitle"></p>
-      <p class="mast-cal" id="calline"></p>
+      <span id="subtitle"></span>
     </header>
 
-    <div class="controls">
-      <label class="search">
-        <svg width="16" height="16" aria-hidden="true"><use href="#i-search"/></svg>
-        <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
-      </label>
-      <div class="leads" id="filters" role="group" aria-label="Filter by sector"></div>
+    <div class="hero" id="hero" hidden>
+      <div class="hero-k" id="hero-k"></div>
+      <p class="hero-big" id="hero-big"></p>
+      <p class="hero-line" id="hero-line"></p>
+      <div class="chart" id="hero-chart"></div>
+      <div class="ranges" id="hero-ranges" role="group" aria-label="Window"></div>
     </div>
 
+    <label class="search">
+      <svg aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
+    </label>
+
+    <h2 class="section">Stocks <span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span></h2>
+    <div class="chips" id="filters" role="group" aria-label="Filter by sector"></div>
+
     <div id="universe-slot">
-      <!-- One listing serves the Universe and Watchlist tabs; the script
+      <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline">
-          <span id="resultcount" aria-live="polite"></span>
-          <button type="button" class="cal xl" data-explain="trace" id="listcal"></button>
-        </div>
+        <div class="resultline"><span id="resultcount" aria-live="polite"></span><span id="listfig"></span></div>
         <ul class="list" id="list" tabindex="-1"></ul>
         <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
           <table class="grid" aria-label="Universe table">
@@ -587,9 +527,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
   </section>
 
   <section class="tab-panel" id="tab-sectors" role="tabpanel" aria-labelledby="tabbtn-sectors" hidden>
-    <h2 class="panel-title">Sectors <span class="watch-n" id="cross-title"></span></h2>
+    <header class="titlebar"><h1>Sectors</h1><span id="cross-title"></span></header>
     <section id="cross" hidden aria-label="12-month cross-section">
-      <ul class="leads-grid" id="xs-sectors"></ul>
+      <div class="resultline"><span>Median 12-month return · names up</span><span>past year</span></div>
+      <ul class="list" id="xs-sectors"></ul>
       <div class="xtreme"><span class="xlabel">Leaders</span><span id="xs-leaders" class="xchips"></span></div>
       <div class="xtreme"><span class="xlabel">Laggards</span><span id="xs-laggards" class="xchips"></span></div>
     </section>
@@ -597,7 +538,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
   </section>
 
   <section class="tab-panel" id="tab-watch" role="tabpanel" aria-labelledby="tabbtn-watch" hidden>
-    <h2 class="panel-title">Watchlist <span class="watch-n"></span></h2>
+    <header class="titlebar"><h1>Watchlist</h1><span class="watch-n"></span></header>
     <div class="watch-tools" id="watch-tools">
       <button id="watch-export" type="button" class="text-btn">Copy tickers</button>
       <button id="watch-import" type="button" class="text-btn">Paste tickers</button>
@@ -608,26 +549,34 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
   </section>
 
   <section class="tab-panel" id="tab-settings" role="tabpanel" aria-labelledby="tabbtn-settings" hidden>
-    <h2 class="panel-title">Settings</h2>
+    <header class="titlebar"><h1>Settings</h1></header>
     <div class="sgroup">
-      <h3 class="sgroup-title">List</h3>
+      <h2 class="sgroup-title">Appearance</h2>
+      <div class="srow">
+        <span class="slabel">Theme</span>
+        <span class="seg" role="group" aria-label="Theme" id="themeSeg">
+          <button type="button" data-theme="system" aria-pressed="true">System</button>
+          <button type="button" data-theme="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+        </span>
+      </div>
+    </div>
+    <div class="sgroup">
+      <h2 class="sgroup-title">List</h2>
       <div class="srow">
         <span class="slabel">View</span>
-        <span class="seg" role="group" aria-label="View">
-          <button type="button" data-view="cards" aria-pressed="true">Strips</button>
+        <span class="seg" role="group" aria-label="View" id="viewSeg">
+          <button type="button" data-view="cards" aria-pressed="true">List</button>
           <button type="button" data-view="table" aria-pressed="false">Table</button>
         </span>
       </div>
       <div class="srow" id="display-row">
-        <label class="slabel" for="displayKey">Figure on each strip</label>
-        <select id="displayKey"></select>
+        <label class="slabel" for="displayKey">Figure on each row</label>
+        <select id="displayKey" class="ctl"></select>
       </div>
       <div class="srow">
-        <label class="slabel" for="sortKey">Sort by</label>
-        <span class="sctl">
-          <select id="sortKey"></select>
-          <button id="sortDir" type="button" class="icon-btn" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        </span>
+        <span class="slabel">Sort direction</span>
+        <button id="sortDir" type="button" class="icon-btn" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
       </div>
       <div class="srow" id="group-row">
         <span class="slabel" id="group-label">Group by sector</span>
@@ -635,12 +584,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       </div>
     </div>
     <div class="sgroup">
-      <h3 class="sgroup-title">Explain</h3>
-      <button id="columnsHelp" type="button" class="srow srow-btn">What the columns mean <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-      <button id="traceHelp" type="button" class="srow srow-btn xl-plain" data-explain="trace">How to read a strip <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+      <h2 class="sgroup-title">Explain</h2>
+      <button id="columnsHelp" type="button" class="srow srow-btn">What the figures mean <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+      <button id="chartHelp" type="button" class="srow srow-btn" data-explain="chart">How the charts are drawn <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
     </div>
     <div class="sgroup">
-      <h3 class="sgroup-title">Data</h3>
+      <h2 class="sgroup-title">Data</h2>
       <p class="note" id="history-note" hidden></p>
       <p class="note" id="changes-note" hidden></p>
       <footer id="footer"></footer>
@@ -651,15 +600,15 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 <nav class="tabbar" aria-label="Sections">
   <div class="tabbar-inner" role="tablist" id="tabbar">
     <button type="button" role="tab" id="tabbtn-universe" data-tab="universe" aria-selected="true" aria-controls="tab-universe">
-      <svg aria-hidden="true"><use href="#i-strips"/></svg>
-      Universe
+      <svg aria-hidden="true"><use href="#i-stocks"/></svg>
+      Stocks
     </button>
     <button type="button" role="tab" id="tabbtn-sectors" data-tab="sectors" aria-selected="false" aria-controls="tab-sectors" tabindex="-1">
-      <svg aria-hidden="true"><use href="#i-leads"/></svg>
+      <svg aria-hidden="true"><use href="#i-sectors"/></svg>
       Sectors
     </button>
     <button type="button" role="tab" id="tabbtn-watch" data-tab="watch" aria-selected="false" aria-controls="tab-watch" tabindex="-1">
-      <svg aria-hidden="true"><use href="#i-star-o"/></svg>
+      <svg aria-hidden="true"><use href="#i-star"/></svg>
       Watchlist
       <span class="tab-badge watch-n" hidden aria-hidden="true"></span>
     </button>
@@ -682,15 +631,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 </div>
 
 <div id="detail-pop" class="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="dp-ticker">
-  <div class="sheet-card dp-card">
-    <div class="sheet-handle" aria-hidden="true"></div>
-    <div class="dp-head">
-      <div>
-        <span class="dp-ticker" id="dp-ticker"></span>
-        <span class="dp-name" id="dp-name"></span>
-      </div>
-      <button id="dp-close" type="button" class="dp-close">Close</button>
+  <div class="sheet-card page dp-card">
+    <div class="page-top">
+      <button id="dp-close" type="button" class="back-btn"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Back</button>
+      <button id="dp-star" type="button" class="star-btn" aria-pressed="false" aria-label="Add to watchlist"><svg aria-hidden="true"><use href="#i-star"/></svg></button>
     </div>
+    <div class="dp-k" id="dp-k"></div>
+    <p class="dp-ticker" id="dp-ticker"></p>
     <div id="dp-body"></div>
   </div>
 </div>
@@ -701,7 +648,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     var universe = JSON.parse(document.getElementById("universe-data").textContent);
     var rows = universe.constituents || [];
-
     var history = JSON.parse(document.getElementById("history-data").textContent);
     var coverage = {};
     ((history && history.coverage) || []).forEach(function (entry) {
@@ -718,8 +664,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (value >= 1e6) return "$" + (value / 1e6).toFixed(0) + "M";
       return "$" + value.toLocaleString();
     }
-    // A true minus, never a hyphen: the sign is the only sign coding on
-    // the page, so it has to be unmistakable in the figures themselves.
+    function price(value) {
+      return "$" + value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    // A true minus, never a hyphen.
     function signed(value, digits, suffix) {
       var s = Math.abs(value).toFixed(digits) + (suffix || "");
       if (value > 0) return "+" + s;
@@ -728,25 +676,26 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function pct(value) { return value == null ? "—" : signed(value, 2, "%"); }
     function pct1(value) { return signed(value, 1, "%"); }
-
-    // Three-letter sector codes: the leads of this strip chart.
-    var SECTOR_CODES = {
-      "Technology": "TEC",
-      "Communication Services": "COM",
-      "Consumer Cyclical": "CCY",
-      "Consumer Defensive": "CDF",
-      "Financial Services": "FIN",
-      "Healthcare": "HLT",
-      "Energy": "ENR",
-      "Industrials": "IND",
-      "Basic Materials": "MAT",
-      "Real Estate": "RES",
-      "Utilities": "UTL",
-      "Unclassified": "UNC"
-    };
-    function sectorCode(name) {
-      return SECTOR_CODES[name] || name.slice(0, 3).toUpperCase();
+    function direction(value) {
+      if (value == null) return "flat";
+      if (value > 0.005) return "up";
+      if (value < -0.005) return "down";
+      return "flat";
     }
+    function median(values) {
+      var v = values.filter(function (x) { return x != null; }).sort(function (a, b) { return a - b; });
+      if (!v.length) return null;
+      var mid = v.length >> 1;
+      return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
+    }
+
+    var SECTOR_CODES = {
+      "Technology": "TEC", "Communication Services": "COM", "Consumer Cyclical": "CCY",
+      "Consumer Defensive": "CDF", "Financial Services": "FIN", "Healthcare": "HLT",
+      "Energy": "ENR", "Industrials": "IND", "Basic Materials": "MAT",
+      "Real Estate": "RES", "Utilities": "UTL", "Unclassified": "UNC"
+    };
+    function sectorCode(name) { return SECTOR_CODES[name] || name.slice(0, 3).toUpperCase(); }
 
     function asOf(iso) {
       var d = new Date(iso);
@@ -772,152 +721,124 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       svg.appendChild(use);
       return svg;
     }
-
-    /* ----- the trace: a series written on calibrated paper -----
-       One heavy box is BIG units on either axis. Time is fixed by the
-       strip's width (boxesW boxes for the full window); the gain, in
-       percent per box, is the smallest of GAINS that fits the series
-       with its zero line on a heavy rule. The calibration pulse at the
-       left is one box tall, so it shows the gain in the paper's own
-       units, and the printed label states it in percent. */
-
-    var BIG = 20;
     var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var DESKTOP = window.matchMedia("(min-width: 720px)");
 
-    // One stroked star, slightly tilted with a pencil's overshoot at the
-    // close: the mark the owner draws on a strip worth a second look.
-    var PENCIL_D = "M9.4 3.2 12.3 8 17.5 8.5 13.6 12.1 14.8 17.3 10 14.7 5.3 17.4 6.4 12.2 2.4 8.6 7.7 8 9.9 2.7 10.6 4.1";
-    function pencilMark(className, draw) {
-      var svg = document.createElementNS(SVG, "svg");
-      svg.setAttribute("class", className || "pmark");
-      svg.setAttribute("viewBox", "0 0 20 20");
-      svg.setAttribute("role", "img");
-      svg.setAttribute("aria-label", "on watchlist");
-      var path = document.createElementNS(SVG, "path");
-      path.setAttribute("d", PENCIL_D);
-      path.setAttribute("transform", "rotate(-9 10 10)");
-      svg.appendChild(path);
-      svg.draw = function () {
-        if (REDUCED.matches) return;
-        path.style.setProperty("--len", path.getTotalLength().toFixed(1));
-        path.setAttribute("class", "draw");
-      };
-      return svg;
-    }
-    var CAL = 10;
-    var GAINS = [5, 10, 25, 50, 100, 250, 500, 1000];
+    /* ----- theme ----- */
 
-    function fitScale(values, boxesH) {
-      var hi = 0, lo = 0;
-      values.forEach(function (v) { if (v > hi) hi = v; if (v < lo) lo = v; });
-      for (var g = 0; g < GAINS.length; g++) {
-        var gain = GAINS[g];
-        for (var b = 0; b <= boxesH; b++) {
-          if (hi <= b * gain + 1e-9 && -lo <= (boxesH - b) * gain + 1e-9) {
-            return { gain: gain, base: b };
-          }
-        }
-      }
-      return { gain: GAINS[GAINS.length - 1], base: Math.round(boxesH / 2) };
+    var DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
+    function applyTheme(pref) {
+      var root = document.documentElement;
+      if (pref === "light" || pref === "dark") root.setAttribute("data-theme", pref);
+      else root.removeAttribute("data-theme");
+      var dark = pref === "dark" || (pref !== "light" && DARK_MQ.matches);
+      document.getElementById("theme-color").setAttribute("content", dark ? "#000000" : "#ffffff");
+      document.querySelectorAll("#themeSeg button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-theme") === (pref || "system")));
+      });
     }
 
-    function pathFor(series, scale, width, height) {
-      var x0 = CAL, span = width - CAL;
-      var step = series.length > 1 ? span / (series.length - 1) : 0;
-      var by = scale.base * BIG;
-      return series.map(function (v, i) {
-        var y = by - (v / scale.gain) * BIG;
-        return (i ? "L" : "M") + (x0 + i * step).toFixed(2) + " " + y.toFixed(2);
-      }).join(" ");
+    /* ----- charts -----
+       The series are thinned cumulative returns (percent) over the
+       full window. A shorter window re-bases the tail of the same
+       series to its own start, so the chart and the headline figure
+       agree on what zero means. */
+
+    var WINDOWS = [
+      { key: "1M", label: "1 month", points: 5, field: "return_1m_pct", metric: "ret1", sessions: 21 },
+      { key: "3M", label: "3 months", points: 15, field: "return_3m_pct", metric: "ret3", sessions: 63 },
+      { key: "6M", label: "6 months", points: 30, field: "return_6m_pct", metric: "ret6", sessions: 126 },
+      { key: "1Y", label: "12 months", points: null, field: "window_return_pct", metric: "ret12", sessions: 252 }
+    ];
+    function windowByKey(key) {
+      for (var i = 0; i < WINDOWS.length; i++) if (WINDOWS[i].key === key) return WINDOWS[i];
+      return WINDOWS[3];
+    }
+    function rebase(series, points) {
+      if (!points || points >= series.length) return series.slice();
+      var tail = series.slice(series.length - points);
+      var base = 1 + tail[0] / 100;
+      return tail.map(function (v) { return ((1 + v / 100) / base - 1) * 100; });
     }
 
-    // opts: overlay (a second series drawn dashed in pen), dashed (a
-    // short-history trace), draw (animate the stylus writing it).
-    function trace(series, boxesW, boxesH, opts) {
+    function colorFor(value) {
+      var d = direction(value);
+      return d === "up" ? "var(--up)" : d === "down" ? "var(--down)" : "var(--text-3)";
+    }
+
+    // opts: width, height, big (zero line, end dot, draw-in), overlay
+    // (a second dashed series), dashed (short history), stroke colour.
+    function lineChart(series, opts) {
       opts = opts || {};
-      var width = CAL + boxesW * BIG, height = boxesH * BIG;
-      var wrap = el("div", "trace");
-      var svg = document.createElementNS(SVG, "svg");
-      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
-      svg.setAttribute("preserveAspectRatio", "xMinYMid meet");
-      svg.setAttribute("aria-hidden", "true");
-      wrap.appendChild(svg);
-
-      var paper = document.createElementNS(SVG, "rect");
-      paper.setAttribute("width", String(width));
-      paper.setAttribute("height", String(height));
-      paper.setAttribute("fill", "url(#ecg-grid)");
-      svg.appendChild(paper);
-      if (!series || series.length < 2) return wrap;
-
+      var w = opts.width || 64, h = opts.height || 26, pad = opts.big ? 6 : 1.5;
       var all = opts.overlay ? series.concat(opts.overlay) : series;
-      var scale = fitScale(all, boxesH);
-      var by = scale.base * BIG;
+      var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+      if (opts.big) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+      var span = hi - lo || 1;
+      function y(v) { return pad + (1 - (v - lo) / span) * (h - pad * 2); }
+      function x(i, n) { return (i / (n - 1)) * w; }
+      function d(s) {
+        return s.map(function (v, i) {
+          return (i ? "L" : "M") + x(i, s.length).toFixed(2) + " " + y(v).toFixed(2);
+        }).join(" ");
+      }
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("aria-hidden", "true");
+      if (!series || series.length < 2) return svg;
 
-      var pulse = document.createElementNS(SVG, "path");
-      pulse.setAttribute("d", "M0 " + by + "H2V" + (by - BIG) + "H8V" + by + "H" + CAL);
-      pulse.setAttribute("fill", "none");
-      pulse.setAttribute("stroke-width", "1");
-      pulse.setAttribute("vector-effect", "non-scaling-stroke");
-      pulse.style.stroke = "var(--ink-2)";
-      svg.appendChild(pulse);
-
+      if (opts.big) {
+        var zero = document.createElementNS(SVG, "line");
+        zero.setAttribute("x1", "0"); zero.setAttribute("x2", String(w));
+        zero.setAttribute("y1", y(0).toFixed(2)); zero.setAttribute("y2", y(0).toFixed(2));
+        zero.setAttribute("stroke-dasharray", "2 4");
+        zero.setAttribute("vector-effect", "non-scaling-stroke");
+        zero.style.stroke = "var(--line-2)";
+        svg.appendChild(zero);
+      }
       if (opts.overlay && opts.overlay.length > 1) {
         var fit = document.createElementNS(SVG, "path");
-        fit.setAttribute("d", pathFor(opts.overlay, scale, width, height));
+        fit.setAttribute("d", d(opts.overlay));
         fit.setAttribute("fill", "none");
-        fit.setAttribute("stroke-width", "1.25");
-        fit.setAttribute("stroke-dasharray", "4 3");
+        fit.setAttribute("stroke-width", "1.5");
+        fit.setAttribute("stroke-dasharray", "4 4");
         fit.setAttribute("vector-effect", "non-scaling-stroke");
-        fit.style.stroke = "var(--pen)";
+        fit.style.stroke = "var(--text-3)";
         svg.appendChild(fit);
       }
-
       var line = document.createElementNS(SVG, "path");
-      line.setAttribute("d", pathFor(series, scale, width, height));
+      line.setAttribute("d", d(series));
       line.setAttribute("fill", "none");
-      line.setAttribute("stroke-width", opts.dashed ? "1.25" : "1.5");
+      line.setAttribute("stroke-width", opts.big ? "2" : "1.6");
       line.setAttribute("stroke-linejoin", "round");
       line.setAttribute("stroke-linecap", "round");
       line.setAttribute("vector-effect", "non-scaling-stroke");
-      line.style.stroke = opts.dashed ? "var(--ink-2)" : "var(--ink)";
       if (opts.dashed) line.setAttribute("stroke-dasharray", "3 3");
+      line.style.stroke = opts.stroke || colorFor(series[series.length - 1] - series[0]);
       svg.appendChild(line);
-
-      var last = series[series.length - 1];
-      var dot = document.createElementNS(SVG, "circle");
-      dot.setAttribute("cx", String(width));
-      dot.setAttribute("cy", (by - (last / scale.gain) * BIG).toFixed(2));
-      dot.setAttribute("r", "2");
-      dot.style.fill = opts.dashed ? "var(--ink-2)" : "var(--ink)";
-      svg.appendChild(dot);
-
-      // The stylus writes the trace in once the strip is on the page:
-      // the length is only measurable after insertion, and a viewer who
-      // asked for less motion gets the finished trace outright.
-      wrap.draw = function () {
-        if (opts.dashed || REDUCED.matches) return;
+      if (opts.big) {
+        var dot = document.createElementNS(SVG, "circle");
+        dot.setAttribute("cx", String(w));
+        dot.setAttribute("cy", y(series[series.length - 1]).toFixed(2));
+        dot.setAttribute("r", "3.5");
+        dot.style.fill = line.style.stroke;
+        svg.appendChild(dot);
+      }
+      // The line draws in once it is on the page; a viewer who asked
+      // for less motion gets the finished chart outright.
+      svg.draw = function () {
+        if (REDUCED.matches) return;
         line.style.setProperty("--len", line.getTotalLength().toFixed(1));
         line.setAttribute("class", "draw");
       };
-
-      var gain = el("span", "gain", scale.gain + "%/box");
-      wrap.appendChild(gain);
-      wrap.gain = scale.gain;
-      // Where the zero line sits in the top half, the trace lives up
-      // there and the lower corner is the clear one.
-      wrap.clearCorner = scale.base <= boxesH / 2 ? "low" : "high";
-      return wrap;
+      return svg;
     }
 
     /* ----- universe facts ----- */
 
     var totalCap = rows.reduce(function (sum, r) { return sum + r.market_cap; }, 0);
     var sectorCounts = {};
-    rows.forEach(function (r) {
-      sectorCounts[r.sector] = (sectorCounts[r.sector] || 0) + 1;
-    });
+    rows.forEach(function (r) { sectorCounts[r.sector] = (sectorCounts[r.sector] || 0) + 1; });
     var sectors = Object.keys(sectorCounts).sort(function (a, b) {
       return sectorCounts[b] - sectorCounts[a] || a.localeCompare(b);
     });
@@ -926,17 +847,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     var sourceName = (universe.source && universe.source.index) || "U.S.-listed companies";
     document.getElementById("subtitle").textContent =
-      universe.count + " " + sourceName + " constituents · " + money(totalCap) +
-      " · " + sectors.length + " sectors";
-    document.getElementById("calline").textContent = "as of " + asOf(universe.generated_at) +
-      (hasHistory ? " · adj. close · " + target + "-session strips" : " · no price history loaded");
+      sourceName + " · " + universe.count + " · " + asOf(universe.generated_at);
     var ageDays = (Date.now() - new Date(universe.generated_at)) / 86400000;
     if (ageDays > 5) {
       var stale = document.getElementById("stale-note");
       stale.hidden = false;
       stale.textContent =
-        "Data is " + Math.floor(ageDays) + " days old — the daily refresh may be failing. " +
-        "Check the repository's Actions tab.";
+        "Data is " + Math.floor(ageDays) + " days old. The daily refresh may be failing; " +
+        "check the repository's Actions tab.";
     }
 
     if (hasHistory) {
@@ -950,7 +868,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           " less than " + target + " trading days of history: " +
           short.map(function (e) {
             return "<b>" + e.ticker + "</b> (" + e.trading_days + "d)";
-          }).join(", ") + ". Their strips are drawn dashed.";
+          }).join(", ") + ". Their charts are drawn dashed.";
       } else {
         note.innerHTML =
           "Adjusted close through " + asOf(history.generated_at) +
@@ -983,7 +901,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           "series per name, the full history lives in <code>data/history/</code>."
         : "");
 
-    /* ----- cross-section: one lead per sector ----- */
+    /* ----- cross-section ----- */
 
     var cross = history && history.cross_section;
     var medianBySector = {};
@@ -991,91 +909,32 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       medianBySector[row.sector] = row.median_return_pct;
     });
 
-    // The sector's own trace: the median cumulative return of its
-    // full-window names at each point of the thinned series. Computed
-    // here from the same sparks the strips draw, so the lead and its
-    // names can never disagree.
+    // Median cumulative-return series, for the universe and per sector,
+    // at each point of the thinned series over full-window names.
+    var universeSeries = null;
     var sectorSeries = {};
     if (hasHistory) {
-      var bySector = {};
+      var bySector = {}, allSparks = [];
       history.coverage.forEach(function (cov) {
         var r = rowByTicker[cov.ticker];
         if (!r || !cov.sufficient || !cov.cum_return_spark) return;
         (bySector[r.sector] = bySector[r.sector] || []).push(cov.cum_return_spark);
+        allSparks.push(cov.cum_return_spark);
       });
-      Object.keys(bySector).forEach(function (s) {
+      function medianSeries(sparks) {
         var lengths = {};
-        bySector[s].forEach(function (sp) { lengths[sp.length] = (lengths[sp.length] || 0) + 1; });
+        sparks.forEach(function (sp) { lengths[sp.length] = (lengths[sp.length] || 0) + 1; });
         var modal = +Object.keys(lengths).sort(function (a, b) { return lengths[b] - lengths[a]; })[0];
-        var sparks = bySector[s].filter(function (sp) { return sp.length === modal; });
-        if (sparks.length < 2) return;
+        var same = sparks.filter(function (sp) { return sp.length === modal; });
+        if (same.length < 2) return null;
         var out = [];
         for (var i = 0; i < modal; i++) {
-          var col = sparks.map(function (sp) { return sp[i]; }).sort(function (a, b) { return a - b; });
-          var mid = col.length >> 1;
-          out.push(col.length % 2 ? col[mid] : (col[mid - 1] + col[mid]) / 2);
+          out.push(median(same.map(function (sp) { return sp[i]; })));
         }
-        sectorSeries[s] = out;
-      });
-    }
-
-    if (cross) {
-      document.getElementById("cross").hidden = false;
-      document.getElementById("cross-empty").hidden = true;
-      document.getElementById("cross-title").textContent =
-        cross.names_used + " of " + rows.length + " names with a full year · 12 mo";
-
-      var leadList = document.getElementById("xs-sectors");
-      cross.sectors.forEach(function (row) {
-        var li = el("li", "lead");
-        var top = el("div", "lead-top");
-        top.appendChild(el("span", "code", sectorCode(row.sector)));
-        top.appendChild(el("span", "lname", row.sector));
-        var ofAll = sectorCounts[row.sector] || row.count;
-        top.appendChild(el("span", "n", (ofAll !== row.count ? row.count + " of " + ofAll : row.count) + " names"));
-        li.appendChild(top);
-        var series = sectorSeries[row.sector];
-        if (series) {
-          var leadTrace = trace(series, 12, 4);
-          li.appendChild(leadTrace);
-          top.lastChild.textContent += " · " + leadTrace.gain + "%/box";
-        }
-        var stats = el("div", "lead-stats");
-        var med = el("div", "lead-stat");
-        med.appendChild(explainLabel("median", "Median return", "xl small"));
-        med.appendChild(el("span", "val", pct(row.median_return_pct)));
-        var br = el("div", "lead-stat");
-        br.appendChild(explainLabel("breadth", "Names up", "xl small"));
-        var breadth = el("span", "breadth");
-        breadth.title = row.breadth_pct + "% of names positive";
-        var track = el("span", "track");
-        var fill = document.createElement("i");
-        fill.style.width = row.breadth_pct + "%";
-        track.appendChild(fill);
-        breadth.appendChild(track);
-        breadth.appendChild(el("span", "pct", Math.round(row.breadth_pct) + "%"));
-        br.appendChild(breadth);
-        stats.appendChild(med);
-        stats.appendChild(br);
-        li.appendChild(stats);
-        leadList.appendChild(li);
-      });
-
-      function chipRow(container, names) {
-        names.forEach(function (row) {
-          var chip = el("button", "xchip");
-          chip.type = "button";
-          chip.appendChild(el("span", null, row.ticker));
-          chip.appendChild(el("span", null, pct(row.return_pct)));
-          chip.addEventListener("click", function () {
-            var r = rowByTicker[row.ticker];
-            if (r) openDetail(r, chip);
-          });
-          container.appendChild(chip);
-        });
+        return out;
       }
-      chipRow(document.getElementById("xs-leaders"), cross.leaders);
-      chipRow(document.getElementById("xs-laggards"), cross.laggards);
+      universeSeries = medianSeries(allSparks);
+      Object.keys(bySector).forEach(function (s) { sectorSeries[s] = medianSeries(bySector[s]); });
     }
 
     /* ----- state ----- */
@@ -1083,12 +942,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var state = {
       query: "", sector: null, grouped: false,
       sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
-      view: "cards", display: "ret12", tab: "universe"
+      view: "cards", display: "ret12", tab: "universe", theme: "system", range: "1Y"
     };
     var collapsedSectors = new Set();
 
-    // View, shown figure and sort survive a reload on this device. They
-    // are conveniences: an unreadable store just means the defaults.
     var PREFS_KEY = "oklahoma-prefs";
     function loadPrefs() {
       var p;
@@ -1101,31 +958,29 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
       if (typeof p.grouped === "boolean") state.grouped = p.grouped;
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
+      if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
+      if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
     }
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
           view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
-          grouped: state.grouped, showTrend: state.showTrend
+          grouped: state.grouped, showTrend: state.showTrend,
+          theme: state.theme, range: state.range
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
 
-    // The watchlist lives in this browser only (localStorage): a personal
-    // shortlist, not synced state. Storage can be unavailable (private
-    // windows, blocked site data), so every touch is guarded and the page
-    // works identically with nothing stored.
+    // The watchlist lives in this browser only (localStorage).
     var WATCH_KEY = "oklahoma-watchlist";
     function loadWatch() {
-      try {
-        return new Set(JSON.parse(localStorage.getItem(WATCH_KEY) || "[]"));
-      } catch (e) { return new Set(); }
+      try { return new Set(JSON.parse(localStorage.getItem(WATCH_KEY) || "[]")); }
+      catch (e) { return new Set(); }
     }
     function saveWatch() {
-      try {
-        localStorage.setItem(WATCH_KEY, JSON.stringify(Array.from(watch)));
-      } catch (e) { /* per-viewer convenience only */ }
+      try { localStorage.setItem(WATCH_KEY, JSON.stringify(Array.from(watch))); }
+      catch (e) { /* per-viewer convenience only */ }
     }
     var watch = loadWatch();
     watch.forEach(function (t) { if (!rowByTicker[t]) watch.delete(t); });
@@ -1133,84 +988,70 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     /* ----- metrics ----- */
 
-    // One registry drives the sort menu, the strip's figure and the table
-    // columns, so a figure means the same thing wherever it appears.
-    // `value` returns null wherever the figure would not be honest: the
-    // full-window metrics for a name with less than a year of bars, or
-    // any metric whose window the name cannot fill. A null shows as a
-    // dash and sinks in every sort, whichever direction.
     function fullOnly(field) {
       return function (r, cov) {
         return cov && cov.sufficient && cov[field] != null ? cov[field] : null;
       };
     }
     function anyWindow(field) {
-      return function (r, cov) {
-        return cov && cov[field] != null ? cov[field] : null;
-      };
+      return function (r, cov) { return cov && cov[field] != null ? cov[field] : null; };
     }
     var METRICS = {
-      cap: { label: "Market cap", short: "Cap", explain: "cap",
+      cap: { label: "Market cap", short: "Mkt cap", explain: "cap", neutral: true,
         value: function (r) { return r.market_cap; }, fmt: money },
-      ret12: { label: "12-mo return", short: "12-mo", explain: "ret12",
+      ret12: { label: "12-month return", short: "12M", explain: "ret12",
         value: fullOnly("window_return_pct"), fmt: pct, tfmt: pct1 },
-      ret6: { label: "6-mo return", short: "6-mo", explain: "ret6",
+      ret6: { label: "6-month return", short: "6M", explain: "ret6",
         value: anyWindow("return_6m_pct"), fmt: pct, tfmt: pct1 },
-      ret3: { label: "3-mo return", short: "3-mo", explain: "ret3",
+      ret3: { label: "3-month return", short: "3M", explain: "ret3",
         value: anyWindow("return_3m_pct"), fmt: pct, tfmt: pct1 },
-      ret1: { label: "1-mo return", short: "1-mo", explain: "ret1",
+      ret1: { label: "1-month return", short: "1M", explain: "ret1",
         value: anyWindow("return_1m_pct"), fmt: pct, tfmt: pct1 },
-      offhigh: { label: "Off 1y high", short: "Off high", explain: "offhigh",
+      offhigh: { label: "Off 1-year high", short: "Off high", explain: "offhigh",
         value: function (r, cov) {
-          if (!cov || !cov.sufficient || cov.window_high == null ||
-              cov.last_adj_close == null) return null;
+          if (!cov || !cov.sufficient || cov.window_high == null || cov.last_adj_close == null) return null;
           return (cov.last_adj_close / cov.window_high - 1) * 100;
         },
-        fmt: function (v) { return v > -0.5 ? "at high" : signed(v, 1, "%"); } },
+        fmt: function (v) { return v > -0.5 ? "At high" : signed(v, 1, "%"); } },
       vsmedian: { label: "Vs sector median", short: "Vs sector", explain: "vsmedian",
         value: function (r, cov) {
           var med = medianBySector[r.sector];
-          if (med == null || !cov || !cov.sufficient ||
-              cov.window_return_pct == null) return null;
+          if (med == null || !cov || !cov.sufficient || cov.window_return_pct == null) return null;
           return cov.window_return_pct - med;
         },
-        fmt: function (v) { return signed(v, 1, " pts"); },
-        head: "Vs sector pts",
+        fmt: function (v) { return signed(v, 1, " pts"); }, head: "Vs sector pts",
         tfmt: function (v) { return signed(v, 1); } },
       trend: { label: "Trend (log slope)", short: "Trend", explain: "trend",
         value: anyWindow("trend_ann_pct"), head: "Trend %/yr",
-        fmt: function (v) { return signed(v, 2, "%/yr"); }, tfmt: pct1 },
-      r2: { label: "R² of trend", short: "R²", explain: "r2",
+        fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
+      r2: { label: "R² of trend", short: "R²", explain: "r2", neutral: true,
         value: anyWindow("trend_r2"), fmt: function (v) { return v.toFixed(2); } },
       quality: { label: "Quality momentum", short: "Quality", explain: "quality",
         value: anyWindow("quality_pct"), head: "Quality %/yr",
-        fmt: function (v) { return signed(v, 2, "%/yr"); }, tfmt: pct1 },
-      last: { label: "Last close", short: "Last",
-        value: anyWindow("last_adj_close"),
-        fmt: function (v) { return "$" + v.toLocaleString(); } }
+        fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
+      last: { label: "Last close", short: "Last", neutral: true,
+        value: anyWindow("last_adj_close"), fmt: price }
     };
-    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
-      "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
-      "trend", "r2", "quality"];
+    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
+    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
-    // `dense` picks the table's one-decimal, suffix-free form where a
-    // metric defines one; the header carries the unit there.
     function metricText(key, v, dense) {
       if (v == null) return "—";
       var m = METRICS[key];
       return dense && m.tfmt ? m.tfmt(v) : m.fmt(v);
     }
+    function metricClass(key, v) {
+      if (v == null) return "none";
+      if (METRICS[key].neutral) return "flat";
+      if (key === "offhigh") return v > -0.5 ? "up" : direction(v);
+      return direction(v);
+    }
 
     function ordered(rows_) {
-      var key = state.sortKey;
-      var sign = state.sortDesc ? -1 : 1;
-      var vals = {};
+      var key = state.sortKey, sign = state.sortDesc ? -1 : 1, vals = {};
       rows_.forEach(function (r) { vals[r.ticker] = metricValue(key, r); });
       return rows_.slice().sort(function (a, b) {
         var ra = vals[a.ticker], rb = vals[b.ticker];
-        // Names without an honest figure sink together, in rank order,
-        // so the dash block is deterministic here rather than by luck.
         if (ra == null && rb == null) return a.rank - b.rank;
         if (ra == null) return 1;
         if (rb == null) return -1;
@@ -1218,11 +1059,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       });
     }
 
-    // 503 rows is too many to build in one synchronous pass on a phone,
-    // so the list paints in frame-sized chunks: the first screenful is
-    // instant and the rest streams in. A newer paint cancels an older one.
-    var paintToken = 0;
-    var afterPaint = null;
+    // 503 rows paint in frame-sized chunks so the first screen is instant.
+    var paintToken = 0, afterPaint = null;
     function paintInto(container, items, makeNode) {
       var token = ++paintToken;
       container.textContent = "";
@@ -1230,17 +1068,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       function step() {
         if (token !== paintToken) return;
         var frag = document.createDocumentFragment();
-        for (var end = Math.min(i + 60, items.length); i < end; i++) {
-          frag.appendChild(makeNode(items[i]));
-        }
+        for (var end = Math.min(i + 60, items.length); i < end; i++) frag.appendChild(makeNode(items[i]));
         container.appendChild(frag);
-        if (i < items.length) {
-          requestAnimationFrame(step);
-        } else if (afterPaint) {
-          var hook = afterPaint;
-          afterPaint = null;
-          hook();
-        }
+        if (i < items.length) requestAnimationFrame(step);
+        else if (afterPaint) { var hook = afterPaint; afterPaint = null; hook(); }
       }
       step();
     }
@@ -1248,7 +1079,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var filtersEl = document.getElementById("filters");
     var listEl = document.getElementById("list");
     var resultEl = document.getElementById("resultcount");
-    var listCal = document.getElementById("listcal");
+    var listFig = document.getElementById("listfig");
     var groupBtn = document.getElementById("groupToggle");
     var tableWrap = document.getElementById("table-wrap");
     var gridHead = document.getElementById("grid-head");
@@ -1260,6 +1091,110 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var groupRow = document.getElementById("group-row");
     var columnsBtn = document.getElementById("columnsHelp");
     var watchMix = document.getElementById("watch-mix");
+
+    /* ----- hero: the universe as one line ----- */
+
+    var heroEl = document.getElementById("hero");
+    function renderHero(animate) {
+      if (!universeSeries) { heroEl.hidden = true; return; }
+      heroEl.hidden = false;
+      var w = windowByKey(state.range);
+      var values = history.coverage.map(function (cov) {
+        return cov.sufficient ? cov[w.field] : null;
+      });
+      var have = values.filter(function (v) { return v != null; }).length;
+      var med = median(values);
+      var series = rebase(universeSeries, w.points);
+      document.getElementById("hero-k").textContent = sourceName + " universe · median name";
+      var big = document.getElementById("hero-big");
+      big.textContent = pct(med);
+      big.className = "hero-big " + direction(med);
+      var line = document.getElementById("hero-line");
+      line.textContent = "";
+      line.className = "hero-line " + direction(med);
+      line.appendChild(document.createTextNode("Past " + w.label));
+      line.appendChild(el("span", null, " · " + have + " of " + rows.length + " names with the full window"));
+      var holder = document.getElementById("hero-chart");
+      holder.textContent = "";
+      var chart = lineChart(series, { width: 358, height: 140, big: true, stroke: colorFor(med) });
+      holder.appendChild(chart);
+      if (animate) chart.draw();
+      renderRanges(document.getElementById("hero-ranges"), null, function () { renderHero(false); });
+    }
+    function renderRanges(container, valuesByKey, onChange) {
+      container.textContent = "";
+      container.classList.toggle("tall", Boolean(valuesByKey));
+      WINDOWS.forEach(function (w) {
+        var b = el("button", null);
+        b.type = "button";
+        var on = w.key === state.range;
+        b.setAttribute("aria-pressed", String(on));
+        b.appendChild(document.createTextNode(w.key));
+        if (valuesByKey) {
+          var v = valuesByKey[w.key];
+          b.appendChild(el("span", "rv", v == null ? "—" : pct1(v)));
+          if (on && direction(v) === "down") b.classList.add("neg");
+        }
+        b.addEventListener("click", function () {
+          state.range = w.key;
+          savePrefs();
+          onChange();
+        });
+        container.appendChild(b);
+      });
+    }
+
+    /* ----- sectors ----- */
+
+    if (cross) {
+      document.getElementById("cross").hidden = false;
+      document.getElementById("cross-empty").hidden = true;
+      document.getElementById("cross-title").textContent =
+        cross.names_used + " of " + rows.length + " names · full year";
+      var list = document.getElementById("xs-sectors");
+      cross.sectors.forEach(function (row) {
+        var li = el("li", "sector-row");
+        var left = el("div", "name-cell");
+        left.appendChild(el("div", "sname", row.sector));
+        var meta = el("div", "smeta");
+        meta.appendChild(document.createTextNode(row.count + " names"));
+        var breadth = el("span", "breadth");
+        var track = el("span", "track");
+        var fill = document.createElement("i");
+        fill.style.width = row.breadth_pct + "%";
+        track.appendChild(fill);
+        breadth.appendChild(track);
+        breadth.appendChild(el("span", null, Math.round(row.breadth_pct) + "% up"));
+        breadth.title = row.breadth_pct + "% of names positive over 12 months";
+        meta.appendChild(breadth);
+        left.appendChild(meta);
+        li.appendChild(left);
+        var sp = el("div", "spark");
+        var series = sectorSeries[row.sector];
+        if (series) sp.appendChild(lineChart(series, { width: 64, height: 26, stroke: colorFor(row.median_return_pct) }));
+        li.appendChild(sp);
+        var fig = el("div", "figure");
+        fig.appendChild(el("span", "pill " + direction(row.median_return_pct), pct(row.median_return_pct)));
+        fig.appendChild(el("span", "lab", "median 12M"));
+        li.appendChild(fig);
+        list.appendChild(li);
+      });
+      function chipRow(container, names) {
+        names.forEach(function (row) {
+          var chip = el("button", "xchip");
+          chip.type = "button";
+          chip.appendChild(el("span", null, row.ticker));
+          chip.appendChild(el("span", direction(row.return_pct), pct1(row.return_pct)));
+          chip.addEventListener("click", function () {
+            var r = rowByTicker[row.ticker];
+            if (r) openDetail(r, chip);
+          });
+          container.appendChild(chip);
+        });
+      }
+      chipRow(document.getElementById("xs-leaders"), cross.leaders);
+      chipRow(document.getElementById("xs-laggards"), cross.laggards);
+    }
 
     /* ----- tabs ----- */
 
@@ -1276,8 +1211,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         btn.setAttribute("aria-selected", String(on));
         btn.tabIndex = on ? 0 : -1;
       });
-      // One listing serves two tabs: it moves under whichever is open,
-      // so the Watchlist is the same strips or table as the Universe.
       if (tab === "universe" || tab === "watch") {
         var slot = document.getElementById(tab === "watch" ? "watch-slot" : "universe-slot");
         if (listing.parentNode !== slot) slot.appendChild(listing);
@@ -1285,11 +1218,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       }
       if (tab === "watch") paintWatchMix();
       savePrefs();
-      if (state.view === "table" && !tableWrap.hidden) {
-        tableWrap.scrollIntoView({ block: "start" });
-      } else {
-        window.scrollTo(0, 0);
-      }
+      if (state.view === "table" && !tableWrap.hidden) tableWrap.scrollIntoView({ block: "start" });
+      else window.scrollTo(0, 0);
     }
     var tabbar = document.getElementById("tabbar");
     tabbar.addEventListener("click", function (event) {
@@ -1305,14 +1235,11 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       document.getElementById("tabbtn-" + next).focus();
     });
     function paintWatchCount() {
-      document.querySelectorAll(".watch-n").forEach(function (elx) {
-        if (elx.id === "cross-title") return;
-        elx.textContent = elx.classList.contains("tab-badge") ? watch.size : watch.size + " names";
-        if (elx.classList.contains("tab-badge")) elx.hidden = !watch.size;
+      document.querySelectorAll(".watch-n").forEach(function (n) {
+        n.textContent = n.classList.contains("tab-badge") ? watch.size : watch.size + " names";
+        if (n.classList.contains("tab-badge")) n.hidden = !watch.size;
       });
     }
-    // The shortlist's mix by sector: the same count the detail sheet
-    // reasons about, here as one line the whole list can be read against.
     function paintWatchMix() {
       watchMix.textContent = "";
       watchMix.hidden = !watch.size;
@@ -1325,20 +1252,22 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); })
         .forEach(function (s) {
           var item = el("span", null);
-          item.appendChild(el("span", "code", sectorCode(s)));
-          item.appendChild(document.createTextNode(" " + counts[s]));
-          item.title = s;
+          item.appendChild(el("b", null, String(counts[s])));
+          item.appendChild(document.createTextNode(" " + s));
           watchMix.appendChild(item);
         });
     }
 
-    // The ticker as both views show it: the symbol, the pencil mark if
-    // watched (unless the strip's paper carries it), and the honest
-    // badge for a name short of a year's bars.
-    function tickerSpan(r, withMark) {
+    function tickerSpan(r) {
       var cov = coverage[r.ticker];
       var tick = el("span", "ticker", r.ticker);
-      if (withMark && watch.has(r.ticker)) tick.appendChild(pencilMark());
+      if (watch.has(r.ticker)) {
+        var star = icon("i-star-f", "star");
+        star.removeAttribute("aria-hidden");
+        star.setAttribute("role", "img");
+        star.setAttribute("aria-label", "on watchlist");
+        tick.appendChild(star);
+      }
       if (cov && !cov.sufficient) {
         var warn = el("span", "warn", cov.trading_days + "d");
         warn.title = "Only " + cov.trading_days + " trading days of history";
@@ -1354,16 +1283,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       });
     }
 
-    /* ----- lead selector ----- */
+    /* ----- chips ----- */
 
-    function leadButton(code, name, value, count) {
-      var b = el("button", "lead-btn");
+    function chip(label, value, count) {
+      var b = el("button", "chip");
       b.type = "button";
       b.setAttribute("aria-pressed", String(state.sector === value));
-      if (code) b.appendChild(el("span", "code", code));
-      b.appendChild(el("span", "lname", name));
+      b.appendChild(document.createTextNode(label));
       b.appendChild(el("span", "n", count));
-      if (value) b.title = name;
       b.addEventListener("click", function () {
         state.sector = state.sector === value ? null : value;
         renderFilters();
@@ -1373,261 +1300,223 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function renderFilters() {
       filtersEl.textContent = "";
-      filtersEl.appendChild(leadButton(null, "All", null, rows.length));
-      sectors.forEach(function (s) {
-        filtersEl.appendChild(leadButton(sectorCode(s), s, s, sectorCounts[s]));
-      });
+      filtersEl.appendChild(chip("All", null, rows.length));
+      sectors.forEach(function (s) { filtersEl.appendChild(chip(s, s, sectorCounts[s])); });
     }
 
     function visible() {
-      // The Watchlist tab shows the whole shortlist; search and sector
-      // leads belong to the Universe tab and do not reach into it.
-      if (state.watchOnly) {
-        return rows.filter(function (r) { return watch.has(r.ticker); });
-      }
+      if (state.watchOnly) return rows.filter(function (r) { return watch.has(r.ticker); });
       var q = state.query.trim().toLowerCase();
       return rows.filter(function (r) {
         if (state.sector && r.sector !== state.sector) return false;
         if (!q) return true;
-        return (
-          r.ticker.toLowerCase().indexOf(q) !== -1 ||
+        return r.ticker.toLowerCase().indexOf(q) !== -1 ||
           r.name.toLowerCase().indexOf(q) !== -1 ||
           r.sector.toLowerCase().indexOf(q) !== -1 ||
-          (r.industry || "").toLowerCase().indexOf(q) !== -1
-        );
+          (r.industry || "").toLowerCase().indexOf(q) !== -1;
       });
     }
 
-    /* ----- the detail sheet: one name's full strip ----- */
+    /* ----- the name page ----- */
 
-    function bandCell(key, label, value, sub, missing) {
-      var cell = el("div", "band-cell");
+    function stat(key, label, value, cls, sub) {
+      var cell = el("div", "stat");
       cell.appendChild(explainLabel(key, label));
-      cell.appendChild(el("span", "val" + (missing ? " none" : ""), value));
+      cell.appendChild(el("span", "val" + (cls ? " " + cls : ""), value));
       if (sub) cell.appendChild(el("span", "sub", sub));
       return cell;
     }
 
-    function detailList(r) {
-      var dl = el("div", "detail");
+    var dpStar = document.getElementById("dp-star");
+    function detailBody(r) {
+      var body = el("div", "detail");
       var cov = coverage[r.ticker];
+      var cum = cov && cov.cum_return_spark;
+      var hasSeries = cum && cum.length > 1;
+      var hasFit = cov && cov.fit_spark && cov.fit_spark.length > 1;
 
-      var bits = [sectorCode(r.sector) + " " + r.sector, r.industry,
-        money(r.market_cap) + " (" + ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe)"];
-      if (r.share_classes && r.share_classes.length > 1) {
-        bits.push("classes " + r.share_classes.join(" + "));
-      }
-      dl.appendChild(el("div", "fact-line", bits.filter(Boolean).join(" · ")));
-
-      if (cov && cov.window_return_pct != null) {
-        // The return windows as one banded strip: every window has its
-        // cell, and a window the name cannot fill says so in place.
-        var windows = el("div", "band-row four");
-        var w1 = cov.return_1m_pct, w3 = cov.return_3m_pct, w6 = cov.return_6m_pct;
-        windows.appendChild(bandCell("ret1", "1 mo", pct(w1), "21 days", w1 == null));
-        windows.appendChild(bandCell("ret3", "3 mo", pct(w3), "63 days", w3 == null));
-        windows.appendChild(bandCell("ret6", "6 mo", pct(w6), "126 days", w6 == null));
-        windows.appendChild(bandCell(cov.sufficient ? "ret12" : null,
-          cov.sufficient ? "12 mo" : cov.window_trading_days + " days",
-          pct(cov.window_return_pct),
-          cov.sufficient ? target + " days" : "short history"));
-        dl.appendChild(windows);
-
-        var position = el("div", "band-row two");
-        if (cov.window_high != null && cov.last_adj_close != null) {
-          var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
-          position.appendChild(bandCell(cov.sufficient ? "offhigh" : null,
-            cov.sufficient ? "Off 1y high" : "Off " + cov.window_trading_days + "-day high",
-            offHigh > -0.5 ? "at high" : signed(offHigh, 1, "%"),
-            "high $" + cov.window_high.toLocaleString()));
-        }
-        var med = medianBySector[r.sector];
-        if (med != null && cov.sufficient) {
-          position.appendChild(bandCell("vsmedian", "Vs sector",
-            signed(cov.window_return_pct - med, 1, " pts"),
-            sectorCode(r.sector) + " median " + pct(med)));
-        } else {
-          position.appendChild(bandCell(null, "Vs sector", "—", "needs a full window", true));
-        }
-        dl.appendChild(position);
+      var line = el("p", "dp-line");
+      var holder = el("div", "chart");
+      var foot = el("div", "chart-foot");
+      var ranges = el("div", "ranges");
+      ranges.setAttribute("role", "group");
+      ranges.setAttribute("aria-label", "Window");
+      var toggle = null;
+      if (hasFit) {
+        toggle = el("button", "fit-toggle");
+        toggle.type = "button";
       }
 
-      var cumSeries = cov && cov.cum_return_spark;
-      if (cumSeries && cumSeries.length > 1) {
-        var hasFit = cov.fit_spark && cov.fit_spark.length > 1;
-        var rhythm = el("div", "rhythm");
-        var head = el("div", "rhythm-head");
-        var title = el("span", "rhythm-title");
-        head.appendChild(title);
-        var toggle = null;
-        if (hasFit) {
-          toggle = el("button", "fit-toggle");
-          toggle.type = "button";
-        }
-        if (toggle) head.appendChild(toggle);
-        rhythm.appendChild(head);
-
-        var holder = el("div", "series");
-        rhythm.appendChild(holder);
-        function renderChart(animate) {
-          holder.textContent = "";
-          var strip = trace(cumSeries, 12, 4, {
-            overlay: hasFit && state.showTrend ? cov.fit_spark : null,
-            dashed: !cov.sufficient
+      function windowValue(w) {
+        if (!cov) return null;
+        if (w.key === "1Y") return cov.window_return_pct;
+        return cov[w.field];
+      }
+      function paint(animate) {
+        var w = windowByKey(state.range);
+        var v = windowValue(w);
+        var full = cov && cov.sufficient;
+        line.textContent = "";
+        line.className = "dp-line " + direction(v);
+        line.appendChild(document.createTextNode(v == null ? "—" : pct(v)));
+        var label = w.key === "1Y" && !full && cov
+          ? " · past " + cov.window_trading_days + " sessions"
+          : " · past " + w.label;
+        line.appendChild(el("span", null, label +
+          (cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "")));
+        holder.textContent = "";
+        if (hasSeries) {
+          var series = rebase(cum, w.points);
+          var overlay = null;
+          if (hasFit && state.showTrend && w.key === "1Y") overlay = cov.fit_spark;
+          var chart = lineChart(series, {
+            width: 358, height: 140, big: true, overlay: overlay,
+            dashed: !full, stroke: colorFor(v == null ? series[series.length - 1] : v)
           });
-          holder.appendChild(strip);
-          title.textContent = cov.window_trading_days + " sessions · 1 box = 21 sessions × " + strip.gain + "%";
-          if (animate) strip.draw();
+          holder.appendChild(chart);
+          if (animate) chart.draw();
+        }
+        foot.textContent = "";
+        if (cov) {
+          foot.appendChild(el("span", null, w.key === "1Y" ? (cov.window_start_date || cov.start_date) : w.sessions + " sessions"));
           if (toggle) {
             toggle.textContent = "";
             toggle.appendChild(el("span", "swatch"));
-            toggle.appendChild(document.createTextNode(
-              state.showTrend ? "Trend line shown" : "Show trend line"));
+            toggle.appendChild(document.createTextNode(state.showTrend ? "Trend line on" : "Show trend line"));
             toggle.setAttribute("aria-pressed", String(state.showTrend));
+            toggle.hidden = w.key !== "1Y";
+            foot.appendChild(toggle);
           }
+          foot.appendChild(el("span", null, cov.end_date));
         }
-        if (toggle) {
-          toggle.addEventListener("click", function () {
-            state.showTrend = !state.showTrend;
-            savePrefs();
-            renderChart(false);
-          });
-        }
-        renderChart(true);
-
-        var axis = el("div", "axis");
-        axis.appendChild(el("span", null, cov.window_start_date || cov.start_date));
-        axis.appendChild(el("span", null, "0% at start"));
-        axis.appendChild(el("span", null, cov.end_date));
-        rhythm.appendChild(axis);
-        dl.appendChild(rhythm);
-
-        if (hasFit) {
-          var fitRow = el("div", "band-row three");
-          fitRow.appendChild(bandCell("trend", "Trend", signed(cov.trend_ann_pct, 2, "%"), "per year"));
-          fitRow.appendChild(bandCell("r2", "R²", cov.trend_r2.toFixed(2), "0 to 1"));
-          fitRow.appendChild(bandCell("quality", "Quality", signed(cov.quality_pct, 2, "%"), "trend × R²"));
-          dl.appendChild(fitRow);
-        }
+        var vals = {};
+        WINDOWS.forEach(function (ww) { vals[ww.key] = windowValue(ww); });
+        renderRanges(ranges, vals, function () { paint(false); renderHero(false); });
       }
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          state.showTrend = !state.showTrend;
+          savePrefs();
+          paint(false);
+        });
+      }
+      paint(true);
+      body.appendChild(line);
+      body.appendChild(holder);
+      body.appendChild(foot);
+      body.appendChild(ranges);
 
-      var watchRow = el("div", "watch-row");
+      var h = el("h2", "section", "Key stats");
+      body.appendChild(h);
+      var grid = el("div", "stats");
+      grid.appendChild(stat("cap", "Market cap", money(r.market_cap), null,
+        ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe"));
+      if (cov && cov.window_high != null && cov.last_adj_close != null) {
+        var off = (cov.last_adj_close / cov.window_high - 1) * 100;
+        grid.appendChild(stat(cov.sufficient ? "offhigh" : null,
+          cov.sufficient ? "Off 1-year high" : "Off " + cov.window_trading_days + "-day high",
+          off > -0.5 ? "At high" : signed(off, 1, "%"), off > -0.5 ? "up" : direction(off),
+          "high " + price(cov.window_high)));
+      }
+      var med = medianBySector[r.sector];
+      if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
+        grid.appendChild(stat("vsmedian", "Vs sector median", signed(cov.window_return_pct - med, 1, " pts"),
+          direction(cov.window_return_pct - med), r.sector + " median " + pct(med)));
+      } else {
+        grid.appendChild(stat(null, "Vs sector median", "—", "none", "needs a full year"));
+      }
+      if (cov && cov.window_low != null) {
+        grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
+          price(cov.window_low) + " – " + price(cov.window_high)));
+      }
+      if (hasFit) {
+        grid.appendChild(stat("trend", "Trend (log slope)", signed(cov.trend_ann_pct, 1, "% /yr"), direction(cov.trend_ann_pct)));
+        grid.appendChild(stat("r2", "R² of trend", cov.trend_r2.toFixed(2), null, "0 to 1"));
+        grid.appendChild(stat("quality", "Quality momentum", signed(cov.quality_pct, 1, "% /yr"), direction(cov.quality_pct), "trend × R²"));
+      }
+      if (r.share_classes && r.share_classes.length > 1) {
+        grid.appendChild(stat(null, "Share classes", r.share_classes.join(" + ")));
+      }
+      if (r.exchange) grid.appendChild(stat(null, "Exchange", r.exchange));
+      body.appendChild(grid);
+
       var watchBtn = el("button", "watch-btn");
       watchBtn.type = "button";
       var watchCtx = el("span", "watch-ctx");
-      function paintWatch(drawIn) {
+      function paintWatch() {
         var on = watch.has(r.ticker);
         watchBtn.textContent = "";
-        var btnMark = pencilMark();
-        btnMark.removeAttribute("role");
-        btnMark.removeAttribute("aria-label");
-        btnMark.setAttribute("aria-hidden", "true");
-        watchBtn.appendChild(btnMark);
-        watchBtn.appendChild(document.createTextNode(on ? "On the watchlist" : "Mark for the watchlist"));
+        watchBtn.appendChild(icon(on ? "i-star-f" : "i-star"));
+        watchBtn.appendChild(document.createTextNode(on ? "On your watchlist" : "Add to watchlist"));
         watchBtn.setAttribute("aria-pressed", String(on));
+        dpStar.setAttribute("aria-pressed", String(on));
+        dpStar.setAttribute("aria-label", on ? "Remove from watchlist" : "Add to watchlist");
+        dpStar.textContent = "";
+        dpStar.appendChild(icon(on ? "i-star-f" : "i-star"));
         var inSector = 0;
         watch.forEach(function (t) {
           if (t === r.ticker) return;
           var rec = rowByTicker[t];
           if (rec && rec.sector === r.sector) inSector++;
         });
-        watchCtx.textContent = !watch.size
-          ? ""
-          : "Watching " + watch.size + (inSector
-              ? " · " + inSector + " already in " + r.sector
-              : " · none in " + r.sector);
-        var dpTick = document.getElementById("dp-ticker");
-        var old = dpTick.querySelector(".pmark");
-        if (old) old.remove();
-        if (on) {
-          var mark = pencilMark();
-          dpTick.appendChild(mark);
-          if (drawIn) mark.draw();
-        }
+        watchCtx.textContent = !watch.size ? "" :
+          "Watching " + watch.size + (inSector ? " · " + inSector + " already in " + r.sector : " · none in " + r.sector);
       }
-      watchBtn.addEventListener("click", function () {
-        if (watch.has(r.ticker)) watch.delete(r.ticker);
-        else watch.add(r.ticker);
+      function toggleWatch() {
+        if (watch.has(r.ticker)) watch.delete(r.ticker); else watch.add(r.ticker);
         saveWatch();
-        paintWatch(true);
+        paintWatch();
         paintWatchCount();
         paintWatchMix();
         syncStars(r.ticker);
         if (state.watchOnly) renderList();
-      });
-      paintWatch(false);
-      watchRow.appendChild(watchBtn);
-      watchRow.appendChild(watchCtx);
-      dl.appendChild(watchRow);
-
-      if (cov) {
-        var meta = [];
-        if (r.exchange) meta.push(r.exchange);
-        meta.push(cov.trading_days + " trading days, " + cov.start_date + " → " + cov.end_date);
-        if (cov.window_low != null) {
-          meta.push("range $" + cov.window_low.toLocaleString() + "–$" + cov.window_high.toLocaleString());
-        }
-        if (cov.last_adj_close != null) {
-          meta.push("last adj. close $" + cov.last_adj_close.toLocaleString());
-        }
-        dl.appendChild(el("div", "detail-meta", meta.join(" · ")));
       }
-      return dl;
+      watchBtn.addEventListener("click", toggleWatch);
+      dpStar.onclick = toggleWatch;
+      paintWatch();
+      body.appendChild(watchBtn);
+      body.appendChild(watchCtx);
+
+      body.appendChild(el("h2", "section", "About the numbers"));
+      body.appendChild(el("p", "about",
+        "Every figure is recomputed from committed daily bars, adjusted for splits and dividends. " +
+        "Tap any stat to see its plain-language meaning and formula."));
+      if (cov) {
+        body.appendChild(el("div", "detail-meta",
+          cov.trading_days + " trading days, " + cov.start_date + " → " + cov.end_date +
+          (cov.last_adj_close != null ? " · last adj. close " + price(cov.last_adj_close) : "")));
+      }
+      return body;
     }
 
-    /* ----- strips ----- */
+    /* ----- rows ----- */
 
     function rowItem(r) {
       var li = document.createElement("li");
       var cov = coverage[r.ticker];
-
-      var button = el("button", "strip");
+      var button = el("button", "row");
       button.type = "button";
       button.setAttribute("aria-haspopup", "dialog");
 
-      button.appendChild(el("span", "rank", r.rank));
-
-      var hasTrace = Boolean(cov && cov.cum_return_spark && cov.cum_return_spark.length > 1);
       var main = el("span", "name-cell");
-      main.appendChild(tickerSpan(r, !hasTrace));
-      var company = el("span", "company");
-      company.appendChild(el("span", "company-name", r.name));
-      company.appendChild(el("span", "cap-sub", money(r.market_cap)));
-      main.appendChild(company);
+      main.appendChild(tickerSpan(r));
+      main.appendChild(el("span", "company", r.name + " · " + money(r.market_cap)));
       button.appendChild(main);
 
-      // The phone strip is six boxes of two months; the desktop strip
-      // twelve of one, the full strip's own scale.
-      var wide = DESKTOP.matches;
-      var strip = null;
-      if (hasTrace) {
-        strip = trace(cov.cum_return_spark, wide ? 12 : 6, wide ? 3 : 2, { dashed: !cov.sufficient });
-        if (watch.has(r.ticker)) {
-          strip.appendChild(pencilMark("pmark" + (strip.clearCorner === "low" ? " low" : "")));
-        }
-        button.appendChild(strip);
+      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
+        var sp = el("span", "spark");
+        sp.appendChild(lineChart(cov.cum_return_spark, { width: 64, height: 26, dashed: !cov.sufficient,
+          stroke: colorFor(cov.window_return_pct) }));
+        button.appendChild(sp);
       } else {
-        button.appendChild(el("span", "trace-empty"));
-      }
-
-      if (wide) {
-        // The shorter windows ride beside the strip where the paper has
-        // room, skipping whichever one the chosen figure already shows.
-        ["ret1", "ret3", "ret6"].forEach(function (key) {
-          if (key === state.display) return;
-          var cell = el("span", "extra");
-          var ev = metricValue(key, r);
-          cell.appendChild(el("span", "val" + (ev == null ? " none" : ""), metricText(key, ev, true)));
-          cell.appendChild(el("span", "lab", METRICS[key].short.toLowerCase()));
-          button.appendChild(cell);
-        });
+        button.appendChild(el("span", "spark-empty"));
       }
 
       var figure = el("span", "figure");
+      figure.appendChild(el("span", "price" + (cov && cov.last_adj_close != null ? "" : " none"),
+        cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
       var v = metricValue(state.display, r);
-      figure.appendChild(el("span", "val" + (v == null ? " none" : ""), metricText(state.display, v)));
-      figure.appendChild(el("span", "lab", METRICS[state.display].short.toLowerCase()));
-      if (strip && strip.gain) figure.appendChild(el("span", "lab", strip.gain + "%/box"));
+      figure.appendChild(el("span", "pill " + metricClass(state.display, v), metricText(state.display, v)));
       button.appendChild(figure);
 
       button.addEventListener("click", function () { openDetail(r, button); });
@@ -1638,22 +1527,18 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     function sectorHeader(name, count) {
       var li = document.createElement("li");
-      var btn = el("button", "lead-head");
+      var btn = el("button", "group-head");
       btn.type = "button";
       var collapsed = collapsedSectors.has(name);
       btn.setAttribute("aria-expanded", String(!collapsed));
       btn.setAttribute("data-sector", name);
       btn.appendChild(icon("i-chev", "chev"));
-      btn.appendChild(el("span", "code", sectorCode(name)));
-      btn.appendChild(el("span", "lname", name));
+      btn.appendChild(document.createTextNode(name));
       btn.appendChild(el("span", "n", count + " names"));
       btn.addEventListener("click", function () {
-        if (collapsedSectors.has(name)) collapsedSectors.delete(name);
-        else collapsedSectors.add(name);
+        if (collapsedSectors.has(name)) collapsedSectors.delete(name); else collapsedSectors.add(name);
         afterPaint = function () {
-          var again = listEl.querySelector(
-            '.lead-head[data-sector="' + CSS.escape(name) + '"]'
-          );
+          var again = listEl.querySelector('.group-head[data-sector="' + CSS.escape(name) + '"]');
           if (again) again.focus();
         };
         renderList();
@@ -1664,10 +1549,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     function emptyMessage() {
       return state.watchOnly && !watch.size
-        ? "Your watchlist is empty. Open a name and mark it for the watchlist."
-        : state.watchOnly
-          ? "No watchlist name matches."
-          : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        ? "Your watchlist is empty. Open a name and add it."
+        : state.watchOnly ? "No watchlist name matches."
+        : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
     }
 
     function renderList() {
@@ -1677,15 +1561,11 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var shown = ordered(visible());
       resultEl.textContent = state.watchOnly
         ? shown.length + " on your watchlist"
-        : shown.length === rows.length
-          ? "All " + rows.length + " names"
-          : shown.length + " of " + rows.length + " names";
-      listCal.hidden = isTable || !hasHistory;
-      listCal.textContent = DESKTOP.matches ? "1 box = 1 mo × gain" : "1 box = 2 mo × gain";
-      if (isTable) renderTable(shown);
-      else renderCards(shown);
+        : shown.length === rows.length ? "All " + rows.length + " names"
+        : shown.length + " of " + rows.length + " names";
+      listFig.textContent = isTable ? "" : "last close · " + METRICS[state.display].label.toLowerCase();
+      if (isTable) renderTable(shown); else renderCards(shown);
     }
-
     function renderTable(shown) {
       tableWrap.scrollTop = 0;
       if (!shown.length) {
@@ -1699,13 +1579,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       }
       paintInto(gridBody, shown, tableRow);
     }
-
     function renderCards(shown) {
       listEl.textContent = "";
-      if (!shown.length) {
-        listEl.appendChild(el("li", "empty", emptyMessage()));
-        return;
-      }
+      if (!shown.length) { listEl.appendChild(el("li", "empty", emptyMessage())); return; }
       var items = [];
       if (state.grouped) {
         sectors.forEach(function (s) {
@@ -1719,9 +1595,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         shown.forEach(function (r) { items.push({ row: r }); });
       }
       paintInto(listEl, items, function (item) {
-        return item.header
-          ? sectorHeader(item.header, item.count)
-          : rowItem(item.row);
+        return item.header ? sectorHeader(item.header, item.count) : rowItem(item.row);
       });
     }
 
@@ -1730,12 +1604,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function renderTableHead() {
       gridHead.textContent = "";
       var first = document.createElement("th");
-      first.scope = "col";
-      first.textContent = "Ticker";
+      first.scope = "col"; first.textContent = "Ticker";
       gridHead.appendChild(first);
       var sectorTh = document.createElement("th");
-      sectorTh.scope = "col";
-      sectorTh.textContent = "Lead";
+      sectorTh.scope = "col"; sectorTh.textContent = "Sector";
       gridHead.appendChild(sectorTh);
       TABLE_COLUMNS.forEach(function (key) {
         var th = document.createElement("th");
@@ -1768,19 +1640,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var key = b.getAttribute("data-sort");
       setSort(key, key === state.sortKey ? !state.sortDesc : true);
     });
-
     function tableRow(r) {
       var tr = document.createElement("tr");
       tr.setAttribute("data-ticker", r.ticker);
-
       var nameCell = document.createElement("td");
       var open = el("button", "tcell");
       open.type = "button";
       open.setAttribute("aria-haspopup", "dialog");
-      open.appendChild(tickerSpan(r, true));
+      open.appendChild(tickerSpan(r));
       nameCell.appendChild(open);
       tr.appendChild(nameCell);
-
       var sectorCell = el("td", "tsector");
       var code = document.createElement("abbr");
       code.title = r.sector;
@@ -1788,14 +1657,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       code.textContent = sectorCode(r.sector);
       sectorCell.appendChild(code);
       tr.appendChild(sectorCell);
-
       TABLE_COLUMNS.forEach(function (key) {
         var v = metricValue(key, r);
-        tr.appendChild(el("td", v == null ? "none" : "", metricText(key, v, true)));
+        var cls = metricClass(key, v);
+        tr.appendChild(el("td", cls === "flat" ? "" : cls, metricText(key, v, true)));
       });
       tr.addEventListener("click", function () { openDetail(r, open); });
       return tr;
     }
+
+    /* ----- controls ----- */
 
     var searchTimer;
     document.getElementById("search").addEventListener("input", function (event) {
@@ -1807,60 +1678,41 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     document.getElementById("watch-export").addEventListener("click", function (event) {
       var text = Array.from(watch).sort().join(", ");
       var btn = event.currentTarget;
-      function done(label) {
-        btn.textContent = label;
-        setTimeout(function () { btn.textContent = "Copy tickers"; }, 1500);
-      }
+      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = "Copy tickers"; }, 1500); }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(
           function () { done("Copied"); },
-          function () { window.prompt("Copy your watchlist:", text); done("Copy tickers"); }
-        );
+          function () { window.prompt("Copy your watchlist:", text); done("Copy tickers"); });
       } else {
         window.prompt("Copy your watchlist:", text);
       }
     });
-
     document.getElementById("watch-import").addEventListener("click", function () {
       var input = window.prompt("Paste tickers (comma or space separated):", "");
       if (!input) return;
       var added = 0, unknown = [];
       input.toUpperCase().split(/[^A-Z0-9.\-]+/).forEach(function (t) {
         if (!t) return;
-        if (rowByTicker[t]) {
-          if (!watch.has(t)) { watch.add(t); added++; }
-        } else {
-          unknown.push(t);
-        }
+        if (rowByTicker[t]) { if (!watch.has(t)) { watch.add(t); added++; } }
+        else unknown.push(t);
       });
-      saveWatch();
-      paintWatchCount();
-      paintWatchMix();
-      renderList();
-      if (unknown.length) {
-        window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
-      }
+      saveWatch(); paintWatchCount(); paintWatchMix(); renderList();
+      if (unknown.length) window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
     });
 
-    // One path for every sort control: the menu, the direction button
-    // and the table headers all end here, so they can never disagree.
     function setSort(key, desc) {
       state.sortKey = key;
       state.sortDesc = desc;
       sortSelect.value = key;
+      document.getElementById("sortLabel").textContent = "By " + METRICS[key].label.toLowerCase();
       sortDirBtn.firstElementChild.style.transform = desc ? "" : "rotate(180deg)";
-      sortDirBtn.setAttribute("aria-label",
-        "Sort direction: " + (desc ? "descending" : "ascending"));
+      sortDirBtn.setAttribute("aria-label", "Sort direction: " + (desc ? "descending" : "ascending"));
       paintTableSortState();
       savePrefs();
       renderList();
     }
-    sortSelect.addEventListener("change", function (event) {
-      setSort(event.target.value, state.sortDesc);
-    });
-    sortDirBtn.addEventListener("click", function () {
-      setSort(state.sortKey, !state.sortDesc);
-    });
+    sortSelect.addEventListener("change", function (event) { setSort(event.target.value, state.sortDesc); });
+    sortDirBtn.addEventListener("click", function () { setSort(state.sortKey, !state.sortDesc); });
 
     function paintSettingsRows() {
       var isTable = state.view === "table";
@@ -1869,25 +1721,31 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function setView(view) {
       state.view = view;
-      document.querySelectorAll(".seg button").forEach(function (b) {
+      document.querySelectorAll("#viewSeg button").forEach(function (b) {
         b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view));
       });
       paintSettingsRows();
       savePrefs();
       renderList();
     }
-    document.querySelectorAll(".seg button").forEach(function (b) {
+    document.querySelectorAll("#viewSeg button").forEach(function (b) {
       b.addEventListener("click", function () { setView(b.getAttribute("data-view")); });
     });
-
+    document.querySelectorAll("#themeSeg button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.theme = b.getAttribute("data-theme");
+        applyTheme(state.theme);
+        savePrefs();
+      });
+    });
+    (DARK_MQ.addEventListener ? DARK_MQ.addEventListener("change", function () { applyTheme(state.theme); })
+      : DARK_MQ.addListener(function () { applyTheme(state.theme); }));
     displaySelect.addEventListener("change", function (event) {
       state.display = event.target.value;
       savePrefs();
       renderList();
     });
-
     columnsBtn.addEventListener("click", function () { openColumns(columnsBtn); });
-
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
       groupBtn.setAttribute("aria-checked", String(state.grouped));
@@ -1895,13 +1753,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       renderList();
     });
 
-    // ----- tap-to-explain -----
-    // Every underlined label opens one shared sheet: a plain sentence and
-    // the formula, instead of fine print scattered through the page.
+    /* ----- tap-to-explain ----- */
+
     var EXPLAIN = {
-      trace: ["Reading a strip",
-        "Each trace is the name's cumulative return written on ruled paper. Time runs left to right across the boxes: one heavy box is two months in the list and one month on a name's full strip. Height is the gain printed in the corner, in percent per heavy box; the square pulse at the left is exactly one box tall so the scale can be read off the paper itself. The trace starts at 0% at the beginning of the window on a heavy rule. Every strip picks the smallest gain that fits the year, so a flat trace at 5%/box and a flat trace at 100%/box are very different years. A dashed trace means the name has less than the full window of history.",
-        "y = cumulative return ÷ gain · box height; x = session ÷ sessions per box"],
+      chart: ["How the charts are drawn",
+        "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
+        "value = close ÷ first close of the window − 1"],
       cap: ["Market cap",
         "Share price times shares outstanding, from the provider's quote — the market's total price for the whole company. It sets the default order and each name's share of the universe. This is full market cap, not the free-float weighting the index itself uses.",
         "price × shares outstanding"],
@@ -1924,7 +1781,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         "This name's 12-month return minus the median 12-month return of its sector, in percentage points. Separates a genuine standout from a name merely riding a strong sector.",
         "name's 12m return − sector median 12m return"],
       trend: ["12-month log trend",
-        "A straight line fitted to the logarithm of the daily adjusted closes over the past year. On a log scale, steady compounding is a straight line — so the slope reads as the steady growth rate the year implies, shown annualized. The dashed line on the strip is this fit.",
+        "A straight line fitted to the logarithm of the daily adjusted closes over the past year. On a log scale, steady compounding is a straight line — so the slope reads as the steady growth rate the year implies, shown annualized. The dashed line on the chart is this fit.",
         "slope of best-fit line through ln(close) vs day, compounded over 252 days"],
       r2: ["R²",
         "How much of the year's path the straight trend line explains, from 0 to 1. Near 1: the name ground steadily along its trend. Near 0: the outcome came from swings the trend does not describe.",
@@ -1933,18 +1790,15 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         "The trend's growth rate damped by how reliable the trend was. A steep but chaotic year scores lower than a steady climb — the classic quality-adjusted momentum score.",
         "trend %/yr × R²"],
       median: ["Median return",
-        "The middle 12-month return among the sector's names — half did better, half worse. Resistant to one huge winner dragging the average. The sector's trace is this median at every point of the year.",
+        "The middle 12-month return among the sector's names — half did better, half worse. Resistant to one huge winner dragging the average.",
         "middle value of the sector's 12-month returns"],
       breadth: ["Names up",
         "The share of the sector's names whose 12-month return is positive. The guard on the median: a sector can look healthy on three winners, and breadth says so.",
         "names with positive 12m return ÷ names in sector"]
     };
 
-    // ----- sheets -----
-    // Both bottom sheets (a name's detail, an explanation) share one set
-    // of mechanics: focus moves in, Tab cycles inside, Esc or the
-    // backdrop closes, and focus returns to whatever opened it. The
-    // explanation can open on top of the detail; Esc peels the top one.
+    /* ----- sheets ----- */
+
     var epPop = document.getElementById("explain-pop");
     var epBody = document.getElementById("ep-body");
     var epFormula = document.getElementById("ep-formula");
@@ -1955,19 +1809,17 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var dpOpener = null;
 
     function lockScroll() {
-      document.documentElement.classList.toggle(
-        "sheet-open", !epPop.hidden || !dpPop.hidden);
+      document.documentElement.classList.toggle("sheet-open", !epPop.hidden || !dpPop.hidden);
     }
-    function focusablesIn(elx) {
+    function focusablesIn(node) {
       return Array.prototype.filter.call(
-        elx.querySelectorAll("button, [href], select, input, [tabindex]:not([tabindex='-1'])"),
+        node.querySelectorAll("button, [href], select, input, [tabindex]:not([tabindex='-1'])"),
         function (n) { return !n.disabled && n.offsetParent !== null; });
     }
     function trapTab(event, card) {
       var items = focusablesIn(card);
       if (!items.length) { event.preventDefault(); return; }
-      var first = items[0], last = items[items.length - 1];
-      var current = document.activeElement;
+      var first = items[0], last = items[items.length - 1], current = document.activeElement;
       if (!card.contains(current)) { event.preventDefault(); first.focus(); }
       else if (event.shiftKey && current === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && current === last) { event.preventDefault(); first.focus(); }
@@ -1976,43 +1828,35 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (opener && document.body.contains(opener)) { opener.focus(); return; }
       (state.view === "table" ? tableWrap : listEl).focus();
     }
-
     function openExplain(key, opener) {
       var entry = EXPLAIN[key];
       if (!entry) return;
       document.getElementById("ep-title").textContent = entry[0];
       epBody.textContent = entry[1];
       epFormula.textContent = entry[2];
-      epBody.hidden = false;
-      epFormula.hidden = false;
-      epList.hidden = true;
+      epBody.hidden = false; epFormula.hidden = false; epList.hidden = true;
       epOpener = opener;
       epPop.hidden = false;
       lockScroll();
       document.getElementById("ep-close").focus();
     }
     function openColumns(opener) {
-      document.getElementById("ep-title").textContent = "What the columns mean";
-      epBody.textContent = "Tap a column heading to sort by it; tap again to flip " +
+      document.getElementById("ep-title").textContent = "What the figures mean";
+      epBody.textContent = "In the table, tap a column heading to sort by it; tap again to flip " +
         "the direction. A dash means the figure would need more history than " +
         "the name has, so it is left out rather than measured over less.";
-      epBody.hidden = false;
-      epFormula.hidden = true;
+      epBody.hidden = false; epFormula.hidden = true;
       epList.textContent = "";
       TABLE_COLUMNS.forEach(function (key) {
-        var m = METRICS[key];
-        var entry = m.explain && EXPLAIN[m.explain];
+        var m = METRICS[key], entry = m.explain && EXPLAIN[m.explain];
         if (!entry) return;
-        var dt = el("dt", null, m.label);
+        epList.appendChild(el("dt", null, m.label));
         var dd = el("dd", null, entry[1]);
         dd.appendChild(el("code", null, entry[2]));
-        epList.appendChild(dt);
         epList.appendChild(dd);
       });
-      epList.appendChild(el("dt", null, "Leads (sector codes)"));
-      epList.appendChild(el("dd", null, sectors.map(function (name) {
-        return sectorCode(name) + " " + name;
-      }).join(" · ")));
+      epList.appendChild(el("dt", null, "Sector codes"));
+      epList.appendChild(el("dd", null, sectors.map(function (name) { return sectorCode(name) + " " + name; }).join(" · ")));
       epList.hidden = false;
       epOpener = opener;
       epPop.hidden = false;
@@ -2022,17 +1866,15 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function closeExplain() {
       epPop.hidden = true;
       lockScroll();
-      var back = epOpener;
-      epOpener = null;
+      var back = epOpener; epOpener = null;
       returnFocus(back);
     }
-
     function openDetail(r, opener) {
-      var tick = document.getElementById("dp-ticker");
-      tick.textContent = r.ticker;
-      document.getElementById("dp-name").textContent = r.name;
+      document.getElementById("dp-k").textContent =
+        [r.name, r.sector, r.industry].filter(Boolean).join(" · ");
+      document.getElementById("dp-ticker").textContent = r.ticker;
       dpBody.textContent = "";
-      dpBody.appendChild(detailList(r));
+      dpBody.appendChild(detailBody(r));
       dpOpener = opener;
       dpPop.hidden = false;
       dpPop.firstElementChild.scrollTop = 0;
@@ -2043,60 +1885,50 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       dpPop.hidden = true;
       dpBody.textContent = "";
       lockScroll();
-      var back = dpOpener;
-      dpOpener = null;
+      var back = dpOpener; dpOpener = null;
       returnFocus(back);
     }
-
     document.addEventListener("click", function (event) {
       var label = event.target.closest ? event.target.closest("[data-explain]") : null;
-      if (label) { openExplain(label.getAttribute("data-explain"), label); }
+      if (label) openExplain(label.getAttribute("data-explain"), label);
     });
-    epPop.addEventListener("click", function (event) {
-      if (event.target === epPop) closeExplain();
-    });
-    dpPop.addEventListener("click", function (event) {
-      if (event.target === dpPop) closeDetail();
-    });
+    epPop.addEventListener("click", function (event) { if (event.target === epPop) closeExplain(); });
+    dpPop.addEventListener("click", function (event) { if (event.target === dpPop) closeDetail(); });
     document.getElementById("ep-close").addEventListener("click", closeExplain);
     document.getElementById("dp-close").addEventListener("click", closeDetail);
     document.addEventListener("keydown", function (event) {
       var top = !epPop.hidden ? epPop : !dpPop.hidden ? dpPop : null;
       if (!top) return;
-      if (event.key === "Escape") {
-        event.preventDefault();
-        if (top === epPop) closeExplain(); else closeDetail();
-      } else if (event.key === "Tab") {
-        trapTab(event, top.firstElementChild);
-      }
+      if (event.key === "Escape") { event.preventDefault(); if (top === epPop) closeExplain(); else closeDetail(); }
+      else if (event.key === "Tab") trapTab(event, top.firstElementChild);
     });
-
-    function explainLabel(key, text, className) {
-      // No key means no sheet applies (a short-history name whose label
-      // already says its real window): a plain span, not a dead button.
+    function explainLabel(key, text) {
       if (!key) return el("span", "xl-static", text);
-      var b = el("button", className || "xl", text);
+      var b = el("button", "xl", text);
       b.type = "button";
       b.setAttribute("data-explain", key);
       return b;
     }
 
+    /* ----- init ----- */
+
     METRIC_ORDER.forEach(function (key) {
-      [sortSelect, displaySelect].forEach(function (sel) {
-        var option = document.createElement("option");
-        option.value = key;
-        option.textContent = METRICS[key].label;
-        sel.appendChild(option);
-      });
+      var o1 = document.createElement("option");
+      o1.value = key; o1.textContent = "By " + METRICS[key].label.toLowerCase();
+      sortSelect.appendChild(o1);
+      var o2 = document.createElement("option");
+      o2.value = key; o2.textContent = METRICS[key].label;
+      displaySelect.appendChild(o2);
     });
     loadPrefs();
+    applyTheme(state.theme);
     if (!hasHistory) state.display = "cap";
     displaySelect.value = state.display;
     sortSelect.value = state.sortKey;
+    document.getElementById("sortLabel").textContent = "By " + METRICS[state.sortKey].label.toLowerCase();
     sortDirBtn.firstElementChild.style.transform = state.sortDesc ? "" : "rotate(180deg)";
-    sortDirBtn.setAttribute("aria-label",
-      "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
-    document.querySelectorAll(".seg button").forEach(function (b) {
+    sortDirBtn.setAttribute("aria-label", "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
+    document.querySelectorAll("#viewSeg button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === state.view));
     });
     groupBtn.setAttribute("aria-checked", String(state.grouped));
@@ -2105,10 +1937,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     paintWatchCount();
     paintWatchMix();
     paintSettingsRows();
+    renderHero(true);
     renderList();
     setTab(state.tab);
-    (DESKTOP.addEventListener ? DESKTOP.addEventListener("change", renderList)
-      : DESKTOP.addListener(renderList));
   })();
 </script>
 </body>

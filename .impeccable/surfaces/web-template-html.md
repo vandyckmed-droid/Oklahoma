@@ -7,24 +7,24 @@ related_targets: ["web/index.html"]
 
 # Surface brief: web/template.html (the Oklahoma page)
 
-Scope: the whole generated page (universe list, sectors, watchlist, settings, detail and explain sheets). Visitor mode: Operate.
+Scope: the whole generated page (stocks list, sectors, watchlist, settings, per-name page, explain sheet). Visitor mode: Operate.
 
 Audience and job: one owner, seated under a desk lamp or in daylight after the U.S. close, phone first, shortlisting S&P 500 names into a starred watchlist within minutes. Task: scan, sort, filter, open a name, star it. Proof: every figure recomputed from committed bars, explained on tap.
 
-Constraints: no buy or sell buttons, no trade nudges, no mascots. Single light world committed to the scene; the incumbent dark theme is cut deliberately. Sector hue coding and green/red sign coding are dropped: sign is carried by the glyph and the trace's direction.
+Constraints: no buy or sell buttons, no trade nudges, no mascots. Light and dark themes both first-class (system, light, dark in Settings). Canon direction chosen by the owner on 2026-09-02 after seeing an ECG-strip build, a lab-report mockup, and four professional mockups: the consumer-brokerage register, Robinhood first, played straight at full craft.
 
-Signature interaction: tapping a strip opens the full rhythm strip; the trace writes itself in like a stylus, and the fitted trend is a dashed overlay. Starring draws a grease-pencil mark on the strip.
+Signature interaction: opening a name pushes a full-height page whose chart draws in; the 1M / 3M / 6M / 1Y selector re-bases the chart and swaps the headline figure; starring fills the outline button.
 
 ## Direction contract
 
-THESIS: Every figure is a measured trace on ruled paper; the grid gives each sparkline a stated scale so it stops being decoration. Refuses the screener arrangement of cards, colored pills and green/red badges.
+THESIS: A brokerage-app stocks list, executed at Robinhood's craft level, with the one thing a broker cannot show: a universe median as the hero and honest return windows as the range selector. Refuses novelty: no metaphor, no ornament.
 
-OWN-WORLD: Warm-white ECG paper; salmon fine and heavy rules living only inside trace panels; near-black thermal ink; ballpoint blue for anything tappable; red grease pencil for the watchlist mark. Barlow Condensed heads, Barlow body, Chivo Mono figures with true signs, all on a 4px box ruler. No sector hues, no sign colors.
+OWN-WORLD: White (light) or true black (dark) ground, hairline dividers, Inter with tabular figures, one green accent for actions and gains, red only for losses, sparklines in the row, rounded pills and chips, outline pill buttons.
 
-STORY: The owner reads the universe as a strip chart, sorts, opens a full rhythm strip, marks a name in pencil, leaves with a shortlist.
+STORY: The owner reads the universe like a brokerage watchlist, filters, opens a name, reads its year across four windows, stars it, leaves.
 
-FIRST VIEWPORT: Machine header (name, universe, date, calibration line), ruled search, sector lead codes as chips, then strips: rank and ticker left, calibrated trace centre, signed figure right; tab bar at the bottom.
+FIRST VIEWPORT: App title bar, hero (median-name 12-month return over a full-width line chart, range selector), "Stocks" heading with sort, sector chips, rows: ticker and name left, sparkline centre, price and return pill right; tab bar bottom.
 
-FORM: ECG strip, candidate 3 of 7, seed key 535a8328.
+FORM: The category standard (canon exit), owner-pinned; seed key 535a8328 retired.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.

@@ -68,7 +68,8 @@ A personal research instrument, not a brokerage screener, a news feed, or a prod
 - Voice (in README and page): plain language, precise, shows its reasoning, no hype, no advice. Keep it.
 - No logo or brand assets exist.
 - **Binding negatives (owner, 2026-09-02):** no buy or sell buttons, no trade nudges, and no mascots or characters. Anything that reads as a brokerage call to action or a consumer-fintech personality is wrong regardless of polish.
-- The incumbent look (IBM Plex Sans/Mono and Newsreader, teal accent on pale ground, black with green/orange in dark mode) is not a commitment. The owner finds it generic and dated and has asked for a full visual replacement; it is evidence of what the page contains, not authority over what it becomes.
+- **Standing visual preference (owner, 2026-09-02):** the page follows the conventions of consumer brokerage apps, Robinhood first among them, executed at their craft level: a light ground with a true-black dark theme, one green accent with red reserved for negative figures, a hero figure over a large line chart, sparkline rows with a price and a coloured return, and per-name pages with a 1M / 3M / 6M / 1Y range selector and a key-stats grid. Both light and dark themes are first-class. The owner reviewed and declined an ECG-strip world and a lab-report world in favour of this familiar register; a future redesign should start from this preference, not from a novelty search.
+- The earlier look (IBM Plex Sans/Mono and Newsreader, teal accent on pale ground) is gone and is not a commitment.
 
 ## Evidence on Hand
 
