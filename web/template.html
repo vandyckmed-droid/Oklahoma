@@ -22,7 +22,7 @@
   --line-2: #d4d8dc;
   --text: #1b1b1b;
   --text-2: #6b6f74;
-  --text-3: #979b9f;
+  --text-3: #767a7e;
   --up: #00c805;
   --up-text: #00891c;
   --up-soft: rgba(0, 200, 5, 0.12);
@@ -44,7 +44,7 @@
     --line-2: #333333;
     --text: #ffffff;
     --text-2: #a1a5a9;
-    --text-3: #7a7e82;
+    --text-3: #808488;
     --up-text: #00c805;
     --down-text: #ff5000;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
@@ -58,7 +58,7 @@
   --line-2: #333333;
   --text: #ffffff;
   --text-2: #a1a5a9;
-  --text-3: #6f7377;
+  --text-3: #808488;
   --up-text: #00c805;
   --down-text: #ff5000;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
@@ -82,7 +82,7 @@ body {
 :focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: 0; padding: 0; }
-input::placeholder { color: var(--text-3); opacity: 1; }
+input::placeholder { color: var(--text-2); opacity: 1; }
 input[type="search"] { caret-color: var(--up); }
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
@@ -117,10 +117,9 @@ svg { display: block; }
 
 /* ----- hero ----- */
 .hero { padding: 12px 0 0; }
-.hero-k { font: 500 13px/18px var(--sans); color: var(--text-2); }
-.hero-big { margin: 2px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.hero-big { margin: 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
 .hero-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
-.hero-line span { color: var(--text-2); font-weight: 400; }
+.hero-sub { margin: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
 .chart { position: relative; width: 100%; aspect-ratio: 358 / 140; margin-top: 8px; }
 @media (min-width: 720px) { .chart { aspect-ratio: 728 / 220; } }
 .chart svg { width: 100%; height: 100%; overflow: visible; }
@@ -210,7 +209,9 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .ticker { display: flex; align-items: center; gap: 6px; font: 600 15px/20px var(--sans); }
 .ticker .star { width: 14px; height: 14px; color: var(--up-text); flex: none; }
 .ticker .warn { font: 500 10px/16px var(--sans); color: var(--text-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 0 6px; }
-.company { display: block; font: 400 13px/18px var(--sans); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.company { display: flex; gap: 4px; min-width: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
+.company-name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-sub { flex: none; }
 .spark { width: 64px; height: 26px; }
 .spark svg { width: 100%; height: 100%; overflow: visible; }
 .spark-empty { width: 64px; height: 26px; border-bottom: 1px dashed var(--line-2); }
@@ -407,7 +408,7 @@ select.ctl {
 .star-btn svg { width: 22px; height: 22px; }
 .star-btn[aria-pressed="true"] { color: var(--up-text); }
 .dp-k { font: 500 13px/18px var(--sans); color: var(--text-2); }
-.dp-ticker { margin: 2px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.dp-ticker { margin: 4px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
 .dp-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
 .dp-line span { color: var(--text-2); font-weight: 400; }
 
@@ -495,9 +496,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     </header>
 
     <div class="hero" id="hero" hidden>
-      <div class="hero-k" id="hero-k"></div>
       <p class="hero-big" id="hero-big"></p>
       <p class="hero-line" id="hero-line"></p>
+      <p class="hero-sub" id="hero-sub"></p>
       <div class="chart" id="hero-chart"></div>
       <div class="ranges" id="hero-ranges" role="group" aria-label="Window"></div>
     </div>
@@ -529,7 +530,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
   <section class="tab-panel" id="tab-sectors" role="tabpanel" aria-labelledby="tabbtn-sectors" hidden>
     <header class="titlebar"><h1>Sectors</h1><span id="cross-title"></span></header>
     <section id="cross" hidden aria-label="12-month cross-section">
-      <div class="resultline"><span>Median 12-month return · names up</span><span>past year</span></div>
+      <div class="resultline"><span>Names up over the year</span><span>Median 12-month return</span></div>
       <ul class="list" id="xs-sectors"></ul>
       <div class="xtreme"><span class="xlabel">Leaders</span><span id="xs-leaders" class="xchips"></span></div>
       <div class="xtreme"><span class="xlabel">Laggards</span><span id="xs-laggards" class="xchips"></span></div>
@@ -636,8 +637,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <button id="dp-close" type="button" class="back-btn"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Back</button>
       <button id="dp-star" type="button" class="star-btn" aria-pressed="false" aria-label="Add to watchlist"><svg aria-hidden="true"><use href="#i-star"/></svg></button>
     </div>
-    <div class="dp-k" id="dp-k"></div>
     <p class="dp-ticker" id="dp-ticker"></p>
+    <div class="dp-k" id="dp-k"></div>
     <div id="dp-body"></div>
   </div>
 </div>
@@ -655,6 +656,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     });
     var hasHistory = Boolean(history && history.coverage && history.coverage.length);
     var target = hasHistory ? history.criteria.trading_days_target : 252;
+    // The date the page speaks for is the last bar, not the refresh time.
+    var lastBar = hasHistory ? history.coverage.reduce(function (d, c) {
+      return c.end_date > d ? c.end_date : d;
+    }, "") : null;
 
     /* ----- formatting ----- */
 
@@ -760,6 +765,19 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       return tail.map(function (v) { return ((1 + v / 100) / base - 1) * 100; });
     }
 
+    // Calendar dates for the thinned points are interpolated between the
+    // window's first and last bar, so a scrubbed date is approximate.
+    function windowStart(w) {
+      if (!lastBar) return null;
+      var days = Math.round(w.sessions * 365 / 252);
+      return new Date(new Date(lastBar).getTime() - days * 86400000).toISOString().slice(0, 10);
+    }
+    function approxDate(start, end, i, n) {
+      if (!start || !end) return null;
+      var a = new Date(start).getTime(), b = new Date(end).getTime();
+      var t = new Date(a + (b - a) * (i / (n - 1)));
+      return "≈ " + t.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    }
     function colorFor(value) {
       var d = direction(value);
       return d === "up" ? "var(--up)" : d === "down" ? "var(--down)" : "var(--text-3)";
@@ -831,7 +849,55 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         line.style.setProperty("--len", line.getTotalLength().toFixed(1));
         line.setAttribute("class", "draw");
       };
+      if (opts.big && opts.scrub) attachScrub(svg, series, x, y, w, h, opts.scrub);
       return svg;
+    }
+
+    // Drag across a chart to read it: a cursor follows the pointer, the
+    // headline shows the value at that point, and letting go restores
+    // the window's own figure.
+    function attachScrub(svg, series, x, y, w, h, scrub) {
+      var n = series.length;
+      var cursor = document.createElementNS(SVG, "g");
+      cursor.style.display = "none";
+      var vline = document.createElementNS(SVG, "line");
+      vline.setAttribute("y1", "0"); vline.setAttribute("y2", String(h));
+      vline.setAttribute("vector-effect", "non-scaling-stroke");
+      vline.style.stroke = "var(--text-2)";
+      var pt = document.createElementNS(SVG, "circle");
+      pt.setAttribute("r", "4");
+      pt.style.fill = "var(--text)";
+      cursor.appendChild(vline);
+      cursor.appendChild(pt);
+      svg.appendChild(cursor);
+      svg.style.touchAction = "none";
+      svg.style.cursor = "crosshair";
+      var active = false;
+      function at(event) {
+        var box = svg.getBoundingClientRect();
+        var frac = Math.min(1, Math.max(0, (event.clientX - box.left) / box.width));
+        var i = Math.round(frac * (n - 1));
+        var cx = x(i, n).toFixed(2), cy = y(series[i]).toFixed(2);
+        vline.setAttribute("x1", cx); vline.setAttribute("x2", cx);
+        pt.setAttribute("cx", cx); pt.setAttribute("cy", cy);
+        cursor.style.display = "";
+        scrub.onScrub(i, series[i], approxDate(scrub.start, scrub.end, i, n) || ("point " + (i + 1) + " of " + n));
+      }
+      function stop() {
+        if (!active) return;
+        active = false;
+        cursor.style.display = "none";
+        scrub.onScrub(null);
+      }
+      svg.addEventListener("pointerdown", function (event) {
+        active = true;
+        try { svg.setPointerCapture(event.pointerId); } catch (e) { /* not needed */ }
+        at(event);
+      });
+      svg.addEventListener("pointermove", function (event) { if (active) at(event); });
+      svg.addEventListener("pointerup", stop);
+      svg.addEventListener("pointercancel", stop);
+      svg.addEventListener("lostpointercapture", stop);
     }
 
     /* ----- universe facts ----- */
@@ -847,7 +913,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     var sourceName = (universe.source && universe.source.index) || "U.S.-listed companies";
     document.getElementById("subtitle").textContent =
-      sourceName + " · " + universe.count + " · " + asOf(universe.generated_at);
+      sourceName + " · " + universe.count + " · " + asOf(lastBar || universe.generated_at);
     var ageDays = (Date.now() - new Date(universe.generated_at)) / 86400000;
     if (ageDays > 5) {
       var stale = document.getElementById("stale-note");
@@ -863,7 +929,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       note.hidden = false;
       if (short.length) {
         note.innerHTML =
-          "Adjusted close through " + asOf(history.generated_at) + ". " +
+          "Adjusted close through " + asOf(lastBar) + ", refreshed " + asOf(history.generated_at) + ". " +
           short.length + " name" + (short.length > 1 ? "s have" : " has") +
           " less than " + target + " trading days of history: " +
           short.map(function (e) {
@@ -871,7 +937,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           }).join(", ") + ". Their charts are drawn dashed.";
       } else {
         note.innerHTML =
-          "Adjusted close through " + asOf(history.generated_at) +
+          "Adjusted close through " + asOf(lastBar) + ", refreshed " + asOf(history.generated_at) +
           ". Every name covers at least " + target + " trading days.";
       }
     }
@@ -1105,18 +1171,23 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var have = values.filter(function (v) { return v != null; }).length;
       var med = median(values);
       var series = rebase(universeSeries, w.points);
-      document.getElementById("hero-k").textContent = sourceName + " universe · median name";
       var big = document.getElementById("hero-big");
-      big.textContent = pct(med);
-      big.className = "hero-big " + direction(med);
       var line = document.getElementById("hero-line");
-      line.textContent = "";
-      line.className = "hero-line " + direction(med);
-      line.appendChild(document.createTextNode("Past " + w.label));
-      line.appendChild(el("span", null, " · " + have + " of " + rows.length + " names with the full window"));
+      function headline(value, label) {
+        big.textContent = pct(value);
+        big.className = "hero-big " + direction(value);
+        line.textContent = label;
+        line.className = "hero-line " + direction(value);
+      }
+      headline(med, "Median name, past " + w.label);
+      document.getElementById("hero-sub").textContent = have + " of " + rows.length + " names, full window";
       var holder = document.getElementById("hero-chart");
       holder.textContent = "";
-      var chart = lineChart(series, { width: 358, height: 140, big: true, stroke: colorFor(med) });
+      var chart = lineChart(series, { width: 358, height: 140, big: true, stroke: colorFor(med),
+        scrub: { start: windowStart(w), end: lastBar, onScrub: function (i, value, when) {
+          if (i == null) headline(med, "Median name, past " + w.label);
+          else headline(value, "Median name · " + when);
+        } } });
       holder.appendChild(chart);
       if (animate) chart.draw();
       renderRanges(document.getElementById("hero-ranges"), null, function () { renderHero(false); });
@@ -1175,7 +1246,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         li.appendChild(sp);
         var fig = el("div", "figure");
         fig.appendChild(el("span", "pill " + direction(row.median_return_pct), pct(row.median_return_pct)));
-        fig.appendChild(el("span", "lab", "median 12M"));
         li.appendChild(fig);
         list.appendChild(li);
       });
@@ -1356,22 +1426,30 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         var w = windowByKey(state.range);
         var v = windowValue(w);
         var full = cov && cov.sufficient;
-        line.textContent = "";
-        line.className = "dp-line " + direction(v);
-        line.appendChild(document.createTextNode(v == null ? "—" : pct(v)));
-        var label = w.key === "1Y" && !full && cov
+        var label = (w.key === "1Y" && !full && cov
           ? " · past " + cov.window_trading_days + " sessions"
-          : " · past " + w.label;
-        line.appendChild(el("span", null, label +
-          (cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "")));
+          : " · past " + w.label) +
+          (cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "");
+        function paintLine(value, text) {
+          line.textContent = "";
+          line.className = "dp-line " + direction(value);
+          line.appendChild(document.createTextNode(value == null ? "—" : pct(value)));
+          line.appendChild(el("span", null, text));
+        }
+        paintLine(v, label);
         holder.textContent = "";
         if (hasSeries) {
           var series = rebase(cum, w.points);
           var overlay = null;
           if (hasFit && state.showTrend && w.key === "1Y") overlay = cov.fit_spark;
+          var startDate = w.key === "1Y" ? (cov.window_start_date || cov.start_date) : windowStart(w);
           var chart = lineChart(series, {
             width: 358, height: 140, big: true, overlay: overlay,
-            dashed: !full, stroke: colorFor(v == null ? series[series.length - 1] : v)
+            dashed: !full, stroke: colorFor(v == null ? series[series.length - 1] : v),
+            scrub: { start: startDate, end: cov.end_date, onScrub: function (i, value, when) {
+              if (i == null) { paintLine(v, label); return; }
+              paintLine(value, " · " + when + " · from the window's start");
+            } }
           });
           holder.appendChild(chart);
           if (animate) chart.draw();
@@ -1500,7 +1578,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
       var main = el("span", "name-cell");
       main.appendChild(tickerSpan(r));
-      main.appendChild(el("span", "company", r.name + " · " + money(r.market_cap)));
+      var company = el("span", "company");
+      company.appendChild(el("span", "company-name", r.name));
+      company.appendChild(el("span", "cap-sub", "· " + money(r.market_cap)));
+      main.appendChild(company);
       button.appendChild(main);
 
       if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
@@ -1563,7 +1644,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         ? shown.length + " on your watchlist"
         : shown.length === rows.length ? "All " + rows.length + " names"
         : shown.length + " of " + rows.length + " names";
-      listFig.textContent = isTable ? "" : "last close · " + METRICS[state.display].label.toLowerCase();
+      listFig.textContent = isTable ? "" : METRICS[state.display].label;
       if (isTable) renderTable(shown); else renderCards(shown);
     }
     function renderTable(shown) {
