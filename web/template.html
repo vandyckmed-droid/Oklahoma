@@ -219,11 +219,12 @@ svg { display: block; }
   border-radius: 2px;
   padding: 0 4px;
 }
-.star-mark { width: 14px; height: 14px; color: var(--pencil); flex: none; }
 .figure { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0; }
 .figure .val { font: 500 15px/20px var(--mono); letter-spacing: -0.01em; white-space: nowrap; }
 .figure .val.none { color: var(--ink-3); }
-.figure .lab { font: 500 11px/16px var(--cond); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.figure .lab { font: 400 11px/14px var(--mono); color: var(--ink-3); white-space: nowrap; }
+.strip .extra { display: none; }
+@media (max-width: 719px) { .strip .cap-sub { display: none; } }
 
 /* the trace: a calibrated panel of ruled paper */
 .trace { position: relative; width: 100%; }
@@ -238,11 +239,21 @@ svg { display: block; }
   pointer-events: none;
   white-space: nowrap;
 }
-.lead .gain, .rhythm .gain { display: none; }
+.lead .gain, .rhythm .gain, .strip .gain { display: none; }
+/* the owner's grease-pencil mark, written on the paper itself */
+.pmark, .trace svg.pmark, .strip .trace svg.pmark { position: absolute; left: 3px; top: 2px; width: 18px; height: 18px; color: var(--pencil); opacity: 0.88; pointer-events: none; }
+.pmark path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.ticker .pmark { position: static; width: 16px; height: 16px; }
+.dp-ticker .pmark { position: static; width: 24px; height: 24px; }
+@media (min-width: 720px) { .trace svg.pmark, .strip .trace svg.pmark { width: 22px; height: 22px; left: 4px; top: 3px; } }
 .trace-empty { height: 40px; border-left: 1px solid var(--hair); }
 @media (min-width: 720px) {
-  .strip { grid-template-columns: 32px minmax(0, 1fr) 195px 96px; column-gap: 12px; height: 80px; }
-  .strip .trace, .strip .trace svg { width: 195px; height: 60px; }
+  .strip { grid-template-columns: 32px minmax(160px, 1fr) 250px repeat(3, 84px) 120px; column-gap: 12px; height: 80px; }
+  .strip .trace, .strip .trace svg { width: 250px; height: 60px; }
+  .strip .extra { display: flex; flex-direction: column; align-items: flex-end; }
+  .strip .extra .val { font: 400 13px/20px var(--mono); }
+  .strip .extra .val.none { color: var(--ink-3); }
+  .strip .extra .lab { font: 400 11px/16px var(--mono); color: var(--ink-3); }
 }
 
 /* sector header inside a grouped list: the lead label */
@@ -296,7 +307,9 @@ svg { display: block; }
   align-items: baseline;
   gap: 12px;
 }
+.panel-title { flex-wrap: wrap; }
 .panel-title .watch-n { font: 400 14px/20px var(--mono); color: var(--ink-3); text-transform: none; letter-spacing: 0; }
+@media (max-width: 719px) { #cross-title { flex-basis: 100%; } }
 .leads-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; }
 .lead {
   padding: 12px 0 16px;
@@ -313,6 +326,7 @@ svg { display: block; }
 .lead-stats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
 .lead-stat { display: flex; flex-direction: column; gap: 2px; }
 .lead-stat .val { font: 500 18px/24px var(--mono); }
+.lead-stat .xl { font: 600 11px/16px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; }
 .breadth { display: flex; align-items: center; gap: 8px; }
 .breadth .track { flex: 1; height: 8px; border: 1px solid var(--ink); background: var(--paper); position: relative; }
 .breadth .track i { display: block; height: 100%; background: var(--ink); }
@@ -405,7 +419,7 @@ select {
 .tabbar button svg { width: 22px; height: 22px; }
 .tabbar button[aria-selected="true"] { color: var(--ink); }
 .tabbar button[aria-selected="true"]::after { content: ""; position: absolute; top: -1px; left: 20%; right: 20%; height: 2px; background: var(--ink); }
-.tab-badge { position: absolute; top: 8px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--pencil); color: var(--paper); font: 700 10px/16px var(--mono); }
+.tab-badge { position: absolute; top: 6px; left: calc(50% + 12px); color: var(--pencil); font: 700 12px/16px var(--mono); letter-spacing: 0.02em; }
 
 /* ----- sheets: detail and explain ----- */
 .sheet {
@@ -434,7 +448,6 @@ select {
 .sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--hair); margin: 0 auto 12px; }
 .dp-head { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: start; padding-bottom: 8px; }
 .dp-ticker { display: flex; align-items: center; gap: 8px; font: 700 28px/32px var(--mono); letter-spacing: 0.01em; }
-.dp-ticker .star-mark { width: 20px; height: 20px; }
 .dp-name { display: block; font: 400 15px/20px var(--sans); color: var(--ink-2); }
 .dp-close, .ep-close { height: 32px; padding: 0 12px; border: 1px solid var(--ink); border-radius: 2px; font: 500 13px/30px var(--cond); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); }
 .fact-line { font: 400 12px/16px var(--mono); color: var(--ink-3); padding-bottom: 12px; }
@@ -486,7 +499,7 @@ select {
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
 }
 .watch-btn svg { width: 16px; height: 16px; }
-.watch-btn[aria-pressed="true"] { background: var(--pencil); color: var(--paper); }
+.watch-btn[aria-pressed="true"] { background: var(--pencil-soft); }
 .watch-ctx { font: 400 12px/16px var(--sans); color: var(--ink-2); }
 .detail-meta { font: 400 12px/18px var(--mono); color: var(--ink-3); padding-top: 8px; }
 
@@ -499,11 +512,13 @@ select {
 .ep-card dd code { display: block; margin-top: 4px; color: var(--ink-3); }
 
 /* ----- motion discipline ----- */
-.trace path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 640ms var(--ease-out) forwards; }
+/* the stylus writes at paper speed: constant, not eased */
+path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 640ms linear forwards; }
+.pmark path.draw { animation-duration: 320ms; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .sheet, .sheet-card { animation: none; }
-  .trace path.draw { animation: none; stroke-dashoffset: 0; }
+  path.draw { animation: none; stroke-dashoffset: 0; }
   .lead-head .chev, .switch .knob { transition: none; }
 }
 </style>
@@ -765,6 +780,28 @@ select {
 
     var BIG = 20;
     var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var DESKTOP = window.matchMedia("(min-width: 720px)");
+
+    // One stroked star, slightly tilted with a pencil's overshoot at the
+    // close: the mark the owner draws on a strip worth a second look.
+    var PENCIL_D = "M9.4 3.2 12.3 8 17.5 8.5 13.6 12.1 14.8 17.3 10 14.7 5.3 17.4 6.4 12.2 2.4 8.6 7.7 8 9.9 2.7 10.6 4.1";
+    function pencilMark(className, draw) {
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("class", className || "pmark");
+      svg.setAttribute("viewBox", "0 0 20 20");
+      svg.setAttribute("role", "img");
+      svg.setAttribute("aria-label", "on watchlist");
+      var path = document.createElementNS(SVG, "path");
+      path.setAttribute("d", PENCIL_D);
+      path.setAttribute("transform", "rotate(-9 10 10)");
+      svg.appendChild(path);
+      svg.draw = function () {
+        if (REDUCED.matches) return;
+        path.style.setProperty("--len", path.getTotalLength().toFixed(1));
+        path.setAttribute("class", "draw");
+      };
+      return svg;
+    }
     var CAL = 10;
     var GAINS = [5, 10, 25, 50, 100, 250, 500, 1000];
 
@@ -980,7 +1017,7 @@ select {
       document.getElementById("cross").hidden = false;
       document.getElementById("cross-empty").hidden = true;
       document.getElementById("cross-title").textContent =
-        cross.names_used + " names · 12 mo";
+        cross.names_used + " of " + rows.length + " names with a full year · 12 mo";
 
       var leadList = document.getElementById("xs-sectors");
       cross.sectors.forEach(function (row) {
@@ -988,13 +1025,14 @@ select {
         var top = el("div", "lead-top");
         top.appendChild(el("span", "code", sectorCode(row.sector)));
         top.appendChild(el("span", "lname", row.sector));
-        top.appendChild(el("span", "n", row.count + " names"));
+        var ofAll = sectorCounts[row.sector] || row.count;
+        top.appendChild(el("span", "n", (ofAll !== row.count ? row.count + " of " + ofAll : row.count) + " names"));
         li.appendChild(top);
         var series = sectorSeries[row.sector];
         if (series) {
           var leadTrace = trace(series, 12, 4);
           li.appendChild(leadTrace);
-          top.lastChild.textContent = row.count + " names · " + leadTrace.gain + "%/box";
+          top.lastChild.textContent += " · " + leadTrace.gain + "%/box";
         }
         var stats = el("div", "lead-stats");
         var med = el("div", "lead-stat");
@@ -1288,19 +1326,13 @@ select {
         });
     }
 
-    function starMark() {
-      var mark = icon("i-star", "star-mark");
-      mark.setAttribute("role", "img");
-      mark.setAttribute("aria-label", "on watchlist");
-      mark.removeAttribute("aria-hidden");
-      return mark;
-    }
     // The ticker as both views show it: the symbol, the pencil mark if
-    // watched, and the honest badge for a name short of a year's bars.
-    function tickerSpan(r) {
+    // watched (unless the strip's paper carries it), and the honest
+    // badge for a name short of a year's bars.
+    function tickerSpan(r, withMark) {
       var cov = coverage[r.ticker];
       var tick = el("span", "ticker", r.ticker);
-      if (watch.has(r.ticker)) tick.appendChild(starMark());
+      if (withMark && watch.has(r.ticker)) tick.appendChild(pencilMark());
       if (cov && !cov.sufficient) {
         var warn = el("span", "warn", cov.trading_days + "d");
         warn.title = "Only " + cov.trading_days + " trading days of history";
@@ -1311,10 +1343,8 @@ select {
     function syncStars(ticker) {
       var r = rowByTicker[ticker];
       if (!r) return;
-      document.querySelectorAll(
-        '[data-ticker="' + CSS.escape(ticker) + '"] .ticker'
-      ).forEach(function (tick) {
-        tick.replaceWith(tickerSpan(r));
+      document.querySelectorAll('[data-ticker="' + CSS.escape(ticker) + '"]').forEach(function (node) {
+        node.replaceWith(node.tagName === "TR" ? tableRow(r) : rowItem(r));
       });
     }
 
@@ -1479,7 +1509,7 @@ select {
       var watchBtn = el("button", "watch-btn");
       watchBtn.type = "button";
       var watchCtx = el("span", "watch-ctx");
-      function paintWatch() {
+      function paintWatch(drawIn) {
         var on = watch.has(r.ticker);
         watchBtn.textContent = "";
         watchBtn.appendChild(icon(on ? "i-star" : "i-star-o"));
@@ -1497,21 +1527,25 @@ select {
               ? " · " + inSector + " already in " + r.sector
               : " · none in " + r.sector);
         var dpTick = document.getElementById("dp-ticker");
-        var old = dpTick.querySelector(".star-mark");
+        var old = dpTick.querySelector(".pmark");
         if (old) old.remove();
-        if (on) dpTick.appendChild(starMark());
+        if (on) {
+          var mark = pencilMark();
+          dpTick.appendChild(mark);
+          if (drawIn) mark.draw();
+        }
       }
       watchBtn.addEventListener("click", function () {
         if (watch.has(r.ticker)) watch.delete(r.ticker);
         else watch.add(r.ticker);
         saveWatch();
-        paintWatch();
+        paintWatch(true);
         paintWatchCount();
         paintWatchMix();
         syncStars(r.ticker);
         if (state.watchOnly) renderList();
       });
-      paintWatch();
+      paintWatch(false);
       watchRow.appendChild(watchBtn);
       watchRow.appendChild(watchCtx);
       dl.appendChild(watchRow);
@@ -1543,24 +1577,45 @@ select {
 
       button.appendChild(el("span", "rank", r.rank));
 
+      var hasTrace = Boolean(cov && cov.cum_return_spark && cov.cum_return_spark.length > 1);
       var main = el("span", "name-cell");
-      main.appendChild(tickerSpan(r));
+      main.appendChild(tickerSpan(r, !hasTrace));
       var company = el("span", "company");
       company.appendChild(el("span", "company-name", r.name));
       company.appendChild(el("span", "cap-sub", money(r.market_cap)));
       main.appendChild(company);
       button.appendChild(main);
 
-      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
-        button.appendChild(trace(cov.cum_return_spark, 6, 2, { dashed: !cov.sufficient }));
+      // The phone strip is six boxes of two months; the desktop strip
+      // twelve of one, the full strip's own scale.
+      var wide = DESKTOP.matches;
+      var strip = null;
+      if (hasTrace) {
+        strip = trace(cov.cum_return_spark, wide ? 12 : 6, wide ? 3 : 2, { dashed: !cov.sufficient });
+        if (watch.has(r.ticker)) strip.appendChild(pencilMark());
+        button.appendChild(strip);
       } else {
         button.appendChild(el("span", "trace-empty"));
+      }
+
+      if (wide) {
+        // The shorter windows ride beside the strip where the paper has
+        // room, skipping whichever one the chosen figure already shows.
+        ["ret1", "ret3", "ret6"].forEach(function (key) {
+          if (key === state.display) return;
+          var cell = el("span", "extra");
+          var ev = metricValue(key, r);
+          cell.appendChild(el("span", "val" + (ev == null ? " none" : ""), metricText(key, ev, true)));
+          cell.appendChild(el("span", "lab", METRICS[key].short.toLowerCase()));
+          button.appendChild(cell);
+        });
       }
 
       var figure = el("span", "figure");
       var v = metricValue(state.display, r);
       figure.appendChild(el("span", "val" + (v == null ? " none" : ""), metricText(state.display, v)));
-      figure.appendChild(el("span", "lab", METRICS[state.display].short));
+      figure.appendChild(el("span", "lab", METRICS[state.display].short.toLowerCase()));
+      if (strip && strip.gain) figure.appendChild(el("span", "lab", strip.gain + "%/box"));
       button.appendChild(figure);
 
       button.addEventListener("click", function () { openDetail(r, button); });
@@ -1614,7 +1669,7 @@ select {
           ? "All " + rows.length + " names"
           : shown.length + " of " + rows.length + " names";
       listCal.hidden = isTable || !hasHistory;
-      listCal.textContent = "1 box = 2 mo × gain";
+      listCal.textContent = DESKTOP.matches ? "1 box = 1 mo × gain" : "1 box = 2 mo × gain";
       if (isTable) renderTable(shown);
       else renderCards(shown);
     }
@@ -1710,7 +1765,7 @@ select {
       var open = el("button", "tcell");
       open.type = "button";
       open.setAttribute("aria-haspopup", "dialog");
-      open.appendChild(tickerSpan(r));
+      open.appendChild(tickerSpan(r, true));
       nameCell.appendChild(open);
       tr.appendChild(nameCell);
 
@@ -2040,6 +2095,8 @@ select {
     paintSettingsRows();
     renderList();
     setTab(state.tab);
+    (DESKTOP.addEventListener ? DESKTOP.addEventListener("change", renderList)
+      : DESKTOP.addListener(renderList));
   })();
 </script>
 </body>
