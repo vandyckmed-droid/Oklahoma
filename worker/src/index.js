@@ -7,12 +7,15 @@
 
 const SYMBOL = /^[A-Z0-9.\-]{1,10}$/;
 const MAX_SYMBOLS = 100;
+// Used when no ALLOWED_ORIGINS variable is set (a Worker created in the
+// Cloudflare dashboard rather than with wrangler): the page's own origin.
+const DEFAULT_ORIGINS = "https://vandyckmed-droid.github.io";
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
-    const allowed = (env.ALLOWED_ORIGINS || "")
+    const allowed = (env.ALLOWED_ORIGINS || DEFAULT_ORIGINS)
       .split(",").map((s) => s.trim()).filter(Boolean);
     const cors = allowed.includes(origin) ? origin : null;
 
