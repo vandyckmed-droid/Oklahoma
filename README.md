@@ -246,6 +246,15 @@ detail: return vs its sector's median, distance from its 1-year high, the
 cumulative-return chart with its trend line), and whether it adds something
 the shortlist doesn't already have (the watchlist).
 
+The page is a tabbed app with a bottom tab bar: **Universe** (masthead,
+search, sector chips, the list), **Sectors** (the 12-month cross-section),
+**Watchlist** (the starred names in the same view, with copy/paste tools)
+and **Settings** (every control in one place: view, the figure shown on
+cards, sort and direction, group by sector, the column explainer, and the
+data notes). Tapping a table heading still sorts in place, since that is
+an act on the data rather than a setting; the Settings sort mirrors it.
+The stale-data warning stays a banner on every tab.
+
 One **metric registry** in the template drives every surface, so a figure
 means the same thing wherever it appears. The list has two views. **Cards**
 show each name as a sparkline plus one labeled figure chosen from the Show
