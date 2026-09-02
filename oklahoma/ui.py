@@ -72,8 +72,9 @@ def _display(universe: dict, history_index: dict) -> dict:
             row["cum_return_spark"] = [
                 round(value, 2) for value in thin(values, SPARKLINE_POINTS)
             ]
-            # The short lens only exists where a full quarter of bars does;
-            # measuring it over less would not be a 3-month number.
+            # Each shorter lens exists only where its full window of bars
+            # does; measuring 6, 3 or 1 months over less would not be
+            # that number, so the field is absent instead.
             if len(bars) >= TRADING_DAYS_HALF:
                 half = cumulative_returns(bars, TRADING_DAYS_HALF)
                 row["return_6m_pct"] = round(half[-1]["cum_return_pct"], 2)

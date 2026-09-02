@@ -2233,6 +2233,9 @@
       sectorCell.appendChild(dot);
       var code = document.createElement("abbr");
       code.title = r.sector;
+      // abbr expansion is off in some screen readers and title tooltips
+      // do not exist on touch, so the accessible name is set outright.
+      code.setAttribute("aria-label", r.sector);
       code.textContent = sectorCode(r.sector);
       sectorCell.appendChild(code);
       tr.appendChild(sectorCell);
