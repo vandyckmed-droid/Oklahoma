@@ -81,7 +81,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
 :focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
 button, input, select { font: inherit; color: inherit; }
-button { cursor: pointer; background: none; border: 0; padding: 0; }
+button { cursor: pointer; background: none; border: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 input::placeholder { color: var(--text-2); opacity: 1; }
 input[type="search"] { caret-color: var(--up); }
 input[type="search"]::-webkit-search-decoration,
@@ -126,16 +126,16 @@ svg { display: block; }
 .ranges { display: flex; gap: 4px; padding: 10px 0 4px; border-bottom: 1px solid var(--line); }
 .ranges button {
   flex: 1;
-  height: 36px;
-  border-radius: 18px;
-  font: 600 13px/36px var(--sans);
+  height: 40px;
+  border-radius: 20px;
+  font: 600 13px/40px var(--sans);
   color: var(--text-2);
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
 }
 .ranges button[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
 .ranges button[aria-pressed="true"].neg { background: var(--down); color: var(--on-pill-down); }
-.ranges button .rv { display: block; font: 500 12px/14px var(--sans); margin-top: -8px; padding-bottom: 6px; }
-.ranges.tall button { height: 48px; line-height: 40px; }
+.ranges button .rv { display: block; font: 500 12px/14px var(--sans); margin-top: -8px; padding-bottom: 8px; }
+.ranges.tall button { height: 52px; line-height: 44px; }
 
 /* ----- section heads ----- */
 h2.section {
@@ -149,7 +149,7 @@ h2.section {
   gap: 12px;
 }
 h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
-.sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; font: 500 13px/20px var(--sans); color: var(--up-text); }
+.sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 0 0 8px; font: 500 13px/20px var(--sans); color: var(--up-text); }
 .sortwrap svg { width: 12px; height: 12px; }
 .sortwrap select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
@@ -186,6 +186,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
   transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out), border-color 120ms var(--ease-out);
 }
 .chip .n { color: var(--text-2); }
+.chip:active { background: var(--bg-2); }
 .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
 .chip[aria-pressed="true"] .n { color: var(--bg); opacity: 0.7; }
 
@@ -205,6 +206,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
   transition: background-color 120ms var(--ease-out);
 }
 @media (hover: hover) { .row:hover { background: var(--bg-2); margin: 0 -8px; padding: 12px 8px; width: calc(100% + 16px); } }
+.row:active { background: var(--bg-2); margin: 0 -8px; padding: 12px 8px; width: calc(100% + 16px); }
 .name-cell { min-width: 0; }
 .ticker { display: flex; align-items: center; gap: 6px; font: 600 15px/20px var(--sans); }
 .ticker .star { width: 14px; height: 14px; color: var(--up-text); flex: none; }
@@ -278,9 +280,10 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
   border-bottom: 1px solid var(--line);
 }
 .sector-row .sname { font: 600 15px/20px var(--sans); }
-.sector-row .smeta { font: 400 12px/18px var(--sans); color: var(--text-2); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.sector-row .smeta { font: 400 12px/18px var(--sans); color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; white-space: nowrap; }
 .breadth { display: inline-flex; align-items: center; gap: 6px; }
 .breadth .track { width: 44px; height: 6px; border-radius: 3px; background: var(--bg-3); overflow: hidden; flex: none; }
+@media (max-width: 400px) { .breadth .track { width: 36px; } .sector-row { column-gap: 10px; } }
 .breadth .track i { display: block; height: 100%; background: var(--up); }
 .xtreme { display: grid; grid-template-columns: 76px 1fr; column-gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .xlabel { font: 600 13px/18px var(--sans); color: var(--text-2); }
@@ -302,7 +305,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 
 /* ----- watchlist ----- */
 .watch-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 4px 0 12px; }
-.text-btn { color: var(--up-text); font: 600 14px/20px var(--sans); }
+.text-btn { color: var(--up-text); font: 600 14px/20px var(--sans); min-height: 36px; display: inline-flex; align-items: center; }
 .text-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
 .watch-tools-note { font: 400 12px/16px var(--sans); color: var(--text-3); }
 .watch-mix { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 8px; }
@@ -382,6 +385,7 @@ select.ctl {
   animation: fade 160ms var(--ease-out);
 }
 .sheet-card {
+  overscroll-behavior: contain;
   width: 100%;
   max-width: 640px;
   max-height: calc(100dvh - 24px);
@@ -392,7 +396,7 @@ select.ctl {
   padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
   animation: rise 240ms var(--ease-out);
 }
-.sheet-card.page { max-height: 100dvh; height: 100dvh; border-radius: 0; }
+.sheet-card.page { max-height: 100dvh; height: 100dvh; border-radius: 0; padding-top: calc(8px + env(safe-area-inset-top)); overscroll-behavior: contain; }
 @media (min-width: 720px) {
   .sheet { align-items: center; }
   .sheet-card, .sheet-card.page { height: auto; max-height: calc(100dvh - 48px); border-radius: 20px; }
@@ -417,11 +421,11 @@ select.ctl {
 .stat .val { font: 500 15px/20px var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stat .val.none { color: var(--text-3); }
 .stat .sub { font: 400 12px/16px var(--sans); color: var(--text-3); }
-.xl { color: var(--text-2); text-decoration: underline dotted; text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.xl { color: var(--text-2); padding: 4px 0; margin: -4px 0; text-decoration: underline dotted; text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .xl:hover { color: var(--text); text-decoration-color: var(--text-2); }
 .xl-static { color: var(--text-2); }
 
-.fit-toggle { font: 500 13px/18px var(--sans); color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
+.fit-toggle { font: 500 13px/18px var(--sans); color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; min-height: 32px; }
 .fit-toggle .swatch { display: inline-block; width: 16px; height: 0; border-top: 2px dashed var(--text-3); }
 .fit-toggle[aria-pressed="true"] { color: var(--text); }
 .chart-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; font: 400 12px/16px var(--sans); color: var(--text-3); }
@@ -1499,18 +1503,18 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           off > -0.5 ? "At high" : signed(off, 1, "%"), off > -0.5 ? "up" : direction(off),
           "high " + price(cov.window_high)));
       }
+      if (cov && cov.mom_12_1_pct != null) {
+        grid.appendChild(stat("mom121", "12-1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct), "skips the last month"));
+      }
+      if (cov && cov.mom_6_1_pct != null) {
+        grid.appendChild(stat("mom61", "6-1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct), "skips the last month"));
+      }
       var med = medianBySector[r.sector];
       if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
         grid.appendChild(stat("vsmedian", "Vs sector median", signed(cov.window_return_pct - med, 1, " pts"),
-          direction(cov.window_return_pct - med), r.sector + " median " + pct(med)));
+          direction(cov.window_return_pct - med), "sector median " + pct(med)));
       } else {
         grid.appendChild(stat(null, "Vs sector median", "—", "none", "needs a full year"));
-      }
-      if (cov && cov.mom_12_1_pct != null) {
-        grid.appendChild(stat("mom121", "12-1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct)));
-      }
-      if (cov && cov.mom_6_1_pct != null) {
-        grid.appendChild(stat("mom61", "6-1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct)));
       }
       if (cov && cov.window_low != null) {
         grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
