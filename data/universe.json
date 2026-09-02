@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-02T03:13:21Z",
+  "generated_at": "2026-09-02T06:00:08Z",
   "source": {
     "provider": "Financial Modeling Prep",
     "endpoint": "stable/sp500-constituent",
