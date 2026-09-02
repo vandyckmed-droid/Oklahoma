@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ACGL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":90.17,"volume":2503600},
 {"date":"2025-06-23","adj_close":91.11,"volume":1587400},
 {"date":"2025-06-24","adj_close":90.97,"volume":1505500},
 {"date":"2025-06-25","adj_close":89.23,"volume":1415940},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":100.72,"volume":1333104},
 {"date":"2026-08-27","adj_close":98.76,"volume":1862813},
 {"date":"2026-08-28","adj_close":98.84,"volume":3990833},
-{"date":"2026-08-31","adj_close":98.07,"volume":3796924}
+{"date":"2026-08-31","adj_close":98.07,"volume":3796928},
+{"date":"2026-09-01","adj_close":98.61,"volume":1906516}
 ]}

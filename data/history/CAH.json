@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CAH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":161.22,"volume":4642700},
 {"date":"2025-06-23","adj_close":161.8,"volume":2944500},
 {"date":"2025-06-24","adj_close":162.02,"volume":4188900},
 {"date":"2025-06-25","adj_close":161.57,"volume":2693600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":238.4,"volume":1473077},
 {"date":"2026-08-27","adj_close":235.13,"volume":1033994},
 {"date":"2026-08-28","adj_close":234.55,"volume":1779203},
-{"date":"2026-08-31","adj_close":234.62,"volume":1660481}
+{"date":"2026-08-31","adj_close":234.62,"volume":1673454},
+{"date":"2026-09-01","adj_close":239.35,"volume":1298373}
 ]}

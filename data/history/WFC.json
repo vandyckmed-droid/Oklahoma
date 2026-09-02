@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WFC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":73.35,"volume":27677535},
 {"date":"2025-06-23","adj_close":74.92,"volume":17375700},
 {"date":"2025-06-24","adj_close":75.99,"volume":16342330},
 {"date":"2025-06-25","adj_close":76.92,"volume":13954500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":85.23,"volume":9901913},
 {"date":"2026-08-27","adj_close":84.97,"volume":10849773},
 {"date":"2026-08-28","adj_close":86.69,"volume":12024512},
-{"date":"2026-08-31","adj_close":86.39,"volume":18964200}
+{"date":"2026-08-31","adj_close":86.39,"volume":19126894},
+{"date":"2026-09-01","adj_close":87.05,"volume":15861404}
 ]}

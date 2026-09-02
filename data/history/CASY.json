@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CASY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":497.98,"volume":456600},
 {"date":"2025-06-23","adj_close":508.09,"volume":308415},
 {"date":"2025-06-24","adj_close":508.57,"volume":360611},
 {"date":"2025-06-25","adj_close":502.82,"volume":286595},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":807.12,"volume":224402},
 {"date":"2026-08-27","adj_close":763.38,"volume":454895},
 {"date":"2026-08-28","adj_close":755.47,"volume":442226},
-{"date":"2026-08-31","adj_close":752.21,"volume":419717}
+{"date":"2026-08-31","adj_close":752.21,"volume":419800},
+{"date":"2026-09-01","adj_close":766.91,"volume":432330}
 ]}

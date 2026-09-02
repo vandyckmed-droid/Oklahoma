@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TRGP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":166.07,"volume":2211463},
 {"date":"2025-06-23","adj_close":160.3,"volume":1891334},
 {"date":"2025-06-24","adj_close":163.22,"volume":2041446},
 {"date":"2025-06-25","adj_close":165.91,"volume":1980200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":294.03,"volume":939047},
 {"date":"2026-08-27","adj_close":288.95,"volume":1117008},
 {"date":"2026-08-28","adj_close":287.82,"volume":806330},
-{"date":"2026-08-31","adj_close":293.65,"volume":1727221}
+{"date":"2026-08-31","adj_close":293.65,"volume":1740700},
+{"date":"2026-09-01","adj_close":296.06,"volume":1183692}
 ]}

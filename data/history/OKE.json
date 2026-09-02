@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"OKE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":77.15,"volume":7507710},
 {"date":"2025-06-23","adj_close":74.79,"volume":4196100},
 {"date":"2025-06-24","adj_close":75.46,"volume":3257376},
 {"date":"2025-06-25","adj_close":75.11,"volume":3101215},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":94.9,"volume":3350929},
 {"date":"2026-08-27","adj_close":94.72,"volume":2556668},
 {"date":"2026-08-28","adj_close":94.76,"volume":2605991},
-{"date":"2026-08-31","adj_close":96.01,"volume":5214635}
+{"date":"2026-08-31","adj_close":96.01,"volume":5214976},
+{"date":"2026-09-01","adj_close":95.69,"volume":4359614}
 ]}

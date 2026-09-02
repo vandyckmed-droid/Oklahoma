@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"INTC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":21.08,"volume":133472814},
 {"date":"2025-06-23","adj_close":21.19,"volume":81461000},
 {"date":"2025-06-24","adj_close":22.55,"volume":130368742},
 {"date":"2025-06-25","adj_close":22.2,"volume":64975117},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":88.24,"volume":75752800},
 {"date":"2026-08-27","adj_close":92.09,"volume":100556800},
 {"date":"2026-08-28","adj_close":89.47,"volume":86172600},
-{"date":"2026-08-31","adj_close":89.51,"volume":64515383}
+{"date":"2026-08-31","adj_close":89.51,"volume":65188218},
+{"date":"2026-09-01","adj_close":88.97,"volume":73208841}
 ]}

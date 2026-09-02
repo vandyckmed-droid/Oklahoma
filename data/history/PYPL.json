@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"PYPL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":69.45,"volume":18497900},
 {"date":"2025-06-23","adj_close":71.39,"volume":11447942},
 {"date":"2025-06-24","adj_close":72.95,"volume":9500942},
 {"date":"2025-06-25","adj_close":72.44,"volume":7851900},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":61.81,"volume":11422283},
 {"date":"2026-08-27","adj_close":61.47,"volume":9168560},
 {"date":"2026-08-28","adj_close":53.66,"volume":36340503},
-{"date":"2026-08-31","adj_close":52.67,"volume":19831267}
+{"date":"2026-08-31","adj_close":52.67,"volume":19879292},
+{"date":"2026-09-01","adj_close":52.4,"volume":9917961}
 ]}

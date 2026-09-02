@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NTRS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":109.36,"volume":2546248},
 {"date":"2025-06-23","adj_close":118.12,"volume":15633636},
 {"date":"2025-06-24","adj_close":115.55,"volume":4712151},
 {"date":"2025-06-25","adj_close":121.05,"volume":4307648},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":187.66,"volume":807240},
 {"date":"2026-08-27","adj_close":186.27,"volume":903569},
 {"date":"2026-08-28","adj_close":186.79,"volume":603018},
-{"date":"2026-08-31","adj_close":185.56,"volume":777187}
+{"date":"2026-08-31","adj_close":185.56,"volume":777200},
+{"date":"2026-09-01","adj_close":182.68,"volume":834485}
 ]}

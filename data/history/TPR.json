@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TPR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":83.25,"volume":4336790},
 {"date":"2025-06-23","adj_close":84.66,"volume":3387642},
 {"date":"2025-06-24","adj_close":86.15,"volume":3187827},
 {"date":"2025-06-25","adj_close":84.33,"volume":2800065},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":130.25,"volume":4837681},
 {"date":"2026-08-27","adj_close":123.24,"volume":3957932},
 {"date":"2026-08-28","adj_close":125.49,"volume":3534945},
-{"date":"2026-08-31","adj_close":123.39,"volume":4052474}
+{"date":"2026-08-31","adj_close":123.39,"volume":4082750},
+{"date":"2026-09-01","adj_close":122.14,"volume":2801496}
 ]}

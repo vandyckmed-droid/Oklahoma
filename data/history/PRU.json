@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"PRU","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":97.82,"volume":2639243},
 {"date":"2025-06-23","adj_close":99.01,"volume":1672989},
 {"date":"2025-06-24","adj_close":99.67,"volume":1769784},
 {"date":"2025-06-25","adj_close":98.94,"volume":1334500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":120.24,"volume":1542814},
 {"date":"2026-08-27","adj_close":120.37,"volume":1334147},
 {"date":"2026-08-28","adj_close":119.79,"volume":1248558},
-{"date":"2026-08-31","adj_close":117.6,"volume":2442174}
+{"date":"2026-08-31","adj_close":117.6,"volume":2442200},
+{"date":"2026-09-01","adj_close":117.14,"volume":1439077}
 ]}

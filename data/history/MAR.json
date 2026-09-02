@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MAR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":257.4,"volume":2244300},
 {"date":"2025-06-23","adj_close":261.27,"volume":1728502},
 {"date":"2025-06-24","adj_close":265.84,"volume":1505779},
 {"date":"2025-06-25","adj_close":263.13,"volume":1514085},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":358.67,"volume":2033857},
 {"date":"2026-08-27","adj_close":353.87,"volume":1481162},
 {"date":"2026-08-28","adj_close":351.08,"volume":1011182},
-{"date":"2026-08-31","adj_close":341.76,"volume":1420623}
+{"date":"2026-08-31","adj_close":341.76,"volume":1422809},
+{"date":"2026-09-01","adj_close":334.55,"volume":1674624}
 ]}

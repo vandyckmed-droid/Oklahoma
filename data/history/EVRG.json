@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"EVRG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":64.33,"volume":2769091},
 {"date":"2025-06-23","adj_close":65.55,"volume":2309970},
 {"date":"2025-06-24","adj_close":65.85,"volume":2635000},
 {"date":"2025-06-25","adj_close":65.29,"volume":2600232},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":82.23,"volume":1146043},
 {"date":"2026-08-27","adj_close":81.42,"volume":3596749},
 {"date":"2026-08-28","adj_close":80.65,"volume":1448129},
-{"date":"2026-08-31","adj_close":81.02,"volume":2798168}
+{"date":"2026-08-31","adj_close":81.02,"volume":2798200},
+{"date":"2026-09-01","adj_close":81.52,"volume":2186997}
 ]}

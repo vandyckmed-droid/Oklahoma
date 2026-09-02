@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"PAYX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":141.77,"volume":3483540},
 {"date":"2025-06-23","adj_close":143.8,"volume":2338150},
 {"date":"2025-06-24","adj_close":144.75,"volume":4296500},
 {"date":"2025-06-25","adj_close":131.14,"volume":9294200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":124.88,"volume":1111747},
 {"date":"2026-08-27","adj_close":126.48,"volume":1726341},
 {"date":"2026-08-28","adj_close":127.04,"volume":1546226},
-{"date":"2026-08-31","adj_close":127.34,"volume":2470350}
+{"date":"2026-08-31","adj_close":127.34,"volume":2470400},
+{"date":"2026-09-01","adj_close":125.64,"volume":1706944}
 ]}

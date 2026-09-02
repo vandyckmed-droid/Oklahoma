@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CPT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":110.04,"volume":1585800},
 {"date":"2025-06-23","adj_close":110.68,"volume":857700},
 {"date":"2025-06-24","adj_close":109.98,"volume":941241},
 {"date":"2025-06-25","adj_close":107.63,"volume":1629916},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":107.61,"volume":558816},
 {"date":"2026-08-27","adj_close":105.79,"volume":659373},
 {"date":"2026-08-28","adj_close":106.35,"volume":868755},
-{"date":"2026-08-31","adj_close":105.8,"volume":1300528}
+{"date":"2026-08-31","adj_close":105.8,"volume":1300539},
+{"date":"2026-09-01","adj_close":105.96,"volume":852956}
 ]}

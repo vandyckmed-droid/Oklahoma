@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NXPI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":204.41,"volume":4244800},
 {"date":"2025-06-23","adj_close":206.23,"volume":1847200},
 {"date":"2025-06-24","adj_close":213.71,"volume":2833300},
 {"date":"2025-06-25","adj_close":212.51,"volume":1781700},
@@ -298,6 +297,7 @@
 {"date":"2026-08-25","adj_close":224.75,"volume":2025440},
 {"date":"2026-08-26","adj_close":223.15,"volume":1816954},
 {"date":"2026-08-27","adj_close":225.86,"volume":2564715},
-{"date":"2026-08-28","adj_close":223.58,"volume":3328885},
-{"date":"2026-08-31","adj_close":224.64,"volume":2926609}
+{"date":"2026-08-28","adj_close":223.58,"volume":3328900},
+{"date":"2026-08-31","adj_close":224.64,"volume":2993638},
+{"date":"2026-09-01","adj_close":222.4,"volume":3114801}
 ]}

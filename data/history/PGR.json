@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"PGR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":245.93,"volume":8887134},
 {"date":"2025-06-23","adj_close":250.03,"volume":3006510},
 {"date":"2025-06-24","adj_close":249.68,"volume":3540580},
 {"date":"2025-06-25","adj_close":243.73,"volume":2957807},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":222.51,"volume":1447349},
 {"date":"2026-08-27","adj_close":217.65,"volume":1519866},
 {"date":"2026-08-28","adj_close":218.64,"volume":924968},
-{"date":"2026-08-31","adj_close":218.08,"volume":1748170}
+{"date":"2026-08-31","adj_close":218.08,"volume":1748520},
+{"date":"2026-09-01","adj_close":220.54,"volume":2239972}
 ]}

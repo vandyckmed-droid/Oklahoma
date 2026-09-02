@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AOS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":61.07,"volume":2773600},
 {"date":"2025-06-23","adj_close":62.44,"volume":1386600},
 {"date":"2025-06-24","adj_close":63.22,"volume":911117},
 {"date":"2025-06-25","adj_close":63.31,"volume":1290200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":62.48,"volume":1013400},
 {"date":"2026-08-27","adj_close":61.95,"volume":1044953},
 {"date":"2026-08-28","adj_close":60.38,"volume":1811607},
-{"date":"2026-08-31","adj_close":59.13,"volume":2168092}
+{"date":"2026-08-31","adj_close":59.13,"volume":2168100},
+{"date":"2026-09-01","adj_close":58.49,"volume":1019849}
 ]}

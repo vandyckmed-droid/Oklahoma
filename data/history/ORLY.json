@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ORLY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":89.69,"volume":9218846},
 {"date":"2025-06-23","adj_close":91.26,"volume":5008718},
 {"date":"2025-06-24","adj_close":89.18,"volume":4188305},
 {"date":"2025-06-25","adj_close":87.84,"volume":4525400},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":89.55,"volume":3699288},
 {"date":"2026-08-27","adj_close":87.83,"volume":4073272},
 {"date":"2026-08-28","adj_close":88.5,"volume":4704806},
-{"date":"2026-08-31","adj_close":88.8,"volume":6348427}
+{"date":"2026-08-31","adj_close":88.8,"volume":6399710},
+{"date":"2026-09-01","adj_close":87.95,"volume":4948947}
 ]}

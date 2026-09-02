@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MPC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":165.42,"volume":6556500},
 {"date":"2025-06-23","adj_close":162.96,"volume":3356800},
 {"date":"2025-06-24","adj_close":161.67,"volume":2875965},
 {"date":"2025-06-25","adj_close":162.06,"volume":2006911},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":362.27,"volume":2089976},
 {"date":"2026-08-27","adj_close":363.54,"volume":3019978},
 {"date":"2026-08-28","adj_close":368.83,"volume":1919203},
-{"date":"2026-08-31","adj_close":373.32,"volume":3625388}
+{"date":"2026-08-31","adj_close":373.32,"volume":3627294},
+{"date":"2026-09-01","adj_close":383.0,"volume":2365627}
 ]}

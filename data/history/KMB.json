@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"KMB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":122.3,"volume":5306997},
 {"date":"2025-06-23","adj_close":124.06,"volume":3205971},
 {"date":"2025-06-24","adj_close":123.88,"volume":2761044},
 {"date":"2025-06-25","adj_close":122.17,"volume":1820507},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":110.34,"volume":3951993},
 {"date":"2026-08-27","adj_close":109.98,"volume":3344553},
 {"date":"2026-08-28","adj_close":109.55,"volume":2433647},
-{"date":"2026-08-31","adj_close":107.95,"volume":4490505}
+{"date":"2026-08-31","adj_close":107.95,"volume":4491184},
+{"date":"2026-09-01","adj_close":107.08,"volume":3608328}
 ]}

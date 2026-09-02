@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"STT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":96.43,"volume":4284100},
 {"date":"2025-06-23","adj_close":97.99,"volume":2868162},
 {"date":"2025-06-24","adj_close":99.6,"volume":2552200},
 {"date":"2025-06-25","adj_close":101.0,"volume":2168021},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":193.62,"volume":1053034},
 {"date":"2026-08-27","adj_close":193.37,"volume":965510},
 {"date":"2026-08-28","adj_close":193.33,"volume":627434},
-{"date":"2026-08-31","adj_close":191.38,"volume":1832368}
+{"date":"2026-08-31","adj_close":191.38,"volume":1843418},
+{"date":"2026-09-01","adj_close":187.79,"volume":1152465}
 ]}

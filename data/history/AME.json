@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AME","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":175.58,"volume":2794326},
 {"date":"2025-06-23","adj_close":176.17,"volume":1461300},
 {"date":"2025-06-24","adj_close":178.12,"volume":1523752},
 {"date":"2025-06-25","adj_close":176.88,"volume":1115916},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":245.2,"volume":803632},
 {"date":"2026-08-27","adj_close":243.67,"volume":808503},
 {"date":"2026-08-28","adj_close":236.25,"volume":1746295},
-{"date":"2026-08-31","adj_close":235.17,"volume":2106598}
+{"date":"2026-08-31","adj_close":235.17,"volume":2106604},
+{"date":"2026-09-01","adj_close":231.32,"volume":1529849}
 ]}

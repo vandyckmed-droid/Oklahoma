@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TROW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":88.57,"volume":2605904},
 {"date":"2025-06-23","adj_close":89.31,"volume":1325000},
 {"date":"2025-06-24","adj_close":90.36,"volume":1247264},
 {"date":"2025-06-25","adj_close":90.22,"volume":1077337},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":112.55,"volume":682947},
 {"date":"2026-08-27","adj_close":112.36,"volume":859410},
 {"date":"2026-08-28","adj_close":111.24,"volume":1059329},
-{"date":"2026-08-31","adj_close":111.28,"volume":2584268}
+{"date":"2026-08-31","adj_close":111.28,"volume":2584335},
+{"date":"2026-09-01","adj_close":108.98,"volume":1257715}
 ]}

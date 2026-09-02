@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HUM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":235.35,"volume":2045560},
 {"date":"2025-06-23","adj_close":230.47,"volume":1826818},
 {"date":"2025-06-24","adj_close":234.53,"volume":1281300},
 {"date":"2025-06-25","adj_close":234.25,"volume":1346200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":391.06,"volume":908159},
 {"date":"2026-08-27","adj_close":392.63,"volume":899479},
 {"date":"2026-08-28","adj_close":385.54,"volume":746601},
-{"date":"2026-08-31","adj_close":383.41,"volume":1000815}
+{"date":"2026-08-31","adj_close":383.23,"volume":1019962},
+{"date":"2026-09-01","adj_close":394.88,"volume":1059657}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"IBM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":272.02,"volume":7677000},
 {"date":"2025-06-23","adj_close":279.97,"volume":3786200},
 {"date":"2025-06-24","adj_close":284.43,"volume":4219100},
 {"date":"2025-06-25","adj_close":281.79,"volume":3862300},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":229.87,"volume":4632000},
 {"date":"2026-08-27","adj_close":238.79,"volume":5505922},
 {"date":"2026-08-28","adj_close":235.59,"volume":3945403},
-{"date":"2026-08-31","adj_close":233.87,"volume":6074219}
+{"date":"2026-08-31","adj_close":233.87,"volume":6101445},
+{"date":"2026-09-01","adj_close":231.4,"volume":3174901}
 ]}

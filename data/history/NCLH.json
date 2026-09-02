@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NCLH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":18.86,"volume":14736032},
 {"date":"2025-06-23","adj_close":18.6,"volume":31785137},
 {"date":"2025-06-24","adj_close":19.4,"volume":28488400},
 {"date":"2025-06-25","adj_close":19.02,"volume":12966800},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":17.09,"volume":8931600},
 {"date":"2026-08-27","adj_close":16.65,"volume":13432520},
 {"date":"2026-08-28","adj_close":16.65,"volume":14046800},
-{"date":"2026-08-31","adj_close":16.14,"volume":14444907}
+{"date":"2026-08-31","adj_close":16.14,"volume":14576900},
+{"date":"2026-09-01","adj_close":15.43,"volume":20424501}
 ]}

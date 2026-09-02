@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ERIE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":343.36,"volume":462615},
 {"date":"2025-06-23","adj_close":348.07,"volume":136700},
 {"date":"2025-06-24","adj_close":344.91,"volume":128144},
 {"date":"2025-06-25","adj_close":332.88,"volume":164035},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":257.27,"volume":216000},
 {"date":"2026-08-27","adj_close":259.44,"volume":230734},
 {"date":"2026-08-28","adj_close":260.4,"volume":224287},
-{"date":"2026-08-31","adj_close":255.56,"volume":1993359}
+{"date":"2026-08-31","adj_close":255.56,"volume":1993400},
+{"date":"2026-09-01","adj_close":256.09,"volume":233254}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WRB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":71.2,"volume":3887525},
 {"date":"2025-06-23","adj_close":71.94,"volume":2290900},
 {"date":"2025-06-24","adj_close":71.3,"volume":1642700},
 {"date":"2025-06-25","adj_close":69.87,"volume":1792907},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":68.67,"volume":1262789},
 {"date":"2026-08-27","adj_close":68.34,"volume":1636733},
 {"date":"2026-08-28","adj_close":68.44,"volume":1267067},
-{"date":"2026-08-31","adj_close":67.56,"volume":2024206}
+{"date":"2026-08-31","adj_close":67.56,"volume":2029204},
+{"date":"2026-09-01","adj_close":67.72,"volume":1738074}
 ]}

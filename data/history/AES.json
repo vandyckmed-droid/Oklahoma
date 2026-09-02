@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AES","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":9.78,"volume":18140300},
 {"date":"2025-06-23","adj_close":9.53,"volume":13611700},
 {"date":"2025-06-24","adj_close":9.83,"volume":17165100},
 {"date":"2025-06-25","adj_close":9.86,"volume":9776000},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":14.73,"volume":10823550},
 {"date":"2026-08-27","adj_close":14.75,"volume":7233587},
 {"date":"2026-08-28","adj_close":14.73,"volume":5672834},
-{"date":"2026-08-31","adj_close":14.74,"volume":9090310}
+{"date":"2026-08-31","adj_close":14.74,"volume":9091089},
+{"date":"2026-09-01","adj_close":14.77,"volume":5566738}
 ]}

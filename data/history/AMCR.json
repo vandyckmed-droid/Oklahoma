@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AMCR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":42.23,"volume":24825675},
 {"date":"2025-06-23","adj_close":42.7,"volume":4799960},
 {"date":"2025-06-24","adj_close":43.22,"volume":4296530},
 {"date":"2025-06-25","adj_close":42.61,"volume":4676464},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":47.15,"volume":2929626},
 {"date":"2026-08-27","adj_close":46.52,"volume":3246230},
 {"date":"2026-08-28","adj_close":46.67,"volume":2886475},
-{"date":"2026-08-31","adj_close":45.89,"volume":3815721}
+{"date":"2026-08-31","adj_close":45.89,"volume":4043123},
+{"date":"2026-09-01","adj_close":45.82,"volume":2427118}
 ]}

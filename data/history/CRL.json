@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CRL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":147.45,"volume":1542800},
 {"date":"2025-06-23","adj_close":147.38,"volume":1488005},
 {"date":"2025-06-24","adj_close":148.4,"volume":823845},
 {"date":"2025-06-25","adj_close":150.21,"volume":749249},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":295.1,"volume":1231129},
 {"date":"2026-08-27","adj_close":296.41,"volume":901386},
 {"date":"2026-08-28","adj_close":291.5,"volume":659870},
-{"date":"2026-08-31","adj_close":288.24,"volume":1086021}
+{"date":"2026-08-31","adj_close":288.24,"volume":1086241},
+{"date":"2026-09-01","adj_close":282.34,"volume":686952}
 ]}

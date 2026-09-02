@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"EXPD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":112.45,"volume":2809643},
 {"date":"2025-06-23","adj_close":113.21,"volume":909608},
 {"date":"2025-06-24","adj_close":112.98,"volume":919610},
 {"date":"2025-06-25","adj_close":111.12,"volume":978200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":190.18,"volume":667251},
 {"date":"2026-08-27","adj_close":190.72,"volume":783134},
 {"date":"2026-08-28","adj_close":190.97,"volume":567292},
-{"date":"2026-08-31","adj_close":189.65,"volume":1289154}
+{"date":"2026-08-31","adj_close":189.65,"volume":1289200},
+{"date":"2026-09-01","adj_close":187.7,"volume":779861}
 ]}

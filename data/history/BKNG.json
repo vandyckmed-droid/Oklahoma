@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"BKNG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":210.38,"volume":11048050},
 {"date":"2025-06-23","adj_close":211.55,"volume":4395675},
 {"date":"2025-06-24","adj_close":217.45,"volume":5850875},
 {"date":"2025-06-25","adj_close":217.57,"volume":4432500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":208.89,"volume":4012351},
 {"date":"2026-08-27","adj_close":202.56,"volume":5420803},
 {"date":"2026-08-28","adj_close":205.63,"volume":3591995},
-{"date":"2026-08-31","adj_close":199.09,"volume":5053317}
+{"date":"2026-08-31","adj_close":199.09,"volume":5055859},
+{"date":"2026-09-01","adj_close":195.69,"volume":5292955}
 ]}

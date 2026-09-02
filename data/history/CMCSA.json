@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CMCSA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":32.64,"volume":42693904},
 {"date":"2025-06-23","adj_close":32.7,"volume":28769100},
 {"date":"2025-06-24","adj_close":33.28,"volume":24319501},
 {"date":"2025-06-25","adj_close":32.93,"volume":21623146},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":27.2,"volume":13764861},
 {"date":"2026-08-27","adj_close":26.41,"volume":20704614},
 {"date":"2026-08-28","adj_close":27.06,"volume":20587292},
-{"date":"2026-08-31","adj_close":26.62,"volume":23216513}
+{"date":"2026-08-31","adj_close":26.62,"volume":23306590},
+{"date":"2026-09-01","adj_close":26.3,"volume":19272529}
 ]}

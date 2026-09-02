@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CLX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":114.22,"volume":4705408},
 {"date":"2025-06-23","adj_close":115.67,"volume":1687457},
 {"date":"2025-06-24","adj_close":115.4,"volume":1380824},
 {"date":"2025-06-25","adj_close":113.0,"volume":1631759},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":104.23,"volume":1524407},
 {"date":"2026-08-27","adj_close":103.63,"volume":1476746},
 {"date":"2026-08-28","adj_close":102.53,"volume":1866259},
-{"date":"2026-08-31","adj_close":97.68,"volume":13448472}
+{"date":"2026-08-31","adj_close":97.68,"volume":13457897},
+{"date":"2026-09-01","adj_close":94.97,"volume":3322770}
 ]}

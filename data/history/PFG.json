@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"PFG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":73.9,"volume":2262700},
 {"date":"2025-06-23","adj_close":74.59,"volume":804848},
 {"date":"2025-06-24","adj_close":75.17,"volume":790428},
 {"date":"2025-06-25","adj_close":74.33,"volume":1006300},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":112.21,"volume":803166},
 {"date":"2026-08-27","adj_close":112.17,"volume":983157},
 {"date":"2026-08-28","adj_close":111.41,"volume":806380},
-{"date":"2026-08-31","adj_close":110.16,"volume":2123242}
+{"date":"2026-08-31","adj_close":110.16,"volume":2123243},
+{"date":"2026-09-01","adj_close":109.36,"volume":1189973}
 ]}

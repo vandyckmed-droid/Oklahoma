@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"BBY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":63.95,"volume":5187900},
 {"date":"2025-06-23","adj_close":62.86,"volume":3985200},
 {"date":"2025-06-24","adj_close":65.2,"volume":4386400},
 {"date":"2025-06-25","adj_close":64.4,"volume":2837600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":87.44,"volume":6809739},
 {"date":"2026-08-27","adj_close":83.56,"volume":8970677},
 {"date":"2026-08-28","adj_close":82.44,"volume":5154369},
-{"date":"2026-08-31","adj_close":80.15,"volume":5612823}
+{"date":"2026-08-31","adj_close":80.15,"volume":5782293},
+{"date":"2026-09-01","adj_close":82.63,"volume":4502954}
 ]}

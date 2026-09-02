@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ABT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":129.4,"volume":11338200},
 {"date":"2025-06-23","adj_close":129.67,"volume":4887246},
 {"date":"2025-06-24","adj_close":134.36,"volume":9894809},
 {"date":"2025-06-25","adj_close":133.7,"volume":5507500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":114.1,"volume":6959229},
 {"date":"2026-08-27","adj_close":111.59,"volume":8355172},
 {"date":"2026-08-28","adj_close":112.47,"volume":7545562},
-{"date":"2026-08-31","adj_close":110.35,"volume":10533656}
+{"date":"2026-08-31","adj_close":110.36,"volume":10691544},
+{"date":"2026-09-01","adj_close":108.93,"volume":7229416}
 ]}

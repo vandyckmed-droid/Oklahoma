@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"STZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":156.88,"volume":4379021},
 {"date":"2025-06-23","adj_close":157.75,"volume":2401535},
 {"date":"2025-06-24","adj_close":158.9,"volume":2589952},
 {"date":"2025-06-25","adj_close":156.04,"volume":1750500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":134.45,"volume":1083574},
 {"date":"2026-08-27","adj_close":131.43,"volume":1324928},
 {"date":"2026-08-28","adj_close":130.69,"volume":2004871},
-{"date":"2026-08-31","adj_close":130.62,"volume":3079528}
+{"date":"2026-08-31","adj_close":130.62,"volume":3081841},
+{"date":"2026-09-01","adj_close":130.63,"volume":2139870}
 ]}

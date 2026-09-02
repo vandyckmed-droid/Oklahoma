@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"FTNT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":99.85,"volume":6944097},
 {"date":"2025-06-23","adj_close":103.15,"volume":4523500},
 {"date":"2025-06-24","adj_close":104.42,"volume":3540704},
 {"date":"2025-06-25","adj_close":103.69,"volume":2792178},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":157.54,"volume":2995030},
 {"date":"2026-08-27","adj_close":172.78,"volume":6907240},
 {"date":"2026-08-28","adj_close":166.0,"volume":5095563},
-{"date":"2026-08-31","adj_close":170.93,"volume":6589077}
+{"date":"2026-08-31","adj_close":170.93,"volume":6600808},
+{"date":"2026-09-01","adj_close":161.85,"volume":5126673}
 ]}

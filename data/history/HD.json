@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":340.56,"volume":8056500},
 {"date":"2025-06-23","adj_close":347.71,"volume":3862430},
 {"date":"2025-06-24","adj_close":351.09,"volume":4089980},
 {"date":"2025-06-25","adj_close":352.49,"volume":4159600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":334.85,"volume":4260473},
 {"date":"2026-08-27","adj_close":328.61,"volume":3621250},
 {"date":"2026-08-28","adj_close":330.19,"volume":3136575},
-{"date":"2026-08-31","adj_close":327.83,"volume":3634982}
+{"date":"2026-08-31","adj_close":327.83,"volume":3859187},
+{"date":"2026-09-01","adj_close":319.77,"volume":3284498}
 ]}

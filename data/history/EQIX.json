@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"EQIX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":859.14,"volume":788142},
 {"date":"2025-06-23","adj_close":866.05,"volume":693038},
 {"date":"2025-06-24","adj_close":882.12,"volume":436450},
 {"date":"2025-06-25","adj_close":802.14,"volume":1352000},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":1079.61,"volume":508028},
 {"date":"2026-08-27","adj_close":1076.45,"volume":513340},
 {"date":"2026-08-28","adj_close":1044.41,"volume":477103},
-{"date":"2026-08-31","adj_close":1046.72,"volume":739229}
+{"date":"2026-08-31","adj_close":1046.72,"volume":739249},
+{"date":"2026-09-01","adj_close":1027.59,"volume":481554}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"SPGI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":498.89,"volume":2079800},
 {"date":"2025-06-23","adj_close":509.16,"volume":2134794},
 {"date":"2025-06-24","adj_close":517.46,"volume":1023756},
 {"date":"2025-06-25","adj_close":515.8,"volume":1059922},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":436.49,"volume":1398897},
 {"date":"2026-08-27","adj_close":435.39,"volume":1820962},
 {"date":"2026-08-28","adj_close":442.89,"volume":1288927},
-{"date":"2026-08-31","adj_close":435.84,"volume":2012598}
+{"date":"2026-08-31","adj_close":435.84,"volume":2030976},
+{"date":"2026-09-01","adj_close":440.21,"volume":3283571}
 ]}

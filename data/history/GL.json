@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":119.36,"volume":889000},
 {"date":"2025-06-23","adj_close":120.86,"volume":535033},
 {"date":"2025-06-24","adj_close":121.65,"volume":459232},
 {"date":"2025-06-25","adj_close":120.18,"volume":345827},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":175.55,"volume":465300},
 {"date":"2026-08-27","adj_close":175.78,"volume":387498},
 {"date":"2026-08-28","adj_close":172.79,"volume":454856},
-{"date":"2026-08-31","adj_close":172.67,"volume":590451}
+{"date":"2026-08-31","adj_close":172.67,"volume":590733},
+{"date":"2026-09-01","adj_close":172.3,"volume":276609}
 ]}

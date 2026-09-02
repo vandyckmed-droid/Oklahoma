@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NTAP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":100.43,"volume":3005910},
 {"date":"2025-06-23","adj_close":101.97,"volume":2523247},
 {"date":"2025-06-24","adj_close":103.79,"volume":1905400},
 {"date":"2025-06-25","adj_close":102.86,"volume":1677000},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":193.85,"volume":1710151},
 {"date":"2026-08-27","adj_close":190.64,"volume":2142455},
 {"date":"2026-08-28","adj_close":187.02,"volume":1497600},
-{"date":"2026-08-31","adj_close":185.29,"volume":3066205}
+{"date":"2026-08-31","adj_close":185.29,"volume":3066570},
+{"date":"2026-09-01","adj_close":183.16,"volume":2340584}
 ]}

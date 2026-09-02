@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AVY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":171.59,"volume":1308400},
 {"date":"2025-06-23","adj_close":175.41,"volume":1314900},
 {"date":"2025-06-24","adj_close":175.16,"volume":967300},
 {"date":"2025-06-25","adj_close":172.69,"volume":451400},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":182.33,"volume":787849},
 {"date":"2026-08-27","adj_close":178.34,"volume":518887},
 {"date":"2026-08-28","adj_close":177.75,"volume":775430},
-{"date":"2026-08-31","adj_close":174.11,"volume":7272127}
+{"date":"2026-08-31","adj_close":174.11,"volume":7318000},
+{"date":"2026-09-01","adj_close":173.07,"volume":842009}
 ]}

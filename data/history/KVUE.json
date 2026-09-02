@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"KVUE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":20.21,"volume":24956572},
 {"date":"2025-06-23","adj_close":20.19,"volume":14174385},
 {"date":"2025-06-24","adj_close":20.02,"volume":16640400},
 {"date":"2025-06-25","adj_close":20.0,"volume":16355873},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":19.22,"volume":25400462},
 {"date":"2026-08-27","adj_close":19.2,"volume":14741652},
 {"date":"2026-08-28","adj_close":19.17,"volume":11888632},
-{"date":"2026-08-31","adj_close":18.88,"volume":27071865}
+{"date":"2026-08-31","adj_close":18.88,"volume":27072043},
+{"date":"2026-09-01","adj_close":18.75,"volume":21750957}
 ]}

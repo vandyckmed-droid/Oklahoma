@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"STLD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":123.94,"volume":4349300},
 {"date":"2025-06-23","adj_close":125.45,"volume":1240564},
 {"date":"2025-06-24","adj_close":126.23,"volume":971897},
 {"date":"2025-06-25","adj_close":126.48,"volume":967886},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":235.9,"volume":1205626},
 {"date":"2026-08-27","adj_close":235.84,"volume":787724},
 {"date":"2026-08-28","adj_close":234.67,"volume":670300},
-{"date":"2026-08-31","adj_close":232.62,"volume":916335}
+{"date":"2026-08-31","adj_close":232.62,"volume":916344},
+{"date":"2026-09-01","adj_close":234.09,"volume":663606}
 ]}

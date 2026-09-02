@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GNRC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":127.34,"volume":1351999},
 {"date":"2025-06-23","adj_close":133.53,"volume":1401966},
 {"date":"2025-06-24","adj_close":135.98,"volume":1140522},
 {"date":"2025-06-25","adj_close":139.42,"volume":1669427},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":206.62,"volume":523527},
 {"date":"2026-08-27","adj_close":197.29,"volume":2346899},
 {"date":"2026-08-28","adj_close":183.8,"volume":2430921},
-{"date":"2026-08-31","adj_close":185.38,"volume":1073465}
+{"date":"2026-08-31","adj_close":185.38,"volume":1074138},
+{"date":"2026-09-01","adj_close":181.42,"volume":948150}
 ]}

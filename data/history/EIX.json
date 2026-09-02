@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"EIX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":46.32,"volume":5842068},
 {"date":"2025-06-23","adj_close":46.79,"volume":3501355},
 {"date":"2025-06-24","adj_close":47.94,"volume":3135640},
 {"date":"2025-06-25","adj_close":47.02,"volume":2552077},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":74.51,"volume":3432541},
 {"date":"2026-08-27","adj_close":73.68,"volume":3376351},
 {"date":"2026-08-28","adj_close":70.17,"volume":7395377},
-{"date":"2026-08-31","adj_close":53.98,"volume":24689903}
+{"date":"2026-08-31","adj_close":53.98,"volume":24759600},
+{"date":"2026-09-01","adj_close":58.8,"volume":24485658}
 ]}

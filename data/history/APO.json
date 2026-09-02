@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"APO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":131.86,"volume":4569663},
 {"date":"2025-06-23","adj_close":131.38,"volume":2641831},
 {"date":"2025-06-24","adj_close":137.14,"volume":3203237},
 {"date":"2025-06-25","adj_close":135.0,"volume":2317130},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":133.67,"volume":1461593},
 {"date":"2026-08-27","adj_close":133.44,"volume":1840590},
 {"date":"2026-08-28","adj_close":135.04,"volume":2243439},
-{"date":"2026-08-31","adj_close":136.58,"volume":2603556}
+{"date":"2026-08-31","adj_close":136.58,"volume":2603600},
+{"date":"2026-09-01","adj_close":131.69,"volume":2553512}
 ]}

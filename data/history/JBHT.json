@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"JBHT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":138.06,"volume":1876545},
 {"date":"2025-06-23","adj_close":141.08,"volume":1081252},
 {"date":"2025-06-24","adj_close":141.81,"volume":1025900},
 {"date":"2025-06-25","adj_close":141.13,"volume":496149},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":263.64,"volume":429223},
 {"date":"2026-08-27","adj_close":263.39,"volume":451497},
 {"date":"2026-08-28","adj_close":261.03,"volume":555331},
-{"date":"2026-08-31","adj_close":265.47,"volume":1067650}
+{"date":"2026-08-31","adj_close":265.47,"volume":1067800},
+{"date":"2026-09-01","adj_close":256.48,"volume":661182}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HWM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":172.87,"volume":4597637},
 {"date":"2025-06-23","adj_close":175.16,"volume":2427107},
 {"date":"2025-06-24","adj_close":176.09,"volume":2509698},
 {"date":"2025-06-25","adj_close":175.6,"volume":2692900},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":269.34,"volume":1634948},
 {"date":"2026-08-27","adj_close":267.65,"volume":2721427},
 {"date":"2026-08-28","adj_close":264.85,"volume":1650780},
-{"date":"2026-08-31","adj_close":244.95,"volume":9431551}
+{"date":"2026-08-31","adj_close":244.95,"volume":9622561},
+{"date":"2026-09-01","adj_close":254.89,"volume":5199224}
 ]}

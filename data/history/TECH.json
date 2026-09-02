@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TECH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":49.53,"volume":2577400},
 {"date":"2025-06-23","adj_close":48.94,"volume":1375244},
 {"date":"2025-06-24","adj_close":49.64,"volume":1580958},
 {"date":"2025-06-25","adj_close":51.51,"volume":3881753},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":72.38,"volume":1386300},
 {"date":"2026-08-27","adj_close":72.47,"volume":1684133},
 {"date":"2026-08-28","adj_close":72.35,"volume":1630507},
-{"date":"2026-08-31","adj_close":72.31,"volume":2200640}
+{"date":"2026-08-31","adj_close":72.31,"volume":2200642},
+{"date":"2026-09-01","adj_close":72.18,"volume":2893683}
 ]}

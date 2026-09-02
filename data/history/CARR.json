@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CARR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":69.2,"volume":10629857},
 {"date":"2025-06-23","adj_close":70.49,"volume":3283000},
 {"date":"2025-06-24","adj_close":71.15,"volume":3664500},
 {"date":"2025-06-25","adj_close":71.13,"volume":3344309},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":58.74,"volume":8380592},
 {"date":"2026-08-27","adj_close":58.84,"volume":5728707},
 {"date":"2026-08-28","adj_close":58.79,"volume":6045087},
-{"date":"2026-08-31","adj_close":58.22,"volume":5346906}
+{"date":"2026-08-31","adj_close":58.22,"volume":5347315},
+{"date":"2026-09-01","adj_close":57.25,"volume":4853824}
 ]}

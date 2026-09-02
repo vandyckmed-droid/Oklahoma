@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CHD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":94.89,"volume":4742033},
 {"date":"2025-06-23","adj_close":95.4,"volume":2010130},
 {"date":"2025-06-24","adj_close":94.49,"volume":1843018},
 {"date":"2025-06-25","adj_close":93.73,"volume":2033300},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":102.86,"volume":1884200},
 {"date":"2026-08-27","adj_close":102.37,"volume":1578919},
 {"date":"2026-08-28","adj_close":101.26,"volume":1244500},
-{"date":"2026-08-31","adj_close":99.79,"volume":2288302}
+{"date":"2026-08-31","adj_close":99.78,"volume":2320000},
+{"date":"2026-09-01","adj_close":99.43,"volume":2032123}
 ]}

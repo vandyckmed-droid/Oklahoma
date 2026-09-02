@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"DVA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":136.94,"volume":1711247},
 {"date":"2025-06-23","adj_close":136.34,"volume":1017100},
 {"date":"2025-06-24","adj_close":140.95,"volume":733900},
 {"date":"2025-06-25","adj_close":140.36,"volume":607126},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":180.05,"volume":528810},
 {"date":"2026-08-27","adj_close":178.88,"volume":489931},
 {"date":"2026-08-28","adj_close":180.68,"volume":461800},
-{"date":"2026-08-31","adj_close":176.01,"volume":573886}
+{"date":"2026-08-31","adj_close":176.01,"volume":573911},
+{"date":"2026-09-01","adj_close":176.14,"volume":651640}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HSY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":165.17,"volume":4188794},
 {"date":"2025-06-23","adj_close":166.79,"volume":1354933},
 {"date":"2025-06-24","adj_close":165.75,"volume":1697600},
 {"date":"2025-06-25","adj_close":161.41,"volume":2234519},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":185.35,"volume":727300},
 {"date":"2026-08-27","adj_close":181.32,"volume":1049960},
 {"date":"2026-08-28","adj_close":179.05,"volume":821461},
-{"date":"2026-08-31","adj_close":176.21,"volume":1693050}
+{"date":"2026-08-31","adj_close":176.21,"volume":1694908},
+{"date":"2026-09-01","adj_close":176.0,"volume":1548690}
 ]}

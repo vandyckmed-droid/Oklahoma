@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ALB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":55.91,"volume":5545500},
 {"date":"2025-06-23","adj_close":57.05,"volume":3791433},
 {"date":"2025-06-24","adj_close":59.38,"volume":3124700},
 {"date":"2025-06-25","adj_close":59.58,"volume":2724800},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":134.51,"volume":1541111},
 {"date":"2026-08-27","adj_close":135.77,"volume":1109626},
 {"date":"2026-08-28","adj_close":137.36,"volume":1446768},
-{"date":"2026-08-31","adj_close":134.97,"volume":1959184}
+{"date":"2026-08-31","adj_close":134.97,"volume":1982918},
+{"date":"2026-09-01","adj_close":135.54,"volume":1511318}
 ]}

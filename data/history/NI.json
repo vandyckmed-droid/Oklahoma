@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":38.24,"volume":6150700},
 {"date":"2025-06-23","adj_close":39.19,"volume":5542803},
 {"date":"2025-06-24","adj_close":39.2,"volume":4266804},
 {"date":"2025-06-25","adj_close":38.44,"volume":3858916},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":41.13,"volume":5074316},
 {"date":"2026-08-27","adj_close":40.96,"volume":3725925},
 {"date":"2026-08-28","adj_close":40.57,"volume":3065139},
-{"date":"2026-08-31","adj_close":40.91,"volume":6104801}
+{"date":"2026-08-31","adj_close":40.92,"volume":6917900},
+{"date":"2026-09-01","adj_close":40.96,"volume":6939251}
 ]}

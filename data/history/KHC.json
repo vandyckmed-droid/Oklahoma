@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"KHC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":24.19,"volume":24954349},
 {"date":"2025-06-23","adj_close":24.3,"volume":15043900},
 {"date":"2025-06-24","adj_close":24.4,"volume":13082722},
 {"date":"2025-06-25","adj_close":24.12,"volume":17547400},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":24.79,"volume":26487921},
 {"date":"2026-08-27","adj_close":25.13,"volume":18253100},
 {"date":"2026-08-28","adj_close":25.7,"volume":20656600},
-{"date":"2026-08-31","adj_close":25.67,"volume":18091809}
+{"date":"2026-08-31","adj_close":25.67,"volume":18546384},
+{"date":"2026-09-01","adj_close":25.87,"volume":13928610}
 ]}

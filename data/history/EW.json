@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"EW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":73.83,"volume":7031046},
 {"date":"2025-06-23","adj_close":75.32,"volume":3796229},
 {"date":"2025-06-24","adj_close":75.85,"volume":4651025},
 {"date":"2025-06-25","adj_close":76.97,"volume":3724600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":90.78,"volume":2778784},
 {"date":"2026-08-27","adj_close":89.95,"volume":3059265},
 {"date":"2026-08-28","adj_close":90.21,"volume":2043703},
-{"date":"2026-08-31","adj_close":90.75,"volume":4015609}
+{"date":"2026-08-31","adj_close":90.75,"volume":4047531},
+{"date":"2026-09-01","adj_close":90.74,"volume":2536140}
 ]}

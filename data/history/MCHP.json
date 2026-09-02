@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MCHP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":66.76,"volume":19067440},
 {"date":"2025-06-23","adj_close":66.38,"volume":7498000},
 {"date":"2025-06-24","adj_close":68.17,"volume":8422200},
 {"date":"2025-06-25","adj_close":69.3,"volume":7586600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":74.05,"volume":6229230},
 {"date":"2026-08-27","adj_close":75.49,"volume":7523672},
 {"date":"2026-08-28","adj_close":72.93,"volume":11147839},
-{"date":"2026-08-31","adj_close":73.45,"volume":7045862}
+{"date":"2026-08-31","adj_close":73.45,"volume":7193525},
+{"date":"2026-09-01","adj_close":71.41,"volume":10112964}
 ]}

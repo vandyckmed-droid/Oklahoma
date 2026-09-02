@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"FANG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":144.31,"volume":4309700},
 {"date":"2025-06-23","adj_close":136.84,"volume":4574211},
 {"date":"2025-06-24","adj_close":135.1,"volume":3222743},
 {"date":"2025-06-25","adj_close":133.83,"volume":2068612},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":199.84,"volume":1414572},
 {"date":"2026-08-27","adj_close":200.52,"volume":1254470},
 {"date":"2026-08-28","adj_close":197.67,"volume":2128174},
-{"date":"2026-08-31","adj_close":200.48,"volume":3618606}
+{"date":"2026-08-31","adj_close":200.48,"volume":3619437},
+{"date":"2026-09-01","adj_close":203.16,"volume":2452558}
 ]}

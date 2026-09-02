@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WTW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":294.43,"volume":944600},
 {"date":"2025-06-23","adj_close":299.04,"volume":410700},
 {"date":"2025-06-24","adj_close":297.75,"volume":820029},
 {"date":"2025-06-25","adj_close":294.21,"volume":723945},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":343.12,"volume":430600},
 {"date":"2026-08-27","adj_close":339.58,"volume":518058},
 {"date":"2026-08-28","adj_close":343.75,"volume":311422},
-{"date":"2026-08-31","adj_close":338.55,"volume":487985}
+{"date":"2026-08-31","adj_close":338.55,"volume":488000},
+{"date":"2026-09-01","adj_close":334.47,"volume":407099}
 ]}

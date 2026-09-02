@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HRL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":28.63,"volume":7404215},
 {"date":"2025-06-23","adj_close":29.04,"volume":3746038},
 {"date":"2025-06-24","adj_close":28.62,"volume":3699300},
 {"date":"2025-06-25","adj_close":28.09,"volume":3790131},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":23.71,"volume":9291834},
 {"date":"2026-08-27","adj_close":21.28,"volume":18585600},
 {"date":"2026-08-28","adj_close":21.57,"volume":10648741},
-{"date":"2026-08-31","adj_close":21.85,"volume":7476611}
+{"date":"2026-08-31","adj_close":21.85,"volume":7476611},
+{"date":"2026-09-01","adj_close":21.99,"volume":5551180}
 ]}

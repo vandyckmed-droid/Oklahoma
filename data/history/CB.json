@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":280.25,"volume":2389100},
 {"date":"2025-06-23","adj_close":284.56,"volume":1193301},
 {"date":"2025-06-24","adj_close":283.17,"volume":1351921},
 {"date":"2025-06-25","adj_close":279.26,"volume":1424829},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":343.77,"volume":999238},
 {"date":"2026-08-27","adj_close":338.31,"volume":1196698},
 {"date":"2026-08-28","adj_close":339.92,"volume":1206957},
-{"date":"2026-08-31","adj_close":338.6,"volume":1889282}
+{"date":"2026-08-31","adj_close":338.6,"volume":1893200},
+{"date":"2026-09-01","adj_close":338.74,"volume":1155563}
 ]}

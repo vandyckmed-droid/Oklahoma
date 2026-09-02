@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":228.29,"volume":2583514},
 {"date":"2025-06-23","adj_close":231.02,"volume":1605716},
 {"date":"2025-06-24","adj_close":230.45,"volume":1576743},
 {"date":"2025-06-25","adj_close":224.98,"volume":2167307},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":221.24,"volume":2469762},
 {"date":"2026-08-27","adj_close":217.76,"volume":2277888},
 {"date":"2026-08-28","adj_close":219.66,"volume":1962931},
-{"date":"2026-08-31","adj_close":218.92,"volume":2767310}
+{"date":"2026-08-31","adj_close":218.92,"volume":2779247},
+{"date":"2026-09-01","adj_close":219.77,"volume":2183977}
 ]}

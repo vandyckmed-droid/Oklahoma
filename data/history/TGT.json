@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TGT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":90.83,"volume":9619800},
 {"date":"2025-06-23","adj_close":91.77,"volume":6887215},
 {"date":"2025-06-24","adj_close":92.72,"volume":6406142},
 {"date":"2025-06-25","adj_close":91.93,"volume":4372035},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":164.04,"volume":4661458},
 {"date":"2026-08-27","adj_close":165.93,"volume":4748583},
 {"date":"2026-08-28","adj_close":163.18,"volume":3644518},
-{"date":"2026-08-31","adj_close":160.91,"volume":3825783}
+{"date":"2026-08-31","adj_close":160.88,"volume":3911760},
+{"date":"2026-09-01","adj_close":163.75,"volume":3982974}
 ]}

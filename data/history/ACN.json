@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ACN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":274.83,"volume":11697439},
 {"date":"2025-06-23","adj_close":284.1,"volume":5454927},
 {"date":"2025-06-24","adj_close":289.61,"volume":4940618},
 {"date":"2025-06-25","adj_close":283.71,"volume":3164580},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":181.38,"volume":4378174},
 {"date":"2026-08-27","adj_close":187.38,"volume":4932748},
 {"date":"2026-08-28","adj_close":189.61,"volume":4840890},
-{"date":"2026-08-31","adj_close":189.76,"volume":4134792}
+{"date":"2026-08-31","adj_close":189.76,"volume":4194352},
+{"date":"2026-09-01","adj_close":188.09,"volume":3382616}
 ]}

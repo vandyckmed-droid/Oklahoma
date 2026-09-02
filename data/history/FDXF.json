@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"FDXF","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":67,"bars":[
+{"schema_version":2,"ticker":"FDXF","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":68,"bars":[
 {"date":"2026-05-27","adj_close":151.0,"volume":14200},
 {"date":"2026-05-28","adj_close":185.0,"volume":6300},
 {"date":"2026-05-29","adj_close":160.37,"volume":15439},
@@ -65,5 +65,6 @@
 {"date":"2026-08-26","adj_close":131.27,"volume":1429612},
 {"date":"2026-08-27","adj_close":133.25,"volume":926015},
 {"date":"2026-08-28","adj_close":133.45,"volume":774120},
-{"date":"2026-08-31","adj_close":133.74,"volume":1460014}
+{"date":"2026-08-31","adj_close":133.74,"volume":1461748},
+{"date":"2026-09-01","adj_close":127.57,"volume":1043995}
 ]}

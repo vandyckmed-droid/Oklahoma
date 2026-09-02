@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GIS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":49.28,"volume":9877500},
 {"date":"2025-06-23","adj_close":49.73,"volume":6469000},
 {"date":"2025-06-24","adj_close":49.68,"volume":6897100},
 {"date":"2025-06-25","adj_close":47.14,"volume":13275038},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":40.08,"volume":9072570},
 {"date":"2026-08-27","adj_close":40.44,"volume":8545497},
 {"date":"2026-08-28","adj_close":41.55,"volume":8926546},
-{"date":"2026-08-31","adj_close":41.2,"volume":10666196}
+{"date":"2026-08-31","adj_close":41.2,"volume":10669258},
+{"date":"2026-09-01","adj_close":41.09,"volume":9585471}
 ]}

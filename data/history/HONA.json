@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HONA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":54,"bars":[
+{"schema_version":2,"ticker":"HONA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":55,"bars":[
 {"date":"2026-06-15","adj_close":200.0,"volume":401},
 {"date":"2026-06-16","adj_close":269.95,"volume":7321},
 {"date":"2026-06-17","adj_close":269.95,"volume":11710},
@@ -52,5 +52,6 @@
 {"date":"2026-08-26","adj_close":164.01,"volume":3731541},
 {"date":"2026-08-27","adj_close":160.75,"volume":3051967},
 {"date":"2026-08-28","adj_close":162.37,"volume":2540658},
-{"date":"2026-08-31","adj_close":158.11,"volume":4261429}
+{"date":"2026-08-31","adj_close":158.11,"volume":4263434},
+{"date":"2026-09-01","adj_close":154.24,"volume":2537688}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"LHX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":245.68,"volume":1636538},
 {"date":"2025-06-23","adj_close":247.1,"volume":1193705},
 {"date":"2025-06-24","adj_close":242.71,"volume":1188700},
 {"date":"2025-06-25","adj_close":243.91,"volume":963925},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":262.96,"volume":1395682},
 {"date":"2026-08-27","adj_close":261.98,"volume":1685210},
 {"date":"2026-08-28","adj_close":262.82,"volume":1615146},
-{"date":"2026-08-31","adj_close":266.25,"volume":2583251}
+{"date":"2026-08-31","adj_close":266.25,"volume":2587579},
+{"date":"2026-09-01","adj_close":263.56,"volume":1337225}
 ]}

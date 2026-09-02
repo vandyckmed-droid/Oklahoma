@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WMB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":58.64,"volume":14263742},
 {"date":"2025-06-23","adj_close":58.63,"volume":11633838},
 {"date":"2025-06-24","adj_close":59.26,"volume":9317373},
 {"date":"2025-06-25","adj_close":58.84,"volume":6655700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":74.41,"volume":8291496},
 {"date":"2026-08-27","adj_close":74.19,"volume":7563938},
 {"date":"2026-08-28","adj_close":73.73,"volume":4693159},
-{"date":"2026-08-31","adj_close":75.05,"volume":20164182}
+{"date":"2026-08-31","adj_close":75.05,"volume":20164554},
+{"date":"2026-09-01","adj_close":75.23,"volume":6761690}
 ]}

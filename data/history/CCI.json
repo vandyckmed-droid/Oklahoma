@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CCI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":95.59,"volume":5035153},
 {"date":"2025-06-23","adj_close":97.83,"volume":5335823},
 {"date":"2025-06-24","adj_close":98.46,"volume":4688600},
 {"date":"2025-06-25","adj_close":97.16,"volume":2327252},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":75.54,"volume":1952579},
 {"date":"2026-08-27","adj_close":75.03,"volume":1815703},
 {"date":"2026-08-28","adj_close":76.14,"volume":1935053},
-{"date":"2026-08-31","adj_close":76.14,"volume":4028040}
+{"date":"2026-08-31","adj_close":76.14,"volume":4028062},
+{"date":"2026-09-01","adj_close":75.84,"volume":2456380}
 ]}

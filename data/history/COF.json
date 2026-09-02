@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"COF","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":194.8,"volume":5359729},
 {"date":"2025-06-23","adj_close":198.01,"volume":3541800},
 {"date":"2025-06-24","adj_close":202.65,"volume":3549899},
 {"date":"2025-06-25","adj_close":204.29,"volume":3039822},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":217.21,"volume":2081121},
 {"date":"2026-08-27","adj_close":216.67,"volume":2610037},
 {"date":"2026-08-28","adj_close":215.67,"volume":2538757},
-{"date":"2026-08-31","adj_close":214.51,"volume":3884853}
+{"date":"2026-08-31","adj_close":214.51,"volume":3906355},
+{"date":"2026-09-01","adj_close":211.34,"volume":2904893}
 ]}

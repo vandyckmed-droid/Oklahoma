@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TRMB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":71.81,"volume":3786600},
 {"date":"2025-06-23","adj_close":72.71,"volume":898044},
 {"date":"2025-06-24","adj_close":73.71,"volume":1006016},
 {"date":"2025-06-25","adj_close":74.12,"volume":1156700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":59.68,"volume":1996754},
 {"date":"2026-08-27","adj_close":61.54,"volume":2193710},
 {"date":"2026-08-28","adj_close":61.01,"volume":2532746},
-{"date":"2026-08-31","adj_close":59.94,"volume":25870386}
+{"date":"2026-08-31","adj_close":59.94,"volume":25961743},
+{"date":"2026-09-01","adj_close":58.94,"volume":3648764}
 ]}

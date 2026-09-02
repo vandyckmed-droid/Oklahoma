@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":47.76,"volume":22249839},
 {"date":"2025-06-23","adj_close":48.08,"volume":10626500},
 {"date":"2025-06-24","adj_close":48.55,"volume":12550430},
 {"date":"2025-06-25","adj_close":47.69,"volume":6906761},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":86.33,"volume":5398295},
 {"date":"2026-08-27","adj_close":86.18,"volume":7593936},
 {"date":"2026-08-28","adj_close":86.27,"volume":7348559},
-{"date":"2026-08-31","adj_close":86.32,"volume":7813744}
+{"date":"2026-08-31","adj_close":86.32,"volume":8260227},
+{"date":"2026-09-01","adj_close":85.63,"volume":5174203}
 ]}

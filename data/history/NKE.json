@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NKE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":57.59,"volume":19084000},
 {"date":"2025-06-23","adj_close":58.54,"volume":15921300},
 {"date":"2025-06-24","adj_close":59.16,"volume":12564000},
 {"date":"2025-06-25","adj_close":58.59,"volume":12186200},
@@ -298,6 +297,7 @@
 {"date":"2026-08-25","adj_close":39.07,"volume":41525000},
 {"date":"2026-08-26","adj_close":38.18,"volume":38604300},
 {"date":"2026-08-27","adj_close":38.04,"volume":36573800},
-{"date":"2026-08-28","adj_close":39.18,"volume":28437375},
-{"date":"2026-08-31","adj_close":39.06,"volume":22996681}
+{"date":"2026-08-28","adj_close":39.18,"volume":28437400},
+{"date":"2026-08-31","adj_close":38.65,"volume":23905303},
+{"date":"2026-09-01","adj_close":38.12,"volume":22051850}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"USB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":41.17,"volume":22312736},
 {"date":"2025-06-23","adj_close":41.93,"volume":12500800},
 {"date":"2025-06-24","adj_close":42.36,"volume":10997063},
 {"date":"2025-06-25","adj_close":42.63,"volume":8481951},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":62.8,"volume":6780981},
 {"date":"2026-08-27","adj_close":62.4,"volume":6128124},
 {"date":"2026-08-28","adj_close":62.47,"volume":6256139},
-{"date":"2026-08-31","adj_close":61.58,"volume":8180167}
+{"date":"2026-08-31","adj_close":61.58,"volume":8207768},
+{"date":"2026-09-01","adj_close":61.21,"volume":6759403}
 ]}

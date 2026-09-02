@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"WDC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":59.13,"volume":9426300},
 {"date":"2025-06-23","adj_close":60.22,"volume":4627000},
 {"date":"2025-06-24","adj_close":61.9,"volume":6021185},
 {"date":"2025-06-25","adj_close":62.38,"volume":4530312},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":468.88,"volume":5158500},
 {"date":"2026-08-27","adj_close":462.0,"volume":7618239},
 {"date":"2026-08-28","adj_close":459.45,"volume":4323205},
-{"date":"2026-08-31","adj_close":450.55,"volume":5837229}
+{"date":"2026-08-31","adj_close":450.55,"volume":5854800},
+{"date":"2026-09-01","adj_close":450.44,"volume":5471425}
 ]}

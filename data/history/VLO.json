@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"VLO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":137.05,"volume":5438863},
 {"date":"2025-06-23","adj_close":133.13,"volume":3229219},
 {"date":"2025-06-24","adj_close":131.95,"volume":2973210},
 {"date":"2025-06-25","adj_close":131.82,"volume":2327830},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":348.03,"volume":2158114},
 {"date":"2026-08-27","adj_close":346.59,"volume":1958355},
 {"date":"2026-08-28","adj_close":352.36,"volume":1849401},
-{"date":"2026-08-31","adj_close":358.92,"volume":3535936}
+{"date":"2026-08-31","adj_close":358.92,"volume":3539778},
+{"date":"2026-09-01","adj_close":361.99,"volume":2713142}
 ]}

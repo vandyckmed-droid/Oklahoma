@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"KR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":70.03,"volume":36154600},
 {"date":"2025-06-23","adj_close":72.0,"volume":12332400},
 {"date":"2025-06-24","adj_close":71.44,"volume":13101000},
 {"date":"2025-06-25","adj_close":70.27,"volume":5473300},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":58.51,"volume":5533357},
 {"date":"2026-08-27","adj_close":56.93,"volume":5085922},
 {"date":"2026-08-28","adj_close":57.72,"volume":3970911},
-{"date":"2026-08-31","adj_close":57.54,"volume":8011812}
+{"date":"2026-08-31","adj_close":57.54,"volume":8013332},
+{"date":"2026-09-01","adj_close":57.94,"volume":7303117}
 ]}

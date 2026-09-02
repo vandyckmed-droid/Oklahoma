@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ANET","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":86.25,"volume":18552840},
 {"date":"2025-06-23","adj_close":91.95,"volume":16234000},
 {"date":"2025-06-24","adj_close":94.97,"volume":11279800},
 {"date":"2025-06-25","adj_close":96.31,"volume":7883500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":202.25,"volume":7664600},
 {"date":"2026-08-27","adj_close":201.09,"volume":4699005},
 {"date":"2026-08-28","adj_close":195.38,"volume":3064688},
-{"date":"2026-08-31","adj_close":195.69,"volume":5019680}
+{"date":"2026-08-31","adj_close":195.69,"volume":5026530},
+{"date":"2026-09-01","adj_close":189.26,"volume":4269682}
 ]}

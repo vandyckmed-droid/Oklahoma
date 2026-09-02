@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CPAY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":316.31,"volume":850700},
 {"date":"2025-06-23","adj_close":321.85,"volume":463000},
 {"date":"2025-06-24","adj_close":329.47,"volume":386600},
 {"date":"2025-06-25","adj_close":326.47,"volume":332300},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":406.93,"volume":507229},
 {"date":"2026-08-27","adj_close":403.67,"volume":252300},
 {"date":"2026-08-28","adj_close":407.88,"volume":242622},
-{"date":"2026-08-31","adj_close":404.3,"volume":420180}
+{"date":"2026-08-31","adj_close":404.3,"volume":420200},
+{"date":"2026-09-01","adj_close":404.81,"volume":470214}
 ]}

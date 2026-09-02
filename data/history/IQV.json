@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"IQV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":154.73,"volume":2905654},
 {"date":"2025-06-23","adj_close":155.17,"volume":4537400},
 {"date":"2025-06-24","adj_close":158.58,"volume":1606759},
 {"date":"2025-06-25","adj_close":158.71,"volume":2093330},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":261.51,"volume":1272100},
 {"date":"2026-08-27","adj_close":262.38,"volume":1232936},
 {"date":"2026-08-28","adj_close":261.75,"volume":1842151},
-{"date":"2026-08-31","adj_close":261.19,"volume":1303877}
+{"date":"2026-08-31","adj_close":261.19,"volume":1303900},
+{"date":"2026-09-01","adj_close":258.35,"volume":1228394}
 ]}

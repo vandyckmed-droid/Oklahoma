@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"BR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":231.74,"volume":739310},
 {"date":"2025-06-23","adj_close":235.53,"volume":339200},
 {"date":"2025-06-24","adj_close":236.94,"volume":437911},
 {"date":"2025-06-25","adj_close":233.37,"volume":548400},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":181.6,"volume":1186334},
 {"date":"2026-08-27","adj_close":183.08,"volume":1008842},
 {"date":"2026-08-28","adj_close":183.64,"volume":734221},
-{"date":"2026-08-31","adj_close":182.38,"volume":1125970}
+{"date":"2026-08-31","adj_close":182.38,"volume":1126000},
+{"date":"2026-09-01","adj_close":180.39,"volume":1140947}
 ]}

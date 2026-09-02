@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"DASH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":220.46,"volume":6879112},
 {"date":"2025-06-23","adj_close":230.32,"volume":5159800},
 {"date":"2025-06-24","adj_close":236.17,"volume":5602800},
 {"date":"2025-06-25","adj_close":232.68,"volume":3070348},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":236.93,"volume":5008868},
 {"date":"2026-08-27","adj_close":231.89,"volume":3441867},
 {"date":"2026-08-28","adj_close":236.74,"volume":3000082},
-{"date":"2026-08-31","adj_close":231.74,"volume":3361088}
+{"date":"2026-08-31","adj_close":231.74,"volume":3363378},
+{"date":"2026-09-01","adj_close":225.66,"volume":3508780}
 ]}

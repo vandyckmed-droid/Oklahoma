@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AMD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":128.24,"volume":79931000},
 {"date":"2025-06-23","adj_close":129.58,"volume":65152900},
 {"date":"2025-06-24","adj_close":138.43,"volume":78572000},
 {"date":"2025-06-25","adj_close":143.4,"volume":74607219},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":480.93,"volume":14348127},
 {"date":"2026-08-27","adj_close":476.67,"volume":16441821},
 {"date":"2026-08-28","adj_close":465.58,"volume":15373949},
-{"date":"2026-08-31","adj_close":470.72,"volume":12251488}
+{"date":"2026-08-31","adj_close":470.72,"volume":12463000},
+{"date":"2026-09-01","adj_close":459.61,"volume":16023417}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TKO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":172.29,"volume":2884800},
 {"date":"2025-06-23","adj_close":172.85,"volume":727976},
 {"date":"2025-06-24","adj_close":174.19,"volume":769600},
 {"date":"2025-06-25","adj_close":172.27,"volume":605500},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":187.9,"volume":739428},
 {"date":"2026-08-27","adj_close":184.34,"volume":683822},
 {"date":"2026-08-28","adj_close":184.64,"volume":641433},
-{"date":"2026-08-31","adj_close":182.61,"volume":710126}
+{"date":"2026-08-31","adj_close":182.61,"volume":710181},
+{"date":"2026-09-01","adj_close":182.27,"volume":704498}
 ]}

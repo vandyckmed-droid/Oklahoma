@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AVGO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":248.17,"volume":42134900},
 {"date":"2025-06-23","adj_close":251.92,"volume":19747034},
 {"date":"2025-06-24","adj_close":261.85,"volume":32764900},
 {"date":"2025-06-25","adj_close":262.72,"volume":18894200},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":355.59,"volume":19196300},
 {"date":"2026-08-27","adj_close":371.54,"volume":21330000},
 {"date":"2026-08-28","adj_close":368.79,"volume":16596100},
-{"date":"2026-08-31","adj_close":370.34,"volume":21734663}
+{"date":"2026-08-31","adj_close":370.34,"volume":21948000},
+{"date":"2026-09-01","adj_close":369.68,"volume":18648086}
 ]}

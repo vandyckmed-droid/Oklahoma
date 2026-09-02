@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":128.86,"volume":8904400},
 {"date":"2025-06-23","adj_close":130.12,"volume":5232415},
 {"date":"2025-06-24","adj_close":131.96,"volume":5599900},
 {"date":"2025-06-25","adj_close":133.73,"volume":5736436},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":214.08,"volume":4128454},
 {"date":"2026-08-27","adj_close":214.86,"volume":3929580},
 {"date":"2026-08-28","adj_close":214.77,"volume":3735756},
-{"date":"2026-08-31","adj_close":213.44,"volume":3940288}
+{"date":"2026-08-31","adj_close":213.32,"volume":4207041},
+{"date":"2026-09-01","adj_close":211.16,"volume":3404604}
 ]}

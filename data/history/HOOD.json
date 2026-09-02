@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"HOOD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":78.5,"volume":37245800},
 {"date":"2025-06-23","adj_close":76.35,"volume":35289900},
 {"date":"2025-06-24","adj_close":82.01,"volume":42266600},
 {"date":"2025-06-25","adj_close":82.75,"volume":38974915},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":108.54,"volume":13453300},
 {"date":"2026-08-27","adj_close":109.76,"volume":13757900},
 {"date":"2026-08-28","adj_close":104.26,"volume":16287206},
-{"date":"2026-08-31","adj_close":104.81,"volume":16232073}
+{"date":"2026-08-31","adj_close":104.81,"volume":16327114},
+{"date":"2026-09-01","adj_close":103.51,"volume":22471793}
 ]}

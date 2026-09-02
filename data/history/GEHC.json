@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GEHC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":71.12,"volume":6306613},
 {"date":"2025-06-23","adj_close":71.0,"volume":3142371},
 {"date":"2025-06-24","adj_close":71.82,"volume":8746751},
 {"date":"2025-06-25","adj_close":72.59,"volume":5681100},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":73.31,"volume":2043142},
 {"date":"2026-08-27","adj_close":72.48,"volume":2963148},
 {"date":"2026-08-28","adj_close":71.72,"volume":2002731},
-{"date":"2026-08-31","adj_close":71.23,"volume":3330408}
+{"date":"2026-08-31","adj_close":71.23,"volume":3386434},
+{"date":"2026-09-01","adj_close":70.42,"volume":2761239}
 ]}

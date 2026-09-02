@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TER","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":86.07,"volume":6559905},
 {"date":"2025-06-23","adj_close":87.13,"volume":3744100},
 {"date":"2025-06-24","adj_close":90.15,"volume":5908422},
 {"date":"2025-06-25","adj_close":89.97,"volume":3646112},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":363.1,"volume":2225067},
 {"date":"2026-08-27","adj_close":372.06,"volume":2447395},
 {"date":"2026-08-28","adj_close":354.97,"volume":2401000},
-{"date":"2026-08-31","adj_close":349.83,"volume":1860242}
+{"date":"2026-08-31","adj_close":349.83,"volume":1904598},
+{"date":"2026-09-01","adj_close":335.46,"volume":2564710}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NRG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":149.68,"volume":7964294},
 {"date":"2025-06-23","adj_close":149.8,"volume":2423404},
 {"date":"2025-06-24","adj_close":151.41,"volume":2654620},
 {"date":"2025-06-25","adj_close":151.06,"volume":2195578},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":116.14,"volume":1648426},
 {"date":"2026-08-27","adj_close":114.41,"volume":2030046},
 {"date":"2026-08-28","adj_close":111.12,"volume":2169583},
-{"date":"2026-08-31","adj_close":110.12,"volume":3567540}
+{"date":"2026-08-31","adj_close":110.12,"volume":3576607},
+{"date":"2026-09-01","adj_close":109.51,"volume":2178867}
 ]}

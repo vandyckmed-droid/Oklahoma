@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MET","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":76.44,"volume":6575430},
 {"date":"2025-06-23","adj_close":76.84,"volume":2383942},
 {"date":"2025-06-24","adj_close":76.87,"volume":3174400},
 {"date":"2025-06-25","adj_close":76.34,"volume":3232337},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":96.52,"volume":2442377},
 {"date":"2026-08-27","adj_close":96.25,"volume":2257058},
 {"date":"2026-08-28","adj_close":96.51,"volume":2878221},
-{"date":"2026-08-31","adj_close":95.17,"volume":2903011}
+{"date":"2026-08-31","adj_close":95.17,"volume":2903074},
+{"date":"2026-09-01","adj_close":94.42,"volume":2725729}
 ]}

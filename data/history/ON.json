@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ON","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":52.82,"volume":12894117},
 {"date":"2025-06-23","adj_close":53.17,"volume":5670700},
 {"date":"2025-06-24","adj_close":54.21,"volume":7440700},
 {"date":"2025-06-25","adj_close":53.74,"volume":8291700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":73.22,"volume":4354120},
 {"date":"2026-08-27","adj_close":74.8,"volume":6409475},
 {"date":"2026-08-28","adj_close":72.61,"volume":7112438},
-{"date":"2026-08-31","adj_close":74.09,"volume":5606819}
+{"date":"2026-08-31","adj_close":74.09,"volume":5790625},
+{"date":"2026-09-01","adj_close":72.65,"volume":7704123}
 ]}

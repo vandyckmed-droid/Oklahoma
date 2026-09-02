@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"TFC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":38.16,"volume":10243100},
 {"date":"2025-06-23","adj_close":38.89,"volume":7218900},
 {"date":"2025-06-24","adj_close":39.26,"volume":8900808},
 {"date":"2025-06-25","adj_close":39.22,"volume":6152151},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":50.67,"volume":5120370},
 {"date":"2026-08-27","adj_close":50.3,"volume":4840017},
 {"date":"2026-08-28","adj_close":50.43,"volume":4619550},
-{"date":"2026-08-31","adj_close":49.58,"volume":8263264}
+{"date":"2026-08-31","adj_close":49.58,"volume":8264150},
+{"date":"2026-09-01","adj_close":49.44,"volume":6689281}
 ]}

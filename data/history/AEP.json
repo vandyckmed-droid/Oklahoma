@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"AEP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":97.88,"volume":4085609},
 {"date":"2025-06-23","adj_close":99.38,"volume":3327797},
 {"date":"2025-06-24","adj_close":99.35,"volume":2260194},
 {"date":"2025-06-25","adj_close":97.55,"volume":2193043},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":123.36,"volume":3773601},
 {"date":"2026-08-27","adj_close":122.71,"volume":2716729},
 {"date":"2026-08-28","adj_close":122.31,"volume":2608835},
-{"date":"2026-08-31","adj_close":122.43,"volume":4144270}
+{"date":"2026-08-31","adj_close":122.43,"volume":4149421},
+{"date":"2026-09-01","adj_close":122.96,"volume":2771730}
 ]}

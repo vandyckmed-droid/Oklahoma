@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"GWW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":1026.28,"volume":392300},
 {"date":"2025-06-23","adj_close":1027.38,"volume":296400},
 {"date":"2025-06-24","adj_close":1030.39,"volume":242834},
 {"date":"2025-06-25","adj_close":1013.07,"volume":221900},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":1335.39,"volume":153548},
 {"date":"2026-08-27","adj_close":1321.08,"volume":168127},
 {"date":"2026-08-28","adj_close":1306.3,"volume":150179},
-{"date":"2026-08-31","adj_close":1309.49,"volume":425988}
+{"date":"2026-08-31","adj_close":1309.49,"volume":427000},
+{"date":"2026-09-01","adj_close":1309.21,"volume":191615}
 ]}

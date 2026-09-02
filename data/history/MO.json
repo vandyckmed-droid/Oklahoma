@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":55.96,"volume":23289800},
 {"date":"2025-06-23","adj_close":56.65,"volume":8956900},
 {"date":"2025-06-24","adj_close":56.11,"volume":5767100},
 {"date":"2025-06-25","adj_close":55.2,"volume":7040700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":69.12,"volume":6316951},
 {"date":"2026-08-27","adj_close":67.67,"volume":5858272},
 {"date":"2026-08-28","adj_close":68.65,"volume":5864815},
-{"date":"2026-08-31","adj_close":68.49,"volume":10295068}
+{"date":"2026-08-31","adj_close":68.48,"volume":10965683},
+{"date":"2026-09-01","adj_close":69.57,"volume":9827508}
 ]}

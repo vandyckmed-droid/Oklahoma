@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ODFL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":155.45,"volume":2545800},
 {"date":"2025-06-23","adj_close":160.32,"volume":1256551},
 {"date":"2025-06-24","adj_close":160.92,"volume":1177300},
 {"date":"2025-06-25","adj_close":159.31,"volume":1400600},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":199.43,"volume":1218700},
 {"date":"2026-08-27","adj_close":200.06,"volume":1170317},
 {"date":"2026-08-28","adj_close":198.63,"volume":1173835},
-{"date":"2026-08-31","adj_close":199.96,"volume":1655680}
+{"date":"2026-08-31","adj_close":199.96,"volume":1655700},
+{"date":"2026-09-01","adj_close":187.01,"volume":2493637}
 ]}

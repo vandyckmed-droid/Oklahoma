@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"NUE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":122.14,"volume":5239705},
 {"date":"2025-06-23","adj_close":123.8,"volume":1789907},
 {"date":"2025-06-24","adj_close":125.98,"volume":2039100},
 {"date":"2025-06-25","adj_close":125.99,"volume":1713618},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":252.8,"volume":1114306},
 {"date":"2026-08-27","adj_close":252.37,"volume":933355},
 {"date":"2026-08-28","adj_close":250.5,"volume":930239},
-{"date":"2026-08-31","adj_close":249.64,"volume":1329966}
+{"date":"2026-08-31","adj_close":249.64,"volume":1330012},
+{"date":"2026-09-01","adj_close":251.92,"volume":1270076}
 ]}

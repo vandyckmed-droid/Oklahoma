@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"DUK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":110.54,"volume":6203108},
 {"date":"2025-06-23","adj_close":112.05,"volume":2440764},
 {"date":"2025-06-24","adj_close":112.03,"volume":2477953},
 {"date":"2025-06-25","adj_close":111.07,"volume":2966371},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":121.89,"volume":2744618},
 {"date":"2026-08-27","adj_close":120.84,"volume":3212880},
 {"date":"2026-08-28","adj_close":120.25,"volume":2705160},
-{"date":"2026-08-31","adj_close":119.91,"volume":4251594}
+{"date":"2026-08-31","adj_close":119.91,"volume":4283153},
+{"date":"2026-09-01","adj_close":120.39,"volume":3081907}
 ]}

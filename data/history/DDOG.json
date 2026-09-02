@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"DDOG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":127.5,"volume":5224301},
 {"date":"2025-06-23","adj_close":129.52,"volume":4531500},
 {"date":"2025-06-24","adj_close":130.83,"volume":3000083},
 {"date":"2025-06-25","adj_close":130.24,"volume":3782811},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":227.67,"volume":4046701},
 {"date":"2026-08-27","adj_close":242.93,"volume":4552911},
 {"date":"2026-08-28","adj_close":236.98,"volume":2520135},
-{"date":"2026-08-31","adj_close":237.04,"volume":4226397}
+{"date":"2026-08-31","adj_close":237.04,"volume":4242308},
+{"date":"2026-09-01","adj_close":223.84,"volume":3342567}
 ]}

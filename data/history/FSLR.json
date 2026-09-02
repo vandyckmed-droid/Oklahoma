@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"FSLR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":145.0,"volume":5074300},
 {"date":"2025-06-23","adj_close":144.67,"volume":3708200},
 {"date":"2025-06-24","adj_close":151.18,"volume":5149100},
 {"date":"2025-06-25","adj_close":152.7,"volume":3386700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":205.93,"volume":1470042},
 {"date":"2026-08-27","adj_close":210.1,"volume":1469693},
 {"date":"2026-08-28","adj_close":204.46,"volume":1449018},
-{"date":"2026-08-31","adj_close":201.9,"volume":2682083}
+{"date":"2026-08-31","adj_close":201.9,"volume":2793375},
+{"date":"2026-09-01","adj_close":199.65,"volume":1685755}
 ]}

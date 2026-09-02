@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MDLZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":65.56,"volume":12997842},
 {"date":"2025-06-23","adj_close":65.74,"volume":4783424},
 {"date":"2025-06-24","adj_close":65.67,"volume":6374631},
 {"date":"2025-06-25","adj_close":64.57,"volume":5384700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":63.01,"volume":6975197},
 {"date":"2026-08-27","adj_close":62.43,"volume":6828308},
 {"date":"2026-08-28","adj_close":62.36,"volume":9165724},
-{"date":"2026-08-31","adj_close":62.07,"volume":7196381}
+{"date":"2026-08-31","adj_close":62.07,"volume":7277436},
+{"date":"2026-09-01","adj_close":61.61,"volume":7747344}
 ]}

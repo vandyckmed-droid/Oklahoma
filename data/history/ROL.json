@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"ROL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":55.52,"volume":3411745},
 {"date":"2025-06-23","adj_close":56.16,"volume":1299630},
 {"date":"2025-06-24","adj_close":56.54,"volume":1507023},
 {"date":"2025-06-25","adj_close":55.18,"volume":1391691},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":36.7,"volume":6356128},
 {"date":"2026-08-27","adj_close":35.94,"volume":2736987},
 {"date":"2026-08-28","adj_close":36.38,"volume":2723444},
-{"date":"2026-08-31","adj_close":36.07,"volume":5059762}
+{"date":"2026-08-31","adj_close":36.07,"volume":5060352},
+{"date":"2026-09-01","adj_close":36.19,"volume":3746057}
 ]}

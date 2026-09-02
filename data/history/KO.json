@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"KO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":66.95,"volume":40859425},
 {"date":"2025-06-23","adj_close":67.82,"volume":21822800},
 {"date":"2025-06-24","adj_close":68.28,"volume":15216100},
 {"date":"2025-06-25","adj_close":67.72,"volume":12540400},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":90.08,"volume":17133900},
 {"date":"2026-08-27","adj_close":89.06,"volume":13452625},
 {"date":"2026-08-28","adj_close":89.66,"volume":9889569},
-{"date":"2026-08-31","adj_close":88.67,"volume":23291317}
+{"date":"2026-08-31","adj_close":88.67,"volume":23771378},
+{"date":"2026-09-01","adj_close":88.0,"volume":13868440}
 ]}

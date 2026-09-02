@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"RJF","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":146.47,"volume":2143100},
 {"date":"2025-06-23","adj_close":148.45,"volume":1225702},
 {"date":"2025-06-24","adj_close":148.37,"volume":1370143},
 {"date":"2025-06-25","adj_close":149.21,"volume":889809},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":176.69,"volume":1504531},
 {"date":"2026-08-27","adj_close":176.11,"volume":710453},
 {"date":"2026-08-28","adj_close":179.36,"volume":1772447},
-{"date":"2026-08-31","adj_close":178.17,"volume":1264067}
+{"date":"2026-08-31","adj_close":178.17,"volume":1266500},
+{"date":"2026-09-01","adj_close":173.5,"volume":1446963}
 ]}

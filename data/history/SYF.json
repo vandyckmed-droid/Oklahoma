@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"SYF","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":61.04,"volume":8719245},
 {"date":"2025-06-23","adj_close":61.94,"volume":3560039},
 {"date":"2025-06-24","adj_close":63.39,"volume":2723903},
 {"date":"2025-06-25","adj_close":63.58,"volume":2667981},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":79.78,"volume":3927882},
 {"date":"2026-08-27","adj_close":79.93,"volume":3190748},
 {"date":"2026-08-28","adj_close":78.05,"volume":2945734},
-{"date":"2026-08-31","adj_close":77.08,"volume":4465393}
+{"date":"2026-08-31","adj_close":77.08,"volume":4489039},
+{"date":"2026-09-01","adj_close":76.62,"volume":3446346}
 ]}

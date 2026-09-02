@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"MCO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":465.11,"volume":799358},
 {"date":"2025-06-23","adj_close":471.32,"volume":693543},
 {"date":"2025-06-24","adj_close":483.91,"volume":693051},
 {"date":"2025-06-25","adj_close":476.64,"volume":621367},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":514.55,"volume":756474},
 {"date":"2026-08-27","adj_close":509.02,"volume":561648},
 {"date":"2026-08-28","adj_close":514.95,"volume":471694},
-{"date":"2026-08-31","adj_close":504.64,"volume":843023}
+{"date":"2026-08-31","adj_close":504.64,"volume":858018},
+{"date":"2026-09-01","adj_close":494.71,"volume":971561}
 ]}

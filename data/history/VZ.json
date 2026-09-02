@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"VZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":38.41,"volume":37068100},
 {"date":"2025-06-23","adj_close":39.02,"volume":16014400},
 {"date":"2025-06-24","adj_close":39.27,"volume":16716300},
 {"date":"2025-06-25","adj_close":38.8,"volume":15599700},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":50.19,"volume":20726697},
 {"date":"2026-08-27","adj_close":49.43,"volume":16389716},
 {"date":"2026-08-28","adj_close":50.1,"volume":15790820},
-{"date":"2026-08-31","adj_close":50.02,"volume":21380554}
+{"date":"2026-08-31","adj_close":50.02,"volume":21408545},
+{"date":"2026-09-01","adj_close":50.3,"volume":19750132}
 ]}

@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"CAT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":355.99,"volume":6268337},
 {"date":"2025-06-23","adj_close":361.63,"volume":2927400},
 {"date":"2025-06-24","adj_close":368.33,"volume":3842180},
 {"date":"2025-06-25","adj_close":366.91,"volume":1737892},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":821.93,"volume":1851387},
 {"date":"2026-08-27","adj_close":817.0,"volume":1836549},
 {"date":"2026-08-28","adj_close":800.25,"volume":1788584},
-{"date":"2026-08-31","adj_close":797.47,"volume":3033479}
+{"date":"2026-08-31","adj_close":797.47,"volume":3071690},
+{"date":"2026-09-01","adj_close":779.16,"volume":2939017}
 ]}

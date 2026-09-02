@@ -1,5 +1,4 @@
 {"schema_version":2,"ticker":"QCOM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
-{"date":"2025-06-20","adj_close":148.19,"volume":15501900},
 {"date":"2025-06-23","adj_close":149.98,"volume":6860700},
 {"date":"2025-06-24","adj_close":152.49,"volume":7692700},
 {"date":"2025-06-25","adj_close":152.71,"volume":5280104},
@@ -299,5 +298,6 @@
 {"date":"2026-08-26","adj_close":163.72,"volume":10480308},
 {"date":"2026-08-27","adj_close":164.78,"volume":15074244},
 {"date":"2026-08-28","adj_close":164.19,"volume":7754515},
-{"date":"2026-08-31","adj_close":170.48,"volume":12726310}
+{"date":"2026-08-31","adj_close":170.48,"volume":12740709},
+{"date":"2026-09-01","adj_close":166.61,"volume":8828791}
 ]}
