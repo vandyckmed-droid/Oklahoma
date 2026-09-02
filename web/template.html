@@ -289,9 +289,9 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
   display: inline-flex;
   gap: 6px;
   align-items: center;
-  height: 30px;
+  height: 32px;
   padding: 0 10px;
-  border-radius: 15px;
+  border-radius: 16px;
   background: var(--bg-2);
   font: 600 13px/30px var(--sans);
   color: var(--text);
@@ -316,8 +316,8 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .slabel { font: 400 15px/20px var(--sans); }
 .srow-btn { width: 100%; text-align: left; color: var(--text); }
 .srow-btn .chev { width: 14px; height: 14px; color: var(--text-3); }
-.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 18px; background: var(--bg-2); }
-.seg button { height: 30px; padding: 0 12px; border-radius: 15px; font: 500 13px/30px var(--sans); color: var(--text-2); transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out); }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 20px; background: var(--bg-2); }
+.seg button { height: 32px; padding: 0 12px; border-radius: 16px; font: 500 13px/32px var(--sans); color: var(--text-2); transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out); }
 .seg button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
 .sctl { display: inline-flex; gap: 8px; align-items: center; }
 select.ctl {
@@ -334,8 +334,8 @@ select.ctl {
 }
 .icon-btn { width: 36px; height: 36px; border: 1px solid var(--line-2); border-radius: 18px; display: inline-grid; place-items: center; color: var(--text); }
 .icon-btn svg { width: 14px; height: 14px; }
-.switch { position: relative; width: 48px; height: 28px; border-radius: 14px; background: var(--bg-3); transition: background-color 160ms var(--ease-out); }
-.switch .knob { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--bg); box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 160ms var(--ease-out); }
+.switch { position: relative; width: 52px; height: 32px; border-radius: 16px; background: var(--bg-3); transition: background-color 160ms var(--ease-out); }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--bg); box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 160ms var(--ease-out); }
 .switch[aria-checked="true"] { background: var(--up); }
 .switch[aria-checked="true"] .knob { transform: translateX(20px); }
 .note { margin: 8px 0; font: 400 13px/20px var(--sans); color: var(--text-2); }
@@ -399,7 +399,7 @@ select.ctl {
 }
 @keyframes rise { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line-2); margin: 4px auto 8px; }
+.sheet-handle { width: 36px; height: 4px; border-radius: 8px; background: var(--line-2); margin: 4px auto 8px; }
 .page-top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
 .back-btn { display: inline-flex; align-items: center; gap: 4px; font: 500 15px/20px var(--sans); color: var(--text-2); }
 .back-btn svg { width: 16px; height: 16px; }
@@ -449,12 +449,12 @@ select.ctl {
 
 .ep-card h2 { margin: 6px 0 8px; font: 700 22px/28px var(--sans); letter-spacing: -0.01em; }
 .ep-card p { margin: 0 0 12px; font: 400 15px/22px var(--sans); max-width: 60ch; }
-.ep-card code.formula { display: block; padding: 10px 12px; border-radius: 10px; background: var(--bg-2); font-size: 12px; line-height: 18px; margin-bottom: 16px; white-space: normal; }
+.ep-card code.formula { display: block; padding: 10px 12px; border-radius: 12px; background: var(--bg-2); font-size: 12px; line-height: 18px; margin-bottom: 16px; white-space: normal; }
 .ep-card dl { margin: 0 0 16px; }
 .ep-card dt { font: 600 14px/18px var(--sans); padding-top: 12px; }
 .ep-card dd { margin: 4px 0 0; font: 400 14px/20px var(--sans); color: var(--text-2); max-width: 60ch; }
 .ep-card dd code { display: block; margin-top: 4px; color: var(--text-3); }
-.ep-close { height: 44px; width: 100%; border-radius: 22px; background: var(--bg-2); color: var(--text); font: 600 15px/44px var(--sans); }
+.ep-close { height: 48px; width: 100%; border-radius: 24px; background: var(--bg-2); color: var(--text); font: 600 15px/48px var(--sans); }
 
 /* ----- motion ----- */
 path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 560ms var(--ease-out) forwards; }
