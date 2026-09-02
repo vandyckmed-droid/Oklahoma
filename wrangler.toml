@@ -1,7 +1,7 @@
 # Root config for Cloudflare's Git-connected Workers Builds, so a build
 # started from the repository root finds the quotes proxy. It mirrors
 # worker/wrangler.toml; the Worker itself lives in worker/src/index.js.
-name = "oklahoma"
+name = "oklahoma-quotes"
 main = "worker/src/index.js"
 compatibility_date = "2026-09-01"
 
