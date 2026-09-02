@@ -5,3 +5,11 @@ venv/
 .env
 .DS_Store
 .pytest_cache/
+
+# Impeccable transient state (screenshots, build-phase machine)
+.impeccable/review/
+.impeccable/build/
+
+# Local Claude tooling (skills, agents) stays out of the published repo
+.claude/
+.impeccable/

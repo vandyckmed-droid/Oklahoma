@@ -2,1240 +2,519 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oklahoma Universe</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" id="theme-color">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
-  :root {
-    --ground: #f3f5f4;
-    --surface: #ffffff;
-    --surface-sunk: #eef1f0;
-    --ink: #101917;
-    --muted: #5d6b68;
-    --faint: #8a9895;
-    --line: #dee5e3;
-    --accent: #0c6b5f;
-    --accent-soft: #e1efec;
-    --up: #1a7f52;
-    --down: #b4443c;
-    --warn: #9a6a17;
-    --shadow: 0 1px 2px rgba(16, 25, 23, .06), 0 8px 24px -16px rgba(16, 25, 23, .3);
-  }
+/* ------------------------------------------------------------------
+   Oklahoma — a brokerage-style stocks list, light and dark.
+   One accent (green) for actions and gains, red only for losses.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #ffffff;
+  --bg-2: #f3f4f6;
+  --bg-3: #e8eaed;
+  --line: #eceef0;
+  --line-2: #d4d8dc;
+  --text: #1b1b1b;
+  --text-2: #6b6f74;
+  --text-3: #767a7e;
+  --up: #00c805;
+  --up-text: #00891c;
+  --up-soft: rgba(0, 200, 5, 0.12);
+  --down: #ff5000;
+  --down-text: #d84200;
+  --down-soft: rgba(255, 80, 0, 0.12);
+  --on-pill: #0a1f0c;
+  --on-pill-down: #2a0e00;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.14), 0 1px 0 var(--line-2);
+  --sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --ground: #000000;
-      --surface: #0e0e0e;
-      --surface-sunk: #070707;
-      --ink: #f5f5f5;
-      --muted: #9c9c9c;
-      --faint: #6e6e6e;
-      --line: #1f1f1f;
-      --accent: #00c805;
-      --accent-soft: #06290e;
-      --up: #00c805;
-      --down: #ff5000;
-      --warn: #d9a445;
-      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
-    }
-  }
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --ground: #000000;
-    --surface: #0e0e0e;
-    --surface-sunk: #070707;
-    --ink: #f5f5f5;
-    --muted: #9c9c9c;
-    --faint: #6e6e6e;
+    --bg: #000000;
+    --bg-2: #161616;
+    --bg-3: #242424;
     --line: #1f1f1f;
-    --accent: #00c805;
-    --accent-soft: #06290e;
-    --up: #00c805;
-    --down: #ff5000;
-    --warn: #d9a445;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    --line-2: #333333;
+    --text: #ffffff;
+    --text-2: #a1a5a9;
+    --text-3: #808488;
+    --up-text: #00c805;
+    --down-text: #ff5000;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
   }
+}
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --bg-2: #161616;
+  --bg-3: #242424;
+  --line: #1f1f1f;
+  --line-2: #333333;
+  --text: #ffffff;
+  --text-2: #a1a5a9;
+  --text-3: #808488;
+  --up-text: #00c805;
+  --down-text: #ff5000;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 1px 0 var(--line-2);
+}
 
-  * { box-sizing: border-box; }
-  [hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); scrollbar-color: var(--line-2) transparent; scrollbar-width: thin; }
+html.sheet-open, html.sheet-open body { overflow: hidden; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 15px/20px var(--sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+::selection { background: var(--up-soft); color: var(--text); }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+:focus-visible { outline: 2px solid var(--up); outline-offset: 2px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+input::placeholder { color: var(--text-2); opacity: 1; }
+input[type="search"] { caret-color: var(--up); }
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; }
+b { font-weight: 600; }
+[hidden] { display: none !important; }
+svg { display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.up { color: var(--up-text); }
+.down { color: var(--down-text); }
 
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-size: 15px;
-    line-height: 1.45;
-    -webkit-text-size-adjust: 100%;
-  }
+.shell { max-width: 760px; margin: 0 auto; padding: 0 16px; }
 
-  .shell {
-    max-width: 560px;
-    margin: 0 auto;
-    /* Room for the fixed tab bar and the phone's home indicator. */
-    padding: 0 16px calc(84px + env(safe-area-inset-bottom, 0px));
-  }
+/* ----- stale band ----- */
+.band {
+  margin: 0 -16px;
+  padding: 10px 16px;
+  background: var(--down);
+  color: var(--on-pill-down);
+  font: 600 13px/18px var(--sans);
+}
 
-  /* ---------- masthead ---------- */
+/* ----- title bar ----- */
+.titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0 4px;
+}
+.titlebar h1 { margin: 0; font: 700 17px/24px var(--sans); letter-spacing: -0.01em; }
+.titlebar span { font: 400 13px/20px var(--sans); color: var(--text-2); }
 
-  .masthead {
-    padding: 28px 0 18px;
-  }
-  .eyebrow {
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin: 0 0 6px;
-  }
-  h1 {
-    font-family: Newsreader, Georgia, serif;
-    font-weight: 600;
-    font-size: 34px;
-    line-height: 1.05;
-    letter-spacing: -.01em;
-    margin: 0;
-    text-wrap: balance;
-  }
-  .masthead p {
-    margin: 8px 0 0;
-    color: var(--muted);
-    font-size: 13px;
-  }
+/* ----- hero ----- */
+.hero { padding: 12px 0 0; }
+.hero-big { margin: 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.hero-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
+.hero-sub { margin: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
+.chart { position: relative; width: 100%; aspect-ratio: 358 / 140; margin-top: 8px; }
+@media (min-width: 720px) { .chart { aspect-ratio: 728 / 220; } }
+.chart svg { width: 100%; height: 100%; overflow: visible; }
+.ranges { display: flex; gap: 4px; padding: 10px 0 4px; border-bottom: 1px solid var(--line); }
+.ranges button {
+  flex: 1;
+  height: 36px;
+  border-radius: 18px;
+  font: 600 13px/36px var(--sans);
+  color: var(--text-2);
+  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+}
+.ranges button[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
+.ranges button[aria-pressed="true"].neg { background: var(--down); color: var(--on-pill-down); }
+.ranges button .rv { display: block; font: 500 12px/14px var(--sans); margin-top: -8px; padding-bottom: 6px; }
+.ranges.tall button { height: 48px; line-height: 40px; }
 
-  .note {
-    margin: 10px 2px 0;
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--muted);
-  }
-  .note.stale {
-    border: 1px solid var(--warn);
-    border-radius: 8px;
-    padding: 9px 12px;
-    color: var(--warn);
-  }
-  .note b {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-weight: 500;
-    color: var(--ink);
-  }
+/* ----- section heads ----- */
+h2.section {
+  margin: 0;
+  padding: 22px 0 8px;
+  font: 700 20px/24px var(--sans);
+  letter-spacing: -0.01em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
+.sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; font: 500 13px/20px var(--sans); color: var(--up-text); }
+.sortwrap svg { width: 12px; height: 12px; }
+.sortwrap select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
-  /* ---------- price history ---------- */
+/* ----- search ----- */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 14px;
+  margin-top: 12px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  color: var(--text-2);
+}
+.search svg { width: 16px; height: 16px; flex: none; }
+.search input { flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; color: var(--text); font: 400 15px/44px var(--sans); padding: 0; }
+.search input:focus { outline: none; }
 
-  .spark {
-    display: block;
-    width: 54px;
-    height: 18px;
-    margin-top: 3px;
-    margin-left: auto;
-    overflow: visible;
-  }
+/* ----- chips ----- */
+.chips { display: flex; gap: 8px; margin: 0 -16px; padding: 4px 16px 12px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line-2);
+  color: var(--text);
+  font: 500 13px/30px var(--sans);
+  white-space: nowrap;
+  display: inline-flex;
+  gap: 6px;
+  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out), border-color 120ms var(--ease-out);
+}
+.chip .n { color: var(--text-2); }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.chip[aria-pressed="true"] .n { color: var(--bg); opacity: 0.7; }
 
-  .chg {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 11.5px;
-  }
-  .up { color: var(--up); }
-  .down { color: var(--down); }
-  .flat { color: var(--muted); }
+/* ----- rows ----- */
+.list { list-style: none; margin: 0; padding: 0; }
+.list > li { border-bottom: 1px solid var(--line); }
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px auto;
+  align-items: center;
+  column-gap: 14px;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  color: var(--text);
+  border-radius: 8px;
+  transition: background-color 120ms var(--ease-out);
+}
+@media (hover: hover) { .row:hover { background: var(--bg-2); margin: 0 -8px; padding: 12px 8px; width: calc(100% + 16px); } }
+.name-cell { min-width: 0; }
+.ticker { display: flex; align-items: center; gap: 6px; font: 600 15px/20px var(--sans); }
+.ticker .star { width: 14px; height: 14px; color: var(--up-text); flex: none; }
+.ticker .warn { font: 500 10px/16px var(--sans); color: var(--text-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 0 6px; }
+.company { display: flex; gap: 4px; min-width: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
+.company-name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-sub { flex: none; }
+.spark { width: 64px; height: 26px; }
+.spark svg { width: 100%; height: 100%; overflow: visible; }
+.spark-empty { width: 64px; height: 26px; border-bottom: 1px dashed var(--line-2); }
+.figure { text-align: right; min-width: 88px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.figure .price { font: 500 15px/20px var(--sans); white-space: nowrap; }
+.figure .price.none { color: var(--text-3); }
+.pill {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font: 600 12px/18px var(--sans);
+  white-space: nowrap;
+  color: var(--on-pill);
+  background: var(--up);
+}
+.pill.down { background: var(--down); color: var(--on-pill-down); }
+.pill.flat { background: var(--bg-3); color: var(--text); }
+.pill.none { background: transparent; color: var(--text-3); border: 1px solid var(--line-2); }
 
-  .warn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10.5px;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: var(--warn);
-    border: 1px solid currentColor;
-    border-radius: 999px;
-    padding: 1px 6px;
-    white-space: nowrap;
-  }
+.group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 0 6px;
+  text-align: left;
+  color: var(--text);
+  font: 600 13px/18px var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.group-head .chev { width: 12px; height: 12px; color: var(--text-3); transition: transform 160ms var(--ease-out); }
+.group-head[aria-expanded="false"] .chev { transform: rotate(-90deg); }
+.group-head .n { margin-left: auto; font: 400 13px/18px var(--sans); color: var(--text-2); text-transform: none; letter-spacing: 0; }
 
-  .star-mark { color: var(--warn); font-size: 11px; }
-  .watch-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .watch-btn {
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    color: var(--ink);
-    border-radius: 8px;
-    padding: 7px 12px;
-    font: inherit;
-    font-size: 12.5px;
-    cursor: pointer;
-  }
-  .watch-btn[aria-pressed="true"] {
-    border-color: var(--warn);
-    color: var(--warn);
-  }
-  .watch-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .watch-ctx {
-    font-size: 11px;
-    color: var(--muted);
-  }
-  .detail-meta {
-    margin-top: 0;
-    font-size: 10.5px;
-    line-height: 1.5;
-    color: var(--faint);
-  }
-  .detail .series { margin-top: 2px; }
-  .detail .series svg {
-    display: block;
-    width: 100%;
-    height: 56px;
-    overflow: visible;
-  }
-  .detail .axis {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10.5px;
-    color: var(--faint);
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    margin-top: 3px;
-  }
+.empty { padding: 40px 0; font: 400 15px/22px var(--sans); color: var(--text-2); text-align: center; }
+.resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
 
-  /* ---------- cross-section ---------- */
+/* ----- table view ----- */
+.table-wrap { overflow: auto; max-height: calc(100dvh - 200px); margin: 0 -16px; padding: 0 16px; }
+.grid { border-collapse: collapse; width: 100%; min-width: 780px; font: 400 13px/18px var(--sans); }
+.grid th, .grid td { padding: 0 8px; height: 40px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.grid th { position: sticky; top: 0; background: var(--bg); text-align: right; font: 500 12px/16px var(--sans); color: var(--text-2); z-index: 1; box-shadow: inset 0 -1px 0 var(--line-2); }
+.grid th:first-child, .grid td:first-child { text-align: left; padding-left: 0; position: sticky; left: 0; background: var(--bg); }
+.grid th:nth-child(2), .grid td:nth-child(2) { text-align: left; }
+.grid td { text-align: right; }
+.grid td.none { color: var(--text-3); }
+.grid tbody tr { cursor: pointer; }
+@media (hover: hover) { .grid tbody tr:hover td { background: var(--bg-2); } }
+.grid .th-sort { display: inline-flex; gap: 4px; align-items: center; color: inherit; font: inherit; }
+.grid th[aria-sort] .th-sort { color: var(--text); }
+.grid .th-arrow { width: 10px; height: 10px; }
+.grid .tcell { font: 600 13px/18px var(--sans); color: var(--text); text-align: left; }
+.grid .tsector { color: var(--text-2); }
+.grid .tsector abbr { text-decoration: none; }
 
-  /* A real table: header and rows share columns by construction, and a
-     screen reader announces each figure with its column's name. */
-  .xs {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--surface);
-  }
-  .xs th {
-    padding: 8px 12px 5px;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-    text-align: right;
-  }
-  .xs th:first-child { text-align: left; }
-  /* Fixed layout: the th widths set the columns; the sector column takes
-     the remainder and ellipsizes. */
-  .xs th:nth-child(2) { width: 86px; }
-  .xs th:last-child { width: 84px; }
-  .xs td:last-child { padding-left: 2px; }
-  .xs td {
-    padding: 7px 12px;
-    border-top: 1px solid var(--line);
-    font-size: 12.5px;
-  }
-  .xs .sn-text {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .xs .sector-name {
-    max-width: 100%;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .xs .sector-name .n {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10.5px;
-    color: var(--faint);
-  }
-  .xs .med {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 12px;
-    text-align: right;
-  }
-  .breadth {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .breadth .track {
-    flex: 1;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--line);
-    overflow: hidden;
-  }
-  .breadth .track i {
-    display: block;
-    height: 100%;
-    background: var(--up);
-    border-radius: 2px;
-  }
-  .breadth .pct {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10.5px;
-    color: var(--faint);
-    width: 30px;
-    text-align: right;
-  }
+/* ----- sectors ----- */
+.sector-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px auto;
+  column-gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.sector-row .sname { font: 600 15px/20px var(--sans); }
+.sector-row .smeta { font: 400 12px/18px var(--sans); color: var(--text-2); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.breadth { display: inline-flex; align-items: center; gap: 6px; }
+.breadth .track { width: 44px; height: 6px; border-radius: 3px; background: var(--bg-3); overflow: hidden; flex: none; }
+.breadth .track i { display: block; height: 100%; background: var(--up); }
+.xtreme { display: grid; grid-template-columns: 76px 1fr; column-gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.xlabel { font: 600 13px/18px var(--sans); color: var(--text-2); }
+.xchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.xchip {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 16px;
+  background: var(--bg-2);
+  font: 600 13px/30px var(--sans);
+  color: var(--text);
+  transition: background-color 120ms var(--ease-out);
+}
+.xchip span:last-child { font-weight: 500; }
+@media (hover: hover) { .xchip:hover { background: var(--bg-3); } }
 
-  .xtreme {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .xlabel {
-    flex: none;
-    width: 64px;
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .xchips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  .xchip {
-    border: 1px solid var(--line);
-    background: var(--surface);
-    border-radius: 999px;
-    padding: 3px 9px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px;
-    color: var(--ink);
-    cursor: pointer;
-  }
-  .xchip:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+/* ----- watchlist ----- */
+.watch-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 4px 0 12px; }
+.text-btn { color: var(--up-text); font: 600 14px/20px var(--sans); }
+.text-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.watch-tools-note { font: 400 12px/16px var(--sans); color: var(--text-3); }
+.watch-mix { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 8px; }
+.watch-mix span { font: 500 12px/24px var(--sans); color: var(--text-2); background: var(--bg-2); border-radius: 12px; padding: 0 10px; }
+.watch-mix b { color: var(--text); }
 
-  /* ---------- controls ---------- */
+/* ----- settings ----- */
+.sgroup { padding: 8px 0 8px; }
+.sgroup-title { margin: 0; padding: 14px 0 4px; font: 600 12px/16px var(--sans); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+.srow { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.slabel { font: 400 15px/20px var(--sans); }
+.srow-btn { width: 100%; text-align: left; color: var(--text); }
+.srow-btn .chev { width: 14px; height: 14px; color: var(--text-3); }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 20px; background: var(--bg-2); }
+.seg button { height: 32px; padding: 0 12px; border-radius: 16px; font: 500 13px/32px var(--sans); color: var(--text-2); transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out); }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.sctl { display: inline-flex; gap: 8px; align-items: center; }
+select.ctl {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 36px;
+  padding: 0 30px 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  background: var(--bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%236b6f74' stroke-width='1.5'><path d='M2.5 4.5 6 8l3.5-3.5'/></svg>") no-repeat right 10px center;
+  font: 500 13px/34px var(--sans);
+  color: var(--text);
+  max-width: 200px;
+}
+.icon-btn { width: 36px; height: 36px; border: 1px solid var(--line-2); border-radius: 18px; display: inline-grid; place-items: center; color: var(--text); }
+.icon-btn svg { width: 14px; height: 14px; }
+.switch { position: relative; width: 52px; height: 32px; border-radius: 16px; background: var(--bg-3); transition: background-color 160ms var(--ease-out); }
+.switch .knob { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--bg); box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 160ms var(--ease-out); }
+.switch[aria-checked="true"] { background: var(--up); }
+.switch[aria-checked="true"] .knob { transform: translateX(20px); }
+.note { margin: 8px 0; font: 400 13px/20px var(--sans); color: var(--text-2); }
+#footer { margin: 8px 0 0; font: 400 12px/18px var(--sans); color: var(--text-3); }
 
-  .controls { margin-top: 18px; }
+/* ----- tab bar ----- */
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 20;
+}
+.tabbar-inner { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabbar button {
+  position: relative;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-2);
+  font: 500 11px/14px var(--sans);
+  transition: color 120ms var(--ease-out);
+}
+.tabbar button svg { width: 24px; height: 24px; }
+.tabbar button[aria-selected="true"] { color: var(--text); font-weight: 600; }
+.tab-badge { position: absolute; top: 8px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--up); color: var(--on-pill); font: 700 10px/16px var(--sans); }
 
-  .search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 9px;
-    padding: 0 12px;
-  }
-  .search:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-  }
-  .search svg { flex: none; color: var(--faint); }
-  .search input {
-    flex: 1;
-    border: 0;
-    outline: 0;
-    background: transparent;
-    color: var(--ink);
-    font: inherit;
-    padding: 11px 0;
-    min-width: 0;
-  }
-  .search input::placeholder { color: var(--faint); }
+/* ----- sheets: the name page and the explain sheet ----- */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+#explain-pop { z-index: 40; }
+.sheet {
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade 160ms var(--ease-out);
+}
+.sheet-card {
+  width: 100%;
+  max-width: 640px;
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--bg);
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--shadow);
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+  animation: rise 240ms var(--ease-out);
+}
+.sheet-card.page { max-height: 100dvh; height: 100dvh; border-radius: 0; }
+@media (min-width: 720px) {
+  .sheet { align-items: center; }
+  .sheet-card, .sheet-card.page { height: auto; max-height: calc(100dvh - 48px); border-radius: 20px; }
+}
+@keyframes rise { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.sheet-handle { width: 36px; height: 4px; border-radius: 8px; background: var(--line-2); margin: 4px auto 8px; }
+.page-top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
+.back-btn { display: inline-flex; align-items: center; gap: 4px; font: 500 15px/20px var(--sans); color: var(--text-2); }
+.back-btn svg { width: 16px; height: 16px; }
+.star-btn { width: 40px; height: 40px; display: grid; place-items: center; color: var(--text-2); border-radius: 20px; }
+.star-btn svg { width: 22px; height: 22px; }
+.star-btn[aria-pressed="true"] { color: var(--up-text); }
+.dp-k { font: 500 13px/18px var(--sans); color: var(--text-2); }
+.dp-ticker { margin: 4px 0 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
+.dp-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
+.dp-line span { color: var(--text-2); font-weight: 400; }
 
-  .filters {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    padding-bottom: 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .filters::-webkit-scrollbar { display: none; }
-  .chip {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--muted);
-    border-radius: 999px;
-    padding: 6px 11px;
-    font-size: 12.5px;
-    font-family: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .chip:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .chip[aria-pressed="true"] {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-    color: var(--ink);
-  }
-  .chip .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--sector, var(--faint));
-  }
-  .chip .n {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px;
-    color: var(--faint);
-  }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; padding: 14px 0 4px; }
+.stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat .xl, .stat .xl-static { font: 400 13px/18px var(--sans); text-align: left; }
+.stat .val { font: 500 15px/20px var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat .val.none { color: var(--text-3); }
+.stat .sub { font: 400 12px/16px var(--sans); color: var(--text-3); }
+.xl { color: var(--text-2); text-decoration: underline dotted; text-decoration-color: var(--line-2); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.xl:hover { color: var(--text); text-decoration-color: var(--text-2); }
+.xl-static { color: var(--text-2); }
 
-  .resultline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin: 18px 2px 6px;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
+.fit-toggle { font: 500 13px/18px var(--sans); color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
+.fit-toggle .swatch { display: inline-block; width: 16px; height: 0; border-top: 2px dashed var(--text-3); }
+.fit-toggle[aria-pressed="true"] { color: var(--text); }
+.chart-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; font: 400 12px/16px var(--sans); color: var(--text-3); }
+.chart-foot span { white-space: nowrap; }
 
-  /* ---------- tabs ---------- */
+.watch-btn {
+  width: 100%;
+  height: 48px;
+  margin: 14px 0 4px;
+  border-radius: 24px;
+  border: 1.5px solid var(--up);
+  color: var(--up-text);
+  font: 600 15px/45px var(--sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
+}
+.watch-btn svg { width: 18px; height: 18px; }
+.watch-btn[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
+.watch-ctx { display: block; text-align: center; font: 400 13px/18px var(--sans); color: var(--text-2); padding: 4px 0 8px; }
+.about { font: 400 14px/21px var(--sans); color: var(--text-2); margin: 0; }
+.detail-meta { font: 400 12px/18px var(--sans); color: var(--text-3); padding: 8px 0 0; }
 
-  .panel-title {
-    font-family: Newsreader, Georgia, serif;
-    font-weight: 600;
-    font-size: 28px;
-    line-height: 1.1;
-    margin: 26px 0 14px;
-  }
-  .panel-title .n {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--faint);
-    margin-left: 6px;
-  }
-  .tabbar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 40;
-    background: var(--surface);
-    border-top: 1px solid var(--line);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  .tabbar-inner {
-    max-width: 560px;
-    margin: 0 auto;
-    display: flex;
-  }
-  .tabbar button {
-    position: relative;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    padding: 8px 4px 7px;
-    border: 0;
-    background: none;
-    color: var(--faint);
-    font: inherit;
-    font-size: 10px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-  .tabbar button[aria-selected="true"] { color: var(--accent); }
-  .tabbar button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-  .tabbar svg { width: 22px; height: 22px; }
-  .tab-badge {
-    position: absolute;
-    top: 4px;
-    left: calc(50% + 6px);
-    min-width: 16px;
-    height: 16px;
-    padding: 0 4px;
-    border-radius: 8px;
-    background: var(--warn);
-    color: #000;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10px;
-    line-height: 16px;
-    letter-spacing: 0;
-  }
+.ep-card h2 { margin: 6px 0 8px; font: 700 22px/28px var(--sans); letter-spacing: -0.01em; }
+.ep-card p { margin: 0 0 12px; font: 400 15px/22px var(--sans); max-width: 60ch; }
+.ep-card code.formula { display: block; padding: 10px 12px; border-radius: 12px; background: var(--bg-2); font-size: 12px; line-height: 18px; margin-bottom: 16px; white-space: normal; }
+.ep-card dl { margin: 0 0 16px; }
+.ep-card dt { font: 600 14px/18px var(--sans); padding-top: 12px; }
+.ep-card dd { margin: 4px 0 0; font: 400 14px/20px var(--sans); color: var(--text-2); max-width: 60ch; }
+.ep-card dd code { display: block; margin-top: 4px; color: var(--text-3); }
+.ep-close { height: 48px; width: 100%; border-radius: 24px; background: var(--bg-2); color: var(--text); font: 600 15px/48px var(--sans); }
 
-  /* ---------- settings ---------- */
-
-  .sgroup {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
-  .sgroup-title {
-    margin: 0;
-    padding: 9px 14px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: var(--surface-sunk);
-  }
-  .srow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    width: 100%;
-    padding: 11px 14px;
-    border-top: 1px solid var(--line);
-    font-size: 14px;
-    color: var(--ink);
-  }
-  .srow-btn {
-    border: 0;
-    border-top: 1px solid var(--line);
-    background: none;
-    font: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-  .srow-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-  .srow-btn .chev { color: var(--faint); }
-  .srow select {
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    color: var(--ink);
-    border-radius: 7px;
-    padding: 6px 8px;
-    font: inherit;
-    font-size: 13px;
-    max-width: 170px;
-  }
-  .sctl {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  #sortDir {
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    color: var(--ink);
-    border-radius: 7px;
-    padding: 5px 10px;
-    font: inherit;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  #sortDir:focus-visible,
-  .srow select:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .viewswitch {
-    display: inline-flex;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .viewswitch button {
-    border: 0;
-    background: var(--surface);
-    color: var(--muted);
-    padding: 6px 14px;
-    font: inherit;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .viewswitch button + button { border-left: 1px solid var(--line); }
-  .viewswitch button[aria-pressed="true"] {
-    background: var(--accent-soft);
-    color: var(--ink);
-  }
-  .viewswitch button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-  .switch {
-    flex: none;
-    width: 44px;
-    height: 26px;
-    padding: 2px;
-    border-radius: 13px;
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    cursor: pointer;
-  }
-  .switch .knob {
-    display: block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--faint);
-    transition: transform .15s ease;
-  }
-  .switch[aria-checked="true"] {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .switch[aria-checked="true"] .knob {
-    background: #fff;
-    transform: translateX(18px);
-  }
-  .switch:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .sgroup .note,
-  .sgroup footer {
-    margin: 0;
-    padding: 11px 14px;
-    border-top: 1px solid var(--line);
-  }
-
-  /* ---------- list ---------- */
-
-  .list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-  }
-  .list li + li { border-top: 1px solid var(--line); }
-
-  .sector-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    border: 0;
-    padding: 9px 14px;
-    background: var(--surface-sunk);
-    font-family: inherit;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: left;
-    cursor: pointer;
-  }
-  .sector-head:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-  .sector-head .chev {
-    color: var(--faint);
-    font-size: 10px;
-    width: 10px;
-    flex: none;
-  }
-  .sector-head .n {
-    margin-left: auto;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    letter-spacing: 0;
-  }
-
-  .row {
-    display: grid;
-    grid-template-columns: 26px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    border: 0;
-    background: none;
-    color: inherit;
-    font: inherit;
-    text-align: left;
-    padding: 11px 14px;
-    cursor: pointer;
-  }
-  .row:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: -2px;
-  }
-  .rank {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
-    color: var(--faint);
-  }
-  .ticker {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -.01em;
-  }
-  .name-cell {
-    min-width: 0;
-  }
-  .company {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    font-size: 12.5px;
-    color: var(--muted);
-  }
-  .company-name {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .cap-sub {
-    flex: none;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11px;
-    color: var(--faint);
-  }
-  /* The right-hand cluster of a card: the shape of the year, then one
-     labeled figure chosen from the Show menu. */
-  .cap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .cap .spark { margin: 0; }
-  .metric {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-  }
-  .pill {
-    display: inline-block;
-    min-width: 72px;
-    text-align: center;
-    padding: 4px 8px;
-    border-radius: 7px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 12.5px;
-    font-weight: 500;
-    background: var(--surface-sunk);
-    color: var(--ink);
-  }
-  .pill.up { background: color-mix(in srgb, var(--up) 16%, transparent); color: var(--up); }
-  .pill.down { background: color-mix(in srgb, var(--down) 16%, transparent); color: var(--down); }
-  .pill-cap {
-    font-size: 9.5px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  @media (max-width: 359px) {
-    .cap .spark { display: none; }
-  }
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11.5px;
-    color: var(--muted);
-  }
-  .tag .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--sector, var(--faint));
-    flex: none;
-  }
-
-  .detail {
-    padding: 0 14px 14px 52px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    font-size: 12.5px;
-  }
-  .fact-line {
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .stat-cell {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    padding: 8px 10px 9px;
-    background: var(--surface-sunk);
-  }
-  .stat-cell .xl,
-  .stat-cell .xl-static {
-    align-self: flex-start;
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .stat-val {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .stat-sub {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10.5px;
-    color: var(--faint);
-  }
-
-  .trend-card {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 10px 12px 12px;
-    background: var(--surface-sunk);
-  }
-  .tc-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 6px;
-  }
-  .tc-title {
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .fit-toggle {
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--muted);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font: inherit;
-    font-size: 10.5px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .fit-toggle[aria-pressed="true"] {
-    border-color: var(--warn);
-    color: var(--warn);
-  }
-  .fit-toggle:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .tc-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    margin-bottom: 8px;
-  }
-  .tc-stat {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-  }
-  .tc-stat .xl {
-    font-size: 10px;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .tc-val {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 12.5px;
-  }
-
-  .watch-tools {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin: 0 2px 14px;
-  }
-  .watch-tools button {
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--ink);
-    border-radius: 7px;
-    padding: 5px 10px;
-    font: inherit;
-    font-size: 11.5px;
-    cursor: pointer;
-  }
-  .watch-tools button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .watch-tools-note {
-    font-size: 10.5px;
-    color: var(--faint);
-  }
-
-  .empty {
-    padding: 32px 16px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13.5px;
-  }
-
-  .xl {
-    border: 0;
-    background: none;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    cursor: pointer;
-    border-bottom: 1px dotted var(--faint);
-  }
-  .xl:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  #explain-pop {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    background: rgba(0, 0, 0, .5);
-  }
-  #explain-pop[hidden] { display: none; }
-  .ep-card {
-    width: 100%;
-    max-width: 560px;
-    max-height: 85vh;
-    max-height: 85dvh;
-    overflow-y: auto;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px 14px 0 0;
-    padding: 18px 18px calc(20px + env(safe-area-inset-bottom, 0px));
-    box-shadow: var(--shadow);
-  }
-  .ep-card h2 {
-    margin: 0 0 6px;
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .ep-card p {
-    margin: 0 0 10px;
-    font-size: 13.5px;
-    line-height: 1.55;
-    color: var(--muted);
-  }
-  .ep-card code {
-    display: block;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    color: var(--ink);
-    background: var(--surface-sunk);
-    border: 1px solid var(--line);
-    border-radius: 7px;
-    padding: 8px 10px;
-    margin-bottom: 14px;
-    overflow-x: auto;
-  }
-  .ep-card button {
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    color: var(--ink);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font: inherit;
-    font-size: 13px;
-    cursor: pointer;
-  }
-  .ep-card button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  #ep-list {
-    margin: 0 0 14px;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  #ep-list dt {
-    font-weight: 600;
-    margin-top: 10px;
-  }
-  #ep-list dd {
-    margin: 2px 0 0;
-    color: var(--muted);
-  }
-  #ep-list dd code {
-    display: block;
-    margin: 4px 0 0;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 11.5px;
-    color: var(--ink);
-  }
-
-  /* ---------- detail sheet ---------- */
-
-  #detail-pop {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    background: rgba(0, 0, 0, .5);
-  }
-  .dp-card {
-    width: 100%;
-    max-width: 560px;
-    max-height: 88vh;
-    max-height: 88dvh;
-    overflow-y: auto;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px 14px 0 0;
-    padding: 14px 16px calc(24px + env(safe-area-inset-bottom, 0px));
-    box-shadow: var(--shadow);
-  }
-  .dp-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .dp-ticker {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 18px;
-    font-weight: 600;
-  }
-  .dp-name {
-    flex: 1;
-    min-width: 0;
-    font-size: 13px;
-    color: var(--muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .dp-close {
-    border: 1px solid var(--line);
-    background: var(--surface-sunk);
-    color: var(--ink);
-    border-radius: 8px;
-    padding: 5px 11px;
-    font: inherit;
-    font-size: 12.5px;
-    cursor: pointer;
-  }
-  .dp-close:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .dp-card .detail { padding: 0; }
-  html.sheet-open { overflow: hidden; }
-
-  /* ---------- table view ---------- */
-
-  /* The table scrolls inside its own region: a sticky header and a
-     sticky ticker column only hold inside the element that scrolls,
-     so this wrapper, not the page, is the scroller. */
-  .table-wrap {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-    overflow: auto;
-    /* 92px = the 56px tab bar plus 36px of breathing room above it; it
-       tracks .tabbar's padding and icon size by hand. */
-    max-height: calc(100vh - 92px);
-    max-height: calc(100dvh - 92px - env(safe-area-inset-bottom, 0px));
-    -webkit-overflow-scrolling: touch;
-  }
-  .grid {
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 100%;
-  }
-  /* Dense on purpose: a phone-width table earns its place by how many
-     names and columns fit a screen, so cells are tight and figures are
-     one decimal; the detail sheet keeps the full precision. */
-  .grid th,
-  .grid td {
-    padding: 5px 7px;
-    white-space: nowrap;
-    text-align: right;
-    border-bottom: 1px solid var(--line);
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    font-size: 11.5px;
-  }
-  .grid thead th {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: var(--surface-sunk);
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-size: 9.5px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--faint);
-  }
-  .grid th:first-child,
-  .grid td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 1;
-    text-align: left;
-    background: var(--surface);
-    box-shadow: 1px 0 0 var(--line);
-  }
-  .grid thead th:first-child {
-    z-index: 3;
-    background: var(--surface-sunk);
-  }
-  .grid th:nth-child(2),
-  .grid td:nth-child(2) { text-align: left; }
-  .grid .tsector { color: var(--muted); }
-  .grid .tsector abbr { text-decoration: none; }
-  .grid .tsector .dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-right: 6px;
-    vertical-align: 1px;
-  }
-  .th-sort {
-    border: 0;
-    background: none;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .th-sort:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .grid th[aria-sort] .th-sort { color: var(--ink); }
-  .grid tbody tr { cursor: pointer; }
-  .tcell {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1px;
-    border: 0;
-    background: none;
-    padding: 0;
-    font: inherit;
-    color: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-  .tcell:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .tcell .ticker { font-size: 12.5px; }
-  .grid td.empty {
-    text-align: center;
-    white-space: normal;
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-  }
-
-  footer {
-    margin-top: 22px;
-    color: var(--faint);
-    font-size: 11.5px;
-    line-height: 1.6;
-  }
-  footer code {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    color: var(--muted);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .row, .chip { transition: background-color .12s ease; }
-  }
-  @media (min-width: 480px) {
-    h1 { font-size: 40px; }
-    .company { font-size: 13px; }
-  }
+/* ----- motion ----- */
+path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 560ms var(--ease-out) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sheet, .sheet-card { animation: none; }
+  path.draw { animation: none; stroke-dashoffset: 0; }
+  .group-head .chev, .switch .knob { transition: none; }
+}
 </style>
-
 </head>
 <body>
 <script id="universe-data" type="application/json">__UNIVERSE_JSON__</script>
 <script id="history-data" type="application/json">__HISTORY_JSON__</script>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star-f" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="currentColor"/></symbol>
+    <symbol id="i-stocks" viewBox="0 0 24 24"><path d="M3 17l5-6 4 3 4-6 5 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-sectors" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M4 12h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 12 12"><path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 12 12"><path d="M4.5 3 7.5 6l-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 12 12"><path d="M7.5 3 4.5 6l3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 12 12"><path d="M6 2v8M3 7l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.5 10.5 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
 <div class="shell">
-  <p class="note stale" id="stale-note" hidden></p>
+  <p class="band" id="stale-note" hidden></p>
 
   <section class="tab-panel" id="tab-universe" role="tabpanel" aria-labelledby="tabbtn-universe">
-    <header class="masthead">
-      <p class="eyebrow">U.S. equity universe</p>
+    <header class="titlebar">
       <h1>Oklahoma</h1>
-      <p id="subtitle"></p>
+      <span id="subtitle"></span>
     </header>
 
-    <div class="controls">
-      <label class="search">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.5"></circle>
-          <path d="M10.5 10.5 14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-        </svg>
-        <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
-      </label>
-      <div class="filters" id="filters" role="group" aria-label="Filter by sector"></div>
+    <div class="hero" id="hero" hidden>
+      <p class="hero-big" id="hero-big"></p>
+      <p class="hero-line" id="hero-line"></p>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="chart" id="hero-chart"></div>
+      <div class="ranges" id="hero-ranges" role="group" aria-label="Window"></div>
     </div>
 
+    <label class="search">
+      <svg aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
+    </label>
+
+    <h2 class="section">Stocks <span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span></h2>
+    <div class="chips" id="filters" role="group" aria-label="Filter by sector"></div>
+
     <div id="universe-slot">
-      <!-- One listing serves the Universe and Watchlist tabs; the script
+      <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline"><span id="resultcount" aria-live="polite"></span></div>
+        <div class="resultline"><span id="resultcount" aria-live="polite"></span><span id="listfig"></span></div>
         <ul class="list" id="list" tabindex="-1"></ul>
         <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
           <table class="grid" aria-label="Universe table">
@@ -1248,19 +527,10 @@
   </section>
 
   <section class="tab-panel" id="tab-sectors" role="tabpanel" aria-labelledby="tabbtn-sectors" hidden>
-    <h2 class="panel-title">Sectors</h2>
+    <header class="titlebar"><h1>Sectors</h1><span id="cross-title"></span></header>
     <section id="cross" hidden aria-label="12-month cross-section">
-      <div class="resultline"><span id="cross-title"></span></div>
-      <table class="xs">
-        <thead>
-          <tr>
-            <th scope="col">Sector</th>
-            <th scope="col"><button type="button" class="xl" data-explain="median">Median return</button></th>
-            <th scope="col"><button type="button" class="xl" data-explain="breadth">% of names up</button></th>
-          </tr>
-        </thead>
-        <tbody id="xs-sectors"></tbody>
-      </table>
+      <div class="resultline"><span>Names up over the year</span><span>Median 12-month return</span></div>
+      <ul class="list" id="xs-sectors"></ul>
       <div class="xtreme"><span class="xlabel">Leaders</span><span id="xs-leaders" class="xchips"></span></div>
       <div class="xtreme"><span class="xlabel">Laggards</span><span id="xs-laggards" class="xchips"></span></div>
     </section>
@@ -1268,36 +538,45 @@
   </section>
 
   <section class="tab-panel" id="tab-watch" role="tabpanel" aria-labelledby="tabbtn-watch" hidden>
-    <h2 class="panel-title">Watchlist<span class="n watch-n"></span></h2>
+    <header class="titlebar"><h1>Watchlist</h1><span class="watch-n"></span></header>
     <div class="watch-tools" id="watch-tools">
-      <button id="watch-export" type="button">Copy tickers</button>
-      <button id="watch-import" type="button">Paste tickers</button>
+      <button id="watch-export" type="button" class="text-btn">Copy tickers</button>
+      <button id="watch-import" type="button" class="text-btn">Paste tickers</button>
       <span class="watch-tools-note">moves your list between devices</span>
     </div>
+    <div class="watch-mix" id="watch-mix" hidden></div>
     <div id="watch-slot"></div>
   </section>
 
   <section class="tab-panel" id="tab-settings" role="tabpanel" aria-labelledby="tabbtn-settings" hidden>
-    <h2 class="panel-title">Settings</h2>
+    <header class="titlebar"><h1>Settings</h1></header>
     <div class="sgroup">
-      <h3 class="sgroup-title">List</h3>
+      <h2 class="sgroup-title">Appearance</h2>
+      <div class="srow">
+        <span class="slabel">Theme</span>
+        <span class="seg" role="group" aria-label="Theme" id="themeSeg">
+          <button type="button" data-theme="system" aria-pressed="true">System</button>
+          <button type="button" data-theme="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+        </span>
+      </div>
+    </div>
+    <div class="sgroup">
+      <h2 class="sgroup-title">List</h2>
       <div class="srow">
         <span class="slabel">View</span>
-        <span class="viewswitch" role="group" aria-label="View">
-          <button type="button" data-view="cards" aria-pressed="true">Cards</button>
+        <span class="seg" role="group" aria-label="View" id="viewSeg">
+          <button type="button" data-view="cards" aria-pressed="true">List</button>
           <button type="button" data-view="table" aria-pressed="false">Table</button>
         </span>
       </div>
       <div class="srow" id="display-row">
-        <label class="slabel" for="displayKey">Show on cards</label>
-        <select id="displayKey"></select>
+        <label class="slabel" for="displayKey">Figure on each row</label>
+        <select id="displayKey" class="ctl"></select>
       </div>
       <div class="srow">
-        <label class="slabel" for="sortKey">Sort by</label>
-        <span class="sctl">
-          <select id="sortKey"></select>
-          <button id="sortDir" type="button" aria-label="Sort direction: descending">↓</button>
-        </span>
+        <span class="slabel">Sort direction</span>
+        <button id="sortDir" type="button" class="icon-btn" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
       </div>
       <div class="srow" id="group-row">
         <span class="slabel" id="group-label">Group by sector</span>
@@ -1305,11 +584,12 @@
       </div>
     </div>
     <div class="sgroup">
-      <h3 class="sgroup-title">Explain</h3>
-      <button id="columnsHelp" type="button" class="srow srow-btn">What the columns mean <span class="chev" aria-hidden="true">›</span></button>
+      <h2 class="sgroup-title">Explain</h2>
+      <button id="columnsHelp" type="button" class="srow srow-btn">What the figures mean <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+      <button id="chartHelp" type="button" class="srow srow-btn" data-explain="chart">How the charts are drawn <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
     </div>
     <div class="sgroup">
-      <h3 class="sgroup-title">Data</h3>
+      <h2 class="sgroup-title">Data</h2>
       <p class="note" id="history-note" hidden></p>
       <p class="note" id="changes-note" hidden></p>
       <footer id="footer"></footer>
@@ -1320,42 +600,44 @@
 <nav class="tabbar" aria-label="Sections">
   <div class="tabbar-inner" role="tablist" id="tabbar">
     <button type="button" role="tab" id="tabbtn-universe" data-tab="universe" aria-selected="true" aria-controls="tab-universe">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-      Universe
+      <svg aria-hidden="true"><use href="#i-stocks"/></svg>
+      Stocks
     </button>
     <button type="button" role="tab" id="tabbtn-sectors" data-tab="sectors" aria-selected="false" aria-controls="tab-sectors" tabindex="-1">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+      <svg aria-hidden="true"><use href="#i-sectors"/></svg>
       Sectors
     </button>
     <button type="button" role="tab" id="tabbtn-watch" data-tab="watch" aria-selected="false" aria-controls="tab-watch" tabindex="-1">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9l-5.3 2.8 1.1-5.9-4.3-4.1 5.9-.8z"/></svg>
+      <svg aria-hidden="true"><use href="#i-star"/></svg>
       Watchlist
       <span class="tab-badge watch-n" hidden aria-hidden="true"></span>
     </button>
     <button type="button" role="tab" id="tabbtn-settings" data-tab="settings" aria-selected="false" aria-controls="tab-settings" tabindex="-1">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8M4 12h16"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+      <svg aria-hidden="true"><use href="#i-settings"/></svg>
       Settings
     </button>
   </div>
 </nav>
 
-<div id="explain-pop" hidden role="dialog" aria-modal="true" aria-labelledby="ep-title">
-  <div class="ep-card">
+<div id="explain-pop" class="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="ep-title">
+  <div class="sheet-card ep-card">
+    <div class="sheet-handle" aria-hidden="true"></div>
     <h2 id="ep-title"></h2>
     <p id="ep-body"></p>
-    <code id="ep-formula"></code>
+    <code id="ep-formula" class="formula"></code>
     <dl id="ep-list" hidden></dl>
-    <button id="ep-close" type="button">Close</button>
+    <button id="ep-close" type="button" class="ep-close">Close</button>
   </div>
 </div>
 
-<div id="detail-pop" hidden role="dialog" aria-modal="true" aria-labelledby="dp-ticker">
-  <div class="dp-card">
-    <div class="dp-head">
-      <span class="dp-ticker" id="dp-ticker"></span>
-      <span class="dp-name" id="dp-name"></span>
-      <button id="dp-close" type="button" class="dp-close">Close</button>
+<div id="detail-pop" class="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="dp-ticker">
+  <div class="sheet-card page dp-card">
+    <div class="page-top">
+      <button id="dp-close" type="button" class="back-btn"><svg aria-hidden="true"><use href="#i-chev-l"/></svg>Back</button>
+      <button id="dp-star" type="button" class="star-btn" aria-pressed="false" aria-label="Add to watchlist"><svg aria-hidden="true"><use href="#i-star"/></svg></button>
     </div>
+    <p class="dp-ticker" id="dp-ticker"></p>
+    <div class="dp-k" id="dp-k"></div>
     <div id="dp-body"></div>
   </div>
 </div>
@@ -1366,31 +648,19 @@
 
     var universe = JSON.parse(document.getElementById("universe-data").textContent);
     var rows = universe.constituents || [];
-
     var history = JSON.parse(document.getElementById("history-data").textContent);
     var coverage = {};
     ((history && history.coverage) || []).forEach(function (entry) {
       coverage[entry.ticker] = entry;
     });
     var hasHistory = Boolean(history && history.coverage && history.coverage.length);
+    var target = hasHistory ? history.criteria.trading_days_target : 252;
+    // The date the page speaks for is the last bar, not the refresh time.
+    var lastBar = hasHistory ? history.coverage.reduce(function (d, c) {
+      return c.end_date > d ? c.end_date : d;
+    }, "") : null;
 
-    var SECTOR_COLORS = {
-      "Technology": "#3f8ecf",
-      "Communication Services": "#7a6ed0",
-      "Consumer Cyclical": "#d08a3f",
-      "Consumer Defensive": "#a99a35",
-      "Financial Services": "#2fa08a",
-      "Healthcare": "#cf5f7a",
-      "Energy": "#a5623c",
-      "Industrials": "#6f8ba0",
-      "Basic Materials": "#4fa04f",
-      "Real Estate": "#c07ab0",
-      "Utilities": "#c9a93c",
-      "Unclassified": "#8a9895"
-    };
-    function sectorColor(name) {
-      return SECTOR_COLORS[name] || "#8a9895";
-    }
+    /* ----- formatting ----- */
 
     function money(value) {
       if (value >= 1e12) return "$" + (value / 1e12).toFixed(2) + "T";
@@ -1398,131 +668,38 @@
       if (value >= 1e6) return "$" + (value / 1e6).toFixed(0) + "M";
       return "$" + value.toLocaleString();
     }
-
-    function pct(value) {
-      if (value == null) return "—";
-      return (value > 0 ? "+" : "") + value.toFixed(2) + "%";
+    function price(value) {
+      return "$" + value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
-
-    function pct1(value) {
-      return (value > 0 ? "+" : "") + value.toFixed(1) + "%";
+    // A true minus, never a hyphen.
+    function signed(value, digits, suffix) {
+      var s = Math.abs(value).toFixed(digits) + (suffix || "");
+      if (value > 0) return "+" + s;
+      if (value < 0) return "−" + s;
+      return s;
     }
-
-    // Three-letter sector codes for the table; the full name stays on
-    // the chips, the cards and the detail, and in the abbr's title.
-    var SECTOR_CODES = {
-      "Technology": "TEC",
-      "Communication Services": "COM",
-      "Consumer Cyclical": "CCY",
-      "Consumer Defensive": "CDF",
-      "Financial Services": "FIN",
-      "Healthcare": "HLT",
-      "Energy": "ENR",
-      "Industrials": "IND",
-      "Basic Materials": "MAT",
-      "Real Estate": "RES",
-      "Utilities": "UTL",
-      "Unclassified": "UNC"
-    };
-    function sectorCode(name) {
-      return SECTOR_CODES[name] || name.slice(0, 3).toUpperCase();
-    }
-
+    function pct(value) { return value == null ? "—" : signed(value, 2, "%"); }
+    function pct1(value) { return signed(value, 1, "%"); }
     function direction(value) {
       if (value == null) return "flat";
       if (value > 0.005) return "up";
       if (value < -0.005) return "down";
       return "flat";
     }
-
-    var SVG = "http://www.w3.org/2000/svg";
-
-    function sparkPoints(series, width, height, baseline, domain) {
-      var lo = Math.min.apply(null, domain || series);
-      var hi = Math.max.apply(null, domain || series);
-      if (baseline != null) {
-        lo = Math.min(lo, baseline);
-        hi = Math.max(hi, baseline);
-      }
-      var span = hi - lo || 1;
-      var step = series.length > 1 ? width / (series.length - 1) : 0;
-      var pts = series.map(function (value, i) {
-        return [i * step, height - ((value - lo) / span) * height];
-      });
-      pts.baselineY = baseline == null
-        ? height
-        : height - ((baseline - lo) / span) * height;
-      return pts;
+    function median(values) {
+      var v = values.filter(function (x) { return x != null; }).sort(function (a, b) { return a - b; });
+      if (!v.length) return null;
+      var mid = v.length >> 1;
+      return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
     }
 
-    function spark(series, width, height, stroke, withFill, baseline, overlay) {
-      var svg = document.createElementNS(SVG, "svg");
-      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
-      svg.setAttribute("preserveAspectRatio", "none");
-      svg.setAttribute("aria-hidden", "true");
-      if (!series || series.length < 2) return svg;
-
-      var domain = overlay ? series.concat(overlay) : null;
-      var pts = sparkPoints(series, width, height, baseline, domain);
-      var d = pts.map(function (p, i) {
-        return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
-      }).join(" ");
-      var floor = pts.baselineY.toFixed(2);
-
-      if (withFill) {
-        var area = document.createElementNS(SVG, "path");
-        area.setAttribute("fill", stroke);
-        area.setAttribute("fill-opacity", "0.16");
-        area.setAttribute("d", d + " L" + width + " " + floor + " L0 " + floor + " Z");
-        svg.appendChild(area);
-      }
-
-      if (baseline != null) {
-        var rule = document.createElementNS(SVG, "line");
-        rule.setAttribute("x1", "0");
-        rule.setAttribute("x2", String(width));
-        rule.setAttribute("y1", floor);
-        rule.setAttribute("y2", floor);
-        rule.setAttribute("stroke-width", "1");
-        rule.setAttribute("stroke-dasharray", "3 4");
-        rule.style.stroke = "var(--faint)";
-        rule.style.opacity = ".55";
-        svg.appendChild(rule);
-      }
-
-      var line = document.createElementNS(SVG, "path");
-      line.setAttribute("d", d);
-      line.setAttribute("fill", "none");
-      line.setAttribute("stroke-width", "1.4");
-      line.setAttribute("stroke", stroke);
-      line.setAttribute("stroke-linecap", "round");
-      line.setAttribute("stroke-linejoin", "round");
-      svg.appendChild(line);
-
-      if (overlay && overlay.length > 1) {
-        var opts = sparkPoints(overlay, width, height, baseline, domain);
-        var od = opts.map(function (p, i) {
-          return (i ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2);
-        }).join(" ");
-        var fitLine = document.createElementNS(SVG, "path");
-        fitLine.setAttribute("d", od);
-        fitLine.setAttribute("fill", "none");
-        fitLine.setAttribute("stroke-width", "1.3");
-        fitLine.setAttribute("stroke-dasharray", "4 3");
-        fitLine.style.stroke = "var(--warn)";
-        svg.appendChild(fitLine);
-      }
-
-      // The endpoint is where the price actually is; mark it.
-      var end = pts[pts.length - 1];
-      var dot = document.createElementNS(SVG, "circle");
-      dot.setAttribute("cx", end[0].toFixed(2));
-      dot.setAttribute("cy", end[1].toFixed(2));
-      dot.setAttribute("r", "1.7");
-      dot.setAttribute("fill", stroke);
-      svg.appendChild(dot);
-      return svg;
-    }
+    var SECTOR_CODES = {
+      "Technology": "TEC", "Communication Services": "COM", "Consumer Cyclical": "CCY",
+      "Consumer Defensive": "CDF", "Financial Services": "FIN", "Healthcare": "HLT",
+      "Energy": "ENR", "Industrials": "IND", "Basic Materials": "MAT",
+      "Real Estate": "RES", "Utilities": "UTL", "Unclassified": "UNC"
+    };
+    function sectorCode(name) { return SECTOR_CODES[name] || name.slice(0, 3).toUpperCase(); }
 
     function asOf(iso) {
       var d = new Date(iso);
@@ -1530,45 +707,236 @@
       return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
     }
 
-    var totalCap = rows.reduce(function (sum, r) { return sum + r.market_cap; }, 0);
+    function el(tag, className, text) {
+      var node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+    var SVG = "http://www.w3.org/2000/svg";
+    var XLINK = "http://www.w3.org/1999/xlink";
+    function icon(id, className) {
+      var svg = document.createElementNS(SVG, "svg");
+      if (className) svg.setAttribute("class", className);
+      svg.setAttribute("aria-hidden", "true");
+      var use = document.createElementNS(SVG, "use");
+      use.setAttribute("href", "#" + id);
+      use.setAttributeNS(XLINK, "xlink:href", "#" + id);
+      svg.appendChild(use);
+      return svg;
+    }
+    var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    /* ----- theme ----- */
+
+    var DARK_MQ = window.matchMedia("(prefers-color-scheme: dark)");
+    function applyTheme(pref) {
+      var root = document.documentElement;
+      if (pref === "light" || pref === "dark") root.setAttribute("data-theme", pref);
+      else root.removeAttribute("data-theme");
+      var dark = pref === "dark" || (pref !== "light" && DARK_MQ.matches);
+      document.getElementById("theme-color").setAttribute("content", dark ? "#000000" : "#ffffff");
+      document.querySelectorAll("#themeSeg button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-theme") === (pref || "system")));
+      });
+    }
+
+    /* ----- charts -----
+       The series are thinned cumulative returns (percent) over the
+       full window. A shorter window re-bases the tail of the same
+       series to its own start, so the chart and the headline figure
+       agree on what zero means. */
+
+    var WINDOWS = [
+      { key: "1M", label: "1 month", points: 5, field: "return_1m_pct", metric: "ret1", sessions: 21 },
+      { key: "3M", label: "3 months", points: 15, field: "return_3m_pct", metric: "ret3", sessions: 63 },
+      { key: "6M", label: "6 months", points: 30, field: "return_6m_pct", metric: "ret6", sessions: 126 },
+      { key: "1Y", label: "12 months", points: null, field: "window_return_pct", metric: "ret12", sessions: 252 }
+    ];
+    function windowByKey(key) {
+      for (var i = 0; i < WINDOWS.length; i++) if (WINDOWS[i].key === key) return WINDOWS[i];
+      return WINDOWS[3];
+    }
+    function rebase(series, points) {
+      if (!points || points >= series.length) return series.slice();
+      var tail = series.slice(series.length - points);
+      var base = 1 + tail[0] / 100;
+      return tail.map(function (v) { return ((1 + v / 100) / base - 1) * 100; });
+    }
+
+    // Calendar dates for the thinned points are interpolated between the
+    // window's first and last bar, so a scrubbed date is approximate.
+    function windowStart(w) {
+      if (!lastBar) return null;
+      var days = Math.round(w.sessions * 365 / 252);
+      return new Date(new Date(lastBar).getTime() - days * 86400000).toISOString().slice(0, 10);
+    }
+    function approxDate(start, end, i, n) {
+      if (!start || !end) return null;
+      var a = new Date(start).getTime(), b = new Date(end).getTime();
+      var t = new Date(a + (b - a) * (i / (n - 1)));
+      return "≈ " + t.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    }
+    function colorFor(value) {
+      var d = direction(value);
+      return d === "up" ? "var(--up)" : d === "down" ? "var(--down)" : "var(--text-3)";
+    }
+
+    // opts: width, height, big (zero line, end dot, draw-in), overlay
+    // (a second dashed series), dashed (short history), stroke colour.
+    function lineChart(series, opts) {
+      opts = opts || {};
+      var w = opts.width || 64, h = opts.height || 26, pad = opts.big ? 6 : 1.5;
+      var all = opts.overlay ? series.concat(opts.overlay) : series;
+      var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
+      if (opts.big) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+      var span = hi - lo || 1;
+      function y(v) { return pad + (1 - (v - lo) / span) * (h - pad * 2); }
+      function x(i, n) { return (i / (n - 1)) * w; }
+      function d(s) {
+        return s.map(function (v, i) {
+          return (i ? "L" : "M") + x(i, s.length).toFixed(2) + " " + y(v).toFixed(2);
+        }).join(" ");
+      }
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("aria-hidden", "true");
+      if (!series || series.length < 2) return svg;
+
+      if (opts.big) {
+        var zero = document.createElementNS(SVG, "line");
+        zero.setAttribute("x1", "0"); zero.setAttribute("x2", String(w));
+        zero.setAttribute("y1", y(0).toFixed(2)); zero.setAttribute("y2", y(0).toFixed(2));
+        zero.setAttribute("stroke-dasharray", "2 4");
+        zero.setAttribute("vector-effect", "non-scaling-stroke");
+        zero.style.stroke = "var(--line-2)";
+        svg.appendChild(zero);
+      }
+      if (opts.overlay && opts.overlay.length > 1) {
+        var fit = document.createElementNS(SVG, "path");
+        fit.setAttribute("d", d(opts.overlay));
+        fit.setAttribute("fill", "none");
+        fit.setAttribute("stroke-width", "1.5");
+        fit.setAttribute("stroke-dasharray", "4 4");
+        fit.setAttribute("vector-effect", "non-scaling-stroke");
+        fit.style.stroke = "var(--text-3)";
+        svg.appendChild(fit);
+      }
+      var line = document.createElementNS(SVG, "path");
+      line.setAttribute("d", d(series));
+      line.setAttribute("fill", "none");
+      line.setAttribute("stroke-width", opts.big ? "2" : "1.6");
+      line.setAttribute("stroke-linejoin", "round");
+      line.setAttribute("stroke-linecap", "round");
+      line.setAttribute("vector-effect", "non-scaling-stroke");
+      if (opts.dashed) line.setAttribute("stroke-dasharray", "3 3");
+      line.style.stroke = opts.stroke || colorFor(series[series.length - 1] - series[0]);
+      svg.appendChild(line);
+      if (opts.big) {
+        var dot = document.createElementNS(SVG, "circle");
+        dot.setAttribute("cx", String(w));
+        dot.setAttribute("cy", y(series[series.length - 1]).toFixed(2));
+        dot.setAttribute("r", "3.5");
+        dot.style.fill = line.style.stroke;
+        svg.appendChild(dot);
+      }
+      // The line draws in once it is on the page; a viewer who asked
+      // for less motion gets the finished chart outright.
+      svg.draw = function () {
+        if (REDUCED.matches) return;
+        line.style.setProperty("--len", line.getTotalLength().toFixed(1));
+        line.setAttribute("class", "draw");
+      };
+      if (opts.big && opts.scrub) attachScrub(svg, series, x, y, w, h, opts.scrub);
+      return svg;
+    }
+
+    // Drag across a chart to read it: a cursor follows the pointer, the
+    // headline shows the value at that point, and letting go restores
+    // the window's own figure.
+    function attachScrub(svg, series, x, y, w, h, scrub) {
+      var n = series.length;
+      var cursor = document.createElementNS(SVG, "g");
+      cursor.style.display = "none";
+      var vline = document.createElementNS(SVG, "line");
+      vline.setAttribute("y1", "0"); vline.setAttribute("y2", String(h));
+      vline.setAttribute("vector-effect", "non-scaling-stroke");
+      vline.style.stroke = "var(--text-2)";
+      var pt = document.createElementNS(SVG, "circle");
+      pt.setAttribute("r", "4");
+      pt.style.fill = "var(--text)";
+      cursor.appendChild(vline);
+      cursor.appendChild(pt);
+      svg.appendChild(cursor);
+      svg.style.touchAction = "none";
+      svg.style.cursor = "crosshair";
+      var active = false;
+      function at(event) {
+        var box = svg.getBoundingClientRect();
+        var frac = Math.min(1, Math.max(0, (event.clientX - box.left) / box.width));
+        var i = Math.round(frac * (n - 1));
+        var cx = x(i, n).toFixed(2), cy = y(series[i]).toFixed(2);
+        vline.setAttribute("x1", cx); vline.setAttribute("x2", cx);
+        pt.setAttribute("cx", cx); pt.setAttribute("cy", cy);
+        cursor.style.display = "";
+        scrub.onScrub(i, series[i], approxDate(scrub.start, scrub.end, i, n) || ("point " + (i + 1) + " of " + n));
+      }
+      function stop() {
+        if (!active) return;
+        active = false;
+        cursor.style.display = "none";
+        scrub.onScrub(null);
+      }
+      svg.addEventListener("pointerdown", function (event) {
+        active = true;
+        try { svg.setPointerCapture(event.pointerId); } catch (e) { /* not needed */ }
+        at(event);
+      });
+      svg.addEventListener("pointermove", function (event) { if (active) at(event); });
+      svg.addEventListener("pointerup", stop);
+      svg.addEventListener("pointercancel", stop);
+      svg.addEventListener("lostpointercapture", stop);
+    }
+
+    /* ----- universe facts ----- */
+
+    var totalCap = rows.reduce(function (sum, r) { return sum + r.market_cap; }, 0);
     var sectorCounts = {};
-    rows.forEach(function (r) {
-      sectorCounts[r.sector] = (sectorCounts[r.sector] || 0) + 1;
-    });
+    rows.forEach(function (r) { sectorCounts[r.sector] = (sectorCounts[r.sector] || 0) + 1; });
     var sectors = Object.keys(sectorCounts).sort(function (a, b) {
       return sectorCounts[b] - sectorCounts[a] || a.localeCompare(b);
     });
+    var rowByTicker = {};
+    rows.forEach(function (r) { rowByTicker[r.ticker] = r; });
 
     var sourceName = (universe.source && universe.source.index) || "U.S.-listed companies";
     document.getElementById("subtitle").textContent =
-      universe.count + " " + sourceName + " constituents · " + money(totalCap) +
-      " · " + sectors.length + " sectors · as of " + asOf(universe.generated_at);
+      sourceName + " · " + universe.count + " · " + asOf(lastBar || universe.generated_at);
     var ageDays = (Date.now() - new Date(universe.generated_at)) / 86400000;
     if (ageDays > 5) {
       var stale = document.getElementById("stale-note");
       stale.hidden = false;
       stale.textContent =
-        "This data is " + Math.floor(ageDays) + " days old. The daily refresh " +
-        "may be failing \u2014 check the repository's Actions tab.";
+        "Data is " + Math.floor(ageDays) + " days old. The daily refresh may be failing; " +
+        "check the repository's Actions tab.";
     }
 
     if (hasHistory) {
-      var target = history.criteria.trading_days_target;
       var short = history.coverage.filter(function (e) { return !e.sufficient; });
       var note = document.getElementById("history-note");
       note.hidden = false;
       if (short.length) {
         note.innerHTML =
-          "Adjusted close through " + asOf(history.generated_at) + ". " +
+          "Adjusted close through " + asOf(lastBar) + ", refreshed " + asOf(history.generated_at) + ". " +
           short.length + " name" + (short.length > 1 ? "s have" : " has") +
           " less than " + target + " trading days of history: " +
           short.map(function (e) {
             return "<b>" + e.ticker + "</b> (" + e.trading_days + "d)";
-          }).join(", ") + ".";
+          }).join(", ") + ". Their charts are drawn dashed.";
       } else {
         note.innerHTML =
-          "Adjusted close through " + asOf(history.generated_at) +
+          "Adjusted close through " + asOf(lastBar) + ", refreshed " + asOf(history.generated_at) +
           ". Every name covers at least " + target + " trading days.";
       }
     }
@@ -1579,105 +947,13 @@
       changes.slice().reverse().forEach(function (event) {
         var bits = [];
         event.joined.forEach(function (r) { bits.push("+" + r.ticker); });
-        event.left.forEach(function (r) { bits.push("\u2212" + r.ticker); });
-        event.renamed.forEach(function (r) { bits.push(r.from_ticker + "\u2192" + r.to_ticker); });
+        event.left.forEach(function (r) { bits.push("−" + r.ticker); });
+        event.renamed.forEach(function (r) { bits.push(r.from_ticker + "→" + r.to_ticker); });
         parts.push(asOf(event.observed_at) + ": <b>" + bits.join("</b>, <b>") + "</b>");
       });
       var changesNote = document.getElementById("changes-note");
       changesNote.hidden = false;
-      changesNote.innerHTML = "Membership changes \u2014 " + parts.join(" \u00b7 ");
-    }
-
-    var cross = history && history.cross_section;
-    var rowByTicker = {};
-    rows.forEach(function (r) { rowByTicker[r.ticker] = r; });
-    var medianBySector = {};
-    ((cross && cross.sectors) || []).forEach(function (row) {
-      medianBySector[row.sector] = row.median_return_pct;
-    });
-    if (cross) {
-      document.getElementById("cross").hidden = false;
-      document.getElementById("cross-empty").hidden = true;
-      document.getElementById("cross-title").textContent =
-        "12-month cross-section \u00b7 " + cross.names_used + " names";
-
-      var sectorList = document.getElementById("xs-sectors");
-      cross.sectors.forEach(function (row) {
-        var tr = document.createElement("tr");
-        var nameCell = document.createElement("td");
-        var medCell = document.createElement("td");
-        var breadthCell = document.createElement("td");
-
-        var name = document.createElement("span");
-        name.className = "sector-name";
-        var dot = document.createElement("span");
-        dot.className = "dot";
-        dot.style.cssText =
-          "width:7px;height:7px;border-radius:50%;flex:none;background:" +
-          sectorColor(row.sector);
-        name.appendChild(dot);
-        var label = document.createElement("span");
-        label.className = "sn-text";
-        label.textContent = row.sector;
-        name.appendChild(label);
-        var n = document.createElement("span");
-        n.className = "n";
-        n.textContent = row.count;
-        name.appendChild(n);
-
-        medCell.className = "med " + direction(row.median_return_pct);
-        medCell.textContent = pct(row.median_return_pct);
-
-        var breadth = document.createElement("span");
-        breadth.className = "breadth";
-        breadth.title = row.breadth_pct + "% of names positive";
-        var track = document.createElement("span");
-        track.className = "track";
-        var fill = document.createElement("i");
-        fill.style.width = row.breadth_pct + "%";
-        track.appendChild(fill);
-        var pctEl = document.createElement("span");
-        pctEl.className = "pct";
-        pctEl.textContent = Math.round(row.breadth_pct) + "%";
-        breadth.appendChild(track);
-        breadth.appendChild(pctEl);
-
-        nameCell.appendChild(name);
-        breadthCell.appendChild(breadth);
-        tr.appendChild(nameCell);
-        tr.appendChild(medCell);
-        tr.appendChild(breadthCell);
-        sectorList.appendChild(tr);
-      });
-
-      function chipRow(container, names) {
-        names.forEach(function (row) {
-          var chip = document.createElement("button");
-          chip.type = "button";
-          chip.className = "xchip";
-          var tick = document.createElement("span");
-          tick.textContent = row.ticker + " ";
-          var value = document.createElement("span");
-          value.className = direction(row.return_pct);
-          value.textContent = pct(row.return_pct);
-          chip.appendChild(tick);
-          chip.appendChild(value);
-          chip.addEventListener("click", function () {
-            var input = document.getElementById("search");
-            input.value = row.ticker;
-            state.query = row.ticker;
-            // The chip names one specific ticker; an active sector filter
-            // would only hide it, so clear the filter with the chips' UI.
-            state.sector = null;
-            renderFilters();
-            setTab("universe");
-            listEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-          container.appendChild(chip);
-        });
-      }
-      chipRow(document.getElementById("xs-leaders"), cross.leaders);
-      chipRow(document.getElementById("xs-laggards"), cross.laggards);
+      changesNote.innerHTML = "Membership changes — " + parts.join(" · ");
     }
 
     var source = universe.source || {};
@@ -1690,17 +966,51 @@
           "series per name, the full history lives in <code>data/history/</code>."
         : "");
 
+    /* ----- cross-section ----- */
+
+    var cross = history && history.cross_section;
+    var medianBySector = {};
+    ((cross && cross.sectors) || []).forEach(function (row) {
+      medianBySector[row.sector] = row.median_return_pct;
+    });
+
+    // Median cumulative-return series, for the universe and per sector,
+    // at each point of the thinned series over full-window names.
+    var universeSeries = null;
+    var sectorSeries = {};
+    if (hasHistory) {
+      var bySector = {}, allSparks = [];
+      history.coverage.forEach(function (cov) {
+        var r = rowByTicker[cov.ticker];
+        if (!r || !cov.sufficient || !cov.cum_return_spark) return;
+        (bySector[r.sector] = bySector[r.sector] || []).push(cov.cum_return_spark);
+        allSparks.push(cov.cum_return_spark);
+      });
+      function medianSeries(sparks) {
+        var lengths = {};
+        sparks.forEach(function (sp) { lengths[sp.length] = (lengths[sp.length] || 0) + 1; });
+        var modal = +Object.keys(lengths).sort(function (a, b) { return lengths[b] - lengths[a]; })[0];
+        var same = sparks.filter(function (sp) { return sp.length === modal; });
+        if (same.length < 2) return null;
+        var out = [];
+        for (var i = 0; i < modal; i++) {
+          out.push(median(same.map(function (sp) { return sp[i]; })));
+        }
+        return out;
+      }
+      universeSeries = medianSeries(allSparks);
+      Object.keys(bySector).forEach(function (s) { sectorSeries[s] = medianSeries(bySector[s]); });
+    }
+
     /* ----- state ----- */
 
     var state = {
       query: "", sector: null, grouped: false,
       sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
-      view: "cards", display: "ret12", tab: "universe"
+      view: "cards", display: "ret12", tab: "universe", theme: "system", range: "1Y"
     };
     var collapsedSectors = new Set();
 
-    // View, shown figure and sort survive a reload on this device. They
-    // are conveniences: an unreadable store just means the defaults.
     var PREFS_KEY = "oklahoma-prefs";
     function loadPrefs() {
       var p;
@@ -1712,31 +1022,30 @@
       if (typeof p.sortDesc === "boolean") state.sortDesc = p.sortDesc;
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
       if (typeof p.grouped === "boolean") state.grouped = p.grouped;
+      if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
+      if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
+      if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
     }
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
           view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
-          grouped: state.grouped
+          grouped: state.grouped, showTrend: state.showTrend,
+          theme: state.theme, range: state.range
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
 
-    // The watchlist lives in this browser only (localStorage) — a personal
-    // shortlist, not synced state. Storage can be unavailable (private
-    // windows, blocked site data), so every touch is guarded and the page
-    // works identically with nothing stored.
+    // The watchlist lives in this browser only (localStorage).
     var WATCH_KEY = "oklahoma-watchlist";
     function loadWatch() {
-      try {
-        return new Set(JSON.parse(localStorage.getItem(WATCH_KEY) || "[]"));
-      } catch (e) { return new Set(); }
+      try { return new Set(JSON.parse(localStorage.getItem(WATCH_KEY) || "[]")); }
+      catch (e) { return new Set(); }
     }
     function saveWatch() {
-      try {
-        localStorage.setItem(WATCH_KEY, JSON.stringify(Array.from(watch)));
-      } catch (e) { /* per-viewer convenience only */ }
+      try { localStorage.setItem(WATCH_KEY, JSON.stringify(Array.from(watch))); }
+      catch (e) { /* per-viewer convenience only */ }
     }
     var watch = loadWatch();
     watch.forEach(function (t) { if (!rowByTicker[t]) watch.delete(t); });
@@ -1744,90 +1053,70 @@
 
     /* ----- metrics ----- */
 
-    // One registry drives the sort menu, the card pill and the table
-    // columns, so a figure means the same thing wherever it appears.
-    // `value` returns null wherever the figure would not be honest: the
-    // full-window metrics for a name with less than a year of bars, or
-    // any metric whose window the name cannot fill. A null shows as a
-    // dash and sinks in every sort, whichever direction.
     function fullOnly(field) {
       return function (r, cov) {
         return cov && cov.sufficient && cov[field] != null ? cov[field] : null;
       };
     }
     function anyWindow(field) {
-      return function (r, cov) {
-        return cov && cov[field] != null ? cov[field] : null;
-      };
+      return function (r, cov) { return cov && cov[field] != null ? cov[field] : null; };
     }
     var METRICS = {
-      cap: { label: "Market cap", short: "Cap", explain: "cap", neutral: true,
+      cap: { label: "Market cap", short: "Mkt cap", explain: "cap", neutral: true,
         value: function (r) { return r.market_cap; }, fmt: money },
-      ret12: { label: "12-mo return", short: "12-mo", explain: "ret12",
+      ret12: { label: "12-month return", short: "12M", explain: "ret12",
         value: fullOnly("window_return_pct"), fmt: pct, tfmt: pct1 },
-      ret6: { label: "6-mo return", short: "6-mo", explain: "ret6",
+      ret6: { label: "6-month return", short: "6M", explain: "ret6",
         value: anyWindow("return_6m_pct"), fmt: pct, tfmt: pct1 },
-      ret3: { label: "3-mo return", short: "3-mo", explain: "ret3",
+      ret3: { label: "3-month return", short: "3M", explain: "ret3",
         value: anyWindow("return_3m_pct"), fmt: pct, tfmt: pct1 },
-      ret1: { label: "1-mo return", short: "1-mo", explain: "ret1",
+      ret1: { label: "1-month return", short: "1M", explain: "ret1",
         value: anyWindow("return_1m_pct"), fmt: pct, tfmt: pct1 },
-      offhigh: { label: "Off 1y high", short: "Off high", explain: "offhigh",
+      offhigh: { label: "Off 1-year high", short: "Off high", explain: "offhigh",
         value: function (r, cov) {
-          if (!cov || !cov.sufficient || cov.window_high == null ||
-              cov.last_adj_close == null) return null;
+          if (!cov || !cov.sufficient || cov.window_high == null || cov.last_adj_close == null) return null;
           return (cov.last_adj_close / cov.window_high - 1) * 100;
         },
-        fmt: function (v) { return v > -0.5 ? "at high" : v.toFixed(1) + "%"; },
-        cls: function (v) { return v > -0.5 ? "up" : direction(v); } },
+        fmt: function (v) { return v > -0.5 ? "At high" : signed(v, 1, "%"); } },
       vsmedian: { label: "Vs sector median", short: "Vs sector", explain: "vsmedian",
         value: function (r, cov) {
           var med = medianBySector[r.sector];
-          if (med == null || !cov || !cov.sufficient ||
-              cov.window_return_pct == null) return null;
+          if (med == null || !cov || !cov.sufficient || cov.window_return_pct == null) return null;
           return cov.window_return_pct - med;
         },
-        fmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; },
-        head: "Vs sector pts",
-        tfmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1); } },
+        fmt: function (v) { return signed(v, 1, " pts"); }, head: "Vs sector pts",
+        tfmt: function (v) { return signed(v, 1); } },
       trend: { label: "Trend (log slope)", short: "Trend", explain: "trend",
         value: anyWindow("trend_ann_pct"), head: "Trend %/yr",
-        fmt: function (v) { return pct(v) + "/yr"; }, tfmt: pct1 },
-      r2: { label: "R\u00b2 of trend", short: "R\u00b2", explain: "r2", neutral: true,
+        fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
+      r2: { label: "R² of trend", short: "R²", explain: "r2", neutral: true,
         value: anyWindow("trend_r2"), fmt: function (v) { return v.toFixed(2); } },
       quality: { label: "Quality momentum", short: "Quality", explain: "quality",
         value: anyWindow("quality_pct"), head: "Quality %/yr",
-        fmt: function (v) { return pct(v) + "/yr"; }, tfmt: pct1 },
+        fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
       last: { label: "Last close", short: "Last", neutral: true,
-        value: anyWindow("last_adj_close"),
-        fmt: function (v) { return "$" + v.toLocaleString(); } }
+        value: anyWindow("last_adj_close"), fmt: price }
     };
-    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
-      "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
-      "trend", "r2", "quality"];
+    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
+    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
-    // `dense` picks the table's one-decimal, suffix-free form where a
-    // metric defines one; the header carries the unit there.
     function metricText(key, v, dense) {
-      if (v == null) return "\u2014";
+      if (v == null) return "—";
       var m = METRICS[key];
       return dense && m.tfmt ? m.tfmt(v) : m.fmt(v);
     }
     function metricClass(key, v) {
-      var m = METRICS[key];
-      if (v == null || m.neutral) return "";
-      return m.cls ? m.cls(v) : direction(v);
+      if (v == null) return "none";
+      if (METRICS[key].neutral) return "flat";
+      if (key === "offhigh") return v > -0.5 ? "up" : direction(v);
+      return direction(v);
     }
 
     function ordered(rows_) {
-      var key = state.sortKey;
-      var sign = state.sortDesc ? -1 : 1;
-      var vals = {};
+      var key = state.sortKey, sign = state.sortDesc ? -1 : 1, vals = {};
       rows_.forEach(function (r) { vals[r.ticker] = metricValue(key, r); });
       return rows_.slice().sort(function (a, b) {
         var ra = vals[a.ticker], rb = vals[b.ticker];
-        // Names without an honest figure sink together, in rank order,
-        // so the dash block is deterministic here rather than by luck.
         if (ra == null && rb == null) return a.rank - b.rank;
         if (ra == null) return 1;
         if (rb == null) return -1;
@@ -1835,11 +1124,8 @@
       });
     }
 
-    // 503 rows is too many to build in one synchronous pass on a phone,
-    // so the list paints in frame-sized chunks: the first screenful is
-    // instant and the rest streams in. A newer paint cancels an older one.
-    var paintToken = 0;
-    var afterPaint = null;
+    // 503 rows paint in frame-sized chunks so the first screen is instant.
+    var paintToken = 0, afterPaint = null;
     function paintInto(container, items, makeNode) {
       var token = ++paintToken;
       container.textContent = "";
@@ -1847,19 +1133,10 @@
       function step() {
         if (token !== paintToken) return;
         var frag = document.createDocumentFragment();
-        for (var end = Math.min(i + 80, items.length); i < end; i++) {
-          frag.appendChild(makeNode(items[i]));
-        }
+        for (var end = Math.min(i + 60, items.length); i < end; i++) frag.appendChild(makeNode(items[i]));
         container.appendChild(frag);
-        if (i < items.length) {
-          requestAnimationFrame(step);
-        } else if (afterPaint) {
-          // Chunked painting means a caller cannot touch late rows right
-          // after renderList() returns; this runs once the last chunk lands.
-          var hook = afterPaint;
-          afterPaint = null;
-          hook();
-        }
+        if (i < items.length) requestAnimationFrame(step);
+        else if (afterPaint) { var hook = afterPaint; afterPaint = null; hook(); }
       }
       step();
     }
@@ -1867,6 +1144,7 @@
     var filtersEl = document.getElementById("filters");
     var listEl = document.getElementById("list");
     var resultEl = document.getElementById("resultcount");
+    var listFig = document.getElementById("listfig");
     var groupBtn = document.getElementById("groupToggle");
     var tableWrap = document.getElementById("table-wrap");
     var gridHead = document.getElementById("grid-head");
@@ -1877,6 +1155,115 @@
     var displayRow = document.getElementById("display-row");
     var groupRow = document.getElementById("group-row");
     var columnsBtn = document.getElementById("columnsHelp");
+    var watchMix = document.getElementById("watch-mix");
+
+    /* ----- hero: the universe as one line ----- */
+
+    var heroEl = document.getElementById("hero");
+    function renderHero(animate) {
+      if (!universeSeries) { heroEl.hidden = true; return; }
+      heroEl.hidden = false;
+      var w = windowByKey(state.range);
+      var values = history.coverage.map(function (cov) {
+        return cov.sufficient ? cov[w.field] : null;
+      });
+      var have = values.filter(function (v) { return v != null; }).length;
+      var med = median(values);
+      var series = rebase(universeSeries, w.points);
+      var big = document.getElementById("hero-big");
+      var line = document.getElementById("hero-line");
+      function headline(value, label) {
+        big.textContent = pct(value);
+        big.className = "hero-big " + direction(value);
+        line.textContent = label;
+        line.className = "hero-line " + direction(value);
+      }
+      headline(med, "Median name, past " + w.label);
+      document.getElementById("hero-sub").textContent = have + " of " + rows.length + " names, full window";
+      var holder = document.getElementById("hero-chart");
+      holder.textContent = "";
+      var chart = lineChart(series, { width: 358, height: 140, big: true, stroke: colorFor(med),
+        scrub: { start: windowStart(w), end: lastBar, onScrub: function (i, value, when) {
+          if (i == null) headline(med, "Median name, past " + w.label);
+          else headline(value, "Median name · " + when);
+        } } });
+      holder.appendChild(chart);
+      if (animate) chart.draw();
+      renderRanges(document.getElementById("hero-ranges"), null, function () { renderHero(false); });
+    }
+    function renderRanges(container, valuesByKey, onChange) {
+      container.textContent = "";
+      container.classList.toggle("tall", Boolean(valuesByKey));
+      WINDOWS.forEach(function (w) {
+        var b = el("button", null);
+        b.type = "button";
+        var on = w.key === state.range;
+        b.setAttribute("aria-pressed", String(on));
+        b.appendChild(document.createTextNode(w.key));
+        if (valuesByKey) {
+          var v = valuesByKey[w.key];
+          b.appendChild(el("span", "rv", v == null ? "—" : pct1(v)));
+          if (on && direction(v) === "down") b.classList.add("neg");
+        }
+        b.addEventListener("click", function () {
+          state.range = w.key;
+          savePrefs();
+          onChange();
+        });
+        container.appendChild(b);
+      });
+    }
+
+    /* ----- sectors ----- */
+
+    if (cross) {
+      document.getElementById("cross").hidden = false;
+      document.getElementById("cross-empty").hidden = true;
+      document.getElementById("cross-title").textContent =
+        cross.names_used + " of " + rows.length + " names · full year";
+      var list = document.getElementById("xs-sectors");
+      cross.sectors.forEach(function (row) {
+        var li = el("li", "sector-row");
+        var left = el("div", "name-cell");
+        left.appendChild(el("div", "sname", row.sector));
+        var meta = el("div", "smeta");
+        meta.appendChild(document.createTextNode(row.count + " names"));
+        var breadth = el("span", "breadth");
+        var track = el("span", "track");
+        var fill = document.createElement("i");
+        fill.style.width = row.breadth_pct + "%";
+        track.appendChild(fill);
+        breadth.appendChild(track);
+        breadth.appendChild(el("span", null, Math.round(row.breadth_pct) + "% up"));
+        breadth.title = row.breadth_pct + "% of names positive over 12 months";
+        meta.appendChild(breadth);
+        left.appendChild(meta);
+        li.appendChild(left);
+        var sp = el("div", "spark");
+        var series = sectorSeries[row.sector];
+        if (series) sp.appendChild(lineChart(series, { width: 64, height: 26, stroke: colorFor(row.median_return_pct) }));
+        li.appendChild(sp);
+        var fig = el("div", "figure");
+        fig.appendChild(el("span", "pill " + direction(row.median_return_pct), pct(row.median_return_pct)));
+        li.appendChild(fig);
+        list.appendChild(li);
+      });
+      function chipRow(container, names) {
+        names.forEach(function (row) {
+          var chip = el("button", "xchip");
+          chip.type = "button";
+          chip.appendChild(el("span", null, row.ticker));
+          chip.appendChild(el("span", direction(row.return_pct), pct1(row.return_pct)));
+          chip.addEventListener("click", function () {
+            var r = rowByTicker[row.ticker];
+            if (r) openDetail(r, chip);
+          });
+          container.appendChild(chip);
+        });
+      }
+      chipRow(document.getElementById("xs-leaders"), cross.leaders);
+      chipRow(document.getElementById("xs-laggards"), cross.laggards);
+    }
 
     /* ----- tabs ----- */
 
@@ -1893,22 +1280,15 @@
         btn.setAttribute("aria-selected", String(on));
         btn.tabIndex = on ? 0 : -1;
       });
-      // One listing serves two tabs: it moves under whichever is open,
-      // so the Watchlist is the same cards or table as the Universe.
       if (tab === "universe" || tab === "watch") {
         var slot = document.getElementById(tab === "watch" ? "watch-slot" : "universe-slot");
         if (listing.parentNode !== slot) slot.appendChild(listing);
         renderList();
       }
+      if (tab === "watch") paintWatchMix();
       savePrefs();
-      // The table is its own scroller sized to fit above the bar only
-      // when its top meets the viewport's, so land on it; cards start
-      // from the page top as usual.
-      if (state.view === "table" && !tableWrap.hidden) {
-        tableWrap.scrollIntoView({ block: "start" });
-      } else {
-        window.scrollTo(0, 0);
-      }
+      if (state.view === "table" && !tableWrap.hidden) tableWrap.scrollIntoView({ block: "start" });
+      else window.scrollTo(0, 0);
     }
     var tabbar = document.getElementById("tabbar");
     tabbar.addEventListener("click", function (event) {
@@ -1924,34 +1304,42 @@
       document.getElementById("tabbtn-" + next).focus();
     });
     function paintWatchCount() {
-      document.querySelectorAll(".watch-n").forEach(function (el) {
-        el.textContent = watch.size;
-        if (el.classList.contains("tab-badge")) el.hidden = !watch.size;
+      document.querySelectorAll(".watch-n").forEach(function (n) {
+        n.textContent = n.classList.contains("tab-badge") ? watch.size : watch.size + " names";
+        if (n.classList.contains("tab-badge")) n.hidden = !watch.size;
       });
     }
-
-    function starMark() {
-      var mark = document.createElement("span");
-      mark.className = "star-mark";
-      mark.textContent = " \u2605";
-      mark.setAttribute("role", "img");
-      mark.setAttribute("aria-label", "on watchlist");
-      return mark;
+    function paintWatchMix() {
+      watchMix.textContent = "";
+      watchMix.hidden = !watch.size;
+      if (!watch.size) return;
+      var counts = {};
+      watch.forEach(function (t) {
+        var r = rowByTicker[t];
+        if (r) counts[r.sector] = (counts[r.sector] || 0) + 1;
+      });
+      Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); })
+        .forEach(function (s) {
+          var item = el("span", null);
+          item.appendChild(el("b", null, String(counts[s])));
+          item.appendChild(document.createTextNode(" " + s));
+          watchMix.appendChild(item);
+        });
     }
-    // The ticker as both views show it: the symbol, a star if watched,
-    // and the honest badge for a name short of a year's bars.
+
     function tickerSpan(r) {
       var cov = coverage[r.ticker];
-      var tick = document.createElement("span");
-      tick.className = "ticker";
-      tick.textContent = r.ticker;
-      if (watch.has(r.ticker)) tick.appendChild(starMark());
+      var tick = el("span", "ticker", r.ticker);
+      if (watch.has(r.ticker)) {
+        var star = icon("i-star-f", "star");
+        star.removeAttribute("aria-hidden");
+        star.setAttribute("role", "img");
+        star.setAttribute("aria-label", "on watchlist");
+        tick.appendChild(star);
+      }
       if (cov && !cov.sufficient) {
-        var warn = document.createElement("span");
-        warn.className = "warn";
-        warn.textContent = cov.trading_days + "d";
+        var warn = el("span", "warn", cov.trading_days + "d");
         warn.title = "Only " + cov.trading_days + " trading days of history";
-        tick.appendChild(document.createTextNode(" "));
         tick.appendChild(warn);
       }
       return tick;
@@ -1959,29 +1347,19 @@
     function syncStars(ticker) {
       var r = rowByTicker[ticker];
       if (!r) return;
-      document.querySelectorAll(
-        '[data-ticker="' + CSS.escape(ticker) + '"] .ticker'
-      ).forEach(function (tick) {
-        tick.replaceWith(tickerSpan(r));
+      document.querySelectorAll('[data-ticker="' + CSS.escape(ticker) + '"]').forEach(function (node) {
+        node.replaceWith(node.tagName === "TR" ? tableRow(r) : rowItem(r));
       });
     }
 
-    function chip(label, value, count, color) {
-      var b = document.createElement("button");
+    /* ----- chips ----- */
+
+    function chip(label, value, count) {
+      var b = el("button", "chip");
       b.type = "button";
-      b.className = "chip";
       b.setAttribute("aria-pressed", String(state.sector === value));
-      if (color) b.style.setProperty("--sector", color);
-      if (color) {
-        var dot = document.createElement("span");
-        dot.className = "dot";
-        b.appendChild(dot);
-      }
       b.appendChild(document.createTextNode(label));
-      var n = document.createElement("span");
-      n.className = "n";
-      n.textContent = count;
-      b.appendChild(n);
+      b.appendChild(el("span", "n", count));
       b.addEventListener("click", function () {
         state.sector = state.sector === value ? null : value;
         renderFilters();
@@ -1989,299 +1367,239 @@
       });
       return b;
     }
-
     function renderFilters() {
       filtersEl.textContent = "";
-      filtersEl.appendChild(chip("All", null, rows.length, null));
-      sectors.forEach(function (s) {
-        filtersEl.appendChild(chip(s, s, sectorCounts[s], sectorColor(s)));
-      });
+      filtersEl.appendChild(chip("All", null, rows.length));
+      sectors.forEach(function (s) { filtersEl.appendChild(chip(s, s, sectorCounts[s])); });
     }
 
     function visible() {
-      // The Watchlist tab shows the whole shortlist; search and sector
-      // chips belong to the Universe tab and do not reach into it.
-      if (state.watchOnly) {
-        return rows.filter(function (r) { return watch.has(r.ticker); });
-      }
+      if (state.watchOnly) return rows.filter(function (r) { return watch.has(r.ticker); });
       var q = state.query.trim().toLowerCase();
       return rows.filter(function (r) {
         if (state.sector && r.sector !== state.sector) return false;
         if (!q) return true;
-        return (
-          r.ticker.toLowerCase().indexOf(q) !== -1 ||
+        return r.ticker.toLowerCase().indexOf(q) !== -1 ||
           r.name.toLowerCase().indexOf(q) !== -1 ||
           r.sector.toLowerCase().indexOf(q) !== -1 ||
-          (r.industry || "").toLowerCase().indexOf(q) !== -1
-        );
+          (r.industry || "").toLowerCase().indexOf(q) !== -1;
       });
     }
 
-    function detailList(r) {
-      var dl = document.createElement("div");
-      dl.className = "detail";
+    /* ----- the name page ----- */
+
+    function stat(key, label, value, cls, sub) {
+      var cell = el("div", "stat");
+      cell.appendChild(explainLabel(key, label));
+      cell.appendChild(el("span", "val" + (cls ? " " + cls : ""), value));
+      if (sub) cell.appendChild(el("span", "sub", sub));
+      return cell;
+    }
+
+    var dpStar = document.getElementById("dp-star");
+    function detailBody(r) {
+      var body = el("div", "detail");
       var cov = coverage[r.ticker];
+      var cum = cov && cov.cum_return_spark;
+      var hasSeries = cum && cum.length > 1;
+      var hasFit = cov && cov.fit_spark && cov.fit_spark.length > 1;
 
-      // Identity in one quiet line; the numbers get the structure.
-      var facts = document.createElement("div");
-      facts.className = "fact-line";
-      var bits = [r.sector, r.industry,
-        money(r.market_cap) + " (" + ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe)"];
-      if (r.share_classes && r.share_classes.length > 1) {
-        bits.push("classes " + r.share_classes.join(" + "));
-      }
-      facts.textContent = bits.filter(Boolean).join(" \u00b7 ");
-      dl.appendChild(facts);
-
-      function statCell(key, label, value, cls, sub) {
-        var cell = document.createElement("div");
-        cell.className = "stat-cell";
-        cell.appendChild(explainLabel(key, label));
-        var v = document.createElement("span");
-        v.className = "stat-val" + (cls ? " " + cls : "");
-        v.textContent = value;
-        cell.appendChild(v);
-        if (sub) {
-          var sb = document.createElement("span");
-          sb.className = "stat-sub";
-          sb.textContent = sub;
-          cell.appendChild(sb);
-        }
-        return cell;
+      var line = el("p", "dp-line");
+      var holder = el("div", "chart");
+      var foot = el("div", "chart-foot");
+      var ranges = el("div", "ranges");
+      ranges.setAttribute("role", "group");
+      ranges.setAttribute("aria-label", "Window");
+      var toggle = null;
+      if (hasFit) {
+        toggle = el("button", "fit-toggle");
+        toggle.type = "button";
       }
 
-      if (cov && cov.window_return_pct != null) {
-        var grid = document.createElement("div");
-        grid.className = "stat-grid";
-        grid.appendChild(statCell(cov.sufficient ? "ret12" : null,
-          cov.sufficient ? "12-mo return" : cov.window_trading_days + "-day return",
-          pct(cov.window_return_pct), direction(cov.window_return_pct)));
-        if (cov.return_6m_pct != null) {
-          grid.appendChild(statCell("ret6", "6-mo return",
-            pct(cov.return_6m_pct), direction(cov.return_6m_pct)));
-        }
-        if (cov.return_3m_pct != null) {
-          grid.appendChild(statCell("ret3", "3-mo return",
-            pct(cov.return_3m_pct), direction(cov.return_3m_pct)));
-        }
-        if (cov.return_1m_pct != null) {
-          grid.appendChild(statCell("ret1", "1-mo return",
-            pct(cov.return_1m_pct), direction(cov.return_1m_pct)));
-        }
-        if (cov.window_high != null && cov.last_adj_close != null) {
-          var offHigh = (cov.last_adj_close / cov.window_high - 1) * 100;
-          grid.appendChild(statCell(cov.sufficient ? "offhigh" : null,
-            cov.sufficient ? "Off 1y high" : "Off " + cov.window_trading_days + "-day high",
-            offHigh > -0.5 ? "at high" : offHigh.toFixed(1) + "%",
-            offHigh > -0.5 ? "up" : direction(offHigh)));
-        }
-        var med = medianBySector[r.sector];
-        if (med != null && cov.sufficient) {
-          var delta = cov.window_return_pct - med;
-          grid.appendChild(statCell("vsmedian", "Vs sector",
-            (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts",
-            direction(delta), "median " + pct(med)));
-        }
-        dl.appendChild(grid);
+      function windowValue(w) {
+        if (!cov) return null;
+        if (w.key === "1Y") return cov.window_return_pct;
+        return cov[w.field];
       }
-
-      var cumSeries = cov && cov.cum_return_spark;
-      if (cumSeries && cumSeries.length > 1) {
-        var card = document.createElement("div");
-        card.className = "trend-card";
-
-        var head = document.createElement("div");
-        head.className = "tc-head";
-        var title = document.createElement("span");
-        title.className = "tc-title";
-        title.textContent = "Price path, " + cov.window_trading_days + " trading days";
-        head.appendChild(title);
-        card.appendChild(head);
-
-        var hasFit = cov.fit_spark && cov.fit_spark.length > 1;
-        if (hasFit) {
-          var stats = document.createElement("div");
-          stats.className = "tc-stats";
-          function tcStat(key, label, value, cls) {
-            var wrap = document.createElement("span");
-            wrap.className = "tc-stat";
-            wrap.appendChild(explainLabel(key, label));
-            var v = document.createElement("span");
-            v.className = "tc-val" + (cls ? " " + cls : "");
-            v.textContent = value;
-            wrap.appendChild(v);
-            return wrap;
-          }
-          stats.appendChild(tcStat("trend", "Trend",
-            pct(cov.trend_ann_pct) + "/yr", direction(cov.trend_ann_pct)));
-          stats.appendChild(tcStat("r2", "R\u00b2", cov.trend_r2.toFixed(2)));
-          stats.appendChild(tcStat("quality", "Quality",
-            pct(cov.quality_pct) + "/yr", direction(cov.quality_pct)));
-          card.appendChild(stats);
-
-          var toggle = document.createElement("button");
-          toggle.type = "button";
-          toggle.className = "fit-toggle";
-          head.appendChild(toggle);
+      function paint(animate) {
+        var w = windowByKey(state.range);
+        var v = windowValue(w);
+        var full = cov && cov.sufficient;
+        var label = (w.key === "1Y" && !full && cov
+          ? " · past " + cov.window_trading_days + " sessions"
+          : " · past " + w.label) +
+          (cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "");
+        function paintLine(value, text) {
+          line.textContent = "";
+          line.className = "dp-line " + direction(value);
+          line.appendChild(document.createTextNode(value == null ? "—" : pct(value)));
+          line.appendChild(el("span", null, text));
         }
-
-        var chartHolder = document.createElement("div");
-        chartHolder.className = "series";
-        card.appendChild(chartHolder);
-        function renderChart() {
-          chartHolder.textContent = "";
-          var stroke = getComputedStyle(document.documentElement)
-            .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
-          chartHolder.appendChild(spark(
-            cumSeries, 300, 56, stroke, true, 0,
-            hasFit && state.showTrend ? cov.fit_spark : null
-          ));
-          if (hasFit) {
-            toggle.textContent = state.showTrend ? "Hide trend line" : "Show trend line";
-            toggle.setAttribute("aria-pressed", String(state.showTrend));
-          }
-        }
-        if (hasFit) {
-          toggle.addEventListener("click", function () {
-            state.showTrend = !state.showTrend;
-            renderChart();
+        paintLine(v, label);
+        holder.textContent = "";
+        if (hasSeries) {
+          var series = rebase(cum, w.points);
+          var overlay = null;
+          if (hasFit && state.showTrend && w.key === "1Y") overlay = cov.fit_spark;
+          var startDate = w.key === "1Y" ? (cov.window_start_date || cov.start_date) : windowStart(w);
+          var chart = lineChart(series, {
+            width: 358, height: 140, big: true, overlay: overlay,
+            dashed: !full, stroke: colorFor(v == null ? series[series.length - 1] : v),
+            scrub: { start: startDate, end: cov.end_date, onScrub: function (i, value, when) {
+              if (i == null) { paintLine(v, label); return; }
+              paintLine(value, " · " + when + " · from the window's start");
+            } }
           });
+          holder.appendChild(chart);
+          if (animate) chart.draw();
         }
-        renderChart();
-
-        var axis = document.createElement("div");
-        axis.className = "axis";
-        var from = document.createElement("span");
-        from.textContent = cov.window_start_date || cov.start_date;
-        var to = document.createElement("span");
-        to.textContent = cov.end_date;
-        axis.appendChild(from);
-        axis.appendChild(to);
-        card.appendChild(axis);
-        dl.appendChild(card);
+        foot.textContent = "";
+        if (cov) {
+          foot.appendChild(el("span", null, w.key === "1Y" ? (cov.window_start_date || cov.start_date) : w.sessions + " sessions"));
+          if (toggle) {
+            toggle.textContent = "";
+            toggle.appendChild(el("span", "swatch"));
+            toggle.appendChild(document.createTextNode(state.showTrend ? "Trend line on" : "Show trend line"));
+            toggle.setAttribute("aria-pressed", String(state.showTrend));
+            toggle.hidden = w.key !== "1Y";
+            foot.appendChild(toggle);
+          }
+          foot.appendChild(el("span", null, cov.end_date));
+        }
+        var vals = {};
+        WINDOWS.forEach(function (ww) { vals[ww.key] = windowValue(ww); });
+        renderRanges(ranges, vals, function () { paint(false); renderHero(false); });
       }
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          state.showTrend = !state.showTrend;
+          savePrefs();
+          paint(false);
+        });
+      }
+      paint(true);
+      body.appendChild(line);
+      body.appendChild(holder);
+      body.appendChild(foot);
+      body.appendChild(ranges);
 
-      var watchRow = document.createElement("div");
-      watchRow.className = "watch-row";
-      watchRow.style.marginTop = "0";
-      var watchBtn = document.createElement("button");
+      var h = el("h2", "section", "Key stats");
+      body.appendChild(h);
+      var grid = el("div", "stats");
+      grid.appendChild(stat("cap", "Market cap", money(r.market_cap), null,
+        ((r.market_cap / totalCap) * 100).toFixed(2) + "% of universe"));
+      if (cov && cov.window_high != null && cov.last_adj_close != null) {
+        var off = (cov.last_adj_close / cov.window_high - 1) * 100;
+        grid.appendChild(stat(cov.sufficient ? "offhigh" : null,
+          cov.sufficient ? "Off 1-year high" : "Off " + cov.window_trading_days + "-day high",
+          off > -0.5 ? "At high" : signed(off, 1, "%"), off > -0.5 ? "up" : direction(off),
+          "high " + price(cov.window_high)));
+      }
+      var med = medianBySector[r.sector];
+      if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
+        grid.appendChild(stat("vsmedian", "Vs sector median", signed(cov.window_return_pct - med, 1, " pts"),
+          direction(cov.window_return_pct - med), r.sector + " median " + pct(med)));
+      } else {
+        grid.appendChild(stat(null, "Vs sector median", "—", "none", "needs a full year"));
+      }
+      if (cov && cov.window_low != null) {
+        grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
+          price(cov.window_low) + " – " + price(cov.window_high)));
+      }
+      if (hasFit) {
+        grid.appendChild(stat("trend", "Trend (log slope)", signed(cov.trend_ann_pct, 1, "% /yr"), direction(cov.trend_ann_pct)));
+        grid.appendChild(stat("r2", "R² of trend", cov.trend_r2.toFixed(2), null, "0 to 1"));
+        grid.appendChild(stat("quality", "Quality momentum", signed(cov.quality_pct, 1, "% /yr"), direction(cov.quality_pct), "trend × R²"));
+      }
+      if (r.share_classes && r.share_classes.length > 1) {
+        grid.appendChild(stat(null, "Share classes", r.share_classes.join(" + ")));
+      }
+      if (r.exchange) grid.appendChild(stat(null, "Exchange", r.exchange));
+      body.appendChild(grid);
+
+      var watchBtn = el("button", "watch-btn");
       watchBtn.type = "button";
-      watchBtn.className = "watch-btn";
-      var watchCtx = document.createElement("span");
-      watchCtx.className = "watch-ctx";
+      var watchCtx = el("span", "watch-ctx");
       function paintWatch() {
         var on = watch.has(r.ticker);
-        watchBtn.textContent = on ? "\u2605 On watchlist" : "\u2606 Add to watchlist";
+        watchBtn.textContent = "";
+        watchBtn.appendChild(icon(on ? "i-star-f" : "i-star"));
+        watchBtn.appendChild(document.createTextNode(on ? "On your watchlist" : "Add to watchlist"));
         watchBtn.setAttribute("aria-pressed", String(on));
-        // Distinctness at a glance: what the shortlist already holds, and
-        // how much of it sits in this same sector.
+        dpStar.setAttribute("aria-pressed", String(on));
+        dpStar.setAttribute("aria-label", on ? "Remove from watchlist" : "Add to watchlist");
+        dpStar.textContent = "";
+        dpStar.appendChild(icon(on ? "i-star-f" : "i-star"));
         var inSector = 0;
         watch.forEach(function (t) {
           if (t === r.ticker) return;
           var rec = rowByTicker[t];
           if (rec && rec.sector === r.sector) inSector++;
         });
-        watchCtx.textContent = !watch.size
-          ? ""
-          : "Watching " + watch.size + (inSector
-              ? " \u00b7 " + inSector + " already in " + r.sector
-              : " \u00b7 none in " + r.sector);
+        watchCtx.textContent = !watch.size ? "" :
+          "Watching " + watch.size + (inSector ? " · " + inSector + " already in " + r.sector : " · none in " + r.sector);
       }
-      watchBtn.addEventListener("click", function () {
-        if (watch.has(r.ticker)) watch.delete(r.ticker);
-        else watch.add(r.ticker);
+      function toggleWatch() {
+        if (watch.has(r.ticker)) watch.delete(r.ticker); else watch.add(r.ticker);
         saveWatch();
         paintWatch();
         paintWatchCount();
+        paintWatchMix();
         syncStars(r.ticker);
-        // With the watchlist filter on, the list behind the sheet must
-        // drop or keep this name; the sheet itself stays where it is.
         if (state.watchOnly) renderList();
-      });
-      paintWatch();
-      watchRow.appendChild(watchBtn);
-      watchRow.appendChild(watchCtx);
-      dl.appendChild(watchRow);
-
-      if (cov) {
-        var meta = document.createElement("div");
-        meta.className = "detail-meta";
-        var bits = [];
-        if (r.exchange) bits.push(r.exchange);
-        bits.push(cov.trading_days + " trading days, " +
-          cov.start_date + " \u2192 " + cov.end_date);
-        if (cov.window_low != null) {
-          bits.push("range $" + cov.window_low.toLocaleString() +
-            "\u2013$" + cov.window_high.toLocaleString());
-        }
-        if (cov.last_adj_close != null) {
-          bits.push("last adj. close $" + cov.last_adj_close.toLocaleString());
-        }
-        meta.textContent = bits.join(" \u00b7 ");
-        dl.appendChild(meta);
       }
-      return dl;
+      watchBtn.addEventListener("click", toggleWatch);
+      dpStar.onclick = toggleWatch;
+      paintWatch();
+      body.appendChild(watchBtn);
+      body.appendChild(watchCtx);
+
+      body.appendChild(el("h2", "section", "About the numbers"));
+      body.appendChild(el("p", "about",
+        "Every figure is recomputed from committed daily bars, adjusted for splits and dividends. " +
+        "Tap any stat to see its plain-language meaning and formula."));
+      if (cov) {
+        body.appendChild(el("div", "detail-meta",
+          cov.trading_days + " trading days, " + cov.start_date + " → " + cov.end_date +
+          (cov.last_adj_close != null ? " · last adj. close " + price(cov.last_adj_close) : "")));
+      }
+      return body;
     }
+
+    /* ----- rows ----- */
 
     function rowItem(r) {
       var li = document.createElement("li");
-      var color = sectorColor(r.sector);
       var cov = coverage[r.ticker];
-
-      var button = document.createElement("button");
+      var button = el("button", "row");
       button.type = "button";
-      button.className = "row";
       button.setAttribute("aria-haspopup", "dialog");
-      button.style.setProperty("--sector", color);
 
-      var rank = document.createElement("span");
-      rank.className = "rank";
-      rank.textContent = r.rank;
-
-      var main = document.createElement("span");
-      main.className = "name-cell";
-      var ticker = tickerSpan(r);
-
-      var company = document.createElement("span");
-      company.className = "company";
-      var companyName = document.createElement("span");
-      companyName.className = "company-name";
-      companyName.textContent = r.name;
-      var capSub = document.createElement("span");
-      capSub.className = "cap-sub";
-      capSub.textContent = money(r.market_cap);
-      company.appendChild(companyName);
-      company.appendChild(capSub);
-      main.appendChild(ticker);
+      var main = el("span", "name-cell");
+      main.appendChild(tickerSpan(r));
+      var company = el("span", "company");
+      company.appendChild(el("span", "company-name", r.name));
+      company.appendChild(el("span", "cap-sub", "· " + money(r.market_cap)));
       main.appendChild(company);
-
-      var cap = document.createElement("span");
-      cap.className = "cap";
-      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
-        var stroke = getComputedStyle(document.documentElement)
-          .getPropertyValue(cov.window_return_pct >= 0 ? "--up" : "--down").trim();
-        var mini = spark(cov.cum_return_spark, 54, 18, stroke, false);
-        mini.setAttribute("class", "spark");
-        cap.appendChild(mini);
-      }
-      var metric = document.createElement("span");
-      metric.className = "metric";
-      var shownValue = metricValue(state.display, r);
-      var pill = document.createElement("span");
-      pill.className = "pill " + metricClass(state.display, shownValue);
-      pill.textContent = metricText(state.display, shownValue);
-      var pillCap = document.createElement("span");
-      pillCap.className = "pill-cap";
-      pillCap.textContent = METRICS[state.display].short;
-      metric.appendChild(pill);
-      metric.appendChild(pillCap);
-      cap.appendChild(metric);
-
-      button.appendChild(rank);
       button.appendChild(main);
-      button.appendChild(cap);
-      button.addEventListener("click", function () { openDetail(r, button); });
 
+      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
+        var sp = el("span", "spark");
+        sp.appendChild(lineChart(cov.cum_return_spark, { width: 64, height: 26, dashed: !cov.sufficient,
+          stroke: colorFor(cov.window_return_pct) }));
+        button.appendChild(sp);
+      } else {
+        button.appendChild(el("span", "spark-empty"));
+      }
+
+      var figure = el("span", "figure");
+      figure.appendChild(el("span", "price" + (cov && cov.last_adj_close != null ? "" : " none"),
+        cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
+      var v = metricValue(state.display, r);
+      figure.appendChild(el("span", "pill " + metricClass(state.display, v), metricText(state.display, v)));
+      button.appendChild(figure);
+
+      button.addEventListener("click", function () { openDetail(r, button); });
       li.setAttribute("data-ticker", r.ticker);
       li.appendChild(button);
       return li;
@@ -2289,37 +1607,18 @@
 
     function sectorHeader(name, count) {
       var li = document.createElement("li");
-      var btn = document.createElement("button");
+      var btn = el("button", "group-head");
       btn.type = "button";
-      btn.className = "sector-head";
       var collapsed = collapsedSectors.has(name);
       btn.setAttribute("aria-expanded", String(!collapsed));
       btn.setAttribute("data-sector", name);
-      var chev = document.createElement("span");
-      chev.className = "chev";
-      chev.setAttribute("aria-hidden", "true");
-      chev.textContent = collapsed ? "\u25b8" : "\u25be";
-      var dot = document.createElement("span");
-      dot.className = "dot";
-      dot.style.cssText =
-        "width:7px;height:7px;border-radius:50%;flex:none;background:" +
-        sectorColor(name);
-      btn.appendChild(chev);
-      btn.appendChild(dot);
+      btn.appendChild(icon("i-chev", "chev"));
       btn.appendChild(document.createTextNode(name));
-      var n = document.createElement("span");
-      n.className = "n";
-      n.textContent = count;
-      btn.appendChild(n);
+      btn.appendChild(el("span", "n", count + " names"));
       btn.addEventListener("click", function () {
-        if (collapsedSectors.has(name)) collapsedSectors.delete(name);
-        else collapsedSectors.add(name);
-        // The header re-renders in place; put keyboard focus back on it
-        // once the (chunked) repaint has actually created it.
+        if (collapsedSectors.has(name)) collapsedSectors.delete(name); else collapsedSectors.add(name);
         afterPaint = function () {
-          var again = listEl.querySelector(
-            '.sector-head[data-sector="' + CSS.escape(name) + '"]'
-          );
+          var again = listEl.querySelector('.group-head[data-sector="' + CSS.escape(name) + '"]');
           if (again) again.focus();
         };
         renderList();
@@ -2330,10 +1629,9 @@
 
     function emptyMessage() {
       return state.watchOnly && !watch.size
-        ? "Your watchlist is empty. Open a name and tap \u2606 Add to watchlist."
-        : state.watchOnly
-          ? "No watchlist name matches. The \u2605 Watchlist filter is on."
-          : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        ? "Your watchlist is empty. Open a name and add it."
+        : state.watchOnly ? "No watchlist name matches."
+        : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
     }
 
     function renderList() {
@@ -2343,39 +1641,27 @@
       var shown = ordered(visible());
       resultEl.textContent = state.watchOnly
         ? shown.length + " on your watchlist"
-        : shown.length === rows.length
-          ? "All " + rows.length + " names"
-          : shown.length + " of " + rows.length + " names";
-      if (isTable) renderTable(shown);
-      else renderCards(shown);
+        : shown.length === rows.length ? "All " + rows.length + " names"
+        : shown.length + " of " + rows.length + " names";
+      listFig.textContent = isTable ? "" : METRICS[state.display].label;
+      if (isTable) renderTable(shown); else renderCards(shown);
     }
-
     function renderTable(shown) {
       tableWrap.scrollTop = 0;
       if (!shown.length) {
         gridBody.textContent = "";
         var tr = document.createElement("tr");
-        var td = document.createElement("td");
-        td.className = "empty";
+        var td = el("td", "empty", emptyMessage());
         td.colSpan = TABLE_COLUMNS.length + 2;
-        td.textContent = emptyMessage();
         tr.appendChild(td);
         gridBody.appendChild(tr);
         return;
       }
       paintInto(gridBody, shown, tableRow);
     }
-
     function renderCards(shown) {
       listEl.textContent = "";
-      if (!shown.length) {
-        var li = document.createElement("li");
-        li.className = "empty";
-        li.textContent = emptyMessage();
-        listEl.appendChild(li);
-        return;
-      }
-
+      if (!shown.length) { listEl.appendChild(el("li", "empty", emptyMessage())); return; }
       var items = [];
       if (state.grouped) {
         sectors.forEach(function (s) {
@@ -2389,9 +1675,7 @@
         shown.forEach(function (r) { items.push({ row: r }); });
       }
       paintInto(listEl, items, function (item) {
-        return item.header
-          ? sectorHeader(item.header, item.count)
-          : rowItem(item.row);
+        return item.header ? sectorHeader(item.header, item.count) : rowItem(item.row);
       });
     }
 
@@ -2400,25 +1684,19 @@
     function renderTableHead() {
       gridHead.textContent = "";
       var first = document.createElement("th");
-      first.scope = "col";
-      first.textContent = "Ticker";
+      first.scope = "col"; first.textContent = "Ticker";
       gridHead.appendChild(first);
       var sectorTh = document.createElement("th");
-      sectorTh.scope = "col";
-      sectorTh.textContent = "Sector";
+      sectorTh.scope = "col"; sectorTh.textContent = "Sector";
       gridHead.appendChild(sectorTh);
       TABLE_COLUMNS.forEach(function (key) {
         var th = document.createElement("th");
         th.scope = "col";
-        var b = document.createElement("button");
+        var b = el("button", "th-sort");
         b.type = "button";
-        b.className = "th-sort";
         b.setAttribute("data-sort", key);
         b.appendChild(document.createTextNode(METRICS[key].head || METRICS[key].short));
-        var arrow = document.createElement("span");
-        arrow.className = "th-arrow";
-        arrow.setAttribute("aria-hidden", "true");
-        b.appendChild(arrow);
+        b.appendChild(icon("i-arrow", "th-arrow"));
         th.appendChild(b);
         gridHead.appendChild(th);
       });
@@ -2431,8 +1709,9 @@
         var active = b.getAttribute("data-sort") === state.sortKey;
         if (active) th.setAttribute("aria-sort", state.sortDesc ? "descending" : "ascending");
         else th.removeAttribute("aria-sort");
-        b.querySelector(".th-arrow").textContent =
-          active ? (state.sortDesc ? " \u2193" : " \u2191") : "";
+        var arrow = b.querySelector(".th-arrow");
+        arrow.style.visibility = active ? "visible" : "hidden";
+        arrow.style.transform = active && !state.sortDesc ? "rotate(180deg)" : "";
       });
     }
     gridHead.addEventListener("click", function (event) {
@@ -2441,47 +1720,33 @@
       var key = b.getAttribute("data-sort");
       setSort(key, key === state.sortKey ? !state.sortDesc : true);
     });
-
     function tableRow(r) {
       var tr = document.createElement("tr");
       tr.setAttribute("data-ticker", r.ticker);
-
       var nameCell = document.createElement("td");
-      var open = document.createElement("button");
+      var open = el("button", "tcell");
       open.type = "button";
-      open.className = "tcell";
       open.setAttribute("aria-haspopup", "dialog");
       open.appendChild(tickerSpan(r));
       nameCell.appendChild(open);
       tr.appendChild(nameCell);
-
-      var sectorCell = document.createElement("td");
-      sectorCell.className = "tsector";
-      var dot = document.createElement("span");
-      dot.className = "dot";
-      dot.style.background = sectorColor(r.sector);
-      sectorCell.appendChild(dot);
+      var sectorCell = el("td", "tsector");
       var code = document.createElement("abbr");
       code.title = r.sector;
-      // abbr expansion is off in some screen readers and title tooltips
-      // do not exist on touch, so the accessible name is set outright.
       code.setAttribute("aria-label", r.sector);
       code.textContent = sectorCode(r.sector);
       sectorCell.appendChild(code);
       tr.appendChild(sectorCell);
-
       TABLE_COLUMNS.forEach(function (key) {
-        var td = document.createElement("td");
         var v = metricValue(key, r);
-        td.className = metricClass(key, v);
-        td.textContent = metricText(key, v, true);
-        tr.appendChild(td);
+        var cls = metricClass(key, v);
+        tr.appendChild(el("td", cls === "flat" ? "" : cls, metricText(key, v, true)));
       });
-      // The whole row is the target; the button inside is the keyboard
-      // path, and its click bubbles here rather than opening twice.
       tr.addEventListener("click", function () { openDetail(r, open); });
       return tr;
     }
+
+    /* ----- controls ----- */
 
     var searchTimer;
     document.getElementById("search").addEventListener("input", function (event) {
@@ -2492,64 +1757,43 @@
 
     document.getElementById("watch-export").addEventListener("click", function (event) {
       var text = Array.from(watch).sort().join(", ");
-      var btn = event.target;
-      function done(label) {
-        btn.textContent = label;
-        setTimeout(function () { btn.textContent = "Copy tickers"; }, 1500);
-      }
+      var btn = event.currentTarget;
+      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = "Copy tickers"; }, 1500); }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(
           function () { done("Copied"); },
-          function () { window.prompt("Copy your watchlist:", text); done("Copy tickers"); }
-        );
+          function () { window.prompt("Copy your watchlist:", text); done("Copy tickers"); });
       } else {
         window.prompt("Copy your watchlist:", text);
       }
     });
-
     document.getElementById("watch-import").addEventListener("click", function () {
       var input = window.prompt("Paste tickers (comma or space separated):", "");
       if (!input) return;
       var added = 0, unknown = [];
       input.toUpperCase().split(/[^A-Z0-9.\-]+/).forEach(function (t) {
         if (!t) return;
-        if (rowByTicker[t]) {
-          if (!watch.has(t)) { watch.add(t); added++; }
-        } else {
-          unknown.push(t);
-        }
+        if (rowByTicker[t]) { if (!watch.has(t)) { watch.add(t); added++; } }
+        else unknown.push(t);
       });
-      saveWatch();
-      paintWatchCount();
-      renderList();
-      if (unknown.length) {
-        window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
-      }
+      saveWatch(); paintWatchCount(); paintWatchMix(); renderList();
+      if (unknown.length) window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
     });
 
-    // One path for every sort control: the menu, the direction button
-    // and the table headers all end here, so they can never disagree.
     function setSort(key, desc) {
       state.sortKey = key;
       state.sortDesc = desc;
       sortSelect.value = key;
-      sortDirBtn.textContent = desc ? "\u2193" : "\u2191";
-      sortDirBtn.setAttribute("aria-label",
-        "Sort direction: " + (desc ? "descending" : "ascending"));
+      document.getElementById("sortLabel").textContent = "By " + METRICS[key].label.toLowerCase();
+      sortDirBtn.firstElementChild.style.transform = desc ? "" : "rotate(180deg)";
+      sortDirBtn.setAttribute("aria-label", "Sort direction: " + (desc ? "descending" : "ascending"));
       paintTableSortState();
       savePrefs();
       renderList();
     }
-    sortSelect.addEventListener("change", function (event) {
-      setSort(event.target.value, state.sortDesc);
-    });
-    sortDirBtn.addEventListener("click", function () {
-      setSort(state.sortKey, !state.sortDesc);
-    });
+    sortSelect.addEventListener("change", function (event) { setSort(event.target.value, state.sortDesc); });
+    sortDirBtn.addEventListener("click", function () { setSort(state.sortKey, !state.sortDesc); });
 
-    // Which Settings rows apply is a function of the view, not of the
-    // list having been painted, so it lives beside setView rather than
-    // inside renderList (which setTab skips on Sectors and Settings).
     function paintSettingsRows() {
       var isTable = state.view === "table";
       displayRow.hidden = isTable;
@@ -2557,25 +1801,31 @@
     }
     function setView(view) {
       state.view = view;
-      document.querySelectorAll(".viewswitch button").forEach(function (b) {
+      document.querySelectorAll("#viewSeg button").forEach(function (b) {
         b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view));
       });
       paintSettingsRows();
       savePrefs();
       renderList();
     }
-    document.querySelectorAll(".viewswitch button").forEach(function (b) {
+    document.querySelectorAll("#viewSeg button").forEach(function (b) {
       b.addEventListener("click", function () { setView(b.getAttribute("data-view")); });
     });
-
+    document.querySelectorAll("#themeSeg button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.theme = b.getAttribute("data-theme");
+        applyTheme(state.theme);
+        savePrefs();
+      });
+    });
+    (DARK_MQ.addEventListener ? DARK_MQ.addEventListener("change", function () { applyTheme(state.theme); })
+      : DARK_MQ.addListener(function () { applyTheme(state.theme); }));
     displaySelect.addEventListener("change", function (event) {
       state.display = event.target.value;
       savePrefs();
       renderList();
     });
-
     columnsBtn.addEventListener("click", function () { openColumns(columnsBtn); });
-
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
       groupBtn.setAttribute("aria-checked", String(state.grouped));
@@ -2583,53 +1833,52 @@
       renderList();
     });
 
-    // ----- tap-to-explain -----
-    // Every underlined label opens one shared sheet: a plain sentence and
-    // the formula, instead of fine print scattered through the page.
+    /* ----- tap-to-explain ----- */
+
     var EXPLAIN = {
+      chart: ["How the charts are drawn",
+        "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
+        "value = close ÷ first close of the window − 1"],
       cap: ["Market cap",
         "Share price times shares outstanding, from the provider's quote — the market's total price for the whole company. It sets the default order and each name's share of the universe. This is full market cap, not the free-float weighting the index itself uses.",
-        "price \u00d7 shares outstanding"],
+        "price × shares outstanding"],
       ret12: ["12-month return",
         "Total change in the adjusted close over the last 252 trading days — about one year of sessions. Adjusted closes fold in dividends and splits, so this is total return.",
-        "close today \u00f7 first close of the 252-session window \u2212 1"],
+        "close today ÷ first close of the 252-session window − 1"],
       ret6: ["6-month return",
         "Total change in the adjusted close over the last 126 trading days — about half a year. Sits between the year's memory and the quarter's news.",
-        "close today \u00f7 first close of the 126-session window \u2212 1"],
+        "close today ÷ first close of the 126-session window − 1"],
       ret3: ["3-month return",
         "Total change in the adjusted close over the last 63 trading days — about one quarter. Fresh momentum, against the 12-month figure's longer memory.",
-        "close today \u00f7 first close of the 63-session window \u2212 1"],
+        "close today ÷ first close of the 63-session window − 1"],
       ret1: ["1-month return",
         "Total change in the adjusted close over the last 21 trading days — about one month. The shortest lens: what the name did lately, before the quarter and the year have their say.",
-        "close today \u00f7 first close of the 21-session window \u2212 1"],
+        "close today ÷ first close of the 21-session window − 1"],
       offhigh: ["Off 1-year high",
         "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
-        "close today \u00f7 year's highest close \u2212 1"],
+        "close today ÷ year's highest close − 1"],
       vsmedian: ["Vs sector median",
         "This name's 12-month return minus the median 12-month return of its sector, in percentage points. Separates a genuine standout from a name merely riding a strong sector.",
-        "name's 12m return \u2212 sector median 12m return"],
+        "name's 12m return − sector median 12m return"],
       trend: ["12-month log trend",
         "A straight line fitted to the logarithm of the daily adjusted closes over the past year. On a log scale, steady compounding is a straight line — so the slope reads as the steady growth rate the year implies, shown annualized. The dashed line on the chart is this fit.",
         "slope of best-fit line through ln(close) vs day, compounded over 252 days"],
-      r2: ["R\u00b2",
+      r2: ["R²",
         "How much of the year's path the straight trend line explains, from 0 to 1. Near 1: the name ground steadily along its trend. Near 0: the outcome came from swings the trend does not describe.",
-        "1 \u2212 variance of residuals \u00f7 variance of ln(close)"],
+        "1 − variance of residuals ÷ variance of ln(close)"],
       quality: ["Quality momentum",
         "The trend's growth rate damped by how reliable the trend was. A steep but chaotic year scores lower than a steady climb — the classic quality-adjusted momentum score.",
-        "trend %/yr \u00d7 R\u00b2"],
+        "trend %/yr × R²"],
       median: ["Median return",
         "The middle 12-month return among the sector's names — half did better, half worse. Resistant to one huge winner dragging the average.",
         "middle value of the sector's 12-month returns"],
-      breadth: ["% of names up",
+      breadth: ["Names up",
         "The share of the sector's names whose 12-month return is positive. The guard on the median: a sector can look healthy on three winners, and breadth says so.",
-        "names with positive 12m return \u00f7 names in sector"]
+        "names with positive 12m return ÷ names in sector"]
     };
 
-    // ----- sheets -----
-    // Both bottom sheets (a name's detail, an explanation) share one set
-    // of mechanics: focus moves in, Tab cycles inside, Esc or the
-    // backdrop closes, and focus returns to whatever opened it. The
-    // explanation can open on top of the detail; Esc peels the top one.
+    /* ----- sheets ----- */
+
     var epPop = document.getElementById("explain-pop");
     var epBody = document.getElementById("ep-body");
     var epFormula = document.getElementById("ep-formula");
@@ -2640,76 +1889,54 @@
     var dpOpener = null;
 
     function lockScroll() {
-      document.documentElement.classList.toggle(
-        "sheet-open", !epPop.hidden || !dpPop.hidden);
+      document.documentElement.classList.toggle("sheet-open", !epPop.hidden || !dpPop.hidden);
     }
-    function focusablesIn(el) {
+    function focusablesIn(node) {
       return Array.prototype.filter.call(
-        el.querySelectorAll("button, [href], select, input, [tabindex]:not([tabindex='-1'])"),
+        node.querySelectorAll("button, [href], select, input, [tabindex]:not([tabindex='-1'])"),
         function (n) { return !n.disabled && n.offsetParent !== null; });
     }
     function trapTab(event, card) {
       var items = focusablesIn(card);
       if (!items.length) { event.preventDefault(); return; }
-      var first = items[0], last = items[items.length - 1];
-      var current = document.activeElement;
+      var first = items[0], last = items[items.length - 1], current = document.activeElement;
       if (!card.contains(current)) { event.preventDefault(); first.focus(); }
       else if (event.shiftKey && current === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && current === last) { event.preventDefault(); first.focus(); }
     }
     function returnFocus(opener) {
       if (opener && document.body.contains(opener)) { opener.focus(); return; }
-      // The opener was repainted away (a watchlist change re-rendered
-      // the list); land on the view itself rather than nowhere.
       (state.view === "table" ? tableWrap : listEl).focus();
     }
-
     function openExplain(key, opener) {
       var entry = EXPLAIN[key];
       if (!entry) return;
       document.getElementById("ep-title").textContent = entry[0];
       epBody.textContent = entry[1];
       epFormula.textContent = entry[2];
-      epBody.hidden = false;
-      epFormula.hidden = false;
-      epList.hidden = true;
+      epBody.hidden = false; epFormula.hidden = false; epList.hidden = true;
       epOpener = opener;
       epPop.hidden = false;
       lockScroll();
       document.getElementById("ep-close").focus();
     }
     function openColumns(opener) {
-      document.getElementById("ep-title").textContent = "What the columns mean";
-      epBody.textContent = "Tap a column heading to sort by it; tap again to flip " +
+      document.getElementById("ep-title").textContent = "What the figures mean";
+      epBody.textContent = "In the table, tap a column heading to sort by it; tap again to flip " +
         "the direction. A dash means the figure would need more history than " +
         "the name has, so it is left out rather than measured over less.";
-      epBody.hidden = false;
-      epFormula.hidden = true;
+      epBody.hidden = false; epFormula.hidden = true;
       epList.textContent = "";
       TABLE_COLUMNS.forEach(function (key) {
-        var m = METRICS[key];
-        var entry = m.explain && EXPLAIN[m.explain];
-        // A column without an explainer is left out rather than given a
-        // borrowed description: silence is never wrong.
+        var m = METRICS[key], entry = m.explain && EXPLAIN[m.explain];
         if (!entry) return;
-        var dt = document.createElement("dt");
-        dt.textContent = m.label;
-        var dd = document.createElement("dd");
-        dd.textContent = entry[1];
-        var code = document.createElement("code");
-        code.textContent = entry[2];
-        dd.appendChild(code);
-        epList.appendChild(dt);
+        epList.appendChild(el("dt", null, m.label));
+        var dd = el("dd", null, entry[1]);
+        dd.appendChild(el("code", null, entry[2]));
         epList.appendChild(dd);
       });
-      var codesDt = document.createElement("dt");
-      codesDt.textContent = "Sector codes";
-      var codesDd = document.createElement("dd");
-      codesDd.textContent = sectors.map(function (name) {
-        return sectorCode(name) + " " + name;
-      }).join(" \u00b7 ");
-      epList.appendChild(codesDt);
-      epList.appendChild(codesDd);
+      epList.appendChild(el("dt", null, "Sector codes"));
+      epList.appendChild(el("dd", null, sectors.map(function (name) { return sectorCode(name) + " " + name; }).join(" · ")));
       epList.hidden = false;
       epOpener = opener;
       epPop.hidden = false;
@@ -2719,16 +1946,15 @@
     function closeExplain() {
       epPop.hidden = true;
       lockScroll();
-      var back = epOpener;
-      epOpener = null;
+      var back = epOpener; epOpener = null;
       returnFocus(back);
     }
-
     function openDetail(r, opener) {
+      document.getElementById("dp-k").textContent =
+        [r.name, r.sector, r.industry].filter(Boolean).join(" · ");
       document.getElementById("dp-ticker").textContent = r.ticker;
-      document.getElementById("dp-name").textContent = r.name;
       dpBody.textContent = "";
-      dpBody.appendChild(detailList(r));
+      dpBody.appendChild(detailBody(r));
       dpOpener = opener;
       dpPop.hidden = false;
       dpPop.firstElementChild.scrollTop = 0;
@@ -2739,76 +1965,59 @@
       dpPop.hidden = true;
       dpBody.textContent = "";
       lockScroll();
-      var back = dpOpener;
-      dpOpener = null;
+      var back = dpOpener; dpOpener = null;
       returnFocus(back);
     }
-
     document.addEventListener("click", function (event) {
-      var label = event.target.closest ? event.target.closest(".xl") : null;
-      if (label) { openExplain(label.getAttribute("data-explain"), label); }
+      var label = event.target.closest ? event.target.closest("[data-explain]") : null;
+      if (label) openExplain(label.getAttribute("data-explain"), label);
     });
-    epPop.addEventListener("click", function (event) {
-      if (event.target === epPop) closeExplain();
-    });
-    dpPop.addEventListener("click", function (event) {
-      if (event.target === dpPop) closeDetail();
-    });
+    epPop.addEventListener("click", function (event) { if (event.target === epPop) closeExplain(); });
+    dpPop.addEventListener("click", function (event) { if (event.target === dpPop) closeDetail(); });
     document.getElementById("ep-close").addEventListener("click", closeExplain);
     document.getElementById("dp-close").addEventListener("click", closeDetail);
     document.addEventListener("keydown", function (event) {
       var top = !epPop.hidden ? epPop : !dpPop.hidden ? dpPop : null;
       if (!top) return;
-      if (event.key === "Escape") {
-        event.preventDefault();
-        if (top === epPop) closeExplain(); else closeDetail();
-      } else if (event.key === "Tab") {
-        trapTab(event, top.firstElementChild);
-      }
+      if (event.key === "Escape") { event.preventDefault(); if (top === epPop) closeExplain(); else closeDetail(); }
+      else if (event.key === "Tab") trapTab(event, top.firstElementChild);
     });
-
     function explainLabel(key, text) {
-      // No key means no sheet applies (a short-history name whose label
-      // already says its real window): a plain span, not a dead button.
-      if (!key) {
-        var s = document.createElement("span");
-        s.className = "xl-static";
-        s.textContent = text;
-        return s;
-      }
-      var b = document.createElement("button");
+      if (!key) return el("span", "xl-static", text);
+      var b = el("button", "xl", text);
       b.type = "button";
-      b.className = "xl";
       b.setAttribute("data-explain", key);
-      b.textContent = text;
       return b;
     }
 
+    /* ----- init ----- */
+
     METRIC_ORDER.forEach(function (key) {
-      [sortSelect, displaySelect].forEach(function (sel) {
-        var option = document.createElement("option");
-        option.value = key;
-        option.textContent = METRICS[key].label;
-        sel.appendChild(option);
-      });
+      var o1 = document.createElement("option");
+      o1.value = key; o1.textContent = "By " + METRICS[key].label.toLowerCase();
+      sortSelect.appendChild(o1);
+      var o2 = document.createElement("option");
+      o2.value = key; o2.textContent = METRICS[key].label;
+      displaySelect.appendChild(o2);
     });
     loadPrefs();
+    applyTheme(state.theme);
     if (!hasHistory) state.display = "cap";
     displaySelect.value = state.display;
     sortSelect.value = state.sortKey;
-    sortDirBtn.textContent = state.sortDesc ? "\u2193" : "\u2191";
-    sortDirBtn.setAttribute("aria-label",
-      "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
-    document.querySelectorAll(".viewswitch button").forEach(function (b) {
+    document.getElementById("sortLabel").textContent = "By " + METRICS[state.sortKey].label.toLowerCase();
+    sortDirBtn.firstElementChild.style.transform = state.sortDesc ? "" : "rotate(180deg)";
+    sortDirBtn.setAttribute("aria-label", "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
+    document.querySelectorAll("#viewSeg button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === state.view));
     });
     groupBtn.setAttribute("aria-checked", String(state.grouped));
     renderTableHead();
     renderFilters();
     paintWatchCount();
+    paintWatchMix();
     paintSettingsRows();
-    // Paint the listing once whichever tab opens, so the result count's
-    // live region and the list exist before Universe is first visited.
+    renderHero(true);
     renderList();
     setTab(state.tab);
   })();
