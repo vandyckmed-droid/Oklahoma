@@ -7,9 +7,9 @@
 #   npx wrangler secret put FMP_API_KEY
 #   npx wrangler deploy
 #
-# Then paste the printed URL (https://oklahoma-quotes.<you>.workers.dev)
+# Then paste the printed URL (https://oklahoma.<you>.workers.dev)
 # into the page's Settings > Live prices.
-name = "oklahoma-quotes"
+name = "oklahoma"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
