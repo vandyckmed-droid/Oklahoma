@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T00:00:00Z",
+  "title": "Design System: Oklahoma",
+  "extensions": {
+    "colorMeta": {
+      "ground": { "role": "neutral", "displayName": "Ground (light)", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(40% 0 0)", "oklch(52% 0 0)", "oklch(65% 0 0)", "oklch(78% 0 0)", "oklch(90% 0 0)", "oklch(100% 0 0)"] },
+      "ground-2": { "role": "neutral", "displayName": "Ground 2 (light)", "canonical": "#f3f4f6", "tonalRamp": ["oklch(15% 0.004 260)", "oklch(27% 0.004 260)", "oklch(40% 0.004 260)", "oklch(52% 0.004 260)", "oklch(65% 0.004 260)", "oklch(78% 0.004 260)", "oklch(90% 0.004 260)", "oklch(96.5% 0.004 260)"] },
+      "ground-3": { "role": "neutral", "displayName": "Ground 3 (light)", "canonical": "#e8eaed", "tonalRamp": ["oklch(15% 0.005 250)", "oklch(27% 0.005 250)", "oklch(40% 0.005 250)", "oklch(52% 0.005 250)", "oklch(65% 0.005 250)", "oklch(78% 0.005 250)", "oklch(88% 0.005 250)", "oklch(93.5% 0.005 250)"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#eceef0", "tonalRamp": ["oklch(15% 0.004 250)", "oklch(27% 0.004 250)", "oklch(40% 0.004 250)", "oklch(52% 0.004 250)", "oklch(65% 0.004 250)", "oklch(78% 0.004 250)", "oklch(88% 0.004 250)", "oklch(94.5% 0.004 250)"] },
+      "hairline-2": { "role": "neutral", "displayName": "Hairline 2", "canonical": "#d4d8dc", "tonalRamp": ["oklch(15% 0.006 240)", "oklch(27% 0.006 240)", "oklch(40% 0.006 240)", "oklch(52% 0.006 240)", "oklch(65% 0.006 240)", "oklch(78% 0.006 240)", "oklch(87.5% 0.006 240)", "oklch(95% 0.006 240)"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1b1b1b", "tonalRamp": ["oklch(15% 0 0)", "oklch(22% 0 0)", "oklch(35% 0 0)", "oklch(48% 0 0)", "oklch(60% 0 0)", "oklch(72% 0 0)", "oklch(85% 0 0)", "oklch(95% 0 0)"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink 2", "canonical": "#6b6f74", "tonalRamp": ["oklch(15% 0.008 250)", "oklch(27% 0.008 250)", "oklch(38% 0.008 250)", "oklch(51.5% 0.008 250)", "oklch(64% 0.008 250)", "oklch(76% 0.008 250)", "oklch(87% 0.008 250)", "oklch(95% 0.008 250)"] },
+      "ink-3": { "role": "neutral", "displayName": "Ink 3", "canonical": "#767a7e", "tonalRamp": ["oklch(15% 0.007 250)", "oklch(27% 0.007 250)", "oklch(40% 0.007 250)", "oklch(55.5% 0.007 250)", "oklch(66% 0.007 250)", "oklch(77% 0.007 250)", "oklch(87% 0.007 250)", "oklch(95% 0.007 250)"] },
+      "up": { "role": "primary", "displayName": "Signal Green", "canonical": "#00c805", "tonalRamp": ["oklch(20% 0.08 145)", "oklch(32% 0.13 145)", "oklch(44% 0.17 145)", "oklch(56% 0.21 145)", "oklch(72% 0.25 145)", "oklch(80% 0.22 145)", "oklch(88% 0.15 145)", "oklch(95% 0.07 145)"] },
+      "up-text": { "role": "primary", "displayName": "Green Ink", "canonical": "#00891c", "tonalRamp": ["oklch(20% 0.08 148)", "oklch(32% 0.13 148)", "oklch(44% 0.17 148)", "oklch(54% 0.19 148)", "oklch(65% 0.21 148)", "oklch(76% 0.2 148)", "oklch(87% 0.14 148)", "oklch(95% 0.06 148)"] },
+      "up-soft": { "role": "primary", "displayName": "Green Tint", "canonical": "rgba(0, 200, 5, 0.12)", "tonalRamp": ["oklch(20% 0.08 145)", "oklch(32% 0.13 145)", "oklch(44% 0.17 145)", "oklch(56% 0.21 145)", "oklch(72% 0.25 145)", "oklch(80% 0.22 145)", "oklch(88% 0.15 145)", "oklch(96% 0.05 145)"] },
+      "down": { "role": "loss", "displayName": "Loss Red", "canonical": "#ff5000", "tonalRamp": ["oklch(20% 0.07 40)", "oklch(32% 0.12 40)", "oklch(44% 0.16 40)", "oklch(56% 0.2 40)", "oklch(67% 0.23 40)", "oklch(76% 0.18 40)", "oklch(86% 0.1 40)", "oklch(95% 0.04 40)"] },
+      "down-text": { "role": "loss", "displayName": "Red Ink", "canonical": "#d84200", "tonalRamp": ["oklch(20% 0.07 40)", "oklch(32% 0.12 40)", "oklch(44% 0.16 40)", "oklch(59% 0.2 40)", "oklch(67% 0.22 40)", "oklch(76% 0.18 40)", "oklch(86% 0.1 40)", "oklch(95% 0.04 40)"] },
+      "down-soft": { "role": "loss", "displayName": "Red Tint", "canonical": "rgba(255, 80, 0, 0.12)", "tonalRamp": ["oklch(20% 0.07 40)", "oklch(32% 0.12 40)", "oklch(44% 0.16 40)", "oklch(56% 0.2 40)", "oklch(67% 0.23 40)", "oklch(76% 0.18 40)", "oklch(86% 0.1 40)", "oklch(96% 0.03 40)"] },
+      "on-pill": { "role": "primary", "displayName": "Pill Ink (green)", "canonical": "#0a1f0c", "tonalRamp": ["oklch(15% 0.03 145)", "oklch(22% 0.04 145)", "oklch(35% 0.08 145)", "oklch(48% 0.12 145)", "oklch(60% 0.16 145)", "oklch(72% 0.2 145)", "oklch(85% 0.12 145)", "oklch(95% 0.05 145)"] },
+      "on-pill-down": { "role": "loss", "displayName": "Pill Ink (red)", "canonical": "#2a0e00", "tonalRamp": ["oklch(15% 0.03 40)", "oklch(22% 0.05 40)", "oklch(35% 0.09 40)", "oklch(48% 0.13 40)", "oklch(60% 0.17 40)", "oklch(72% 0.18 40)", "oklch(85% 0.1 40)", "oklch(95% 0.04 40)"] },
+      "scrim": { "role": "neutral", "displayName": "Scrim", "canonical": "rgba(0, 0, 0, 0.45)", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(40% 0 0)", "oklch(52% 0 0)", "oklch(65% 0 0)", "oklch(78% 0 0)", "oklch(90% 0 0)", "oklch(95% 0 0)"] },
+      "ground-dark": { "role": "neutral", "displayName": "Ground (dark)", "canonical": "#000000", "tonalRamp": ["oklch(0% 0 0)", "oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(40% 0 0)", "oklch(52% 0 0)", "oklch(65% 0 0)", "oklch(78% 0 0)", "oklch(95% 0 0)"] },
+      "ground-2-dark": { "role": "neutral", "displayName": "Ground 2 (dark)", "canonical": "#161616", "tonalRamp": ["oklch(15% 0 0)", "oklch(19.5% 0 0)", "oklch(30% 0 0)", "oklch(42% 0 0)", "oklch(55% 0 0)", "oklch(68% 0 0)", "oklch(82% 0 0)", "oklch(95% 0 0)"] },
+      "ground-3-dark": { "role": "neutral", "displayName": "Ground 3 (dark)", "canonical": "#242424", "tonalRamp": ["oklch(15% 0 0)", "oklch(25.5% 0 0)", "oklch(36% 0 0)", "oklch(48% 0 0)", "oklch(60% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"] },
+      "hairline-dark": { "role": "neutral", "displayName": "Hairline (dark)", "canonical": "#1f1f1f", "tonalRamp": ["oklch(15% 0 0)", "oklch(23% 0 0)", "oklch(34% 0 0)", "oklch(46% 0 0)", "oklch(58% 0 0)", "oklch(70% 0 0)", "oklch(83% 0 0)", "oklch(95% 0 0)"] },
+      "hairline-2-dark": { "role": "neutral", "displayName": "Hairline 2 (dark)", "canonical": "#333333", "tonalRamp": ["oklch(15% 0 0)", "oklch(32% 0 0)", "oklch(42% 0 0)", "oklch(52% 0 0)", "oklch(63% 0 0)", "oklch(74% 0 0)", "oklch(85% 0 0)", "oklch(95% 0 0)"] },
+      "ink-dark": { "role": "neutral", "displayName": "Ink (dark)", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(27% 0 0)", "oklch(40% 0 0)", "oklch(52% 0 0)", "oklch(65% 0 0)", "oklch(78% 0 0)", "oklch(90% 0 0)", "oklch(100% 0 0)"] },
+      "ink-2-dark": { "role": "neutral", "displayName": "Ink 2 (dark)", "canonical": "#a1a5a9", "tonalRamp": ["oklch(15% 0.006 250)", "oklch(27% 0.006 250)", "oklch(40% 0.006 250)", "oklch(52% 0.006 250)", "oklch(64% 0.006 250)", "oklch(71.5% 0.006 250)", "oklch(85% 0.006 250)", "oklch(95% 0.006 250)"] },
+      "ink-3-dark": { "role": "neutral", "displayName": "Ink 3 (dark)", "canonical": "#808488", "tonalRamp": ["oklch(15% 0.007 250)", "oklch(27% 0.007 250)", "oklch(40% 0.007 250)", "oklch(52% 0.007 250)", "oklch(59% 0.007 250)", "oklch(72% 0.007 250)", "oklch(85% 0.007 250)", "oklch(95% 0.007 250)"] },
+      "up-text-dark": { "role": "primary", "displayName": "Green Ink (dark; collapses to Signal Green)", "canonical": "#00c805", "tonalRamp": ["oklch(20% 0.08 145)", "oklch(32% 0.13 145)", "oklch(44% 0.17 145)", "oklch(56% 0.21 145)", "oklch(72% 0.25 145)", "oklch(80% 0.22 145)", "oklch(88% 0.15 145)", "oklch(95% 0.07 145)"] },
+      "down-text-dark": { "role": "loss", "displayName": "Red Ink (dark; collapses to Loss Red)", "canonical": "#ff5000", "tonalRamp": ["oklch(20% 0.07 40)", "oklch(32% 0.12 40)", "oklch(44% 0.16 40)", "oklch(56% 0.2 40)", "oklch(67% 0.23 40)", "oklch(76% 0.18 40)", "oklch(86% 0.1 40)", "oklch(95% 0.04 40)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero median figure and the ticker on a name page; coloured by sign in the hero." },
+      "headline": { "displayName": "Headline", "purpose": "Section heads: Stocks, Key stats, About the numbers; explain-sheet heading at 22/28." },
+      "title": { "displayName": "Title", "purpose": "Title-bar app name, with a 13px ink-2 subtitle on the same baseline." },
+      "body": { "displayName": "Body", "purpose": "Row tickers (600), prices and stat values (500), settings labels, watch button (600), search input, sheet paragraphs at 22px leading." },
+      "secondary": { "displayName": "Secondary", "purpose": "Company names, subtitles, meta lines, stat labels, chip and range labels (500-600), table cells." },
+      "caption": { "displayName": "Caption", "purpose": "Stat sub-lines, chart footers, watch-tool notes; uppercase Settings group titles at 600 with 0.06em." },
+      "micro": { "displayName": "Micro", "purpose": "Tab bar labels; 600 when selected. Badge and short-history mark drop to 10/16." },
+      "group-label": { "displayName": "Group Label", "purpose": "Uppercase collapsible sector group headers in the grouped list." },
+      "mono": { "displayName": "Mono", "purpose": "Data endpoint and CLI in the footer; the explain-sheet formula block." }
+    },
+    "shadows": [
+      { "name": "sheet-lift", "value": "0 10px 30px rgba(0, 0, 0, 0.14), 0 1px 0 var(--line-2)", "purpose": "The sheet card over the scrim; the only resting-surface shadow. Dark: 0 10px 30px rgba(0,0,0,0.6), 0 1px 0 var(--line-2)." },
+      { "name": "knob", "value": "0 1px 3px rgba(0, 0, 0, 0.25)", "purpose": "The switch knob so the toggle reads as physical." },
+      { "name": "sticky-edge", "value": "inset 0 -1px 0 var(--line-2)", "purpose": "Table header row while it sticks to the top of the scroller." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "purpose": "The only easing; every transition and keyframe uses it." },
+      { "name": "state", "value": "120ms", "purpose": "Background, colour and border changes on pills, chips, rows, tabs, segmented options and the watch button." },
+      { "name": "toggle", "value": "160ms", "purpose": "Group-header chevron rotation, switch track and knob, sheet scrim fade." },
+      { "name": "rise", "value": "240ms", "purpose": "Sheet card entering from 24px below at 60% opacity." },
+      { "name": "draw", "value": "560ms", "purpose": "Chart line stroke-dashoffset draw-in on first paint; removed under prefers-reduced-motion, as are rise, fade and the toggle transitions." }
+    ],
+    "breakpoints": [
+      { "name": "wide", "value": "720px" },
+      { "name": "container", "value": "760px" },
+      { "name": "sheet", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Range Selector",
+      "kind": "nav",
+      "refersTo": "range-pill-selected",
+      "description": "Four equal capsules under a chart; the selected window fills green, or red when its return is negative. The tall variant carries each window's return.",
+      "html": "<div class=\"ds-ranges\" role=\"group\" aria-label=\"Window\"><button type=\"button\" aria-pressed=\"false\">1M</button><button type=\"button\" aria-pressed=\"false\">3M</button><button type=\"button\" aria-pressed=\"false\">6M</button><button type=\"button\" aria-pressed=\"true\">1Y</button></div>",
+      "css": ".ds-ranges { display: flex; gap: 4px; padding: 10px 0 4px; border-bottom: 1px solid var(--line, #eceef0); font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-ranges button { flex: 1; height: 36px; border: 0; padding: 0; background: none; cursor: pointer; border-radius: 18px; font: 600 13px/36px inherit; font-family: inherit; color: var(--text-2, #6b6f74); transition: background-color 120ms cubic-bezier(0.2,0.8,0.2,1), color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-ranges button[aria-pressed=\"true\"] { background: var(--up, #00c805); color: var(--on-pill, #0a1f0c); } .ds-ranges button[aria-pressed=\"true\"].ds-neg { background: var(--down, #ff5000); color: var(--on-pill-down, #2a0e00); } .ds-ranges button:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Sector Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Outlined filter chip with a count; selected inverts to ink on ground.",
+      "html": "<div class=\"ds-chips\"><button type=\"button\" class=\"ds-chip\" aria-pressed=\"true\">All <span class=\"ds-n\">503</span></button><button type=\"button\" class=\"ds-chip\" aria-pressed=\"false\">Technology <span class=\"ds-n\">85</span></button></div>",
+      "css": ".ds-chips { display: flex; gap: 8px; font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-chip { flex: none; height: 32px; padding: 0 14px; border-radius: 16px; border: 1px solid var(--line-2, #d4d8dc); background: none; cursor: pointer; color: var(--text, #1b1b1b); font: 500 13px/30px inherit; font-family: inherit; white-space: nowrap; display: inline-flex; gap: 6px; transition: background-color 120ms cubic-bezier(0.2,0.8,0.2,1), color 120ms cubic-bezier(0.2,0.8,0.2,1), border-color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-chip .ds-n { color: var(--text-2, #6b6f74); } .ds-chip[aria-pressed=\"true\"] { background: var(--text, #1b1b1b); color: var(--bg, #ffffff); border-color: var(--text, #1b1b1b); } .ds-chip[aria-pressed=\"true\"] .ds-n { color: var(--bg, #ffffff); opacity: 0.7; } .ds-chip:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Stock Row",
+      "kind": "card",
+      "refersTo": "pill-up",
+      "description": "The list unit: ticker and company left, 64x26 sparkline centre, price over a signed return pill right, hairline below.",
+      "html": "<button type=\"button\" class=\"ds-row\"><span class=\"ds-name\"><span class=\"ds-ticker\">NVDA</span><span class=\"ds-company\"><span class=\"ds-company-name\">Nvidia</span><span> · $5.27T</span></span></span><span class=\"ds-spark\"><svg viewBox=\"0 0 64 26\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0 20 L8 17 L16 19 L24 12 L32 14 L40 9 L48 11 L56 5 L64 7\" fill=\"none\" stroke=\"var(--up, #00c805)\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"/></svg></span><span class=\"ds-figure\"><span class=\"ds-price\">$217.44</span><span class=\"ds-pill\">+27.49%</span></span></button><button type=\"button\" class=\"ds-row\"><span class=\"ds-name\"><span class=\"ds-ticker\">MRK</span><span class=\"ds-company\"><span class=\"ds-company-name\">Merck &amp; Co.</span><span> · $210B</span></span></span><span class=\"ds-spark\"><svg viewBox=\"0 0 64 26\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M0 6 L8 9 L16 7 L24 13 L32 12 L40 17 L48 15 L56 21 L64 19\" fill=\"none\" stroke=\"var(--down, #ff5000)\" stroke-width=\"1.6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" vector-effect=\"non-scaling-stroke\"/></svg></span><span class=\"ds-figure\"><span class=\"ds-price\">$88.10</span><span class=\"ds-pill ds-down\">−12.30%</span></span></button>",
+      "css": ".ds-row { display: grid; grid-template-columns: minmax(0,1fr) 64px auto; align-items: center; column-gap: 14px; width: 100%; padding: 12px 0; border: 0; border-bottom: 1px solid var(--line, #eceef0); background: none; cursor: pointer; text-align: left; color: var(--text, #1b1b1b); border-radius: 8px; font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: tabular-nums; transition: background-color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-row:hover { background: var(--bg-2, #f3f4f6); } .ds-row:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; } .ds-name { min-width: 0; display: block; } .ds-ticker { display: block; font: 600 15px/20px inherit; font-family: inherit; } .ds-company { display: flex; gap: 4px; min-width: 0; font: 400 13px/18px inherit; font-family: inherit; color: var(--text-2, #6b6f74); } .ds-company-name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-spark { width: 64px; height: 26px; display: block; } .ds-spark svg { width: 100%; height: 100%; overflow: visible; display: block; } .ds-figure { min-width: 88px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; } .ds-price { font: 500 15px/20px inherit; font-family: inherit; white-space: nowrap; } .ds-pill { display: inline-block; padding: 1px 8px; border-radius: 8px; font: 600 12px/18px inherit; font-family: inherit; white-space: nowrap; color: var(--on-pill, #0a1f0c); background: var(--up, #00c805); } .ds-pill.ds-down { background: var(--down, #ff5000); color: var(--on-pill-down, #2a0e00); } .ds-pill.ds-flat { background: var(--bg-3, #e8eaed); color: var(--text, #1b1b1b); } .ds-pill.ds-none { background: transparent; color: var(--text-3, #767a7e); border: 1px solid var(--line-2, #d4d8dc); }"
+    },
+    {
+      "name": "Search",
+      "kind": "input",
+      "refersTo": "search",
+      "description": "Tonal 44px field with a stroke search icon, green caret, no border.",
+      "html": "<label class=\"ds-search\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"7\" cy=\"7\" r=\"4.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"/><path d=\"M10.5 10.5 14 14\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg><input type=\"search\" placeholder=\"Search ticker, company or sector\" aria-label=\"Search the universe\"></label>",
+      "css": ".ds-search { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 12px; background: var(--bg-2, #f3f4f6); color: var(--text-2, #6b6f74); font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-search svg { width: 16px; height: 16px; flex: none; display: block; } .ds-search input { flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; color: var(--text, #1b1b1b); font: 400 15px/44px inherit; font-family: inherit; padding: 0; caret-color: var(--up, #00c805); } .ds-search input::placeholder { color: var(--text-2, #6b6f74); opacity: 1; } .ds-search input:focus { outline: none; } .ds-search input::-webkit-search-decoration, .ds-search input::-webkit-search-cancel-button { -webkit-appearance: none; }"
+    },
+    {
+      "name": "Watch Button",
+      "kind": "button",
+      "refersTo": "watch-button",
+      "description": "The one outline button: 1.5px green border and green ink; pressed fills green with dark ink and a filled star.",
+      "html": "<button type=\"button\" class=\"ds-watch-btn\" aria-pressed=\"false\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/></svg>Add to watchlist</button><button type=\"button\" class=\"ds-watch-btn\" aria-pressed=\"true\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z\" fill=\"currentColor\"/></svg>On your watchlist</button>",
+      "css": ".ds-watch-btn { width: 100%; height: 48px; margin: 6px 0; border-radius: 24px; border: 1.5px solid var(--up, #00c805); background: none; cursor: pointer; color: var(--up-text, #00891c); font: 600 15px/45px Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 120ms cubic-bezier(0.2,0.8,0.2,1), color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-watch-btn svg { width: 18px; height: 18px; display: block; } .ds-watch-btn[aria-pressed=\"true\"] { background: var(--up, #00c805); color: var(--on-pill, #0a1f0c); } .ds-watch-btn:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "text-button",
+      "description": "Green-ink text action with no box; hover underlines. Copy tickers / Paste tickers.",
+      "html": "<button type=\"button\" class=\"ds-text-btn\">Copy tickers</button> <button type=\"button\" class=\"ds-text-btn\">Paste tickers</button>",
+      "css": ".ds-text-btn { border: 0; padding: 0; background: none; cursor: pointer; color: var(--up-text, #00891c); font: 600 14px/20px Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-text-btn:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-text-btn:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "nav",
+      "refersTo": "segmented-option-selected",
+      "description": "Tonal track with capsule options; the selected option inverts to ink on ground. Theme and View in Settings.",
+      "html": "<span class=\"ds-seg\" role=\"group\" aria-label=\"Theme\"><button type=\"button\" aria-pressed=\"true\">System</button><button type=\"button\" aria-pressed=\"false\">Light</button><button type=\"button\" aria-pressed=\"false\">Dark</button></span>",
+      "css": ".ds-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 18px; background: var(--bg-2, #f3f4f6); font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-seg button { height: 30px; padding: 0 12px; border: 0; background: none; cursor: pointer; border-radius: 15px; font: 500 13px/30px inherit; font-family: inherit; color: var(--text-2, #6b6f74); transition: background-color 120ms cubic-bezier(0.2,0.8,0.2,1), color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-seg button[aria-pressed=\"true\"] { background: var(--text, #1b1b1b); color: var(--bg, #ffffff); } .ds-seg button:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Switch",
+      "kind": "custom",
+      "refersTo": "segmented",
+      "description": "48x28 toggle: grey track and white knob with a 1px lift; on fills green and slides the knob 20px.",
+      "html": "<button type=\"button\" class=\"ds-switch\" role=\"switch\" aria-checked=\"false\" aria-label=\"Group by sector\"><span class=\"ds-knob\"></span></button> <button type=\"button\" class=\"ds-switch\" role=\"switch\" aria-checked=\"true\" aria-label=\"Group by sector\"><span class=\"ds-knob\"></span></button>",
+      "css": ".ds-switch { position: relative; width: 48px; height: 28px; border: 0; padding: 0; cursor: pointer; border-radius: 14px; background: var(--bg-3, #e8eaed); transition: background-color 160ms cubic-bezier(0.2,0.8,0.2,1); } .ds-switch .ds-knob { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--bg, #ffffff); box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 160ms cubic-bezier(0.2,0.8,0.2,1); } .ds-switch[aria-checked=\"true\"] { background: var(--up, #00c805); } .ds-switch[aria-checked=\"true\"] .ds-knob { transform: translateX(20px); } .ds-switch:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    },
+    {
+      "name": "Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab-badge",
+      "description": "Four-cell bottom bar with authored stroke icons and 11px labels; the selected tab turns ink at 600; the Watchlist tab carries a green count badge.",
+      "html": "<nav class=\"ds-tabbar\" aria-label=\"Sections\"><div class=\"ds-tabbar-inner\" role=\"tablist\"><button type=\"button\" role=\"tab\" aria-selected=\"true\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 17l5-6 4 3 4-6 5 4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M3 21h18\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg>Stocks</button><button type=\"button\" role=\"tab\" aria-selected=\"false\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3.5\" y=\"3.5\" width=\"7\" height=\"7\" rx=\"2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><rect x=\"13.5\" y=\"3.5\" width=\"7\" height=\"7\" rx=\"2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><rect x=\"3.5\" y=\"13.5\" width=\"7\" height=\"7\" rx=\"2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><rect x=\"13.5\" y=\"13.5\" width=\"7\" height=\"7\" rx=\"2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/></svg>Sectors</button><button type=\"button\" role=\"tab\" aria-selected=\"false\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/></svg>Watchlist<span class=\"ds-tab-badge\">3</span></button><button type=\"button\" role=\"tab\" aria-selected=\"false\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h9M17 7h3M4 17h3M11 17h9M4 12h16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><circle cx=\"15\" cy=\"7\" r=\"2.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><circle cx=\"9\" cy=\"17\" r=\"2.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/></svg>Settings</button></div></nav>",
+      "css": ".ds-tabbar { background: var(--bg, #ffffff); border-top: 1px solid var(--line, #eceef0); font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-tabbar-inner { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); } .ds-tabbar button { position: relative; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 0; background: none; cursor: pointer; color: var(--text-2, #6b6f74); font: 500 11px/14px inherit; font-family: inherit; transition: color 120ms cubic-bezier(0.2,0.8,0.2,1); } .ds-tabbar button svg { width: 24px; height: 24px; display: block; } .ds-tabbar button[aria-selected=\"true\"] { color: var(--text, #1b1b1b); font-weight: 600; } .ds-tabbar button:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: -2px; } .ds-tab-badge { position: absolute; top: 8px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--up, #00c805); color: var(--on-pill, #0a1f0c); font: 700 10px/16px inherit; font-family: inherit; }"
+    },
+    {
+      "name": "Sheet Card",
+      "kind": "card",
+      "refersTo": "sheet-card",
+      "description": "The explain sheet: handle, heading, paragraph, mono formula block, close button. The only surface that carries the shadow.",
+      "html": "<div class=\"ds-sheet-card\"><div class=\"ds-sheet-handle\" aria-hidden=\"true\"></div><h2>12-month return</h2><p>The change in adjusted close from the first bar of the window to the last, as a percentage of the first bar.</p><code class=\"ds-formula\">(last_adj_close / first_adj_close − 1) × 100</code><button type=\"button\" class=\"ds-close\">Close</button></div>",
+      "css": ".ds-sheet-card { width: 100%; max-width: 640px; background: var(--bg, #ffffff); color: var(--text, #1b1b1b); border-radius: 20px; box-shadow: var(--shadow, 0 10px 30px rgba(0,0,0,0.14), 0 1px 0 #d4d8dc); padding: 8px 16px 24px; font-family: Inter, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; } .ds-sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line-2, #d4d8dc); margin: 4px auto 8px; } .ds-sheet-card h2 { margin: 6px 0 8px; font: 700 22px/28px inherit; font-family: inherit; letter-spacing: -0.01em; } .ds-sheet-card p { margin: 0 0 12px; font: 400 15px/22px inherit; font-family: inherit; max-width: 60ch; } .ds-formula { display: block; padding: 10px 12px; border-radius: 10px; background: var(--bg-2, #f3f4f6); font: 400 12px/18px ui-monospace, 'SF Mono', Menlo, Consolas, monospace; margin-bottom: 16px; white-space: normal; } .ds-close { height: 44px; width: 100%; border: 0; cursor: pointer; border-radius: 22px; background: var(--bg-2, #f3f4f6); color: var(--text, #1b1b1b); font: 600 15px/44px inherit; font-family: inherit; } .ds-close:focus-visible { outline: 2px solid var(--up, #00c805); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Brokerage Watchlist, Played Straight",
+    "overview": "Oklahoma is a consumer-brokerage stocks list executed at that category's craft level and refusing everything else: no metaphor, no ornament, no mascot, no call to act. The page looks like the app a person already keeps on their phone, with the one thing a broker cannot show, a universe median as the hero figure and honest return windows as the range selector. Its personality lives in precision: tabular figures, true minus signs, hairline dividers, and a single green that means either \"gain\" or \"you can act here\".\n\nThe system is a flat, two-theme world. Light sits on pure white; dark sits on true black with two lifted greys. Both are first-class and are driven by prefers-color-scheme with a data-theme override chosen in Settings (System / Light / Dark). Nothing is elevated at rest; depth exists only when a sheet slides over the page. Density is phone-first: one column, 16px gutters, 760px container on a laptop, rows that read in a single glance (ticker and name, sparkline, price and a coloured return pill).\n\nThe build follows the direction contract's OWN-WORLD block closely. The one place it landed differently from the plain reading of \"outline pill buttons\" is that outline treatment is reserved for the watchlist button and the sector chips; range pills, segmented controls and the close button are filled tonal shapes with no border.",
+    "keyCharacteristics": [
+      "Pure white or true black ground, hairline dividers, no cards",
+      "Inter 400–700 with tabular figures everywhere, real minus signs",
+      "One green accent for actions and gains; red appears only on losses and the stale-data band",
+      "Fully rounded pills, chips and buttons; 20px sheets; 8px return pills",
+      "Sparklines in every row, one large chart in the hero and on each name page",
+      "Authored 24px stroke icons in an inline SVG sprite; no icon font, no glyphs"
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Green is the only accent and it carries two meanings, gain and action; red carries exactly one, loss (plus the broken-refresh band). Neutral metrics (market cap, R², last close) render in the flat grey pill, never in colour.", "section": "colors" },
+      { "name": "The Two Greens Rule", "body": "`up` is a fill, `up-text` is text. Green text on the light ground always uses `up-text`; the same holds for `down` and `down-text`. Dark mode collapses each pair to the fill colour.", "section": "colors" },
+      { "name": "The Dark Ink on Colour Rule", "body": "Anything sitting on a green or red fill uses `on-pill` / `on-pill-down`, never white.", "section": "colors" },
+      { "name": "The True Black Rule", "body": "Dark mode is `#000000`, not a charcoal; the lifted surfaces are `#161616` and `#242424`. The `theme-color` meta follows the ground exactly.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Figures are tabular everywhere; a price column never jitters as values change.", "section": "typography" },
+      { "name": "The True Minus Rule", "body": "Negative figures use U+2212 \"−\", never a hyphen; \"—\" is the only placeholder for missing data.", "section": "typography" },
+      { "name": "The Weight Carries Hierarchy Rule", "body": "Ticker vs company, price vs return, selected vs unselected tab: the difference is weight (600 vs 400/500) before it is size or colour.", "section": "typography" },
+      { "name": "The Hairline Rule", "body": "At rest the page has one plane. Anything that needs an edge gets a 1px `hairline`; anything that needs a surface gets the next grey step. Shadows appear only under a sheet above the scrim.", "section": "elevation" },
+      { "name": "The Scrim Stack Rule", "body": "Sheets sit at z-index 30 over a 45% black scrim; the explain sheet at 40 so it can open above a name page; the tab bar at 20 below both.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep both themes first-class: every new colour needs a light value and a dark value, and the dark ground stays `#000000`.",
+      "Do use `up-text` / `down-text` for coloured text on the light ground and the fill colours only on fills, lines and dark-mode text.",
+      "Do put `on-pill` / `on-pill-down` ink on any green or red fill.",
+      "Do set figures tabular and negatives with a true minus; use \"—\" for missing values in `ink-3`.",
+      "Do separate surfaces with 1px hairlines or the next grey step; reserve the shadow for a sheet over the scrim.",
+      "Do make interactive shapes capsules (radius = half height) and keep return pills at 8px.",
+      "Do author icons as 24-viewBox stroke paths (1.6–1.8px, round caps) in the inline sprite.",
+      "Do give every control a 2px green `:focus-visible` outline and respect `prefers-reduced-motion` on any new animation.",
+      "Do colour a chart line by the sign of its window and draw short-history series dashed."
+    ],
+    "donts": [
+      "Don't add a second accent or use green and red for anything but action/gain and loss/broken-refresh.",
+      "Don't colour neutral metrics (market cap, R², last close); they take the flat grey pill.",
+      "Don't put white text on a coloured pill or use `#00c805` as text on white.",
+      "Don't use shadows, cards or borders to lift resting content; the page is one plane.",
+      "Don't add buy or sell buttons, trade nudges, mascots or characters (owner's binding negatives).",
+      "Don't introduce a second typeface, italics, or an icon font; Inter and the authored SVG sprite are the whole vocabulary.",
+      "Don't add eyebrow labels above headings; the only uppercase text is the collapsible group header and the Settings group title.",
+      "Don't write a hyphen where a minus belongs, or a decimal-free return where the row shows two places."
+    ]
+  }
+}
