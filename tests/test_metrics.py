@@ -46,6 +46,33 @@ class CumulativeReturnTests(unittest.TestCase):
         self.assertEqual(metrics.cumulative_returns([], trading_days=252), [])
 
 
+class SkipMonthReturnTests(unittest.TestCase):
+    def test_ends_at_the_skipped_windows_base(self):
+        # 100 -> 121 at the skip window's base, then a giveback it ignores.
+        series = bars(100, 110, 121, 110)
+        self.assertEqual(metrics.skip_month_return(series, 4, 2), 21.0)
+
+    def test_reads_from_its_own_window_base(self):
+        series = bars(50, 100, 110, 121, 110)
+        self.assertEqual(metrics.skip_month_return(series, 4, 2), 21.0)
+
+    def test_composes_with_the_short_window(self):
+        # (1 + skip-month) x (1 + short window) = 1 + full window.
+        series = bars(100, 105, 121, 133.1)
+        mom = metrics.skip_month_return(series, 4, 2)
+        short = metrics.cumulative_returns(series, 2)[-1]["cum_return_pct"]
+        full = metrics.cumulative_returns(series, 4)[-1]["cum_return_pct"]
+        self.assertAlmostEqual(
+            (1 + mom / 100) * (1 + short / 100), 1 + full / 100, places=6
+        )
+
+    def test_short_series_is_none_not_a_smaller_number(self):
+        self.assertIsNone(metrics.skip_month_return(bars(100, 110), 4, 2))
+
+    def test_window_must_outreach_the_skip(self):
+        self.assertIsNone(metrics.skip_month_return(bars(100, 110, 121), 2, 2))
+
+
 class CrossSectionTests(unittest.TestCase):
     ROWS = [
         {"ticker": "A", "sector": "Tech", "return_pct": 10.0},

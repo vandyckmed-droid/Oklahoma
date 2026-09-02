@@ -1072,6 +1072,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         value: anyWindow("return_3m_pct"), fmt: pct, tfmt: pct1 },
       ret1: { label: "1-month return", short: "1M", explain: "ret1",
         value: anyWindow("return_1m_pct"), fmt: pct, tfmt: pct1 },
+      mom121: { label: "12-1 momentum", short: "12-1", explain: "mom121",
+        value: anyWindow("mom_12_1_pct"), fmt: pct, tfmt: pct1 },
+      mom61: { label: "6-1 momentum", short: "6-1", explain: "mom61",
+        value: anyWindow("mom_6_1_pct"), fmt: pct, tfmt: pct1 },
       offhigh: { label: "Off 1-year high", short: "Off high", explain: "offhigh",
         value: function (r, cov) {
           if (!cov || !cov.sufficient || cov.window_high == null || cov.last_adj_close == null) return null;
@@ -1097,8 +1101,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       last: { label: "Last close", short: "Last", neutral: true,
         value: anyWindow("last_adj_close"), fmt: price }
     };
-    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian", "trend", "r2", "quality"];
+    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
+    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
     function metricText(key, v, dense) {
       if (v == null) return "—";
@@ -1502,6 +1506,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       } else {
         grid.appendChild(stat(null, "Vs sector median", "—", "none", "needs a full year"));
       }
+      if (cov && cov.mom_12_1_pct != null) {
+        grid.appendChild(stat("mom121", "12-1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct)));
+      }
+      if (cov && cov.mom_6_1_pct != null) {
+        grid.appendChild(stat("mom61", "6-1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct)));
+      }
       if (cov && cov.window_low != null) {
         grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
           price(cov.window_low) + " – " + price(cov.window_high)));
@@ -1854,6 +1864,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       ret1: ["1-month return",
         "Total change in the adjusted close over the last 21 trading days — about one month. The shortest lens: what the name did lately, before the quarter and the year have their say.",
         "close today ÷ first close of the 21-session window − 1"],
+      mom121: ["12-1 momentum",
+        "The 12-month return with the most recent month left out: from the first close of the 252-session window to the close 21 sessions ago. The freshest month tends to reverse, so classic momentum skips it. A name can look flat on 12-month return yet strong here when the last month gave gains back.",
+        "close 21 sessions ago ÷ first close of the 252-session window − 1"],
+      mom61: ["6-1 momentum",
+        "The 6-month return with the most recent month left out: from the first close of the 126-session window to the close 21 sessions ago. The shorter momentum lens, same reversal skip.",
+        "close 21 sessions ago ÷ first close of the 126-session window − 1"],
       offhigh: ["Off 1-year high",
         "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
         "close today ÷ year's highest close − 1"],

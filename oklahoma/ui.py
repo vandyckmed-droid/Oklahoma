@@ -22,7 +22,13 @@ from .config import (
 )
 from .history import load_series, thin, thin_indices
 from .universe import load_changes
-from .metrics import cumulative_returns, log_trend, rank_by_return, sector_summary
+from .metrics import (
+    cumulative_returns,
+    log_trend,
+    rank_by_return,
+    sector_summary,
+    skip_month_return,
+)
 
 UNIVERSE_PLACEHOLDER = "__UNIVERSE_JSON__"
 HISTORY_PLACEHOLDER = "__HISTORY_JSON__"
@@ -84,6 +90,14 @@ def _display(universe: dict, history_index: dict) -> dict:
             if len(bars) >= TRADING_DAYS_MONTH:
                 month = cumulative_returns(bars, TRADING_DAYS_MONTH)
                 row["return_1m_pct"] = round(month[-1]["cum_return_pct"], 2)
+            # Momentum with the freshest month skipped (12-1, 6-1):
+            # only where the full window exists, like the plain windows.
+            mom = skip_month_return(bars, target, TRADING_DAYS_MONTH)
+            if mom is not None:
+                row["mom_12_1_pct"] = mom
+            mom = skip_month_return(bars, TRADING_DAYS_HALF, TRADING_DAYS_MONTH)
+            if mom is not None:
+                row["mom_6_1_pct"] = mom
             trend = log_trend(bars, target)
             if trend is not None:
                 row["trend_ann_pct"] = trend["trend_ann_pct"]
