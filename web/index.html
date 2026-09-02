@@ -342,6 +342,12 @@ select.ctl {
 .switch[aria-checked="true"] { background: var(--up); }
 .switch[aria-checked="true"] .knob { transform: translateX(20px); }
 .note { margin: 8px 0; font: 400 13px/20px var(--sans); color: var(--text-2); }
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--up); margin: 0 6px 1px 0; vertical-align: middle; }
+input.ctl { height: 36px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 18px; background: var(--bg); color: var(--text); font: 400 13px/34px var(--sans); min-width: 0; width: 100%; }
+input.ctl:focus { outline: none; border-color: var(--up); }
+.srow.stack { flex-direction: column; align-items: stretch; gap: 8px; }
+.srow.stack .slabel { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.srow.stack .slabel span { font: 400 12px/16px var(--sans); color: var(--text-2); text-align: right; }
 #footer { margin: 8px 0 0; font: 400 12px/18px var(--sans); color: var(--text-3); }
 
 /* ----- tab bar ----- */
@@ -585,6 +591,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <div class="srow" id="group-row">
         <span class="slabel" id="group-label">Group by sector</span>
         <button id="groupToggle" type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="group-label"><span class="knob"></span></button>
+      </div>
+    </div>
+    <div class="sgroup">
+      <h2 class="sgroup-title">Live prices</h2>
+      <div class="srow stack">
+        <label class="slabel" for="quotesUrl">Quotes Worker URL <span id="live-status">Off</span></label>
+        <input id="quotesUrl" class="ctl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://oklahoma-quotes.your-name.workers.dev">
+        <p class="note" style="margin:0">Your own Cloudflare Worker (the <code>worker/</code> folder in the repository) holds the data key and answers with live prices. Leave empty to show end-of-day closes only.</p>
       </div>
     </div>
     <div class="sgroup">
@@ -903,6 +917,85 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       svg.addEventListener("lostpointercapture", stop);
     }
 
+    /* ----- live prices -----
+       Optional. A Cloudflare Worker the owner deploys (worker/ in the
+       repository) holds the data key and answers /quotes?symbols=...
+       with the latest price and day change. The page asks on load and
+       whenever it comes back into view after a minute; the daily window
+       figures stay end-of-day and are never mixed with a live tick. */
+
+    var DEFAULT_QUOTES_URL = "";
+    var live = {};
+    var liveAsOf = null;
+    var liveLastFetch = 0;
+    var liveError = null;
+    var dpCurrent = null;
+    var dpRepaint = null;
+
+    function quoteBase() {
+      return (state.quotesUrl || "").trim().replace(/\/+$/, "");
+    }
+    function loadQuotes(force) {
+      var base = quoteBase();
+      if (!base || !/^https?:\/\//.test(base)) { live = {}; liveAsOf = null; liveError = null; paintLive(); return; }
+      if (!force && Date.now() - liveLastFetch < 60000) return;
+      liveLastFetch = Date.now();
+      var symbols = rows.map(function (r) { return r.ticker; });
+      var chunks = [];
+      for (var i = 0; i < symbols.length; i += 100) chunks.push(symbols.slice(i, i + 100));
+      Promise.all(chunks.map(function (chunk) {
+        return fetch(base + "/quotes?symbols=" + encodeURIComponent(chunk.join(",")), { mode: "cors" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          });
+      })).then(function (results) {
+        var next = {}, newest = 0;
+        results.forEach(function (payload) {
+          (payload.quotes || []).forEach(function (q) {
+            if (!q || !rowByTicker[q.symbol] || typeof q.price !== "number") return;
+            next[q.symbol] = q;
+            if (q.timestamp && q.timestamp > newest) newest = q.timestamp;
+          });
+        });
+        live = next;
+        liveAsOf = newest ? new Date(newest * 1000) : new Date();
+        liveError = null;
+        paintLive();
+      }).catch(function (err) {
+        liveError = err && err.message ? err.message : "failed";
+        paintLive();
+      });
+    }
+    function clock(d) {
+      return d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+    }
+    function paintLive() {
+      var status = document.getElementById("live-status");
+      var n = Object.keys(live).length;
+      var sub = document.getElementById("subtitle");
+      if (n) {
+        status.textContent = "Live · " + n + " names · " + clock(liveAsOf);
+        sub.textContent = "";
+        var dot = el("span", "live-dot");
+        dot.setAttribute("aria-hidden", "true");
+        sub.appendChild(dot);
+        sub.appendChild(document.createTextNode(sourceName + " · live " + clock(liveAsOf)));
+      } else {
+        status.textContent = liveError ? "Failed: " + liveError : quoteBase() ? "Connecting…" : "Off";
+        sub.textContent = sourceName + " · " + universe.count + " · " + asOf(lastBar || universe.generated_at);
+      }
+      renderList();
+      if (!dpPop.hidden && dpRepaint) dpRepaint();
+    }
+    function livePrice(r) {
+      var q = live[r.ticker];
+      return q && typeof q.price === "number" ? q : null;
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") loadQuotes(false);
+    });
+
     /* ----- universe facts ----- */
 
     var totalCap = rows.reduce(function (sum, r) { return sum + r.market_cap; }, 0);
@@ -1011,7 +1104,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var state = {
       query: "", sector: null, grouped: false,
       sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
-      view: "cards", display: "ret12", tab: "universe", theme: "system", range: "1Y"
+      view: "cards", display: "ret12", tab: "universe", theme: "system", range: "1Y",
+      quotesUrl: DEFAULT_QUOTES_URL
     };
     var collapsedSectors = new Set();
 
@@ -1029,6 +1123,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
+      if (typeof p.quotesUrl === "string") state.quotesUrl = p.quotesUrl;
     }
     function savePrefs() {
       try {
@@ -1036,7 +1131,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
           grouped: state.grouped, showTrend: state.showTrend,
-          theme: state.theme, range: state.range
+          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
@@ -1076,6 +1171,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         value: anyWindow("return_3m_pct"), fmt: pct, tfmt: pct1 },
       ret1: { label: "1-month return", short: "1M", explain: "ret1",
         value: anyWindow("return_1m_pct"), fmt: pct, tfmt: pct1 },
+      today: { label: "Today's change", short: "Today", explain: "today",
+        value: function (r) { var q = live[r.ticker]; return q && q.changePct != null ? q.changePct : null; },
+        fmt: pct, tfmt: pct1 },
       mom121: { label: "12-1 momentum", short: "12-1", explain: "mom121",
         value: anyWindow("mom_12_1_pct"), fmt: pct, tfmt: pct1 },
       mom61: { label: "6-1 momentum", short: "6-1", explain: "mom61",
@@ -1105,7 +1203,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       last: { label: "Last close", short: "Last", neutral: true,
         value: anyWindow("last_adj_close"), fmt: price }
     };
-    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
+    var METRIC_ORDER = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
     var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
     function metricText(key, v, dense) {
@@ -1405,6 +1503,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
 
     var dpStar = document.getElementById("dp-star");
+    function priceTail(r, cov) {
+      var q = livePrice(r);
+      if (q) {
+        return " · " + price(q.price) + (q.changePct != null ? " · " + signed(q.changePct, 2, "%") + " today" : "");
+      }
+      return cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "";
+    }
     function detailBody(r) {
       var body = el("div", "detail");
       var cov = coverage[r.ticker];
@@ -1435,8 +1540,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         var full = cov && cov.sufficient;
         var label = (w.key === "1Y" && !full && cov
           ? " · past " + cov.window_trading_days + " sessions"
-          : " · past " + w.label) +
-          (cov && cov.last_adj_close != null ? " · adj. close " + price(cov.last_adj_close) : "");
+          : " · past " + w.label) + priceTail(r, cov);
         function paintLine(value, text) {
           line.textContent = "";
           line.className = "dp-line " + direction(value);
@@ -1485,6 +1589,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           paint(false);
         });
       }
+      dpRepaint = function () { paint(false); };
       paint(true);
       body.appendChild(line);
       body.appendChild(holder);
@@ -1607,8 +1712,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       }
 
       var figure = el("span", "figure");
-      figure.appendChild(el("span", "price" + (cov && cov.last_adj_close != null ? "" : " none"),
-        cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
+      var q = livePrice(r);
+      figure.appendChild(el("span", "price" + (q || (cov && cov.last_adj_close != null) ? "" : " none"),
+        q ? price(q.price) : cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
       var v = metricValue(state.display, r);
       figure.appendChild(el("span", "pill " + metricClass(state.display, v), metricText(state.display, v)));
       button.appendChild(figure);
@@ -1657,7 +1763,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         ? shown.length + " on your watchlist"
         : shown.length === rows.length ? "All " + rows.length + " names"
         : shown.length + " of " + rows.length + " names";
-      listFig.textContent = isTable ? "" : METRICS[state.display].label;
+      listFig.textContent = isTable ? "" : (Object.keys(live).length ? "live price · " : "last close · ") + METRICS[state.display].label.toLowerCase();
       if (isTable) renderTable(shown); else renderCards(shown);
     }
     function renderTable(shown) {
@@ -1840,6 +1946,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       renderList();
     });
     columnsBtn.addEventListener("click", function () { openColumns(columnsBtn); });
+    var quotesInput = document.getElementById("quotesUrl");
+    var quotesTimer;
+    quotesInput.addEventListener("input", function () {
+      state.quotesUrl = quotesInput.value.trim();
+      savePrefs();
+      clearTimeout(quotesTimer);
+      quotesTimer = setTimeout(function () { loadQuotes(true); }, 500);
+    });
     groupBtn.addEventListener("click", function () {
       state.grouped = !state.grouped;
       groupBtn.setAttribute("aria-checked", String(state.grouped));
@@ -1853,6 +1967,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       chart: ["How the charts are drawn",
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
+      today: ["Today's change",
+        "The live price against the previous close, from your own quotes Worker, refreshed when the page opens and whenever it comes back into view after a minute. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
+        "live price ÷ previous close − 1"],
       cap: ["Market cap",
         "Share price times shares outstanding, from the provider's quote — the market's total price for the whole company. It sets the default order and each name's share of the universe. This is full market cap, not the free-float weighting the index itself uses.",
         "price × shares outstanding"],
@@ -1974,6 +2091,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         [r.name, r.sector, r.industry].filter(Boolean).join(" · ");
       document.getElementById("dp-ticker").textContent = r.ticker;
       dpBody.textContent = "";
+      dpCurrent = r;
       dpBody.appendChild(detailBody(r));
       dpOpener = opener;
       dpPop.hidden = false;
@@ -1984,6 +2102,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function closeDetail() {
       dpPop.hidden = true;
       dpBody.textContent = "";
+      dpCurrent = null;
+      dpRepaint = null;
       lockScroll();
       var back = dpOpener; dpOpener = null;
       returnFocus(back);
@@ -2037,9 +2157,11 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     paintWatchCount();
     paintWatchMix();
     paintSettingsRows();
+    quotesInput.value = state.quotesUrl || "";
     renderHero(true);
     renderList();
     setTab(state.tab);
+    loadQuotes(true);
   })();
 </script>
 </body>

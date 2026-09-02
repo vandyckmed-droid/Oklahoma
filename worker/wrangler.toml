@@ -1,0 +1,21 @@
+# Oklahoma quotes proxy.
+#
+# Holds the Financial Modeling Prep key so the public GitHub Pages site
+# never ships it. Deploy from this directory:
+#
+#   npx wrangler login
+#   npx wrangler secret put FMP_API_KEY
+#   npx wrangler deploy
+#
+# Then paste the printed URL (https://oklahoma-quotes.<you>.workers.dev)
+# into the page's Settings > Live prices.
+name = "oklahoma-quotes"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Origins allowed to call this Worker, comma separated. The page's own
+# origin plus a local dev server.
+ALLOWED_ORIGINS = "https://vandyckmed-droid.github.io,http://localhost:8000,http://127.0.0.1:8000"
+# Seconds a batch of quotes is cached at the edge before FMP is asked again.
+CACHE_SECONDS = "60"
