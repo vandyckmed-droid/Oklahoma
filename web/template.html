@@ -962,15 +962,18 @@
     border-spacing: 0;
     min-width: 100%;
   }
+  /* Dense on purpose: a phone-width table earns its place by how many
+     names and columns fit a screen, so cells are tight and figures are
+     one decimal; the detail sheet keeps the full precision. */
   .grid th,
   .grid td {
-    padding: 8px 10px;
+    padding: 5px 7px;
     white-space: nowrap;
     text-align: right;
     border-bottom: 1px solid var(--line);
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    font-size: 12px;
+    font-size: 11.5px;
   }
   .grid thead th {
     position: sticky;
@@ -978,7 +981,7 @@
     z-index: 2;
     background: var(--surface-sunk);
     font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 500;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -999,13 +1002,8 @@
   }
   .grid th:nth-child(2),
   .grid td:nth-child(2) { text-align: left; }
-  .grid .tsector {
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    color: var(--muted);
-  }
+  .grid .tsector { color: var(--muted); }
+  .grid .tsector abbr { text-decoration: none; }
   .grid .tsector .dot {
     display: inline-block;
     width: 6px;
@@ -1048,16 +1046,7 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-  .tcell .ticker { font-size: 13px; }
-  .tcell .tname {
-    max-width: 118px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-size: 10.5px;
-    color: var(--faint);
-  }
+  .tcell .ticker { font-size: 12.5px; }
   .grid td.empty {
     text-align: center;
     white-space: normal;
@@ -1222,6 +1211,30 @@
     function pct(value) {
       if (value == null) return "—";
       return (value > 0 ? "+" : "") + value.toFixed(2) + "%";
+    }
+
+    function pct1(value) {
+      return (value > 0 ? "+" : "") + value.toFixed(1) + "%";
+    }
+
+    // Three-letter sector codes for the table; the full name stays on
+    // the chips, the cards and the detail, and in the abbr's title.
+    var SECTOR_CODES = {
+      "Technology": "TEC",
+      "Communication Services": "COM",
+      "Consumer Cyclical": "CCY",
+      "Consumer Defensive": "CDF",
+      "Financial Services": "FIN",
+      "Healthcare": "HLT",
+      "Energy": "ENR",
+      "Industrials": "IND",
+      "Basic Materials": "MAT",
+      "Real Estate": "RES",
+      "Utilities": "UTL",
+      "Unclassified": "UNC"
+    };
+    function sectorCode(name) {
+      return SECTOR_CODES[name] || name.slice(0, 3).toUpperCase();
     }
 
     function direction(value) {
@@ -1556,11 +1569,13 @@
       cap: { label: "Market cap", short: "Cap", explain: "cap", neutral: true,
         value: function (r) { return r.market_cap; }, fmt: money },
       ret12: { label: "12-mo return", short: "12-mo", explain: "ret12",
-        value: fullOnly("window_return_pct"), fmt: pct },
+        value: fullOnly("window_return_pct"), fmt: pct, tfmt: pct1 },
+      ret6: { label: "6-mo return", short: "6-mo", explain: "ret6",
+        value: anyWindow("return_6m_pct"), fmt: pct, tfmt: pct1 },
       ret3: { label: "3-mo return", short: "3-mo", explain: "ret3",
-        value: anyWindow("return_3m_pct"), fmt: pct },
+        value: anyWindow("return_3m_pct"), fmt: pct, tfmt: pct1 },
       ret1: { label: "1-mo return", short: "1-mo", explain: "ret1",
-        value: anyWindow("return_1m_pct"), fmt: pct },
+        value: anyWindow("return_1m_pct"), fmt: pct, tfmt: pct1 },
       offhigh: { label: "Off 1y high", short: "Off high", explain: "offhigh",
         value: function (r, cov) {
           if (!cov || !cov.sufficient || cov.window_high == null ||
@@ -1576,25 +1591,33 @@
               cov.window_return_pct == null) return null;
           return cov.window_return_pct - med;
         },
-        fmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; } },
+        fmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + " pts"; },
+        head: "Vs sector pts",
+        tfmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1); } },
       trend: { label: "Trend (log slope)", short: "Trend", explain: "trend",
-        value: anyWindow("trend_ann_pct"),
-        fmt: function (v) { return pct(v) + "/yr"; } },
+        value: anyWindow("trend_ann_pct"), head: "Trend %/yr",
+        fmt: function (v) { return pct(v) + "/yr"; }, tfmt: pct1 },
       r2: { label: "R\u00b2 of trend", short: "R\u00b2", explain: "r2", neutral: true,
         value: anyWindow("trend_r2"), fmt: function (v) { return v.toFixed(2); } },
       quality: { label: "Quality momentum", short: "Quality", explain: "quality",
-        value: anyWindow("quality_pct"),
-        fmt: function (v) { return pct(v) + "/yr"; } },
+        value: anyWindow("quality_pct"), head: "Quality %/yr",
+        fmt: function (v) { return pct(v) + "/yr"; }, tfmt: pct1 },
       last: { label: "Last close", short: "Last", neutral: true,
         value: anyWindow("last_adj_close"),
         fmt: function (v) { return "$" + v.toLocaleString(); } }
     };
-    var METRIC_ORDER = ["cap", "ret12", "ret3", "ret1", "offhigh", "vsmedian",
+    var METRIC_ORDER = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
       "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "ret12", "ret3", "ret1", "offhigh", "vsmedian",
+    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "offhigh", "vsmedian",
       "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
-    function metricText(key, v) { return v == null ? "\u2014" : METRICS[key].fmt(v); }
+    // `dense` picks the table's one-decimal, suffix-free form where a
+    // metric defines one; the header carries the unit there.
+    function metricText(key, v, dense) {
+      if (v == null) return "\u2014";
+      var m = METRICS[key];
+      return dense && m.tfmt ? m.tfmt(v) : m.fmt(v);
+    }
     function metricClass(key, v) {
       var m = METRICS[key];
       if (v == null || m.neutral) return "";
@@ -1799,6 +1822,10 @@
         grid.appendChild(statCell(cov.sufficient ? "ret12" : null,
           cov.sufficient ? "12-mo return" : cov.window_trading_days + "-day return",
           pct(cov.window_return_pct), direction(cov.window_return_pct)));
+        if (cov.return_6m_pct != null) {
+          grid.appendChild(statCell("ret6", "6-mo return",
+            pct(cov.return_6m_pct), direction(cov.return_6m_pct)));
+        }
         if (cov.return_3m_pct != null) {
           grid.appendChild(statCell("ret3", "3-mo return",
             pct(cov.return_3m_pct), direction(cov.return_3m_pct)));
@@ -1820,10 +1847,6 @@
           grid.appendChild(statCell("vsmedian", "Vs sector",
             (delta > 0 ? "+" : "") + delta.toFixed(1) + " pts",
             direction(delta), "median " + pct(med)));
-        }
-        if (cov.last_adj_close != null) {
-          grid.appendChild(statCell(null, "Last close",
-            "$" + cov.last_adj_close.toLocaleString(), ""));
         }
         dl.appendChild(grid);
       }
@@ -1957,6 +1980,9 @@
         if (cov.window_low != null) {
           bits.push("range $" + cov.window_low.toLocaleString() +
             "\u2013$" + cov.window_high.toLocaleString());
+        }
+        if (cov.last_adj_close != null) {
+          bits.push("last adj. close $" + cov.last_adj_close.toLocaleString());
         }
         meta.textContent = bits.join(" \u00b7 ");
         dl.appendChild(meta);
@@ -2145,7 +2171,7 @@
       gridHead.textContent = "";
       var first = document.createElement("th");
       first.scope = "col";
-      first.textContent = "Name";
+      first.textContent = "Ticker";
       gridHead.appendChild(first);
       var sectorTh = document.createElement("th");
       sectorTh.scope = "col";
@@ -2158,7 +2184,7 @@
         b.type = "button";
         b.className = "th-sort";
         b.setAttribute("data-sort", key);
-        b.appendChild(document.createTextNode(METRICS[key].short));
+        b.appendChild(document.createTextNode(METRICS[key].head || METRICS[key].short));
         var arrow = document.createElement("span");
         arrow.className = "th-arrow";
         arrow.setAttribute("aria-hidden", "true");
@@ -2196,28 +2222,26 @@
       open.className = "tcell";
       open.setAttribute("aria-haspopup", "dialog");
       open.appendChild(tickerSpan(r));
-      var nm = document.createElement("span");
-      nm.className = "tname";
-      nm.textContent = r.name;
-      open.appendChild(nm);
       nameCell.appendChild(open);
       tr.appendChild(nameCell);
 
       var sectorCell = document.createElement("td");
       sectorCell.className = "tsector";
-      sectorCell.title = r.sector;
       var dot = document.createElement("span");
       dot.className = "dot";
       dot.style.background = sectorColor(r.sector);
       sectorCell.appendChild(dot);
-      sectorCell.appendChild(document.createTextNode(r.sector));
+      var code = document.createElement("abbr");
+      code.title = r.sector;
+      code.textContent = sectorCode(r.sector);
+      sectorCell.appendChild(code);
       tr.appendChild(sectorCell);
 
       TABLE_COLUMNS.forEach(function (key) {
         var td = document.createElement("td");
         var v = metricValue(key, r);
         td.className = metricClass(key, v);
-        td.textContent = metricText(key, v);
+        td.textContent = metricText(key, v, true);
         tr.appendChild(td);
       });
       // The whole row is the target; the button inside is the keyboard
@@ -2327,6 +2351,9 @@
       ret12: ["12-month return",
         "Total change in the adjusted close over the last 252 trading days — about one year of sessions. Adjusted closes fold in dividends and splits, so this is total return.",
         "close today \u00f7 first close of the 252-session window \u2212 1"],
+      ret6: ["6-month return",
+        "Total change in the adjusted close over the last 126 trading days — about half a year. Sits between the year's memory and the quarter's news.",
+        "close today \u00f7 first close of the 126-session window \u2212 1"],
       ret3: ["3-month return",
         "Total change in the adjusted close over the last 63 trading days — about one quarter. Fresh momentum, against the 12-month figure's longer memory.",
         "close today \u00f7 first close of the 63-session window \u2212 1"],
@@ -2433,6 +2460,14 @@
         epList.appendChild(dt);
         epList.appendChild(dd);
       });
+      var codesDt = document.createElement("dt");
+      codesDt.textContent = "Sector codes";
+      var codesDd = document.createElement("dd");
+      codesDd.textContent = sectors.map(function (name) {
+        return sectorCode(name) + " " + name;
+      }).join(" \u00b7 ");
+      epList.appendChild(codesDt);
+      epList.appendChild(codesDd);
       epList.hidden = false;
       epOpener = opener;
       epPop.hidden = false;

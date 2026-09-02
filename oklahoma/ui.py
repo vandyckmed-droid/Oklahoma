@@ -14,6 +14,7 @@ from math import exp
 
 from .config import (
     SPARKLINE_POINTS,
+    TRADING_DAYS_HALF,
     TRADING_DAYS_MONTH,
     TRADING_DAYS_QUARTER,
     UI_OUTPUT_PATH,
@@ -73,6 +74,9 @@ def _display(universe: dict, history_index: dict) -> dict:
             ]
             # The short lens only exists where a full quarter of bars does;
             # measuring it over less would not be a 3-month number.
+            if len(bars) >= TRADING_DAYS_HALF:
+                half = cumulative_returns(bars, TRADING_DAYS_HALF)
+                row["return_6m_pct"] = round(half[-1]["cum_return_pct"], 2)
             if len(bars) >= TRADING_DAYS_QUARTER:
                 quarter = cumulative_returns(bars, TRADING_DAYS_QUARTER)
                 row["return_3m_pct"] = round(quarter[-1]["cum_return_pct"], 2)

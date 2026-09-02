@@ -66,6 +66,9 @@ TRADING_DAYS_TARGET = 252
 # from a stale 12-month winner coasting on old gains.
 TRADING_DAYS_QUARTER = 63
 
+# The half-year lens: between the year's memory and the quarter's news.
+TRADING_DAYS_HALF = 126
+
 # The shortest lens: ~one month of trading. What the name did lately,
 # before the quarter and the year have their say.
 TRADING_DAYS_MONTH = 21

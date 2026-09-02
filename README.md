@@ -159,8 +159,8 @@ Every figure on the page is **tap-to-explain**: underlined labels open a
 sheet with a plain-language sentence and the formula, instead of fine
 print scattered through the layout.
 
-Return windows come in three lengths — **12-month** (252 sessions),
-**3-month** (63) and **1-month** (21) — each measured from the first close
+Return windows come in four lengths — **12-month** (252 sessions),
+**6-month** (126), **3-month** (63) and **1-month** (21) — each measured from the first close
 of its own window. A name that cannot fill a window gets no figure for it
 rather than a shorter one wearing the same label; the page shows a dash
 and sinks the name under that sort.
@@ -249,10 +249,12 @@ the shortlist doesn't already have (the watchlist).
 One **metric registry** in the template drives every surface, so a figure
 means the same thing wherever it appears. The list has two views. **Cards**
 show each name as a sparkline plus one labeled figure chosen from the Show
-menu (12-mo, 3-mo, 1-mo, off high, vs sector, trend, R², quality, last
-close). **Table** lays every column out at once: it scrolls sideways
-inside its own region so the header row and the ticker column stay put,
-and tapping a column heading sorts by it (again to flip). Tapping any name
+menu (12-mo, 6-mo, 3-mo, 1-mo, off high, vs sector, trend, R², quality,
+last close). **Table** is built for density on a phone: ticker only,
+three-letter sector codes, one-decimal figures, and every column at once.
+It scrolls sideways inside its own region so the header row and the
+ticker column stay put, and tapping a column heading sorts by it (again
+to flip). Tapping any name
 in either view opens the same detail as a bottom sheet. The chosen view,
 figure and sort are remembered per device.
 
