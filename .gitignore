@@ -13,3 +13,7 @@ venv/
 # Local Claude tooling (skills, agents) stays out of the published repo
 .claude/
 .impeccable/
+
+# Cloudflare Worker tooling
+worker/node_modules/
+worker/.wrangler/
