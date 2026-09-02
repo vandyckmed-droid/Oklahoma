@@ -241,11 +241,15 @@ svg { display: block; }
 }
 .lead .gain, .rhythm .gain, .strip .gain { display: none; }
 /* the owner's grease-pencil mark, written on the paper itself */
-.pmark, .trace svg.pmark, .strip .trace svg.pmark { position: absolute; left: 3px; top: 2px; width: 18px; height: 18px; color: var(--pencil); opacity: 0.88; pointer-events: none; }
+.pmark, .trace svg.pmark, .strip .trace svg.pmark { position: absolute; left: 12px; top: 2px; width: 18px; height: 18px; color: var(--pencil); opacity: 0.88; pointer-events: none; }
+/* the mark takes the corner the trace leaves clear of its zero line */
+.trace svg.pmark.low, .strip .trace svg.pmark.low { top: auto; bottom: 2px; }
+.watch-btn svg.pmark { position: static; width: 18px; height: 18px; opacity: 1; }
+.watch-btn[aria-pressed="false"] svg.pmark { color: var(--pencil); opacity: 0.6; }
 .pmark path { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .ticker .pmark { position: static; width: 16px; height: 16px; }
 .dp-ticker .pmark { position: static; width: 24px; height: 24px; }
-@media (min-width: 720px) { .trace svg.pmark, .strip .trace svg.pmark { width: 22px; height: 22px; left: 4px; top: 3px; } }
+@media (min-width: 720px) { .trace svg.pmark, .strip .trace svg.pmark { width: 22px; height: 22px; left: 14px; top: 3px; } .trace svg.pmark.low, .strip .trace svg.pmark.low { top: auto; bottom: 3px; } }
 .trace-empty { height: 40px; border-left: 1px solid var(--hair); }
 @media (min-width: 720px) {
   .strip { grid-template-columns: 32px minmax(160px, 1fr) 250px repeat(3, 84px) 120px; column-gap: 12px; height: 80px; }
@@ -534,7 +538,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <path d="M4 0V20M8 0V20M12 0V20M16 0V20M0 4H20M0 8H20M0 12H20M0 16H20" fill="none" style="stroke:var(--rule)" stroke-width="0.6"/>
       <path d="M0 0.5H20M0.5 0V20" fill="none" style="stroke:var(--rule-heavy)" stroke-width="1"/>
     </pattern>
-    <symbol id="i-star" viewBox="0 0 16 16"><path d="M8 1.6l1.9 4.1 4.5.5-3.3 3.1.9 4.5L8 11.6l-4 2.2.9-4.5L1.6 6.2l4.5-.5z" fill="currentColor"/></symbol>
     <symbol id="i-star-o" viewBox="0 0 24 24"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.3 1.2 6.1L12 17.1l-5.5 2.9 1.2-6.1-4.5-4.3 6.1-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
     <symbol id="i-strips" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 7l1.5-2 1.5 2M12 12l1.5-2.5 1.5 2.5M9 17l1.5-2 1.5 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
     <symbol id="i-leads" viewBox="0 0 24 24"><path d="M3 4h18v16H3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 4v16M15 4v16M3 12h18" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
@@ -902,6 +905,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var gain = el("span", "gain", scale.gain + "%/box");
       wrap.appendChild(gain);
       wrap.gain = scale.gain;
+      // Where the zero line sits in the top half, the trace lives up
+      // there and the lower corner is the clear one.
+      wrap.clearCorner = scale.base <= boxesH / 2 ? "low" : "high";
       return wrap;
     }
 
@@ -1512,7 +1518,11 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       function paintWatch(drawIn) {
         var on = watch.has(r.ticker);
         watchBtn.textContent = "";
-        watchBtn.appendChild(icon(on ? "i-star" : "i-star-o"));
+        var btnMark = pencilMark();
+        btnMark.removeAttribute("role");
+        btnMark.removeAttribute("aria-label");
+        btnMark.setAttribute("aria-hidden", "true");
+        watchBtn.appendChild(btnMark);
         watchBtn.appendChild(document.createTextNode(on ? "On the watchlist" : "Mark for the watchlist"));
         watchBtn.setAttribute("aria-pressed", String(on));
         var inSector = 0;
@@ -1592,7 +1602,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var strip = null;
       if (hasTrace) {
         strip = trace(cov.cum_return_spark, wide ? 12 : 6, wide ? 3 : 2, { dashed: !cov.sufficient });
-        if (watch.has(r.ticker)) strip.appendChild(pencilMark());
+        if (watch.has(r.ticker)) {
+          strip.appendChild(pencilMark("pmark" + (strip.clearCorner === "low" ? " low" : "")));
+        }
         button.appendChild(strip);
       } else {
         button.appendChild(el("span", "trace-empty"));
