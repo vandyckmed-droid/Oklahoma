@@ -269,7 +269,7 @@ figure and sort are remembered per device.
 
 The **watchlist** is stored in the browser (`localStorage`) — a personal
 shortlist on that device, not synced state. Starred names show a marker in
-the list, a Watchlist filter chip shows only them, and each name's detail
+the list, the Watchlist tab shows only them, and each name's detail
 notes how much of the current watchlist already sits in the same sector.
 
 ## Tests and CI
