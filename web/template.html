@@ -1083,6 +1083,8 @@
     background: var(--surface);
     box-shadow: var(--shadow);
     overflow: auto;
+    /* 92px = the 56px tab bar plus 36px of breathing room above it; it
+       tracks .tabbar's padding and icon size by hand. */
     max-height: calc(100vh - 92px);
     max-height: calc(100dvh - 92px - env(safe-area-inset-bottom, 0px));
     -webkit-overflow-scrolling: touch;
@@ -1899,7 +1901,14 @@
         renderList();
       }
       savePrefs();
-      window.scrollTo(0, 0);
+      // The table is its own scroller sized to fit above the bar only
+      // when its top meets the viewport's, so land on it; cards start
+      // from the page top as usual.
+      if (state.view === "table" && !tableWrap.hidden) {
+        tableWrap.scrollIntoView({ block: "start" });
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
     var tabbar = document.getElementById("tabbar");
     tabbar.addEventListener("click", function (event) {
@@ -2331,8 +2340,6 @@
       var isTable = state.view === "table";
       listEl.hidden = isTable;
       tableWrap.hidden = !isTable;
-      displayRow.hidden = isTable;
-      groupRow.hidden = isTable;
       var shown = ordered(visible());
       resultEl.textContent = state.watchOnly
         ? shown.length + " on your watchlist"
@@ -2540,11 +2547,20 @@
       setSort(state.sortKey, !state.sortDesc);
     });
 
+    // Which Settings rows apply is a function of the view, not of the
+    // list having been painted, so it lives beside setView rather than
+    // inside renderList (which setTab skips on Sectors and Settings).
+    function paintSettingsRows() {
+      var isTable = state.view === "table";
+      displayRow.hidden = isTable;
+      groupRow.hidden = isTable;
+    }
     function setView(view) {
       state.view = view;
       document.querySelectorAll(".viewswitch button").forEach(function (b) {
         b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view));
       });
+      paintSettingsRows();
       savePrefs();
       renderList();
     }
@@ -2790,6 +2806,10 @@
     renderTableHead();
     renderFilters();
     paintWatchCount();
+    paintSettingsRows();
+    // Paint the listing once whichever tab opens, so the result count's
+    // live region and the list exist before Universe is first visited.
+    renderList();
     setTab(state.tab);
   })();
 </script>
