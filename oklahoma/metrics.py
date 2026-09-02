@@ -34,6 +34,27 @@ def cumulative_returns(bars: list[dict], trading_days: int = TRADING_DAYS_TARGET
     ]
 
 
+def skip_month_return(
+    bars: list[dict], trading_days: int, skip: int
+) -> float | None:
+    """Window return measured to `skip` sessions ago, in percent.
+
+    The classic momentum construction (12-1, 6-1): the window's total
+    return with the most recent month left out, because the freshest month
+    tends to reverse. Measured from the first close of the last
+    `trading_days` sessions to the first close of the last `skip`
+    sessions — the skipped window's own base — so it composes exactly
+    with the page's short window: (1 + 12-1) x (1 + 1M) = 1 + 12M.
+    Returns None when the full window is not there — a shorter span would
+    be a different number wearing this one's name.
+    """
+    if skip < 2 or len(bars) < trading_days or trading_days <= skip:
+        return None
+    base = bars[-trading_days]["adj_close"]
+    end = bars[-skip]["adj_close"]
+    return round((end / base - 1) * 100, 2)
+
+
 def sector_summary(rows: list[dict]) -> list[dict]:
     """Per-sector view of window returns, strongest sector first.
 
