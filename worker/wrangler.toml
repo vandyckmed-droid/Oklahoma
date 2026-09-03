@@ -11,9 +11,6 @@
 name = "oklahoma-quotes"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
-# Keep variables and secrets set in the dashboard across deploys.
-keep_vars = true
-
 [vars]
 # Origins allowed to call this Worker, comma separated. The page's own
 # origin plus a local dev server.
