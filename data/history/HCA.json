@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HCA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HCA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":376.18,"volume":1098033},
 {"date":"2025-06-24","adj_close":376.47,"volume":1105100},
 {"date":"2025-06-25","adj_close":371.68,"volume":1294225},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":419.34,"volume":975112},
 {"date":"2026-08-28","adj_close":417.82,"volume":1000917},
 {"date":"2026-08-31","adj_close":414.45,"volume":1306128},
-{"date":"2026-09-01","adj_close":413.58,"volume":1256106}
+{"date":"2026-09-01","adj_close":413.58,"volume":1258146},
+{"date":"2026-09-02","adj_close":402.06,"volume":1534758}
 ]}

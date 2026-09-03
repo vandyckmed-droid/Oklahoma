@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MRSH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"MRSH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":213.78,"volume":1964140},
 {"date":"2025-06-24","adj_close":214.33,"volume":1576224},
 {"date":"2025-06-25","adj_close":211.05,"volume":1743219},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":190.0,"volume":2674998},
 {"date":"2026-08-28","adj_close":192.64,"volume":1446842},
 {"date":"2026-08-31","adj_close":189.8,"volume":2360038},
-{"date":"2026-09-01","adj_close":187.58,"volume":2033985}
+{"date":"2026-09-01","adj_close":187.58,"volume":2064328},
+{"date":"2026-09-02","adj_close":187.84,"volume":3011669}
 ]}

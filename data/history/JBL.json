@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"JBL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"JBL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":208.03,"volume":1644819},
 {"date":"2025-06-24","adj_close":211.63,"volume":1777400},
 {"date":"2025-06-25","adj_close":214.33,"volume":1701417},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":312.22,"volume":918905},
 {"date":"2026-08-28","adj_close":301.45,"volume":1022897},
 {"date":"2026-08-31","adj_close":305.26,"volume":975071},
-{"date":"2026-09-01","adj_close":299.14,"volume":914841}
+{"date":"2026-09-01","adj_close":299.14,"volume":926433},
+{"date":"2026-09-02","adj_close":299.39,"volume":872268}
 ]}

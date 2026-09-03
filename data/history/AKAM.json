@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AKAM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AKAM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":79.28,"volume":3152926},
 {"date":"2025-06-24","adj_close":80.06,"volume":3717078},
 {"date":"2025-06-25","adj_close":79.53,"volume":1636755},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":111.24,"volume":3042782},
 {"date":"2026-08-28","adj_close":107.47,"volume":2584450},
 {"date":"2026-08-31","adj_close":108.62,"volume":2408085},
-{"date":"2026-09-01","adj_close":106.46,"volume":2684103}
+{"date":"2026-09-01","adj_close":106.46,"volume":2701022},
+{"date":"2026-09-02","adj_close":105.09,"volume":2172150}
 ]}

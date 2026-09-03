@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"INCY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"INCY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":67.26,"volume":1349027},
 {"date":"2025-06-24","adj_close":69.01,"volume":1700554},
 {"date":"2025-06-25","adj_close":67.55,"volume":995700},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":127.74,"volume":700682},
 {"date":"2026-08-28","adj_close":124.37,"volume":1215069},
 {"date":"2026-08-31","adj_close":123.22,"volume":1483200},
-{"date":"2026-09-01","adj_close":125.01,"volume":1170979}
+{"date":"2026-09-01","adj_close":125.01,"volume":1191993},
+{"date":"2026-09-02","adj_close":128.83,"volume":2324073}
 ]}

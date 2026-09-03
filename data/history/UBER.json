@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UBER","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"UBER","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":85.24,"volume":18407500},
 {"date":"2025-06-24","adj_close":91.65,"volume":38925100},
 {"date":"2025-06-25","adj_close":90.9,"volume":17400840},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":76.95,"volume":14389121},
 {"date":"2026-08-28","adj_close":78.82,"volume":10710383},
 {"date":"2026-08-31","adj_close":75.65,"volume":18505906},
-{"date":"2026-09-01","adj_close":75.24,"volume":11158485}
+{"date":"2026-09-01","adj_close":75.24,"volume":11220638},
+{"date":"2026-09-02","adj_close":76.45,"volume":13014668}
 ]}

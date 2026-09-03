@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"META","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"META","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":696.25,"volume":11080100},
 {"date":"2025-06-24","adj_close":709.88,"volume":13823200},
 {"date":"2025-06-25","adj_close":706.37,"volume":9320436},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":571.1,"volume":15221400},
 {"date":"2026-08-28","adj_close":578.02,"volume":16042400},
 {"date":"2026-08-31","adj_close":572.34,"volume":13383800},
-{"date":"2026-09-01","adj_close":578.54,"volume":15369187}
+{"date":"2026-09-01","adj_close":578.54,"volume":15796900},
+{"date":"2026-09-02","adj_close":592.85,"volume":16426291}
 ]}

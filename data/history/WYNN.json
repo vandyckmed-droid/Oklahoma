@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"WYNN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"WYNN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":88.67,"volume":1862300},
 {"date":"2025-06-24","adj_close":89.92,"volume":1765921},
 {"date":"2025-06-25","adj_close":90.85,"volume":1774402},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":93.61,"volume":1881814},
 {"date":"2026-08-28","adj_close":95.26,"volume":1223808},
 {"date":"2026-08-31","adj_close":91.28,"volume":2764720},
-{"date":"2026-09-01","adj_close":90.6,"volume":1779908}
+{"date":"2026-09-01","adj_close":90.6,"volume":1825607},
+{"date":"2026-09-02","adj_close":91.52,"volume":1757800}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VRTX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"VRTX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":443.54,"volume":950068},
 {"date":"2025-06-24","adj_close":450.27,"volume":1068028},
 {"date":"2025-06-25","adj_close":445.82,"volume":1077249},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":547.55,"volume":844619},
 {"date":"2026-08-28","adj_close":541.69,"volume":886917},
 {"date":"2026-08-31","adj_close":544.52,"volume":1198447},
-{"date":"2026-09-01","adj_close":547.65,"volume":732552}
+{"date":"2026-09-01","adj_close":547.65,"volume":735119},
+{"date":"2026-09-02","adj_close":556.75,"volume":1734185}
 ]}

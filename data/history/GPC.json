@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GPC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"GPC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":117.1,"volume":1123135},
 {"date":"2025-06-24","adj_close":117.01,"volume":740525},
 {"date":"2025-06-25","adj_close":115.03,"volume":681151},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":136.7,"volume":1259587},
 {"date":"2026-08-28","adj_close":137.51,"volume":733720},
 {"date":"2026-08-31","adj_close":135.67,"volume":1245600},
-{"date":"2026-09-01","adj_close":134.84,"volume":921993}
+{"date":"2026-09-01","adj_close":134.84,"volume":932418},
+{"date":"2026-09-02","adj_close":137.15,"volume":736233}
 ]}

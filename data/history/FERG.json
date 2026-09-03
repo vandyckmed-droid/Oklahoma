@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"FERG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"FERG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":210.96,"volume":1450264},
 {"date":"2025-06-24","adj_close":215.03,"volume":1717412},
 {"date":"2025-06-25","adj_close":215.27,"volume":1344119},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":233.26,"volume":1019883},
 {"date":"2026-08-28","adj_close":228.49,"volume":1000749},
 {"date":"2026-08-31","adj_close":224.51,"volume":1624516},
-{"date":"2026-09-01","adj_close":218.91,"volume":1884383}
+{"date":"2026-09-01","adj_close":218.91,"volume":1925422},
+{"date":"2026-09-02","adj_close":221.23,"volume":1667666}
 ]}

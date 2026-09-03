@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HIG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HIG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":124.7,"volume":1042737},
 {"date":"2025-06-24","adj_close":123.86,"volume":1417112},
 {"date":"2025-06-25","adj_close":121.4,"volume":1279940},
@@ -297,7 +297,8 @@
 {"date":"2026-08-25","adj_close":137.62,"volume":1084500},
 {"date":"2026-08-26","adj_close":139.25,"volume":1207191},
 {"date":"2026-08-27","adj_close":137.2,"volume":1256457},
-{"date":"2026-08-28","adj_close":137.94,"volume":875281},
+{"date":"2026-08-28","adj_close":137.94,"volume":875300},
 {"date":"2026-08-31","adj_close":136.78,"volume":2040000},
-{"date":"2026-09-01","adj_close":137.13,"volume":871824}
+{"date":"2026-09-01","adj_close":137.13,"volume":981550},
+{"date":"2026-09-02","adj_close":137.21,"volume":1138562}
 ]}

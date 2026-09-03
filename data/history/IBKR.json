@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"IBKR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"IBKR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":50.25,"volume":5656200},
 {"date":"2025-06-24","adj_close":51.35,"volume":3353823},
 {"date":"2025-06-25","adj_close":51.97,"volume":4457372},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":96.46,"volume":5156050},
 {"date":"2026-08-28","adj_close":95.75,"volume":2236816},
 {"date":"2026-08-31","adj_close":97.2,"volume":3562788},
-{"date":"2026-09-01","adj_close":90.39,"volume":5033237}
+{"date":"2026-09-01","adj_close":90.39,"volume":5142423},
+{"date":"2026-09-02","adj_close":89.12,"volume":4308129}
 ]}

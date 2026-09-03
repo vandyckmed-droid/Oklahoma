@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"BRK-B","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"BRK-B","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":487.77,"volume":4141000},
 {"date":"2025-06-24","adj_close":493.48,"volume":5111700},
 {"date":"2025-06-25","adj_close":486.21,"volume":4260600},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":503.7,"volume":6308048},
 {"date":"2026-08-28","adj_close":505.0,"volume":4852922},
 {"date":"2026-08-31","adj_close":504.03,"volume":5130992},
-{"date":"2026-09-01","adj_close":502.33,"volume":4204782}
+{"date":"2026-09-01","adj_close":502.33,"volume":4846742},
+{"date":"2026-09-02","adj_close":505.09,"volume":3291114}
 ]}

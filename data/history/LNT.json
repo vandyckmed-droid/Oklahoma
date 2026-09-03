@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"LNT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"LNT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":59.04,"volume":1596901},
 {"date":"2025-06-24","adj_close":58.86,"volume":1435804},
 {"date":"2025-06-25","adj_close":57.83,"volume":1489298},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":68.21,"volume":1508567},
 {"date":"2026-08-28","adj_close":68.03,"volume":2048651},
 {"date":"2026-08-31","adj_close":67.98,"volume":2360300},
-{"date":"2026-09-01","adj_close":67.92,"volume":2748601}
+{"date":"2026-09-01","adj_close":67.92,"volume":2843622},
+{"date":"2026-09-02","adj_close":67.74,"volume":2293089}
 ]}

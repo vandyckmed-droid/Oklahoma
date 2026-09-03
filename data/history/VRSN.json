@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VRSN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"VRSN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":278.62,"volume":651790},
 {"date":"2025-06-24","adj_close":280.73,"volume":572111},
 {"date":"2025-06-25","adj_close":278.18,"volume":419639},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":294.73,"volume":580384},
 {"date":"2026-08-28","adj_close":291.93,"volume":698786},
 {"date":"2026-08-31","adj_close":288.28,"volume":798927},
-{"date":"2026-09-01","adj_close":288.37,"volume":682154}
+{"date":"2026-09-01","adj_close":288.37,"volume":736600},
+{"date":"2026-09-02","adj_close":289.96,"volume":766930}
 ]}

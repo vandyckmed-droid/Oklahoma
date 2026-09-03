@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CBOE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CBOE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":227.11,"volume":797405},
 {"date":"2025-06-24","adj_close":226.27,"volume":592000},
 {"date":"2025-06-25","adj_close":227.38,"volume":475438},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":313.08,"volume":836536},
 {"date":"2026-08-28","adj_close":309.59,"volume":953959},
 {"date":"2026-08-31","adj_close":300.2,"volume":2110107},
-{"date":"2026-09-01","adj_close":307.62,"volume":744016}
+{"date":"2026-09-01","adj_close":307.62,"volume":744171},
+{"date":"2026-09-02","adj_close":294.12,"volume":1152972}
 ]}

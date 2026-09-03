@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DTE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DTE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":129.72,"volume":835003},
 {"date":"2025-06-24","adj_close":128.93,"volume":1346300},
 {"date":"2025-06-25","adj_close":126.65,"volume":1156333},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":136.24,"volume":1243374},
 {"date":"2026-08-28","adj_close":135.86,"volume":877318},
 {"date":"2026-08-31","adj_close":135.63,"volume":1430112},
-{"date":"2026-09-01","adj_close":136.06,"volume":1050093}
+{"date":"2026-09-01","adj_close":136.06,"volume":1050305},
+{"date":"2026-09-02","adj_close":136.05,"volume":1169168}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AMAT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AMAT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":170.52,"volume":6838843},
 {"date":"2025-06-24","adj_close":178.67,"volume":7254500},
 {"date":"2025-06-25","adj_close":181.53,"volume":5431800},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":482.36,"volume":6290727},
 {"date":"2026-08-28","adj_close":461.67,"volume":6531804},
 {"date":"2026-08-31","adj_close":458.39,"volume":6177322},
-{"date":"2026-09-01","adj_close":441.85,"volume":7105514}
+{"date":"2026-09-01","adj_close":441.85,"volume":7150153},
+{"date":"2026-09-02","adj_close":438.46,"volume":6523059}
 ]}

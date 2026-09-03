@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ORCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ORCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":204.26,"volume":13418400},
 {"date":"2025-06-24","adj_close":212.38,"volume":19030617},
 {"date":"2025-06-25","adj_close":207.89,"volume":11804604},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":151.94,"volume":30251433},
 {"date":"2026-08-28","adj_close":150.85,"volume":17800000},
 {"date":"2026-08-31","adj_close":149.12,"volume":16118904},
-{"date":"2026-09-01","adj_close":141.26,"volume":24997384}
+{"date":"2026-09-01","adj_close":141.32,"volume":25443300},
+{"date":"2026-09-02","adj_close":145.75,"volume":21573428}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DVN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DVN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":32.0,"volume":15657400},
 {"date":"2025-06-24","adj_close":31.53,"volume":8636300},
 {"date":"2025-06-25","adj_close":31.32,"volume":6371600},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":47.12,"volume":6445487},
 {"date":"2026-08-28","adj_close":47.35,"volume":8785294},
 {"date":"2026-08-31","adj_close":48.51,"volume":12619076},
-{"date":"2026-09-01","adj_close":49.05,"volume":10152705}
+{"date":"2026-09-01","adj_close":49.05,"volume":10285206},
+{"date":"2026-09-02","adj_close":49.03,"volume":8492990}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ADM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ADM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":50.88,"volume":3640900},
 {"date":"2025-06-24","adj_close":50.99,"volume":4966100},
 {"date":"2025-06-25","adj_close":50.38,"volume":4524873},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":79.1,"volume":2726480},
 {"date":"2026-08-28","adj_close":81.54,"volume":3606473},
 {"date":"2026-08-31","adj_close":81.29,"volume":5425821},
-{"date":"2026-09-01","adj_close":84.55,"volume":3954240}
+{"date":"2026-09-01","adj_close":84.55,"volume":4010628},
+{"date":"2026-09-02","adj_close":85.38,"volume":3445028}
 ]}

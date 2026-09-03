@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"BSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"BSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":102.36,"volume":6203608},
 {"date":"2025-06-24","adj_close":104.12,"volume":7160828},
 {"date":"2025-06-25","adj_close":104.29,"volume":5691728},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":46.67,"volume":16277200},
 {"date":"2026-08-28","adj_close":46.84,"volume":17148785},
 {"date":"2026-08-31","adj_close":48.3,"volume":18906225},
-{"date":"2026-09-01","adj_close":48.08,"volume":11176565}
+{"date":"2026-09-01","adj_close":48.08,"volume":12004264},
+{"date":"2026-09-02","adj_close":48.37,"volume":17017972}
 ]}

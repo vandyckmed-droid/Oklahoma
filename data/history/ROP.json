@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ROP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ROP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":560.44,"volume":374935},
 {"date":"2025-06-24","adj_close":565.23,"volume":460600},
 {"date":"2025-06-25","adj_close":561.19,"volume":494639},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":422.69,"volume":907187},
 {"date":"2026-08-28","adj_close":426.2,"volume":560838},
 {"date":"2026-08-31","adj_close":424.64,"volume":706826},
-{"date":"2026-09-01","adj_close":418.31,"volume":495450}
+{"date":"2026-09-01","adj_close":418.31,"volume":495649},
+{"date":"2026-09-02","adj_close":415.79,"volume":646397}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"FITB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"FITB","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":38.49,"volume":8297200},
 {"date":"2025-06-24","adj_close":38.91,"volume":7212000},
 {"date":"2025-06-25","adj_close":38.99,"volume":5827176},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":54.85,"volume":4644872},
 {"date":"2026-08-28","adj_close":54.54,"volume":5618028},
 {"date":"2026-08-31","adj_close":53.77,"volume":5225349},
-{"date":"2026-09-01","adj_close":53.01,"volume":3935774}
+{"date":"2026-09-01","adj_close":53.01,"volume":3936600},
+{"date":"2026-09-02","adj_close":54.4,"volume":4413759}
 ]}

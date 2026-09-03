@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"TSLA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"TSLA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":348.68,"volume":190716815},
 {"date":"2025-06-24","adj_close":340.47,"volume":114736245},
 {"date":"2025-06-25","adj_close":327.55,"volume":119845100},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":354.81,"volume":30136200},
 {"date":"2026-08-28","adj_close":348.75,"volume":32972214},
 {"date":"2026-08-31","adj_close":367.95,"volume":61732300},
-{"date":"2026-09-01","adj_close":356.09,"volume":35998050}
+{"date":"2026-09-01","adj_close":356.09,"volume":36193926},
+{"date":"2026-09-02","adj_close":357.01,"volume":33758963}
 ]}

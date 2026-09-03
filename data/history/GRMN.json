@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GRMN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"GRMN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":198.48,"volume":871300},
 {"date":"2025-06-24","adj_close":201.76,"volume":919364},
 {"date":"2025-06-25","adj_close":200.25,"volume":650323},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":289.87,"volume":654972},
 {"date":"2026-08-28","adj_close":285.19,"volume":781147},
 {"date":"2026-08-31","adj_close":284.11,"volume":1323933},
-{"date":"2026-09-01","adj_close":275.17,"volume":782007}
+{"date":"2026-09-01","adj_close":275.17,"volume":782200},
+{"date":"2026-09-02","adj_close":276.04,"volume":972042}
 ]}

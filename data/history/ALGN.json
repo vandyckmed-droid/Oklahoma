@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ALGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ALGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":183.42,"volume":718000},
 {"date":"2025-06-24","adj_close":186.58,"volume":817700},
 {"date":"2025-06-25","adj_close":187.14,"volume":468444},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":158.84,"volume":801290},
 {"date":"2026-08-28","adj_close":157.58,"volume":954649},
 {"date":"2026-08-31","adj_close":159.79,"volume":1288370},
-{"date":"2026-09-01","adj_close":154.96,"volume":567287}
+{"date":"2026-09-01","adj_close":154.96,"volume":576464},
+{"date":"2026-09-02","adj_close":159.15,"volume":687054}
 ]}

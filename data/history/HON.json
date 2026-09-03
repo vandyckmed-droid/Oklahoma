@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HON","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HON","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":214.58,"volume":2580125},
 {"date":"2025-06-24","adj_close":214.44,"volume":3583919},
 {"date":"2025-06-25","adj_close":211.76,"volume":3004011},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":220.39,"volume":2247266},
 {"date":"2026-08-28","adj_close":217.43,"volume":2109415},
 {"date":"2026-08-31","adj_close":213.53,"volume":5081871},
-{"date":"2026-09-01","adj_close":209.98,"volume":2321471}
+{"date":"2026-09-01","adj_close":209.98,"volume":2345472},
+{"date":"2026-09-02","adj_close":206.07,"volume":2912367}
 ]}

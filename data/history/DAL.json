@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":47.56,"volume":16437940},
 {"date":"2025-06-24","adj_close":48.85,"volume":11886529},
 {"date":"2025-06-25","adj_close":47.62,"volume":7885332},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":81.14,"volume":4716071},
 {"date":"2026-08-28","adj_close":80.07,"volume":3810334},
 {"date":"2026-08-31","adj_close":78.0,"volume":6102618},
-{"date":"2026-09-01","adj_close":76.38,"volume":6474828}
+{"date":"2026-09-01","adj_close":76.38,"volume":6568562},
+{"date":"2026-09-02","adj_close":78.14,"volume":4895592}
 ]}

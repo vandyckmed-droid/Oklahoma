@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DHI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DHI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":126.81,"volume":4075500},
 {"date":"2025-06-24","adj_close":127.76,"volume":4484021},
 {"date":"2025-06-25","adj_close":125.46,"volume":2551381},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":145.26,"volume":1704388},
 {"date":"2026-08-28","adj_close":147.39,"volume":1462494},
 {"date":"2026-08-31","adj_close":144.56,"volume":2585454},
-{"date":"2026-09-01","adj_close":141.37,"volume":1995622}
+{"date":"2026-09-01","adj_close":141.37,"volume":2006840},
+{"date":"2026-09-02","adj_close":142.26,"volume":1672559}
 ]}

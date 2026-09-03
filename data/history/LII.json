@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"LII","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"LII","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":557.03,"volume":306900},
 {"date":"2025-06-24","adj_close":561.94,"volume":317332},
 {"date":"2025-06-25","adj_close":557.82,"volume":205837},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":391.15,"volume":438303},
 {"date":"2026-08-28","adj_close":393.39,"volume":370413},
 {"date":"2026-08-31","adj_close":382.64,"volume":640330},
-{"date":"2026-09-01","adj_close":377.25,"volume":463530}
+{"date":"2026-09-01","adj_close":377.25,"volume":463600},
+{"date":"2026-09-02","adj_close":374.0,"volume":390681}
 ]}

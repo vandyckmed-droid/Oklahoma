@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AON","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AON","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":355.88,"volume":1176600},
 {"date":"2025-06-24","adj_close":356.6,"volume":1270001},
 {"date":"2025-06-25","adj_close":350.45,"volume":1074106},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":349.56,"volume":688508},
 {"date":"2026-08-28","adj_close":355.4,"volume":669144},
 {"date":"2026-08-31","adj_close":321.52,"volume":2434130},
-{"date":"2026-09-01","adj_close":326.3,"volume":2417597}
+{"date":"2026-09-01","adj_close":326.3,"volume":2423281},
+{"date":"2026-09-02","adj_close":330.88,"volume":2052590}
 ]}

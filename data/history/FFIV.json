@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"FFIV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"FFIV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":295.09,"volume":452311},
 {"date":"2025-06-24","adj_close":295.9,"volume":435300},
 {"date":"2025-06-25","adj_close":294.41,"volume":407141},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":410.22,"volume":512104},
 {"date":"2026-08-28","adj_close":394.24,"volume":336165},
 {"date":"2026-08-31","adj_close":407.13,"volume":877922},
-{"date":"2026-09-01","adj_close":395.72,"volume":474359}
+{"date":"2026-09-01","adj_close":395.72,"volume":477400},
+{"date":"2026-09-02","adj_close":391.08,"volume":359200}
 ]}

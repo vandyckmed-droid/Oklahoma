@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"WELL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"WELL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":151.2,"volume":5187496},
 {"date":"2025-06-24","adj_close":151.33,"volume":4939906},
 {"date":"2025-06-25","adj_close":150.53,"volume":3107749},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":239.6,"volume":2390906},
 {"date":"2026-08-28","adj_close":238.07,"volume":2131364},
 {"date":"2026-08-31","adj_close":236.24,"volume":4911300},
-{"date":"2026-09-01","adj_close":240.42,"volume":3416900}
+{"date":"2026-09-01","adj_close":240.42,"volume":3416900},
+{"date":"2026-09-02","adj_close":238.59,"volume":2516700}
 ]}

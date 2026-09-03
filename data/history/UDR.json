@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UDR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"UDR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":39.2,"volume":2725400},
 {"date":"2025-06-24","adj_close":38.82,"volume":3817700},
 {"date":"2025-06-25","adj_close":37.99,"volume":2348938},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":37.08,"volume":3012329},
 {"date":"2026-08-28","adj_close":37.12,"volume":1935767},
 {"date":"2026-08-31","adj_close":36.95,"volume":2415864},
-{"date":"2026-09-01","adj_close":36.87,"volume":2221889}
+{"date":"2026-09-01","adj_close":36.87,"volume":2279141},
+{"date":"2026-09-02","adj_close":36.59,"volume":2329269}
 ]}

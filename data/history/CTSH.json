@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CTSH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CTSH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":74.69,"volume":4741532},
 {"date":"2025-06-24","adj_close":75.54,"volume":4588500},
 {"date":"2025-06-25","adj_close":74.95,"volume":2314260},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":63.76,"volume":5802297},
 {"date":"2026-08-28","adj_close":64.04,"volume":5303086},
 {"date":"2026-08-31","adj_close":64.58,"volume":8661403},
-{"date":"2026-09-01","adj_close":63.39,"volume":4082272}
+{"date":"2026-09-01","adj_close":63.39,"volume":4106148},
+{"date":"2026-09-02","adj_close":63.4,"volume":5851978}
 ]}

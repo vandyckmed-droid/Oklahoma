@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-09-02T06:00:27Z",
+  "generated_at": "2026-09-03T05:59:16Z",
   "source": {
     "provider": "Financial Modeling Prep",
     "endpoint": "stable/historical-price-eod/dividend-adjusted",
@@ -10,8 +10,8 @@
   "criteria": {
     "trading_days_target": 252,
     "calendar_days_requested": 438,
-    "requested_from": "2025-06-21",
-    "requested_to": "2026-09-02"
+    "requested_from": "2025-06-22",
+    "requested_to": "2026-09-03"
   },
   "count": 503,
   "sufficient_count": 500,
@@ -19,3524 +19,3524 @@
   "coverage": [
     {
       "ticker": "A",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AAPL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ABBV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ABNB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ABT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ACGL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ACN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ADBE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ADI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ADM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ADP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ADSK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AEE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AEP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AES",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AFL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AIG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AIZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AJG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AKAM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ALB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ALGN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ALL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ALLE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMAT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMCR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AME",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMGN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AMZN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ANET",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AON",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AOS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "APTV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ARE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ARES",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ATO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AVGO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AVY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AWK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AXON",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AXP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "AZO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BAC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BALL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BAX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BBY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BDX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BEN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BF-B",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BIIB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BKNG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BKR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BLDR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BLK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BMY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BNY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BRK-B",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BRO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BSX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "BXP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "C",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CAH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CARR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CASY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CAT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CBOE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CBRE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CCI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CCL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CDNS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CDW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CEG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CFG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CHD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CHRW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CHTR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CIEN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CINF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CLX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CMCSA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CME",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CMG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CMI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CMS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CNC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CNP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COHR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COIN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "COST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CPAY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CPRT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CPT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CRH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CRL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CRM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CRWD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CSCO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CSGP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CSX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CTAS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CTSH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CTVA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CVNA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CVS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "CVX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "D",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DAL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DASH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DDOG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DECK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DELL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DGX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DHI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DHR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DIS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DLR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DLTR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DOC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DOV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DOW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DPZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DRI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DTE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DUK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DVA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DVN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "DXCM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EBAY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ECHO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ECL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ED",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EFX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EIX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ELV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EME",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EMR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EOG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EQIX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EQT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ERIE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ES",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ESS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ETN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ETR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EVRG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EXC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EXE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EXPD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EXPE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "EXR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "F",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FANG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FAST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FCX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FDS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FDX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FDXF",
-      "trading_days": 68,
+      "trading_days": 69,
       "sufficient": false,
       "start_date": "2026-05-27",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FERG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FFIV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FICO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FIS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FISV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FITB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FIX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FLEX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FOX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FOXA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FRT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FSLR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FTNT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "FTV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GDDY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GEHC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GEN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GEV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GILD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GIS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GLW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GNRC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GOOG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GOOGL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GPC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GPN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GRMN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "GWW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HAL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HAS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HBAN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HCA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HIG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HII",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HLT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HON",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HONA",
-      "trading_days": 55,
+      "trading_days": 56,
       "sufficient": false,
       "start_date": "2026-06-15",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HOOD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HPE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HPQ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HRL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HSIC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HSY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HUBB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HUM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "HWM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IBKR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IBM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ICE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IDXX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IEX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IFF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "INCY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "INTC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "INTU",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "INVH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IQV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IRM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ISRG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ITW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "IVZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "J",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JBHT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JBL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JCI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JKHY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JNJ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "JPM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KDP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KEY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KEYS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KHC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KIM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KKR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KLAC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KMB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KMI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "KVUE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "L",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LDOS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LEN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LHX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LII",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LIN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LITE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LLY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LMT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LNT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LOW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LRCX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LULU",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LUV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LVS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LYB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "LYV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MAA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MAR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MAS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MCD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MCHP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MCK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MCO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MDLZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MDT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MET",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "META",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MGM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MKC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MLM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MMM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MNST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MOS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MPC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MPWR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MRK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MRNA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MRSH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MRVL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MSCI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MSFT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MSI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MTB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MTD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "MU",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NCLH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NDAQ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NDSN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NEE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NEM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NFLX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NKE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NOC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NOW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NRG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NSC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NTAP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NTRS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NUE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NVDA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NVR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NWS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NWSA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "NXPI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "O",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ODFL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "OKE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "OMC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ON",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ORCL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ORLY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "OTIS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "OXY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PANW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PAYX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PCAR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PCG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PEG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PEP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PFE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PFG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PGR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PHM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PKG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PLD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PLTR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PNC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PNR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PNW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PODD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PPG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PPL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PRU",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PSA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PSKY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PSX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PTC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PWR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "PYPL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "Q",
-      "trading_days": 213,
+      "trading_days": 214,
       "sufficient": false,
       "start_date": "2025-10-27",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "QCOM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RCL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RDDT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "REG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "REGN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RJF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RMD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ROK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ROL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ROP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ROST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RSG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RTX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "RVTY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SBAC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SBUX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SCHW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SHW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SJM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SLB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SMCI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SNA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SNDK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SNPS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SOLV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SPG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SPGI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SRE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "STE",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "STLD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "STT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "STX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "STZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SWK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SWKS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SYF",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SYK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "SYY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "T",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TAP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TDG",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TDY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TECH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TEL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TER",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TFC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TGT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TJX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TKO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TMO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TMUS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TPL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TPR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TRGP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TRMB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TROW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TRV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TSCO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TSLA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TSN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TTD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TTWO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TXN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TXT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "TYL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UAL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UBER",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UDR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UHS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ULTA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UNH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UNP",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "UPS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "URI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "USB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "V",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VEEV",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VICI",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VLO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VLTO",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VMC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VMRK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VRSK",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VRSN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VRT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VRTX",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VTR",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VTRS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "VZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WAB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WAT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WBD",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WDAY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WDC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WEC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WELL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WFC",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WMB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WMT",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WRB",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WSM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WST",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WTW",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WY",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "WYNN",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "XEL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "XOM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "XYL",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "XYZ",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "YUM",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ZBH",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ZBRA",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     },
     {
       "ticker": "ZTS",
-      "trading_days": 301,
+      "trading_days": 302,
       "sufficient": true,
       "start_date": "2025-06-23",
-      "end_date": "2026-09-01"
+      "end_date": "2026-09-02"
     }
   ]
 }

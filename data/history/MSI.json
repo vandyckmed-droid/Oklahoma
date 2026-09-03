@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MSI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"MSI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":406.29,"volume":1268140},
 {"date":"2025-06-24","adj_close":413.69,"volume":979102},
 {"date":"2025-06-25","adj_close":414.33,"volume":661104},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":486.54,"volume":523821},
 {"date":"2026-08-28","adj_close":486.0,"volume":504512},
 {"date":"2026-08-31","adj_close":485.3,"volume":1141240},
-{"date":"2026-09-01","adj_close":491.24,"volume":967950}
+{"date":"2026-09-01","adj_close":491.24,"volume":1004327},
+{"date":"2026-09-02","adj_close":478.92,"volume":1281848}
 ]}

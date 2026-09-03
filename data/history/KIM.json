@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"KIM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"KIM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":20.27,"volume":3098909},
 {"date":"2025-06-24","adj_close":20.29,"volume":3566000},
 {"date":"2025-06-25","adj_close":19.9,"volume":4648100},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":23.81,"volume":5553449},
 {"date":"2026-08-28","adj_close":23.78,"volume":3934882},
 {"date":"2026-08-31","adj_close":23.71,"volume":10948749},
-{"date":"2026-09-01","adj_close":24.11,"volume":5986805}
+{"date":"2026-09-01","adj_close":24.12,"volume":5989477},
+{"date":"2026-09-02","adj_close":24.09,"volume":4561175}
 ]}

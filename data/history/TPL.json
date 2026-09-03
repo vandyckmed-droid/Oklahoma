@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"TPL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"TPL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":347.91,"volume":537000},
 {"date":"2025-06-24","adj_close":351.2,"volume":563100},
 {"date":"2025-06-25","adj_close":343.36,"volume":372000},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":369.12,"volume":274680},
 {"date":"2026-08-28","adj_close":363.8,"volume":200162},
 {"date":"2026-08-31","adj_close":373.74,"volume":390620},
-{"date":"2026-09-01","adj_close":369.93,"volume":262816}
+{"date":"2026-09-01","adj_close":369.93,"volume":267989},
+{"date":"2026-09-02","adj_close":367.32,"volume":279409}
 ]}

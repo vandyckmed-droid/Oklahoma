@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MCK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"MCK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":718.13,"volume":677108},
 {"date":"2025-06-24","adj_close":717.12,"volume":530923},
 {"date":"2025-06-25","adj_close":714.72,"volume":529900},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":889.56,"volume":1108251},
 {"date":"2026-08-28","adj_close":892.44,"volume":606054},
 {"date":"2026-08-31","adj_close":884.38,"volume":1382718},
-{"date":"2026-09-01","adj_close":906.77,"volume":654654}
+{"date":"2026-09-01","adj_close":906.77,"volume":788000},
+{"date":"2026-09-02","adj_close":924.78,"volume":821541}
 ]}

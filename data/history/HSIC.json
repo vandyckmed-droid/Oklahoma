@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HSIC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HSIC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":71.89,"volume":1890700},
 {"date":"2025-06-24","adj_close":72.68,"volume":2083100},
 {"date":"2025-06-25","adj_close":72.79,"volume":1236004},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":90.28,"volume":784925},
 {"date":"2026-08-28","adj_close":89.52,"volume":795969},
 {"date":"2026-08-31","adj_close":89.8,"volume":1153600},
-{"date":"2026-09-01","adj_close":88.52,"volume":717896}
+{"date":"2026-09-01","adj_close":88.52,"volume":718250},
+{"date":"2026-09-02","adj_close":90.39,"volume":859381}
 ]}

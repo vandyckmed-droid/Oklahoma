@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"LRCX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"LRCX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":91.1,"volume":12551325},
 {"date":"2025-06-24","adj_close":95.1,"volume":12838800},
 {"date":"2025-06-25","adj_close":95.49,"volume":8690500},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":318.58,"volume":6561235},
 {"date":"2026-08-28","adj_close":301.9,"volume":8059615},
 {"date":"2026-08-31","adj_close":301.49,"volume":6953409},
-{"date":"2026-09-01","adj_close":290.2,"volume":8155813}
+{"date":"2026-09-01","adj_close":290.2,"volume":8254193},
+{"date":"2026-09-02","adj_close":288.32,"volume":4830379}
 ]}

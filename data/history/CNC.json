@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CNC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CNC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":53.4,"volume":3665500},
 {"date":"2025-06-24","adj_close":54.05,"volume":4271715},
 {"date":"2025-06-25","adj_close":53.51,"volume":4716814},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":65.33,"volume":3649093},
 {"date":"2026-08-28","adj_close":64.75,"volume":2527007},
 {"date":"2026-08-31","adj_close":64.34,"volume":8794645},
-{"date":"2026-09-01","adj_close":65.2,"volume":4481866}
+{"date":"2026-09-01","adj_close":65.23,"volume":4564220},
+{"date":"2026-09-02","adj_close":67.35,"volume":4802157}
 ]}
