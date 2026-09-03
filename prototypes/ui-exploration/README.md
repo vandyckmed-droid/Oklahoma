@@ -1,5 +1,9 @@
 # Rapid UI exploration — nine mobile directions
 
+**Saved for later.** The live, operable gallery of all nine is published at
+https://claude.ai/code/artifact/fb0404d7-d6c3-467d-8e70-4302e3cb68fd — open it on a
+phone to try each direction. This folder is its source.
+
 Disposable design instruments, not implementation candidates. Open
 `index.html` for the gallery: nine live, operable phone previews side by
 side, each with its thesis, its strongest advantage and its principal
