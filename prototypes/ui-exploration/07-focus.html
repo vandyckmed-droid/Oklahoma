@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Focus — Oklahoma direction 7</title>
+<meta name="color-scheme" content="light dark">
+<style>
+/* ------------------------------------------------------------------
+   FOCUS — your twelve names, at arm's length.
+   Thesis: the daily use of this app is not screening 503 companies; it
+   is checking the handful you actually hold. So the app opens on your
+   list, at a size readable without glasses, with one number per row and
+   nothing else on screen. The universe is one tap behind a search field.
+   Everything is thumb-reachable and every target is at least 56px.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #ffffff;
+  --bg-2: #f4f5f7;
+  --line: #e6e8ec;
+  --fg: #101215;
+  --fg-2: #5b6270;
+  --fg-3: #8d94a1;
+  --pos: #0b7d4f;
+  --neg: #bd2e18;
+  --accent: #1f3b73;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c0e11; --bg-2: #161a1f; --line: #232830;
+    --fg: #f3f5f8; --fg-2: #a7aeba; --fg-3: #737b88;
+    --pos: #3fd490; --neg: #ff7059; --accent: #9db8f0;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 17px/1.4 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+
+/* ---- header: the only summary ---- */
+header { flex: none; padding: 18px 20px 12px; }
+header .lab { font: 600 13px/1 var(--sans); letter-spacing: 0.09em; text-transform: uppercase; color: var(--fg-3); }
+header .big { margin: 10px 0 0; font: 700 46px/1 var(--sans); letter-spacing: -0.035em; }
+header .sub { margin: 7px 0 0; font: 400 16px/1.4 var(--sans); color: var(--fg-2); }
+
+/* ---- the lens: four big buttons, nothing hidden in a menu ---- */
+.lens { flex: none; display: flex; gap: 8px; padding: 14px 20px 4px; }
+.lens button {
+  flex: 1; height: 52px; border-radius: 14px; background: var(--bg-2);
+  font: 600 16px/1 var(--sans); color: var(--fg-2);
+}
+.lens button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* ---- the list: one row, one number, huge ---- */
+.list { flex: 1; overflow: auto; padding: 8px 12px 0; -webkit-overflow-scrolling: touch; }
+.row {
+  width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center;
+  gap: 14px; padding: 16px 10px; border-radius: 16px; text-align: left; min-height: 76px;
+}
+.row:active { background: var(--bg-2); }
+.row + .row { box-shadow: inset 0 1px 0 var(--line); }
+.row .t { font: 700 24px/1.1 var(--sans); letter-spacing: -0.02em; }
+.row .n { display: block; margin-top: 3px; font: 400 14px/1.3 var(--sans); color: var(--fg-3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 46vw; }
+.row .right { display: flex; align-items: center; gap: 12px; }
+.row .sk { width: 56px; height: 26px; }
+.row .v { font: 700 24px/1 var(--sans); letter-spacing: -0.025em; text-align: right; min-width: 92px; }
+.row .px { display: block; margin-top: 4px; font: 400 13px/1 var(--sans); color: var(--fg-3); text-align: right; }
+.empty { padding: 48px 24px; text-align: center; color: var(--fg-2); font-size: 17px; line-height: 1.5; }
+
+/* ---- bottom bar: two targets, both reachable ---- */
+.bottom {
+  flex: none; display: flex; gap: 10px; padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line); background: var(--bg);
+}
+.bottom button {
+  flex: 1; height: 58px; border-radius: 16px; background: var(--bg-2);
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  font: 600 17px/1 var(--sans);
+}
+.bottom button.primary { background: var(--accent); color: var(--bg); }
+@media (prefers-color-scheme: dark) { .bottom button.primary { color: #0c0e11; } }
+
+/* ---- full-screen add sheet ---- */
+.sheet { position: fixed; inset: 0; z-index: 30; background: var(--bg); display: none;
+  flex-direction: column; padding-top: env(safe-area-inset-top); }
+.sheet[data-open="true"] { display: flex; }
+.sheet .sh { flex: none; display: flex; align-items: center; gap: 12px; padding: 14px 16px 10px; }
+.sheet .sh input {
+  flex: 1; height: 52px; border-radius: 14px; background: var(--bg-2); border: 0; outline: none;
+  padding: 0 16px; font: 400 18px/1 var(--sans); color: var(--fg);
+}
+.sheet .sh button { font: 600 17px/1 var(--sans); color: var(--accent); padding: 8px 4px; }
+.sheet .results { flex: 1; overflow: auto; padding: 4px 12px calc(16px + env(safe-area-inset-bottom)); }
+.sheet .res {
+  width: 100%; display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center;
+  padding: 15px 10px; border-radius: 14px; text-align: left; min-height: 68px;
+}
+.sheet .res + .res { box-shadow: inset 0 1px 0 var(--line); }
+.sheet .res .t { font: 700 19px/1.1 var(--sans); }
+.sheet .res .n { display: block; margin-top: 2px; font: 400 13px/1.3 var(--sans); color: var(--fg-3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 44vw; }
+.sheet .res .v { font: 600 17px/1 var(--sans); min-width: 74px; text-align: right; }
+.sheet .res .add { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2);
+  display: grid; place-items: center; font-size: 22px; color: var(--fg-2); }
+.sheet .res[data-on="true"] .add { background: var(--accent); color: var(--bg); }
+.sheet .hintline { padding: 4px 22px 10px; color: var(--fg-3); font-size: 14px; }
+
+/* ---- detail: a full page, not a modal ---- */
+.page { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: none;
+  flex-direction: column; padding-top: env(safe-area-inset-top); overflow: auto; }
+.page[data-open="true"] { display: flex; }
+.page .pb { flex: none; padding: 12px 16px 4px; }
+.page .pb button { font: 600 17px/1 var(--sans); color: var(--accent); display: flex;
+  align-items: center; gap: 6px; padding: 10px 4px; }
+.page .inner { padding: 4px 20px calc(28px + env(safe-area-inset-bottom)); }
+.page h2 { margin: 6px 0 0; font: 700 40px/1 var(--sans); letter-spacing: -0.035em; }
+.page .co { margin: 8px 0 0; font: 400 17px/1.4 var(--sans); color: var(--fg-2); }
+.page .big { margin: 20px 0 0; font: 700 52px/1 var(--sans); letter-spacing: -0.04em; }
+.page .biglab { margin: 6px 0 0; font: 400 16px/1.4 var(--sans); color: var(--fg-2); }
+.page .chart { height: 150px; margin: 18px -6px 0; }
+.page .chart svg { width: 100%; height: 100%; }
+.page .facts { list-style: none; margin: 22px 0 0; padding: 0; }
+.page .facts li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  padding: 15px 0; border-bottom: 1px solid var(--line); }
+.page .facts dt { font: 400 16px/1.3 var(--sans); color: var(--fg-2); }
+.page .facts dd { margin: 0; font: 600 19px/1.2 var(--sans); }
+.page .cta { margin-top: 22px; width: 100%; height: 60px; border-radius: 16px;
+  background: var(--bg-2); font: 600 17px/1 var(--sans); }
+.page .cta[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+</style>
+</head>
+<body>
+<header>
+  <p class="lab" id="hlab"></p>
+  <p class="big" id="hbig"></p>
+  <p class="sub" id="hsub"></p>
+</header>
+<div class="lens" id="lens"></div>
+<div class="list" id="list"></div>
+<div class="bottom">
+  <button type="button" class="primary" id="add">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+      stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add a name
+  </button>
+  <button type="button" id="mode">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 4-6 5 4"/><path d="M3 21h18"/></svg>
+    <span id="modelab">Universe</span>
+  </button>
+</div>
+
+<div class="sheet" id="sheet" data-open="false">
+  <div class="sh">
+    <input id="q" type="search" placeholder="Ticker or company" autocomplete="off" aria-label="Search all names">
+    <button type="button" id="qdone">Done</button>
+  </div>
+  <p class="hintline" id="qhint"></p>
+  <div class="results" id="results"></div>
+</div>
+
+<div class="page" id="page" data-open="false">
+  <div class="pb"><button type="button" id="pback">
+    <svg width="18" height="18" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.9"
+      stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3 4.5 6l3 3"/></svg>Back</button></div>
+  <div class="inner" id="pinner"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("focus");
+  var LENS = [
+    { key: "r1",  label: "1M" },
+    { key: "r3",  label: "3M" },
+    { key: "r6",  label: "6M" },
+    { key: "r12", label: "1Y" }
+  ];
+  var WIN = { r1: "1M", r3: "3M", r6: "6M", r12: "1Y" };
+  var state = { lens: "r12", universe: false, q: "" };
+
+  document.getElementById("lens").innerHTML = LENS.map(function (l) {
+    return '<button type="button" data-l="' + l.key + '" aria-pressed="' + (state.lens === l.key) + '">' +
+      l.label + '</button>';
+  }).join("");
+
+  function shown() {
+    return state.universe ? K.sortBy(K.names, "cap", true).slice(0, 100)
+                          : K.sortBy(watch.list(), state.lens, true);
+  }
+  function colour(v) { return v == null ? "var(--fg-3)" : v > 0 ? "var(--pos)" : v < 0 ? "var(--neg)" : "var(--fg-2)"; }
+
+  function renderHeader() {
+    var list = shown();
+    var m = K.METRICS[state.lens];
+    var vals = list.map(function (r) { return m.get(r); });
+    var med = K.median(vals);
+    var up = vals.filter(function (v) { return v != null && v > 0; }).length;
+    document.getElementById("hlab").textContent = state.universe
+      ? "The universe · biggest 100" : "Your names";
+    var big = document.getElementById("hbig");
+    big.textContent = K.pct(med);
+    big.style.color = colour(med);
+    document.getElementById("hsub").textContent = list.length
+      ? "Median over " + { r1: "one month", r3: "three months", r6: "six months", r12: "the year" }[state.lens] +
+        " · " + up + " of " + list.length + " up · to " + K.asOf()
+      : "Nothing here yet.";
+  }
+
+  function renderList() {
+    var list = shown(), m = K.METRICS[state.lens];
+    var w = K.windowByKey(WIN[state.lens]);
+    document.getElementById("list").innerHTML = list.length ? list.map(function (r) {
+      var v = m.get(r);
+      return '<button class="row" type="button" data-t="' + r.t + '">' +
+        '<span><span class="t">' + r.t + '</span>' +
+          '<span class="n">' + K.esc(r.n) + '</span></span>' +
+        '<span class="right"><span class="sk">' +
+          K.spark(K.rebase(r.sp, w.points), 56, 26, { stroke: colour(v), width: 1.8 }) + '</span>' +
+          '<span><span class="v" style="color:' + colour(v) + '">' + m.fmt(v) + '</span>' +
+          '<span class="px">' + K.price(r.px) + '</span></span></span>' +
+      '</button>';
+    }).join("") : '<p class="empty">No names yet.<br><br>Tap <b>Add a name</b> to build the short list you actually check.</p>';
+  }
+
+  function render() { renderHeader(); renderList(); }
+
+  document.getElementById("lens").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-l]");
+    if (!b) return;
+    state.lens = b.getAttribute("data-l");
+    document.querySelectorAll("#lens button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    render();
+  });
+  document.getElementById("mode").addEventListener("click", function () {
+    state.universe = !state.universe;
+    document.getElementById("modelab").textContent = state.universe ? "Your names" : "Universe";
+    render();
+    document.getElementById("list").scrollTop = 0;
+  });
+
+  /* ---- add sheet ---- */
+  var sheet = document.getElementById("sheet");
+  function renderResults() {
+    var list = state.q.trim()
+      ? K.search(K.names, state.q).slice(0, 40)
+      : K.sortBy(K.names, "cap", true).slice(0, 40);
+    document.getElementById("qhint").textContent = state.q.trim()
+      ? list.length + " matches" : "The largest names — or type to search all " + K.OK.count + ".";
+    document.getElementById("results").innerHTML = list.map(function (r) {
+      var on = watch.has(r.t);
+      return '<button class="res" type="button" data-add="' + r.t + '" data-on="' + on + '">' +
+        '<span><span class="t">' + r.t + '</span><span class="n">' + K.esc(r.n) + '</span></span>' +
+        '<span class="v" style="color:' + colour(r.r12) + '">' + K.pct(r.r12) + '</span>' +
+        '<span class="add">' + (on ? "✓" : "+") + '</span></button>';
+    }).join("") || '<p class="empty">Nothing matches that.</p>';
+  }
+  document.getElementById("add").addEventListener("click", function () {
+    state.q = "";
+    document.getElementById("q").value = "";
+    renderResults();
+    sheet.setAttribute("data-open", "true");
+    setTimeout(function () { document.getElementById("q").focus(); }, 60);
+  });
+  document.getElementById("qdone").addEventListener("click", function () {
+    sheet.setAttribute("data-open", "false");
+    render();
+  });
+  document.getElementById("q").addEventListener("input", function (e) {
+    state.q = e.target.value; renderResults();
+  });
+  document.getElementById("results").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-add]");
+    if (!b) return;
+    watch.toggle(b.getAttribute("data-add"));
+    renderResults();
+  });
+
+  /* ---- detail page ---- */
+  var page = document.getElementById("page");
+  function openName(r) {
+    var w = K.windowByKey(WIN[state.lens]);
+    var series = K.rebase(r.sp, w.points);
+    var m = K.METRICS[state.lens], v = m.get(r);
+    var g = series.length > 1 ? K.pathFor(series, 320, 150, { pad: 8, zero: true }) : null;
+    function fact(dt, dd, col) {
+      return '<li><dt>' + dt + '</dt><dd' + (col ? ' style="color:' + col + '"' : "") + '>' + dd + '</dd></li>';
+    }
+    document.getElementById("pinner").innerHTML =
+      '<h2>' + r.t + '</h2><p class="co">' + K.esc(r.n) + '<br>' + K.esc(r.s) + '</p>' +
+      '<p class="big" style="color:' + colour(v) + '">' + m.fmt(v) + '</p>' +
+      '<p class="biglab">' + m.label + ', to ' + K.asOf() + '</p>' +
+      (g ? '<div class="chart"><svg viewBox="0 0 320 150" preserveAspectRatio="none">' +
+        '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+        '" stroke="var(--line)" stroke-dasharray="3 5" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + g.d + '" fill="none" stroke="' + colour(v) + '" stroke-width="2.6" ' +
+        'vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' +
+        '<circle cx="320" cy="' + g.y(series[series.length - 1]).toFixed(1) + '" r="5" fill="' + colour(v) + '"/>' +
+        '</svg></div>' : "") +
+      '<ul class="facts">' +
+        fact("Last close", K.price(r.px)) +
+        fact("One month", K.pct(r.r1), colour(r.r1)) +
+        fact("Three months", K.pct(r.r3), colour(r.r3)) +
+        fact("Twelve months", K.pct(r.r12), colour(r.r12)) +
+        fact("Off its high", K.METRICS.off.fmt(r.off), r.off == null ? null : colour(r.off > -0.5 ? 1 : r.off)) +
+        fact("Vs its sector", K.METRICS.vsmed.fmt(K.METRICS.vsmed.get(r)), colour(K.METRICS.vsmed.get(r))) +
+        fact("Year's range", r.lo != null ? K.price(r.lo) + " – " + K.price(r.hi) : "—") +
+        fact("Market value", K.money(r.cap)) +
+      '</ul>' +
+      '<button class="cta" type="button" data-w="' + r.t + '" aria-pressed="' + watch.has(r.t) + '">' +
+        (watch.has(r.t) ? "On your list — tap to remove" : "Add to your list") + '</button>';
+    page.setAttribute("data-open", "true");
+    page.scrollTop = 0;
+  }
+  document.getElementById("list").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-t]");
+    if (b) openName(K.byTicker[b.getAttribute("data-t")]);
+  });
+  document.getElementById("pback").addEventListener("click", function () {
+    page.setAttribute("data-open", "false"); render();
+  });
+  page.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-w]");
+    if (!b) return;
+    var t = b.getAttribute("data-w");
+    watch.toggle(t);
+    openName(K.byTicker[t]);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heatmap — Oklahoma direction 4</title>
+<meta name="color-scheme" content="dark">
+<style>
+/* ------------------------------------------------------------------
+   HEATMAP — the market's shape before its list.
+   Thesis: 503 rows hide where the money and the performance actually
+   sit. A squarified treemap sized by market cap and coloured by the
+   metric you choose shows the whole universe on one screen; the list
+   only appears once you have drilled into something.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #0a0c0f;
+  --panel: #12151a;
+  --line: #1f242c;
+  --line-2: #2d343e;
+  --fg: #eef1f5;
+  --fg-2: #97a0ad;
+  --fg-3: #626b77;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 14px/1.35 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+
+header { flex: none; padding: 10px 14px 8px; }
+.crumbs { display: flex; align-items: baseline; gap: 8px; min-height: 26px; }
+.crumbs button { font: 600 19px/1.2 var(--sans); letter-spacing: -0.02em; }
+.crumbs .sep { color: var(--fg-3); }
+.crumbs .cur { font: 600 19px/1.2 var(--sans); letter-spacing: -0.02em; }
+.crumbs .back { color: var(--fg-2); font-weight: 500; font-size: 15px; }
+.sub { margin: 2px 0 0; font: 400 12.5px/1.4 var(--sans); color: var(--fg-2); }
+
+.metrics { display: flex; gap: 6px; overflow-x: auto; padding: 10px 14px 4px; flex: none;
+  scrollbar-width: none; }
+.metrics::-webkit-scrollbar { display: none; }
+.metrics button {
+  flex: none; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line-2);
+  color: var(--fg-2); font-size: 12.5px; font-weight: 500; white-space: nowrap;
+}
+.metrics button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+.mapwrap { flex: 1; position: relative; margin: 8px 10px 0; min-height: 0; }
+#map { position: absolute; inset: 0; }
+.tile {
+  position: absolute; border-radius: 5px; overflow: hidden; cursor: pointer;
+  transition: opacity 160ms ease;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+}
+.tile .lab { position: absolute; left: 5px; top: 4px; right: 4px; pointer-events: none; }
+.tile .t { display: block; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
+.tile .v { display: block; font-weight: 500; line-height: 1.2; opacity: .92; }
+.tile .n { display: block; font-weight: 400; line-height: 1.2; opacity: .72;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile.dimmed { opacity: .22; }
+
+.legend { flex: none; display: flex; align-items: center; gap: 8px; padding: 10px 14px 6px; }
+.legend .scale { flex: 1; height: 8px; border-radius: 4px; }
+.legend span { font: 500 11px/1 var(--sans); color: var(--fg-3); white-space: nowrap; }
+
+/* ---- bottom sheet ---- */
+.sheet { position: fixed; inset: 0; z-index: 20; background: rgba(0,0,0,.55); display: none; }
+.sheet[data-open="true"] { display: block; }
+.sc {
+  position: absolute; left: 0; right: 0; bottom: 0; background: var(--panel);
+  border-radius: 20px 20px 0 0; border-top: 1px solid var(--line-2);
+  padding: 6px 16px calc(18px + env(safe-area-inset-bottom)); max-height: 88%; overflow: auto;
+}
+.grab { width: 36px; height: 4px; border-radius: 2px; background: var(--line-2); margin: 6px auto 12px; }
+.sh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.sh h2 { margin: 0; font: 700 26px/1 var(--sans); letter-spacing: -0.02em; }
+.sh .cap { font: 500 13px/1 var(--sans); color: var(--fg-2); }
+.sname { margin: 6px 0 0; font: 400 13.5px/1.4 var(--sans); color: var(--fg-2); }
+.sbig { margin: 14px 0 0; font: 700 40px/1 var(--sans); letter-spacing: -0.035em; }
+.sbiglab { margin: 4px 0 0; font: 400 12.5px/1.3 var(--sans); color: var(--fg-2); }
+.schart { height: 108px; margin: 12px -4px 0; }
+.schart svg { width: 100%; height: 100%; }
+.skv { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 14px; }
+.skv div { background: var(--panel); padding: 9px 11px; }
+.skv dt { font: 500 10px/1.2 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.skv dd { margin: 4px 0 0; font: 600 16px/1 var(--sans); }
+.sact { display: flex; gap: 8px; margin-top: 14px; }
+.sact button { flex: 1; border: 1px solid var(--line-2); border-radius: 10px; padding: 12px; font-weight: 500; }
+.sact button[aria-pressed="true"] { border-color: #ffd166; color: #ffd166; }
+.slist { list-style: none; margin: 12px 0 0; padding: 0; }
+.slist li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.slist .t { font-weight: 600; width: 58px; }
+.slist .n { flex: 1; color: var(--fg-2); font-size: 12.5px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.slist .v { font-weight: 600; font-size: 13.5px; }
+.tip { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; z-index: 15;
+  background: var(--panel); border: 1px solid var(--line-2); border-bottom: 0;
+  border-radius: 12px 12px 0 0; padding: 9px 14px calc(9px + env(safe-area-inset-bottom));
+  font-size: 12.5px; color: var(--fg-2); white-space: nowrap; display: none; }
+.tip[data-on="true"] { display: block; }
+.tip b { color: var(--fg); font-weight: 600; }
+</style>
+</head>
+<body>
+<header>
+  <div class="crumbs" id="crumbs"></div>
+  <p class="sub" id="sub"></p>
+</header>
+<div class="metrics" id="metrics"></div>
+<div class="mapwrap"><div id="map"></div></div>
+<div class="legend">
+  <span id="lo"></span><div class="scale" id="scale"></div><span id="hi"></span>
+</div>
+<div class="tip" id="tip"></div>
+
+<div class="sheet" id="sheet" data-open="false"><div class="sc" id="sc"></div></div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("heatmap");
+  var COLOR = ["r12", "r6", "r3", "r1", "m121", "off", "qual", "r2", "vsmed"];
+  var SCALE = { r12: 45, r6: 30, r3: 20, r1: 12, m121: 45, off: 22, qual: 35, r2: 0.5, vsmed: 30 };
+  var state = { metric: "r12", sector: null, sel: null };
+
+  var map = document.getElementById("map"), tip = document.getElementById("tip");
+
+  document.getElementById("metrics").innerHTML = COLOR.map(function (k) {
+    return '<button type="button" data-m="' + k + '" aria-pressed="' + (state.metric === k) + '">' +
+      K.METRICS[k].short + '</button>';
+  }).join("");
+
+  /* ---- colour: diverging, with R² read as a one-sided quality scale ---- */
+  function tint(key, v) {
+    if (v == null) return "#20252c";
+    var s = SCALE[key] || 40;
+    var t;
+    if (key === "r2") t = Math.max(-1, Math.min(1, (v - 0.5) / s));
+    else if (key === "off") t = Math.max(-1, Math.min(1, (v + s * 0.5) / (s * 0.5)));
+    else t = Math.max(-1, Math.min(1, v / s));
+    var m = Math.abs(t);
+    // Perceptually simple two-ramp: teal for positive, magenta-red for negative.
+    var l = 16 + m * 34;
+    var h = t >= 0 ? 158 : 356;
+    var sat = 12 + m * 62;
+    return "hsl(" + h + " " + sat.toFixed(0) + "% " + l.toFixed(0) + "%)";
+  }
+  function ink(key, v) {
+    if (v == null) return "#5c646e";
+    var s = SCALE[key] || 40;
+    var m = Math.min(1, Math.abs(key === "r2" ? (v - 0.5) / s : v / s));
+    return m > 0.45 ? "#ffffff" : "#c6ced8";
+  }
+
+  /* ---- squarified treemap ----
+     Values are areas (already scaled to the container), so a row's depth
+     is simply its area divided by the side it is laid along. Rows are
+     grown while they improve the worst aspect ratio, the classic
+     Bruls-Huizing-van Wijk rule. */
+  function squarify(items, x, y, w, h) {
+    var out = [], i = 0;
+    while (i < items.length && w > 0.5 && h > 0.5) {
+      var along = Math.min(w, h);
+      var horizontal = along === w;
+      var row = [], rowSum = 0, best = Infinity, j = i;
+      while (j < items.length) {
+        var trySum = rowSum + items[j].value;
+        var ratio = worst(row.concat([items[j]]), trySum, along);
+        if (row.length && ratio > best) break;
+        best = ratio; rowSum = trySum; row.push(items[j]); j++;
+      }
+      var depth = rowSum / along;
+      var off = 0;
+      for (var k = 0; k < row.length; k++) {
+        var side = row[k].value / depth;
+        if (horizontal) out.push({ item: row[k], x: x + off, y: y, w: side, h: depth });
+        else out.push({ item: row[k], x: x, y: y + off, w: depth, h: side });
+        off += side;
+      }
+      if (horizontal) { y += depth; h -= depth; } else { x += depth; w -= depth; }
+      i = j;
+    }
+    return out;
+  }
+  function worst(row, sum, along) {
+    if (!sum) return Infinity;
+    var depth = sum / along, max = 0;
+    for (var i = 0; i < row.length; i++) {
+      var side = row[i].value / depth;
+      var r = Math.max(side / depth, depth / side);
+      if (r > max) max = r;
+    }
+    return max;
+  }
+
+  function tiles() {
+    if (!state.sector) {
+      return K.OK.sectors.map(function (s) {
+        var members = K.names.filter(function (r) { return r.s === s.sector; });
+        var cap = members.reduce(function (a, r) { return a + r.cap; }, 0);
+        var vals = members.map(function (r) { return K.METRICS[state.metric].get(r); });
+        return { kind: "sector", key: s.sector, label: K.abbr(s.sector), full: s.sector,
+                 value: cap, metric: K.median(vals), n: members.length, breadth: s.breadth_pct };
+      }).sort(function (a, b) { return b.value - a.value; });
+    }
+    return K.names.filter(function (r) { return r.s === state.sector; })
+      .map(function (r) {
+        return { kind: "name", key: r.t, label: r.t, full: r.n, value: r.cap,
+                 metric: K.METRICS[state.metric].get(r), row: r };
+      }).sort(function (a, b) { return b.value - a.value; });
+  }
+
+  function draw() {
+    var w = map.clientWidth, h = map.clientHeight;
+    if (!w || !h) { requestAnimationFrame(draw); return; }
+    var items = tiles();
+    var total = items.reduce(function (a, b) { return a + b.value; }, 0);
+    var laid = squarify(items.map(function (it) {
+      return { ref: it, value: (it.value / total) * w * h };
+    }), 0, 0, w, h);
+    var m = K.METRICS[state.metric];
+    map.innerHTML = laid.map(function (box) {
+      var it = box.item.ref;
+      var pad = 1.2;
+      var bw = Math.max(0, box.w - pad), bh = Math.max(0, box.h - pad);
+      var big = bw > 54 && bh > 40, mid = bw > 34 && bh > 22;
+      var fsT = Math.max(8.5, Math.min(17, Math.sqrt(bw * bh) / 5.2));
+      var fsV = Math.max(8, Math.min(13, fsT * 0.72));
+      return '<div class="tile" data-k="' + K.esc(it.key) + '" style="left:' + box.x.toFixed(1) +
+        'px;top:' + box.y.toFixed(1) + 'px;width:' + bw.toFixed(1) + 'px;height:' + bh.toFixed(1) +
+        'px;background:' + tint(state.metric, it.metric) + ';color:' + ink(state.metric, it.metric) + '">' +
+        (mid ? '<span class="lab"><span class="t" style="font-size:' + fsT.toFixed(1) + 'px">' +
+          K.esc(it.label) + '</span>' +
+          (big ? '<span class="v" style="font-size:' + fsV.toFixed(1) + 'px">' + m.fmt(it.metric) + '</span>' +
+                 (it.kind === "sector" ? '<span class="n" style="font-size:' + (fsV * 0.85).toFixed(1) +
+                   'px">' + it.n + ' names</span>' : "") : "") +
+          '</span>' : "") + '</div>';
+    }).join("");
+  }
+
+  function crumbs() {
+    var c = document.getElementById("crumbs");
+    if (!state.sector) {
+      c.innerHTML = '<span class="cur">The universe</span>';
+      document.getElementById("sub").textContent =
+        "Every S&P 500 name, sized by market capitalisation, coloured by " +
+        K.METRICS[state.metric].label.toLowerCase() + ". " + K.asOf() + ".";
+    } else {
+      c.innerHTML = '<button type="button" id="up" class="back">← Universe</button>' +
+        '<span class="sep">/</span><span class="cur">' + K.esc(state.sector) + '</span>';
+      var s = K.OK.sectors.filter(function (x) { return x.sector === state.sector; })[0];
+      var members = K.names.filter(function (r) { return r.s === state.sector; }).length;
+      document.getElementById("sub").textContent = s
+        ? members + " names · of the " + s.count + " with a full year, median 12-month " +
+          K.signed(s.median_return_pct, 1, "%") + " and " +
+          Math.round(s.breadth_pct) + "% above water"
+        : members + " names";
+      document.getElementById("up").addEventListener("click", function () {
+        state.sector = null; crumbs(); draw();
+      });
+    }
+    var s = SCALE[state.metric] || 40;
+    document.getElementById("lo").textContent = state.metric === "r2" ? "0.0" : K.signed(-s, 0, "%");
+    document.getElementById("hi").textContent = state.metric === "r2" ? "1.0" : K.signed(s, 0, "%");
+    document.getElementById("scale").style.background =
+      "linear-gradient(90deg," + [-1, -0.5, 0, 0.5, 1].map(function (t) {
+        return tint(state.metric, state.metric === "r2" ? 0.5 + t * s : t * s);
+      }).join(",") + ")";
+  }
+
+  map.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-k]");
+    if (!t) return;
+    var key = t.getAttribute("data-k");
+    if (!state.sector) { state.sector = key; crumbs(); draw(); return; }
+    openName(K.byTicker[key]);
+  });
+
+  /* a press-and-hold reads a tile without opening it */
+  var holdTimer = null;
+  map.addEventListener("pointerdown", function (e) {
+    var t = e.target.closest("[data-k]");
+    if (!t) return;
+    holdTimer = setTimeout(function () {
+      var key = t.getAttribute("data-k");
+      var m = K.METRICS[state.metric];
+      if (state.sector) {
+        var r = K.byTicker[key];
+        tip.innerHTML = "<b>" + r.t + "</b> " + K.esc(r.n) + " · " + K.money(r.cap) +
+          " · " + m.short + " " + m.fmt(m.get(r));
+      } else {
+        var s = K.OK.sectors.filter(function (x) { return x.sector === key; })[0];
+        tip.innerHTML = "<b>" + K.esc(key) + "</b> · " + s.count + " names · median 12M " +
+          K.signed(s.median_return_pct, 1, "%");
+      }
+      tip.setAttribute("data-on", "true");
+    }, 260);
+  });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) {
+    map.addEventListener(ev, function () {
+      clearTimeout(holdTimer);
+      tip.setAttribute("data-on", "false");
+    });
+  });
+
+  document.getElementById("metrics").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-m]");
+    if (!b) return;
+    state.metric = b.getAttribute("data-m");
+    document.querySelectorAll("#metrics button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    crumbs(); draw();
+  });
+
+  var sheet = document.getElementById("sheet"), sc = document.getElementById("sc");
+  function openName(r) {
+    if (!r) return;
+    var g = r.sp && r.sp.length > 1 ? K.pathFor(r.sp, 320, 108, { pad: 6, zero: true }) : null;
+    var stroke = (r.r12 || 0) >= 0 ? "#35d08a" : "#ff5f7a";
+    function kv(dt, dd) { return '<div><dt>' + dt + '</dt><dd>' + dd + '</dd></div>'; }
+    var m = K.METRICS[state.metric], v = m.get(r);
+    sc.innerHTML = '<div class="grab"></div>' +
+      '<div class="sh"><h2>' + r.t + '</h2><span class="cap">' + K.money(r.cap) + '</span></div>' +
+      '<p class="sname">' + K.esc(r.n) + ' · ' + K.esc(r.s) + '</p>' +
+      '<p class="sbig" style="color:' + (m.neutral || v == null ? "var(--fg)" :
+        v > 0 ? "#35d08a" : "#ff5f7a") + '">' + m.fmt(v) + '</p>' +
+      '<p class="sbiglab">' + m.label + ' — the colour of this tile</p>' +
+      (g ? '<div class="schart"><svg viewBox="0 0 320 108" preserveAspectRatio="none">' +
+        '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+        '" stroke="var(--line-2)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + g.d + '" fill="none" stroke="' + stroke + '" stroke-width="2" ' +
+        'vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>' : "") +
+      '<dl class="skv">' + kv("12 months", K.pct(r.r12)) + kv("12-1 momentum", K.pct(r.m121)) +
+        kv("Off high", K.METRICS.off.fmt(r.off)) + kv("Vs sector", K.METRICS.vsmed.fmt(K.METRICS.vsmed.get(r))) +
+        kv("Trend", K.METRICS.trend.fmt(r.trend)) + kv("R²", r.r2 == null ? "—" : r.r2.toFixed(2)) +
+        kv("Last close", K.price(r.px)) + kv("Share of universe",
+          ((r.cap / K.names.reduce(function (a, x) { return a + x.cap; }, 0)) * 100).toFixed(2) + "%") +
+      '</dl>' +
+      '<div class="sact"><button type="button" data-w="' + r.t + '" aria-pressed="' + watch.has(r.t) + '">' +
+        (watch.has(r.t) ? "★ Watching" : "☆ Watch") + '</button>' +
+        '<button type="button" data-close="1">Close</button></div>';
+    sheet.setAttribute("data-open", "true");
+  }
+  sheet.addEventListener("click", function (e) {
+    var w = e.target.closest("[data-w]");
+    if (w) { var t = w.getAttribute("data-w"); watch.toggle(t); openName(K.byTicker[t]); return; }
+    if (e.target.closest("[data-close]") || e.target === sheet) sheet.setAttribute("data-open", "false");
+  });
+
+  crumbs(); draw();
+  window.addEventListener("resize", draw);
+  window.addEventListener("orientationchange", function () { setTimeout(draw, 120); });
+})();
+</script>
+</body>
+</html>

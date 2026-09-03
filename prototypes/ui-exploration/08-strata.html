@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strata — Oklahoma direction 8</title>
+<meta name="color-scheme" content="dark">
+<style>
+/* ------------------------------------------------------------------
+   STRATA — browse by structure, compare by collection.
+   Thesis: the universe is eleven sectors, not one list, and the thing
+   the current app cannot do at all is put two names on the same axes.
+   So: sectors are coloured bands that expand in place; names inside are
+   horizontally-scrolled tiles; and a persistent tray at the bottom
+   collects names and overlays their normalised paths on one chart.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #0a0b0f;
+  --panel: #14161c;
+  --panel-2: #1b1e26;
+  --line: #232732;
+  --line-2: #333846;
+  --fg: #eceff5;
+  --fg-2: #99a1b0;
+  --fg-3: #656d7c;
+  --pos: #46dfa0;
+  --neg: #ff6f7d;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 14px/1.4 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+
+header { flex: none; padding: 14px 16px 8px; display: flex; align-items: baseline;
+  justify-content: space-between; gap: 10px; }
+header h1 { margin: 0; font: 700 20px/1.1 var(--sans); letter-spacing: -0.025em; }
+header .as { font: 400 12px/1 var(--sans); color: var(--fg-3); }
+.lens { flex: none; display: flex; gap: 6px; padding: 4px 16px 10px; }
+.lens button { flex: 1; height: 34px; border-radius: 9px; background: var(--panel);
+  font: 600 12.5px/1 var(--sans); color: var(--fg-2); border: 1px solid var(--line); }
+.lens button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* ---- the strata ---- */
+.bands { flex: 1; overflow: auto; padding: 0 12px 8px; overscroll-behavior: contain; }
+.band {
+  border-radius: 16px; margin-bottom: 8px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--panel);
+  transition: background 220ms ease;
+}
+.band[data-open="true"] { background: var(--panel-2); }
+.bhead {
+  width: 100%; display: grid; grid-template-columns: 4px 1fr 62px 66px; gap: 12px;
+  align-items: center; text-align: left; padding: 0; min-height: 66px;
+}
+.bhead .edge { align-self: stretch; }
+.bhead .who { padding: 12px 0; min-width: 0; }
+.bhead .nm { font: 600 15.5px/1.2 var(--sans); letter-spacing: -0.01em; }
+.bhead .sub { display: block; margin-top: 4px; font: 400 11.5px/1.3 var(--sans); color: var(--fg-3); }
+.bhead .breadth { display: block; margin-top: 6px; height: 4px; border-radius: 2px;
+  background: var(--line-2); width: 108px; position: relative; overflow: hidden; }
+.bhead .breadth i { position: absolute; left: 0; top: 0; height: 4px; border-radius: 2px; }
+.bhead .sk { height: 26px; }
+.bhead .fig { padding-right: 14px; text-align: right; font: 700 17px/1 var(--sans); letter-spacing: -0.02em; }
+.bhead .fig small { display: block; margin-top: 4px; font: 400 10.5px/1 var(--sans); color: var(--fg-3); }
+
+/* ---- names inside a band: a horizontal shelf ---- */
+.shelf { display: none; padding: 2px 0 12px; }
+.band[data-open="true"] .shelf { display: block; }
+.shelf .sorthint { padding: 0 14px 8px; font: 400 11.5px/1.4 var(--sans); color: var(--fg-3); }
+.tiles { display: flex; gap: 8px; overflow-x: auto; padding: 0 14px 6px; scroll-snap-type: x proximity;
+  scrollbar-width: none; }
+.tiles::-webkit-scrollbar { display: none; }
+.tile {
+  flex: none; width: 132px; scroll-snap-align: start; border-radius: 13px; padding: 11px 11px 9px;
+  background: var(--panel); border: 1px solid var(--line); text-align: left;
+  display: flex; flex-direction: column; gap: 7px; position: relative;
+}
+.tile[data-in="true"] { border-color: currentColor; }
+.tile .tt { font: 700 16px/1 var(--sans); letter-spacing: -0.015em; display: flex;
+  align-items: center; justify-content: space-between; gap: 6px; }
+.tile .tn { font: 400 11px/1.3 var(--sans); color: var(--fg-3); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.tile .tc { height: 34px; margin: 0 -2px; }
+.tile .tv { font: 600 15px/1 var(--sans); }
+.tile .tcap { font: 400 10.5px/1 var(--sans); color: var(--fg-3); }
+.tile .plus { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--line-2);
+  display: grid; place-items: center; font-size: 13px; color: var(--fg-3); flex: none; }
+.tile[data-in="true"] .plus { background: currentColor; border-color: currentColor; }
+.tile[data-in="true"] .plus::after { content: "✓"; color: var(--bg); font-size: 11px; font-weight: 700; }
+.tile[data-in="true"] .plus { font-size: 0; }
+.shelf .more { display: block; margin: 4px 14px 0; padding: 9px; border-radius: 10px;
+  background: var(--panel); border: 1px solid var(--line); text-align: center;
+  font: 500 12.5px/1 var(--sans); color: var(--fg-2); width: calc(100% - 28px); }
+
+/* ---- the compare tray ---- */
+.tray {
+  flex: none; border-top: 1px solid var(--line-2); background: var(--panel);
+  padding: 0 0 env(safe-area-inset-bottom);
+  transition: max-height 240ms cubic-bezier(.2,.8,.2,1);
+  max-height: 66px; overflow: hidden;
+}
+.tray[data-open="true"] { max-height: 60vh; overflow: auto; }
+.thead { display: flex; align-items: center; gap: 10px; padding: 12px 16px; min-height: 66px; }
+.thead .chips { flex: 1; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.thead .chips::-webkit-scrollbar { display: none; }
+.thead .chip { flex: none; display: flex; align-items: center; gap: 6px; padding: 6px 8px 6px 10px;
+  border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line-2);
+  font: 600 12px/1 var(--sans); }
+.thead .chip i { width: 7px; height: 7px; border-radius: 50%; display: block; }
+.thead .chip b { font-weight: 400; color: var(--fg-3); font-size: 14px; padding-left: 2px; }
+.thead .none { color: var(--fg-3); font-size: 13px; flex: 1; }
+.thead .open { flex: none; border: 1px solid var(--line-2); border-radius: 9px; padding: 8px 12px;
+  font: 600 12.5px/1 var(--sans); color: var(--fg-2); }
+.tbody { padding: 0 16px 18px; display: none; }
+.tray[data-open="true"] .tbody { display: block; }
+.tbody .cwin { display: flex; gap: 6px; padding: 0 0 10px; }
+.tbody .cwin button { flex: 1; height: 32px; border-radius: 8px; background: var(--panel-2);
+  border: 1px solid var(--line); font: 600 12px/1 var(--sans); color: var(--fg-2); }
+.tbody .cwin button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.tbody .overlay { height: 168px; border: 1px solid var(--line); border-radius: 13px;
+  background: var(--bg); padding: 8px 6px; }
+.tbody .overlay svg { width: 100%; height: 100%; }
+.tbody .legend { list-style: none; margin: 10px 0 0; padding: 0; }
+.tbody .legend li { display: grid; grid-template-columns: 12px 56px 1fr 66px 66px; gap: 9px;
+  align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.tbody .legend li:last-child { border-bottom: 0; }
+.tbody .legend i { width: 10px; height: 10px; border-radius: 3px; display: block; }
+.tbody .legend .t { font-weight: 650; }
+.tbody .legend .n { color: var(--fg-3); font-size: 11.5px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.tbody .legend .v { text-align: right; font-weight: 600; }
+.tbody .legend .x { text-align: right; color: var(--fg-3); font-size: 17px; }
+.tbody .note { margin: 10px 0 0; font: 400 12px/1.5 var(--sans); color: var(--fg-3); }
+.tbody .clearall { margin-top: 10px; border: 1px solid var(--line-2); border-radius: 9px;
+  padding: 10px 14px; font: 600 12.5px/1 var(--sans); color: var(--fg-2); }
+</style>
+</head>
+<body>
+<header><h1>Strata</h1><span class="as" id="as"></span></header>
+<div class="lens" id="lens"></div>
+<div class="bands" id="bands"></div>
+<div class="tray" id="tray" data-open="false">
+  <div class="thead">
+    <div class="chips" id="chips"></div>
+    <button class="open" type="button" id="traybtn">Compare</button>
+  </div>
+  <div class="tbody" id="tbody"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT;
+  var LENS = [
+    { key: "r12", label: "12M" }, { key: "r3", label: "3M" },
+    { key: "m121", label: "12-1" }, { key: "qual", label: "Quality" }, { key: "cap", label: "Size" }
+  ];
+  var WIN = { r12: "1Y", r3: "3M", m121: "1Y", qual: "1Y", cap: "1Y" };
+  var state = { lens: "r12", open: {}, tray: false, cmpWin: "1Y", limit: {} };
+  var tray = [];
+
+  document.getElementById("as").textContent = K.asOf() + " · " + K.OK.count + " names";
+  document.getElementById("lens").innerHTML = LENS.map(function (l) {
+    return '<button type="button" data-l="' + l.key + '" aria-pressed="' + (state.lens === l.key) + '">' +
+      l.label + '</button>';
+  }).join("");
+
+  function sectorColour(s, l) { return "hsl(" + K.hue(s) + ",58%," + (l || 62) + "%)"; }
+  function medianSeries(list) {
+    var sp = list.map(function (r) { return r.sp; }).filter(function (x) { return x && x.length === 32; });
+    if (sp.length < 2) return [];
+    var out = [];
+    for (var i = 0; i < 32; i++) out.push(K.median(sp.map(function (x) { return x[i]; })));
+    return out;
+  }
+  var seriesBySector = {};
+  K.OK.sectors.forEach(function (s) {
+    seriesBySector[s.sector] = medianSeries(K.names.filter(function (r) { return r.s === s.sector && r.ok; }));
+  });
+
+  function sectorStat(sector) {
+    var m = K.METRICS[state.lens];
+    var members = K.names.filter(function (r) { return r.s === sector; });
+    if (state.lens === "cap") {
+      return { value: members.reduce(function (a, r) { return a + r.cap; }, 0), fmt: K.money };
+    }
+    return { value: K.median(members.map(function (r) { return m.get(r); })), fmt: m.fmt };
+  }
+
+  function bandsHTML() {
+    var order = K.OK.sectors.slice().sort(function (a, b) {
+      return sectorStat(b.sector).value - sectorStat(a.sector).value;
+    });
+    return order.map(function (s) {
+      var open = !!state.open[s.sector];
+      var members = K.names.filter(function (r) { return r.s === s.sector; }).length;
+      var st = sectorStat(s.sector);
+      var col = sectorColour(s.sector);
+      var series = seriesBySector[s.sector];
+      var neutral = state.lens === "cap";
+      var figCol = neutral ? "var(--fg)" : st.value >= 0 ? "var(--pos)" : "var(--neg)";
+      return '<section class="band" data-open="' + open + '" data-s="' + K.esc(s.sector) + '" style="color:' + col + '">' +
+        '<button class="bhead" type="button" data-toggle="' + K.esc(s.sector) + '">' +
+          '<span class="edge" style="background:' + col + '"></span>' +
+          '<span class="who"><span class="nm" style="color:var(--fg)">' + K.esc(s.sector) + '</span>' +
+            '<span class="sub">' + members + ' names · ' + Math.round(s.breadth_pct) +
+              '% up over the year</span>' +
+            '<span class="breadth"><i style="width:' + s.breadth_pct + '%;background:' + col + '"></i></span></span>' +
+          '<span class="sk">' + K.spark(series, 60, 26, { stroke: col, width: 1.6 }) + '</span>' +
+          '<span class="fig" style="color:' + figCol + '">' + st.fmt(st.value) +
+            '<small>' + (neutral ? "total cap" : "median") + '</small></span>' +
+        '</button>' +
+        '<div class="shelf">' + (open ? shelfHTML(s.sector) : "") + '</div>' +
+      '</section>';
+    }).join("");
+  }
+
+  function shelfHTML(sector) {
+    var m = K.METRICS[state.lens];
+    var w = K.windowByKey(WIN[state.lens]);
+    var all = K.sortBy(K.names.filter(function (r) { return r.s === sector; }), state.lens, true);
+    var limit = state.limit[sector] || 14;
+    var list = all.slice(0, limit);
+    var col = sectorColour(sector);
+    return '<p class="sorthint">' + all.length + ' names, strongest ' +
+      m.label.toLowerCase() + ' first · tap any tile to put it in the compare tray</p>' +
+      '<div class="tiles">' + list.map(function (r) {
+        var v = m.get(r);
+        var inTray = tray.indexOf(r.t) !== -1;
+        var vc = m.neutral ? "var(--fg)" : v == null ? "var(--fg-3)" : v > 0 ? "var(--pos)" : "var(--neg)";
+        return '<div class="tile" data-in="' + inTray + '" data-t="' + r.t + '" style="color:' + col + '">' +
+          '<span class="tt" style="color:var(--fg)">' + r.t +
+            '<button class="plus" type="button" data-add="' + r.t + '" aria-label="Compare ' + r.t + '">+</button></span>' +
+          '<span class="tn">' + K.esc(r.n) + '</span>' +
+          '<span class="tc">' + K.spark(K.rebase(r.sp, w.points), 110, 34,
+            { stroke: col, width: 1.6, fill: "none" }) + '</span>' +
+          '<span class="tv" style="color:' + vc + '">' + m.fmt(v) + '</span>' +
+          '<span class="tcap">' + K.money(r.cap) + '</span>' +
+        '</div>';
+      }).join("") + '</div>' +
+      (all.length > limit ? '<button class="more" type="button" data-more="' + K.esc(sector) + '">Show ' +
+        Math.min(20, all.length - limit) + ' more of ' + all.length + '</button>' : "");
+  }
+
+  function renderBands(keepScroll) {
+    var el = document.getElementById("bands");
+    var y = el.scrollTop;
+    el.innerHTML = bandsHTML();
+    if (keepScroll) el.scrollTop = y;
+  }
+
+  /* ---- the tray ---- */
+  var PALETTE = ["#6ea8ff", "#ffd166", "#46dfa0", "#ff8fab", "#c792ea", "#ff9f45"];
+  function trayColour(i) { return PALETTE[i % PALETTE.length]; }
+
+  function renderTray() {
+    var chips = document.getElementById("chips");
+    chips.innerHTML = tray.length ? tray.map(function (t, i) {
+      return '<span class="chip"><i style="background:' + trayColour(i) + '"></i>' + t +
+        '<b data-drop="' + t + '">×</b></span>';
+    }).join("") : '<span class="none">Tap ⊕ on any name to compare it against another.</span>';
+    document.getElementById("traybtn").textContent = state.tray ? "Hide" : "Compare" +
+      (tray.length ? " " + tray.length : "");
+    document.getElementById("tray").setAttribute("data-open", String(state.tray));
+    if (!state.tray) return;
+
+    var win = K.windowByKey(state.cmpWin);
+    var rows = tray.map(function (t) { return K.byTicker[t]; }).filter(Boolean);
+    var seriesList = rows.map(function (r) { return K.rebase(r.sp, win.points); });
+    var body = document.getElementById("tbody");
+    var chart = "";
+    if (seriesList.length) {
+      var flat = [];
+      seriesList.forEach(function (s) { flat = flat.concat(s); });
+      flat.push(0);
+      var lo = Math.min.apply(null, flat), hi = Math.max.apply(null, flat);
+      var span = (hi - lo) || 1, W = 320, H = 152, pad = 8;
+      var y = function (v) { return pad + (1 - (v - lo) / span) * (H - pad * 2); };
+      chart = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">' +
+        '<line x1="0" x2="' + W + '" y1="' + y(0).toFixed(1) + '" y2="' + y(0).toFixed(1) +
+          '" stroke="var(--line-2)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+        seriesList.map(function (s, i) {
+          var d = s.map(function (v, j) {
+            return (j ? "L" : "M") + ((j / (s.length - 1)) * W).toFixed(1) + " " + y(v).toFixed(1);
+          }).join(" ");
+          return '<path d="' + d + '" fill="none" stroke="' + trayColour(i) + '" stroke-width="2" ' +
+            'stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+            '<circle cx="' + W + '" cy="' + y(s[s.length - 1]).toFixed(1) + '" r="3.2" fill="' +
+            trayColour(i) + '"/>';
+        }).join("") +
+        '<text x="4" y="12" fill="#656d7c" font-size="9" font-family="system-ui">' +
+          K.signed(hi, 0, "%") + '</text>' +
+        '<text x="4" y="' + (H - 4) + '" fill="#656d7c" font-size="9" font-family="system-ui">' +
+          K.signed(lo, 0, "%") + '</text>' +
+      '</svg>';
+    }
+    body.innerHTML =
+      '<div class="cwin">' + K.WINDOWS.map(function (w) {
+        return '<button type="button" data-cw="' + w.key + '" aria-pressed="' +
+          (state.cmpWin === w.key) + '">' + w.key + '</button>';
+      }).join("") + '</div>' +
+      '<div class="overlay">' + (chart || '<p class="note" style="padding:10px">Add two or more names.</p>') + '</div>' +
+      '<ul class="legend">' + rows.map(function (r, i) {
+        var v = K.METRICS[{ "1Y": "r12", "6M": "r6", "3M": "r3", "1M": "r1" }[state.cmpWin]].get(r);
+        return '<li><i style="background:' + trayColour(i) + '"></i>' +
+          '<span class="t">' + r.t + '</span><span class="n">' + K.esc(r.n) + '</span>' +
+          '<span class="v" style="color:' + (v == null ? "var(--fg-3)" : v > 0 ? "var(--pos)" : "var(--neg)") +
+            '">' + K.pct(v) + '</span>' +
+          '<button class="x" type="button" data-drop="' + r.t + '" aria-label="Remove ' + r.t + '">×</button></li>';
+      }).join("") + '</ul>' +
+      '<p class="note">Every line is re-based to zero at the window’s start, so the chart compares ' +
+      'paths, not prices. Cumulative total return, splits and dividends included.</p>' +
+      (rows.length ? '<button class="clearall" type="button" id="clearall">Clear all</button>' : "");
+  }
+
+  document.getElementById("lens").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-l]");
+    if (!b) return;
+    state.lens = b.getAttribute("data-l");
+    document.querySelectorAll("#lens button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    renderBands();
+    document.getElementById("bands").scrollTop = 0;
+  });
+
+  document.getElementById("bands").addEventListener("click", function (e) {
+    var add = e.target.closest("[data-add]");
+    if (add) {
+      var t = add.getAttribute("data-add");
+      var at = tray.indexOf(t);
+      if (at === -1) { if (tray.length < 6) tray.push(t); }
+      else tray.splice(at, 1);
+      renderBands(true); renderTray();
+      return;
+    }
+    var more = e.target.closest("[data-more]");
+    if (more) {
+      var s = more.getAttribute("data-more");
+      state.limit[s] = (state.limit[s] || 14) + 20;
+      renderBands(true);
+      return;
+    }
+    var tile = e.target.closest("[data-t]");
+    if (tile) {
+      var tk = tile.getAttribute("data-t");
+      var i = tray.indexOf(tk);
+      if (i === -1) { if (tray.length < 6) tray.push(tk); } else tray.splice(i, 1);
+      state.tray = true;
+      renderBands(true); renderTray();
+      return;
+    }
+    var head = e.target.closest("[data-toggle]");
+    if (head) {
+      var sec = head.getAttribute("data-toggle");
+      state.open[sec] = !state.open[sec];
+      renderBands(true);
+    }
+  });
+
+  document.getElementById("traybtn").addEventListener("click", function () {
+    state.tray = !state.tray; renderTray();
+  });
+  document.getElementById("tray").addEventListener("click", function (e) {
+    var drop = e.target.closest("[data-drop]");
+    if (drop) {
+      var i = tray.indexOf(drop.getAttribute("data-drop"));
+      if (i !== -1) tray.splice(i, 1);
+      renderTray(); renderBands(true);
+      return;
+    }
+    var cw = e.target.closest("[data-cw]");
+    if (cw) { state.cmpWin = cw.getAttribute("data-cw"); renderTray(); return; }
+    if (e.target.id === "clearall") { tray = []; renderTray(); renderBands(true); }
+  });
+
+  // Open the two largest sectors so the shelf idea is visible immediately.
+  state.open["Technology"] = true;
+  tray = ["NVDA", "AAPL"].filter(function (t) { return K.byTicker[t]; });
+  renderBands(); renderTray();
+})();
+</script>
+</body>
+</html>

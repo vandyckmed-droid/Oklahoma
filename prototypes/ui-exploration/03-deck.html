@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deck — Oklahoma direction 3</title>
+<meta name="color-scheme" content="dark">
+<style>
+/* ------------------------------------------------------------------
+   DECK — one name at a time, dealt like cards.
+   Thesis: screening 503 names is a triage problem, not a browsing
+   problem. The app deals you a ranked deck; you swipe past or keep.
+   Full-bleed cards, one enormous figure, three supporting stats,
+   and a deck picker that decides what question you are answering.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #08090c;
+  --card: #14161c;
+  --card-2: #1c1f27;
+  --line: #262a34;
+  --fg: #f2f4f8;
+  --fg-2: #9aa2b4;
+  --fg-3: #666e80;
+  --keep: #ffd166;
+  --pos: #4ade80;
+  --neg: #fb7185;
+  --sans: -apple-system, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 15px/1.4 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+
+/* ---- deck picker ---- */
+header { flex: none; padding: 12px 16px 10px; }
+.decks { display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; }
+.decks::-webkit-scrollbar { display: none; }
+.decks button {
+  flex: none; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line);
+  color: var(--fg-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.decks button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.progress { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.progress .track { flex: 1; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.progress .track i { display: block; height: 3px; background: var(--fg-2); transition: width 220ms ease; }
+.progress .n { font: 500 12px/1 var(--sans); color: var(--fg-3); letter-spacing: 0.04em; }
+
+/* ---- the stack ---- */
+.stage { flex: 1; position: relative; margin: 4px 12px 0; perspective: 1200px; min-height: 0; }
+.card {
+  position: absolute; inset: 0; background: var(--card); border: 1px solid var(--line);
+  border-radius: 26px; padding: 22px 22px 18px; display: flex; flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  will-change: transform, opacity;
+}
+.card.behind-1, .card.behind-2 { transform-origin: 50% 0%; }
+.card.behind-1 { transform: translateY(calc(4.5% + 10px)) scale(.955); opacity: .62; z-index: 1; }
+.card.behind-2 { transform: translateY(calc(8.5% + 22px)) scale(.915); opacity: .34; z-index: 0; }
+.card.top { z-index: 3; touch-action: pan-y; }
+.card.animate { transition: transform 280ms cubic-bezier(.2,.8,.2,1), opacity 280ms ease; }
+
+.tick { display: flex; align-items: baseline; justify-content: space-between; }
+.tick h2 { margin: 0; font: 700 30px/1 var(--sans); letter-spacing: -0.02em; }
+.tick .cap { font: 500 13px/1 var(--sans); color: var(--fg-3); }
+.co { margin: 6px 0 0; font: 400 14px/1.35 var(--sans); color: var(--fg-2); }
+.sect { margin: 3px 0 0; font: 500 11px/1 var(--sans); letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--fg-3); }
+
+.big { margin: 18px 0 0; font: 700 62px/0.92 var(--sans); letter-spacing: -0.045em; }
+.big.pos { color: var(--pos); } .big.neg { color: var(--neg); }
+.biglab { margin: 6px 0 0; font: 500 13px/1.3 var(--sans); color: var(--fg-2); }
+
+.cchart { flex: 1; min-height: 90px; margin: 14px -6px 0; position: relative; }
+.cchart svg { width: 100%; height: 100%; }
+.cchart .zero { position: absolute; left: 0; right: 0; height: 1px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--line); border-radius: 14px; overflow: hidden; margin-top: 14px; flex: none; }
+.stats div { background: var(--card-2); padding: 11px 10px 12px; }
+.stats dt { font: 500 10px/1.2 var(--sans); letter-spacing: 0.07em; text-transform: uppercase; color: var(--fg-3); }
+.stats dd { margin: 5px 0 0; font: 600 17px/1 var(--sans); letter-spacing: -0.01em; }
+.stats dd.pos { color: var(--pos); } .stats dd.neg { color: var(--neg); }
+
+.moreline { margin: 12px 0 0; font: 400 13px/1.45 var(--sans); color: var(--fg-2); flex: none; }
+.moreline b { color: var(--fg); font-weight: 600; }
+
+/* swipe verdict stamps */
+.stamp {
+  position: absolute; top: 26px; padding: 7px 14px; border-radius: 8px;
+  font: 700 15px/1 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: 0; pointer-events: none; border: 2px solid;
+}
+.stamp.keep { right: 22px; color: var(--keep); border-color: var(--keep); transform: rotate(9deg); }
+.stamp.pass { left: 22px; color: var(--fg-3); border-color: var(--fg-3); transform: rotate(-9deg); }
+
+/* ---- controls ---- */
+.controls { flex: none; display: flex; align-items: center; justify-content: center;
+  gap: 14px; padding: 16px 16px 14px; }
+.controls button {
+  width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--line);
+  display: grid; place-items: center; background: var(--card);
+}
+.controls button.big-btn { width: 68px; height: 68px; }
+.controls .keepbtn { border-color: var(--keep); color: var(--keep); }
+.controls .undo { width: 46px; height: 46px; color: var(--fg-3); }
+.controls .info { width: 46px; height: 46px; color: var(--fg-2); }
+.hint { flex: none; text-align: center; font: 400 11.5px/1 var(--sans); color: var(--fg-3);
+  padding-bottom: 12px; letter-spacing: 0.02em; }
+
+/* ---- kept sheet ---- */
+.sheet { position: fixed; inset: 0; z-index: 20; background: rgba(0,0,0,.6); display: none; }
+.sheet[data-open="true"] { display: block; }
+.sheet-card {
+  position: absolute; left: 0; right: 0; bottom: 0; max-height: 82%; overflow: auto;
+  background: var(--card); border-radius: 22px 22px 0 0; padding: 8px 16px calc(20px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+}
+.grab { width: 38px; height: 4px; border-radius: 2px; background: var(--line); margin: 6px auto 14px; }
+.sheet h3 { margin: 0 0 4px; font: 600 19px/1.2 var(--sans); }
+.sheet .sub { margin: 0 0 14px; font: 400 13px/1.4 var(--sans); color: var(--fg-2); }
+.kept { list-style: none; margin: 0; padding: 0; }
+.kept li { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.kept .t { font: 600 15px/1 var(--sans); width: 60px; }
+.kept .n { flex: 1; font: 400 13px/1.3 var(--sans); color: var(--fg-2);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kept .v { font: 600 14px/1 var(--sans); }
+.kept .x { color: var(--fg-3); padding: 6px 2px 6px 10px; font-size: 18px; }
+.done { padding: 40px 20px; text-align: center; }
+.done h3 { margin: 0 0 8px; font: 700 22px/1.2 var(--sans); }
+.done p { margin: 0 0 18px; color: var(--fg-2); font-size: 14px; }
+.done button { border: 1px solid var(--line); border-radius: 999px; padding: 12px 22px; color: var(--fg); }
+</style>
+</head>
+<body>
+<header>
+  <div class="decks" id="decks"></div>
+  <div class="progress"><div class="track"><i id="bar"></i></div><span class="n" id="pn"></span></div>
+</header>
+<div class="stage" id="stage"></div>
+<div class="controls" id="controls">
+  <button class="undo" id="undo" type="button" aria-label="Undo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h11a5 5 0 0 1 0 10h-4"/><path d="M3 10l5-5M3 10l5 5"/></svg>
+  </button>
+  <button class="big-btn" id="pass" type="button" aria-label="Pass">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+      stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="big-btn keepbtn" id="keep" type="button" aria-label="Keep">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3.4l2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17.3l-5.4 2.9 1-6.1L3.2 9.8l6.1-.9z"/></svg>
+  </button>
+  <button class="info" id="openkept" type="button" aria-label="Kept names">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+  </button>
+</div>
+<p class="hint">Swipe right to keep · left to pass · tap the card to turn it</p>
+
+<div class="sheet" id="sheet" data-open="false">
+  <div class="sheet-card">
+    <div class="grab"></div>
+    <h3>Kept names</h3>
+    <p class="sub" id="keptsub"></p>
+    <ul class="kept" id="keptlist"></ul>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("deck");
+
+  var DECKS = [
+    { key: "cap",  label: "Biggest",     lens: "r12",  line: "the 60 largest names, biggest first",
+      pick: function () { return K.sortBy(K.names, "cap", true).slice(0, 60); } },
+    { key: "mom",  label: "Momentum",    lens: "m121", line: "12-month return, freshest month skipped",
+      pick: function () { return K.sortBy(K.names.filter(f("m121")), "m121", true).slice(0, 60); } },
+    { key: "qual", label: "Steady",      lens: "qual", line: "trend growth damped by how orderly it was",
+      pick: function () { return K.sortBy(K.names.filter(f("qual")), "qual", true).slice(0, 60); } },
+    { key: "beat", label: "Beating peers", lens: "vsmed", line: "12-month return against the sector median",
+      pick: function () { return K.sortBy(K.names.filter(function (r) { return K.METRICS.vsmed.get(r) != null; }),
+        "vsmed", true).slice(0, 60); } },
+    { key: "fall", label: "Fallen",      lens: "off",  line: "furthest below the year's high",
+      pick: function () { return K.sortBy(K.names.filter(f("off")), "off", false).slice(0, 60); } },
+    { key: "kept", label: "Your names",  lens: "r12",  line: "everything you kept",
+      pick: function () { return K.sortBy(watch.list(), "r12", true); } }
+  ];
+  function f(field) { return function (r) { return r[field] != null; }; }
+
+  var state = { deck: "cap", i: 0, history: [], flipped: {} };
+  var stage = document.getElementById("stage");
+  var sheet = document.getElementById("sheet");
+
+  function deck() {
+    for (var i = 0; i < DECKS.length; i++) if (DECKS[i].key === state.deck) return DECKS[i];
+    return DECKS[0];
+  }
+  var cache = {};
+  function cards() {
+    if (state.deck === "kept") return deck().pick();
+    if (!cache[state.deck]) cache[state.deck] = deck().pick();
+    return cache[state.deck];
+  }
+
+  document.getElementById("decks").innerHTML = DECKS.map(function (d) {
+    return '<button type="button" data-d="' + d.key + '" aria-pressed="' + (state.deck === d.key) + '">' +
+      d.label + '</button>';
+  }).join("");
+
+  function statCell(label, value, v) {
+    var cls = v == null ? "" : v > 0 ? " pos" : v < 0 ? " neg" : "";
+    return '<div><dt>' + label + '</dt><dd class="' + cls.trim() + '">' + value + '</dd></div>';
+  }
+
+  function cardHTML(r, pos) {
+    var d = deck(), m = K.METRICS[d.lens];
+    var v = m.get(r);
+    var flipped = state.flipped[r.t];
+    var series = r.sp || [];
+    var g = series.length > 1 ? K.pathFor(series, 320, 120, { pad: 6, zero: true }) : null;
+    var stroke = (r.r12 == null ? 0 : r.r12) >= 0 ? "var(--pos)" : "var(--neg)";
+    var dirCls = m.neutral ? "" : v == null ? "" : v > 0 ? " pos" : v < 0 ? " neg" : "";
+
+    var face = flipped ? backFace(r) : '' +
+      '<p class="big' + dirCls + '">' + m.fmt(v) + '</p>' +
+      '<p class="biglab">' + m.label + ' · ' + d.line + '</p>' +
+      '<div class="cchart">' + (g ?
+        '<svg viewBox="0 0 320 120" preserveAspectRatio="none">' +
+          '<defs><linearGradient id="gr' + r.t + '" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0" stop-color="' + stroke + '" stop-opacity=".26"/>' +
+            '<stop offset="1" stop-color="' + stroke + '" stop-opacity="0"/></linearGradient></defs>' +
+          '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+            '" stroke="var(--line)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+          '<path d="' + g.area + '" fill="url(#gr' + r.t + ')" stroke="none"/>' +
+          '<path d="' + g.d + '" fill="none" stroke="' + stroke + '" stroke-width="2.2" ' +
+            'stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+          '<circle cx="320" cy="' + g.y(series[series.length - 1]).toFixed(1) + '" r="4" fill="' + stroke + '"/>' +
+        '</svg>' : '<p class="moreline">Only ' + r.days + ' sessions of history.</p>') + '</div>' +
+      '<dl class="stats">' +
+        statCell("12 months", K.pct(r.r12), r.r12) +
+        statCell("Off high", K.METRICS.off.fmt(r.off), r.off == null ? null : (r.off > -0.5 ? 1 : r.off)) +
+        statCell("Trend R²", r.r2 == null ? "—" : r.r2.toFixed(2), null) +
+      '</dl>' +
+      '<p class="moreline">' + sentence(r) + '</p>';
+
+    return '<div class="card ' + pos + '" data-t="' + r.t + '">' +
+      '<span class="stamp keep">Keep</span><span class="stamp pass">Pass</span>' +
+      '<div class="tick"><h2>' + r.t + '</h2><span class="cap">' + K.money(r.cap) + '</span></div>' +
+      '<p class="co">' + K.esc(r.n) + '</p>' +
+      '<p class="sect">' + K.esc(r.s) + (r.i ? " · " + K.esc(r.i) : "") + '</p>' +
+      face + '</div>';
+  }
+
+  function backFace(r) {
+    function row(dt, dd, v) {
+      var cls = v == null ? "" : v > 0 ? " pos" : v < 0 ? " neg" : "";
+      return '<div><dt>' + dt + '</dt><dd class="' + cls.trim() + '">' + dd + '</dd></div>';
+    }
+    return '<dl class="stats" style="margin-top:20px">' +
+        row("1 month", K.pct(r.r1), r.r1) + row("3 months", K.pct(r.r3), r.r3) + row("6 months", K.pct(r.r6), r.r6) +
+      '</dl>' +
+      '<dl class="stats" style="margin-top:10px">' +
+        row("12 months", K.pct(r.r12), r.r12) + row("12-1", K.pct(r.m121), r.m121) + row("6-1", K.pct(r.m61), r.m61) +
+      '</dl>' +
+      '<dl class="stats" style="margin-top:10px">' +
+        row("Trend", K.METRICS.trend.fmt(r.trend), r.trend) +
+        row("R²", r.r2 == null ? "—" : r.r2.toFixed(2), null) +
+        row("Quality", K.METRICS.qual.fmt(r.qual), r.qual) +
+      '</dl>' +
+      backChart(r) +
+      '<p class="moreline"><b>Last close</b> ' + K.price(r.px) +
+        (r.lo != null ? ' · range ' + K.price(r.lo) + '–' + K.price(r.hi) : "") +
+        ' · <b>vs sector</b> ' + K.METRICS.vsmed.fmt(K.METRICS.vsmed.get(r)) +
+        '<br>Tap again to turn back.</p>';
+  }
+
+  /* The back of the card keeps the shape but adds the fitted trend, so the
+     R² printed above has something to be the R² of. */
+  function backChart(r) {
+    var series = r.sp || [];
+    if (series.length < 2) return '<div class="cchart" style="flex:1"></div>';
+    var fit = r.fit && r.fit.length > 1 ? r.fit : null;
+    var g = K.pathFor(series, 320, 110, { pad: 6, zero: true, with: fit });
+    var stroke = (r.r12 || 0) >= 0 ? "var(--pos)" : "var(--neg)";
+    return '<div class="cchart" style="flex:1;min-height:76px">' +
+      '<svg viewBox="0 0 320 110" preserveAspectRatio="none">' +
+      '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+        '" stroke="var(--line)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+      (fit ? '<path d="' + g.line(fit) + '" fill="none" stroke="var(--fg-3)" stroke-width="1.4" ' +
+        'stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>' : "") +
+      '<path d="' + g.d + '" fill="none" stroke="' + stroke + '" stroke-width="2" ' +
+        'stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div>';
+  }
+
+  function sentence(r) {
+    var med = K.medianBySector[r.s];
+    if (r.r12 == null) return "Short history — the year's figures are withheld.";
+    var rel = med == null ? null : r.r12 - med;
+    var s = "";
+    if (rel != null) s += rel >= 0 ? "<b>" + K.signed(rel, 0, " pts") + "</b> ahead of " + K.abbr(r.s)
+      : "<b>" + K.signed(rel, 0, " pts") + "</b> behind " + K.abbr(r.s);
+    if (r.r2 != null) s += (s ? " · " : "") + (r.r2 >= 0.7 ? "steady climb" :
+      r.r2 >= 0.35 ? "trend plus swing" : "mostly swing");
+    if (r.off != null && r.off > -2) s += " · at its high";
+    else if (r.off != null && r.off < -25) s += " · " + Math.abs(r.off).toFixed(0) + "% off its high";
+    return s;
+  }
+
+  function render() {
+    var list = cards();
+    var d = deck();
+    document.getElementById("bar").style.width =
+      (list.length ? Math.min(100, (state.i / list.length) * 100) : 0) + "%";
+    document.getElementById("pn").textContent = list.length
+      ? Math.min(state.i + 1, list.length) + " / " + list.length : "0";
+    if (!list.length || state.i >= list.length) {
+      stage.innerHTML = '<div class="card top"><div class="done">' +
+        '<h3>' + (list.length ? "Deck finished" : "Nothing in this deck") + '</h3>' +
+        '<p>' + (list.length ? "You kept " + watch.size + " names. Deal again, or pick another deck above."
+          : "Keep some names first, or choose another deck.") + '</p>' +
+        '<button type="button" id="again">Deal again</button></div></div>';
+      var a = document.getElementById("again");
+      if (a) a.addEventListener("click", function () { state.i = 0; state.history = []; render(); });
+      return;
+    }
+    var html = "";
+    for (var k = 2; k >= 0; k--) {
+      var r = list[state.i + k];
+      if (!r) continue;
+      html += cardHTML(r, k === 0 ? "top" : "behind-" + k);
+    }
+    stage.innerHTML = html;
+    attach(stage.querySelector(".card.top"), list[state.i]);
+  }
+
+  /* ---- swipe ---- */
+  function attach(card, r) {
+    if (!card || !r) return;
+    var x0 = 0, y0 = 0, dx = 0, dy = 0, dragging = false, moved = false, id = null;
+    var keepStamp = card.querySelector(".stamp.keep"), passStamp = card.querySelector(".stamp.pass");
+    card.addEventListener("pointerdown", function (e) {
+      dragging = true; moved = false; id = e.pointerId;
+      x0 = e.clientX; y0 = e.clientY;
+      card.classList.remove("animate");
+      card.setPointerCapture(id);
+    });
+    card.addEventListener("pointermove", function (e) {
+      if (!dragging || e.pointerId !== id) return;
+      dx = e.clientX - x0; dy = e.clientY - y0;
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) moved = true;
+      card.style.transform = "translate(" + dx + "px," + dy * 0.25 + "px) rotate(" + dx / 22 + "deg)";
+      keepStamp.style.opacity = Math.max(0, Math.min(1, dx / 90));
+      passStamp.style.opacity = Math.max(0, Math.min(1, -dx / 90));
+    });
+    function end(e) {
+      if (!dragging || (e && e.pointerId !== id)) return;
+      dragging = false;
+      if (Math.abs(dx) > 90) { fly(card, dx > 0 ? 1 : -1, r); dx = 0; return; }
+      card.classList.add("animate");
+      card.style.transform = "";
+      keepStamp.style.opacity = 0; passStamp.style.opacity = 0;
+      if (!moved) { state.flipped[r.t] = !state.flipped[r.t]; render(); }
+      dx = 0;
+    }
+    card.addEventListener("pointerup", end);
+    card.addEventListener("pointercancel", end);
+  }
+
+  function fly(card, sign, r) {
+    card.classList.add("animate");
+    card.style.transform = "translate(" + sign * 520 + "px,60px) rotate(" + sign * 24 + "deg)";
+    card.style.opacity = "0";
+    if (sign > 0 && !watch.has(r.t)) watch.toggle(r.t);
+    state.history.push({ t: r.t, kept: sign > 0 });
+    setTimeout(function () { state.i++; render(); }, 190);
+  }
+
+  function act(sign) {
+    var list = cards(), r = list[state.i];
+    if (!r) return;
+    var card = stage.querySelector(".card.top");
+    if (card) fly(card, sign, r);
+  }
+  document.getElementById("keep").addEventListener("click", function () { act(1); });
+  document.getElementById("pass").addEventListener("click", function () { act(-1); });
+  document.getElementById("undo").addEventListener("click", function () {
+    var last = state.history.pop();
+    if (!last) return;
+    if (last.kept && watch.has(last.t)) watch.toggle(last.t);
+    state.i = Math.max(0, state.i - 1);
+    render();
+  });
+  document.getElementById("decks").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-d]");
+    if (!b) return;
+    state.deck = b.getAttribute("data-d"); state.i = 0; state.history = [];
+    document.querySelectorAll("#decks button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    render();
+  });
+
+  function renderKept() {
+    var list = K.sortBy(watch.list(), "r12", true);
+    document.getElementById("keptsub").textContent = list.length
+      ? list.length + " names · median 12-month " + K.pct(K.median(list.map(function (r) { return r.r12; })))
+      : "Nothing kept yet.";
+    document.getElementById("keptlist").innerHTML = list.map(function (r) {
+      return '<li><span class="t">' + r.t + '</span><span class="n">' + K.esc(r.n) + '</span>' +
+        '<span class="v ' + K.dir(r.r12) + '" style="color:' +
+          (r.r12 >= 0 ? "var(--pos)" : "var(--neg)") + '">' + K.pct(r.r12) + '</span>' +
+        '<button class="x" type="button" data-drop="' + r.t + '" aria-label="Remove ' + r.t + '">×</button></li>';
+    }).join("");
+  }
+  document.getElementById("openkept").addEventListener("click", function () {
+    renderKept();
+    sheet.setAttribute("data-open", "true");
+  });
+  sheet.addEventListener("click", function (e) {
+    var drop = e.target.closest("[data-drop]");
+    if (drop) { watch.toggle(drop.getAttribute("data-drop")); renderKept();
+                if (state.deck === "kept") render(); return; }
+    if (e.target === sheet) sheet.setAttribute("data-open", "false");
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
