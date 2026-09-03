@@ -27,7 +27,7 @@ concurrency:
 
 env:
   CLOUDFLARE_ACCOUNT_ID: 8d3d52b624bad9ac26283d4d342e7bcb
-  WORKER_URL: https://oklahoma-quotes.vandyck-med.workers.dev
+  SITE_ORIGIN: https://vandyckmed-droid.github.io
 
 jobs:
   deploy:
@@ -71,21 +71,34 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: npx --yes wrangler@4 deploy
 
-      # Prove the deployed Worker answers with real quotes for the site's
-      # origin, not just that the upload succeeded. A freshly created
-      # Worker's workers.dev address can answer "error code: 1042" for a
-      # minute or so before Cloudflare finishes wiring it up, so retry.
+      # Prove the deployed Worker answers the way the page needs, at the
+      # URL the page actually uses: real quotes with the fields the page
+      # reads, and the CORS header a browser on the site requires. A
+      # freshly created Worker's workers.dev address can answer "error
+      # code: 1042" for a minute before Cloudflare finishes wiring it up,
+      # so retry.
       - name: Verify live quotes
+        working-directory: .
         run: |
+          url="$(grep -o 'var DEFAULT_QUOTES_URL = "[^"]*"' web/template.html | cut -d'"' -f2)"
+          [ -n "$url" ] || { echo "::error::DEFAULT_QUOTES_URL not found in web/template.html"; exit 1; }
+          echo "Page default quotes URL: $url"
           for attempt in $(seq 1 12); do
-            body="$(curl -sS --max-time 20 -H "Origin: https://vandyckmed-droid.github.io" \
-              "$WORKER_URL/quotes?symbols=AAPL,MSFT" || true)"
-            if echo "$body" | grep -q '"quotes":\[{'; then
-              echo "$body" | head -c 600; echo
-              echo "Live quotes are working at $WORKER_URL"
+            out="$(curl -sS -i --max-time 20 -H "Origin: $SITE_ORIGIN" \
+              "$url/quotes?symbols=AAPL,MSFT" || true)"
+            body="$(printf '%s' "$out" | tr -d '\r' | sed '1,/^$/d')"
+            if printf '%s' "$body" | grep -q '"quotes":\[{'; then
+              printf '%s\n' "$body" | head -c 600; echo
+              printf '%s' "$out" | tr -d '\r' | grep -qi "^access-control-allow-origin: $SITE_ORIGIN\$" \
+                || { echo "::error::Missing CORS header for $SITE_ORIGIN"; exit 1; }
+              printf '%s' "$body" | grep -q '"changePct":-\?[0-9]' \
+                || { echo "::error::Quotes carry no changePct; the Today column would be empty"; exit 1; }
+              printf '%s' "$body" | grep -q '"timestamp":[0-9]' \
+                || { echo "::error::Quotes carry no timestamp; the page could not show a trade time"; exit 1; }
+              echo "Live quotes are working at $url"
               exit 0
             fi
-            echo "Attempt $attempt: $(echo "$body" | head -c 200)"
+            echo "Attempt $attempt: $(printf '%s' "$body" | head -c 200)"
             sleep 10
           done
           echo "::error::Worker did not return quotes after two minutes"

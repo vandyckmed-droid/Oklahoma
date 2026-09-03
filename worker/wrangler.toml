@@ -18,6 +18,13 @@ ALLOWED_ORIGINS = "https://vandyckmed-droid.github.io,http://localhost:8000,http
 # Seconds a batch of quotes is cached at the edge before FMP is asked again.
 CACHE_SECONDS = "60"
 
+# Per-IP request budget; the page sends six requests per load, and the
+# 60-second edge cache absorbs reloads, so 60 a minute is generous.
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+simple = { limit = 60, period = 60 }
+
 # Refuse to deploy unless the FMP key is bound, so a missing secret fails
 # the deploy loudly instead of returning 500s at runtime.
 [secrets]
