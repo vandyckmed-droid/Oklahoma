@@ -15,7 +15,7 @@ from .config import (
     UniverseConfig,
 )
 from .fmp import FMPError
-from . import history as history_mod, metrics, ui, universe as universe_mod
+from . import display, history as history_mod, metrics, universe as universe_mod
 
 
 def _millions(value: int) -> str:
@@ -51,7 +51,7 @@ def cmd_refresh(args: argparse.Namespace) -> int:
             for record in diff["renamed"]:
                 print(f"  renamed: {record['from_ticker']} -> {record['to_ticker']} ({record['name']})")
     if not args.no_ui:
-        print(f"Wrote UI to {ui.build(data, _history_index())}")
+        _write_display(data, _history_index())
     return 0
 
 
@@ -63,8 +63,16 @@ def _history_index() -> dict | None:
         return None
 
 
+def _write_display(universe: dict, index: dict | None) -> None:
+    path = display.build(universe, index)
+    if path:
+        print(f"Wrote page data to {path}")
+    else:
+        print("No price history yet, so no page data. Run: python -m oklahoma history")
+
+
 def cmd_build_ui(args: argparse.Namespace) -> int:
-    print(f"Wrote UI to {ui.build(universe_mod.load(args.output), _history_index())}")
+    _write_display(universe_mod.load(args.output), _history_index())
     return 0
 
 
@@ -96,7 +104,7 @@ def cmd_history(args: argparse.Namespace) -> int:
         print(f"  failed: {failure['ticker']}: {failure['error']}", file=sys.stderr)
 
     if not args.no_ui:
-        print(f"Wrote UI to {ui.build(universe, index)}")
+        _write_display(universe, index)
     return 0
 
 
@@ -172,12 +180,14 @@ def main(argv: list[str] | None = None) -> int:
         help="one row per company (by CIK) instead of mirroring the index's listings",
     )
     refresh.add_argument(
-        "--no-ui", action="store_true", help="skip regenerating web/index.html"
+        "--no-ui", action="store_true", help="skip rewriting data/display.json"
     )
     refresh.set_defaults(func=cmd_refresh)
 
     subparsers.add_parser(
-        "build-ui", help="regenerate web/index.html from the saved universe"
+        "build-ui",
+        help="rewrite data/display.json, the page's history payload, "
+        "from the saved universe and history",
     ).set_defaults(func=cmd_build_ui)
 
     subparsers.add_parser(
@@ -193,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
         help="trading days each name should cover (default 252)",
     )
     hist.add_argument(
-        "--no-ui", action="store_true", help="skip regenerating web/index.html"
+        "--no-ui", action="store_true", help="skip rewriting data/display.json"
     )
     hist.set_defaults(func=cmd_history)
 

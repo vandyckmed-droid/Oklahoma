@@ -8,7 +8,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from oklahoma import ui, universe as universe_mod
+from oklahoma import display, universe as universe_mod
 from oklahoma.config import UniverseConfig
 
 
@@ -120,20 +120,34 @@ class RoundTripTests(unittest.TestCase):
         )
 
 
-class UiTests(unittest.TestCase):
-    def test_page_embeds_the_universe(self):
-        page = ui.render(sample_universe())
-        self.assertNotIn(ui.UNIVERSE_PLACEHOLDER, page)
-        self.assertNotIn(ui.HISTORY_PLACEHOLDER, page)
-        payload = page.split('type="application/json">')[1].split("</script>")[0]
-        self.assertEqual(json.loads(payload.replace("<\\/", "</"))["count"], 3)
+class DisplayFileTests(unittest.TestCase):
+    """The page fetches data/display.json; it must be plain JSON, and absent
+    (not a stub) until there is history for it to describe."""
 
-    def test_page_is_a_complete_document(self):
-        page = ui.render(sample_universe())
-        self.assertTrue(page.startswith("<!doctype html>"))
-        for tag in ("<head>", "</head>", "<body>", "</body>", "</html>"):
-            self.assertIn(tag, page)
-        self.assertEqual(page.count("<title>"), 1)
+    def test_no_history_writes_nothing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "display.json")
+            self.assertIsNone(display.build(sample_universe(), None, path))
+            self.assertFalse(os.path.exists(path))
+
+    def test_writes_the_payload_as_json(self):
+        index = {
+            "schema_version": 2,
+            "generated_at": "2026-01-01T00:00:00Z",
+            "criteria": {"trading_days_target": 252},
+            "count": 0,
+            "sufficient_count": 0,
+            "coverage": [],
+            "failures": [],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "display.json")
+            self.assertEqual(display.build(sample_universe(), index, path), path)
+            with open(path, encoding="utf-8") as handle:
+                written = json.load(handle)
+        self.assertEqual(written["coverage"], [])
+        self.assertEqual(written["criteria"]["trading_days_target"], 252)
+        self.assertNotIn("cross_section", written)
 
 
 class RealUniverseTests(unittest.TestCase):

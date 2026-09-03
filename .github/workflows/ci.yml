@@ -29,8 +29,8 @@ jobs:
       - name: Run tests
         run: python -m unittest discover -s tests -v
 
-  generated-ui-is-current:
-    name: Generated UI matches the data
+  generated-data-is-current:
+    name: Page data matches the history
     runs-on: ubuntu-latest
 
     steps:
@@ -40,17 +40,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      # web/index.html is generated from web/template.html plus the data
-      # files. Rebuilding it must be a no-op, or the committed page has
-      # drifted from the data it claims to show.
-      - name: Rebuild the page from committed data
+      # data/display.json is derived from data/universe.json and the bar
+      # files under data/history/. Rebuilding it must be a no-op, or the
+      # numbers the page fetches have drifted from the history behind them.
+      - name: Rebuild the page data from committed history
         run: python -m oklahoma build-ui
 
-      - name: Fail if the page changed
+      - name: Fail if the page data changed
         run: |
-          if ! git diff --quiet -- web/index.html; then
-            echo "web/index.html is out of date. Run: python -m oklahoma build-ui"
-            git diff --stat -- web/index.html
+          if ! git diff --quiet -- data/display.json; then
+            echo "data/display.json is out of date. Run: python -m oklahoma build-ui"
+            git diff --stat -- data/display.json
             exit 1
           fi
-          echo "web/index.html is up to date."
+          echo "data/display.json is up to date."
