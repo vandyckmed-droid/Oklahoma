@@ -1,9 +1,8 @@
 # Oklahoma on a phone — Expo Go client
 
-An Expo app that runs in stock **Expo Go** — no development build and no Expo
-account. It does need a computer once, to run the dev server; the zero-setup
-Snack route is blocked by an SDK mismatch outside this repository's control,
-explained below.
+An Expo app that runs in stock **Expo Go**, with no development build. It is
+published by a GitHub Actions workflow, so nothing needs a computer: the
+one-time setup is two pastes in a phone browser, explained below.
 
 ## Opening it — read this first
 
@@ -29,27 +28,42 @@ iOS either.
 moment Snack ships SDK 57 the zero-setup path returns — but it now prints a
 warning saying the link will fail.
 
-### What does work
+### How to open it — no computer needed
 
-**A development server.** Expo Go's supported path. Needs a computer once, on
-the same wifi as your phone:
+Expo Go can load any project published with **EAS Update**, as long as the
+account signed in to Expo Go owns the project. The workflow at
+`.github/workflows/mobile-update.yml` does the publishing, on GitHub's
+machines. One-time setup, all from a phone browser:
 
-```
-cd mobile
-npm install
-npx expo start           # scan the QR with Expo Go
-npx expo start --tunnel  # if the phone and computer are on different networks
-```
+1. **Make a token.** `https://expo.dev/settings/access-tokens` → *Create token*.
+   Copy it.
+2. **Give it to GitHub.**
+   `https://github.com/vandyckmed-droid/Oklahoma/settings/secrets/actions` →
+   *New repository secret* → name `EXPO_TOKEN`, paste, save.
+3. **Run the workflow.** GitHub → *Actions* → *Publish mobile app to Expo Go* →
+   *Run workflow*. It takes about two minutes.
 
-That serves SDK 57 — an exact match for current Expo Go. `@expo/ngrok` is
-already a devDependency, so `--tunnel` needs no extra install.
+Then, on the phone signed in to that same Expo account, open **Expo Go →
+Projects → Oklahoma**. The run's summary also prints a tappable
+`exp://u.expo.dev/…` link and the dashboard page with a QR.
 
-**Or skip Expo entirely.** Because this app is a WebView shell, adding the page
-to your home screen gets you substantially the same thing, permanently, with no
-tooling at all: open
-`https://vandyckmed-droid.github.io/Oklahoma/web/` in Safari, then Share →
-Add to Home Screen. What you lose is the native shell's error handling and
-safe-area control; what you gain is that it just works and never expires.
+After that, every push to `mobile/` republishes automatically.
+
+How it stays compatible: `runtimeVersion` is deliberately left out of the app
+config, so EAS derives it from the SDK — `exposdk:57.0.0` — which is exactly
+what Expo Go for SDK 57 accepts. `eas update:configure` would write an
+`appVersion` policy and break that, so it is not run; `app.config.js` adds the
+project id and `updates.url` from the environment instead.
+
+### Other routes
+
+- **A development server**, if you have a computer on the same wifi:
+  `cd mobile && npm install && npx expo start`, then scan with Expo Go.
+  `--tunnel` works too; `@expo/ngrok` is a devDependency.
+- **Or skip Expo entirely.** Because this app is a WebView shell, adding
+  `https://vandyckmed-droid.github.io/Oklahoma/web/` to the home screen
+  (Safari → Share → Add to Home Screen) gets substantially the same thing,
+  permanently, with no tooling at all.
 
 ## What it is
 
@@ -117,15 +131,13 @@ These are real, and worth weighing before anyone builds on this.
    inlined. Fine on wifi, noticeable on a poor connection, and it is fetched
    again whenever the cache expires.
 
-4. **The Expo Go delivery path is the weak point, not the app.** The app itself
-   is verified further than a parse: `npx expo export` bundles it with Metro
-   against SDK 57 / React Native 0.86 — 598 modules, 1.5 MB of Hermes
-   bytecode, clean exit — so the code compiles and every native module
-   resolves. What is *not* verified is the app running on a device, because
-   every route to a phone from here is closed: Snack caps at SDK 54, and an
-   ngrok tunnel cannot establish through this environment's egress proxy. A
-   development server on your own machine is the shortest route to a first
-   real run.
+4. **The publish workflow has not run yet.** It needs `EXPO_TOKEN`, which only
+   the account owner can create. Everything short of that is verified: the
+   app bundles with Metro against SDK 57 / React Native 0.86 (598 modules,
+   1.5 MB of Hermes bytecode, clean exit); `app.config.js` produces the
+   right config with and without a project id; the workflow parses; and every
+   `eas` flag it uses exists in eas-cli 23.2.0. The first real run is the
+   remaining test, and its summary will say plainly if anything fails.
 
 5. **The SDK is pinned to 57** in `package.json`, matching current Expo Go.
    When Expo ships SDK 58, Expo Go will follow and this needs bumping —
