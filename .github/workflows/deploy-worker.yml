@@ -72,12 +72,21 @@ jobs:
         run: npx --yes wrangler@4 deploy
 
       # Prove the deployed Worker answers with real quotes for the site's
-      # origin, not just that the upload succeeded.
+      # origin, not just that the upload succeeded. A freshly created
+      # Worker's workers.dev address can answer "error code: 1042" for a
+      # minute or so before Cloudflare finishes wiring it up, so retry.
       - name: Verify live quotes
         run: |
-          sleep 5
-          body="$(curl -sS --max-time 20 -H "Origin: https://vandyckmed-droid.github.io" \
-            "$WORKER_URL/quotes?symbols=AAPL,MSFT")"
-          echo "$body" | head -c 600; echo
-          echo "$body" | grep -q '"quotes":\[{' || { echo "::error::Worker did not return quotes"; exit 1; }
-          echo "Live quotes are working at $WORKER_URL"
+          for attempt in $(seq 1 12); do
+            body="$(curl -sS --max-time 20 -H "Origin: https://vandyckmed-droid.github.io" \
+              "$WORKER_URL/quotes?symbols=AAPL,MSFT" || true)"
+            if echo "$body" | grep -q '"quotes":\[{'; then
+              echo "$body" | head -c 600; echo
+              echo "Live quotes are working at $WORKER_URL"
+              exit 0
+            fi
+            echo "Attempt $attempt: $(echo "$body" | head -c 200)"
+            sleep 10
+          done
+          echo "::error::Worker did not return quotes after two minutes"
+          exit 1
