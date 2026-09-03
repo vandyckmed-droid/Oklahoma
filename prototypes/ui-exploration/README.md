@@ -1,9 +1,13 @@
-# Rapid UI exploration — eight mobile directions
+# Rapid UI exploration — nine mobile directions
 
 Disposable design instruments, not implementation candidates. Open
-`index.html` for the gallery: eight live, operable phone previews side by
+`index.html` for the gallery: nine live, operable phone previews side by
 side, each with its thesis, its strongest advantage and its principal
 tradeoff.
+
+Directions 1–8 each commit to a single thesis. Direction 9 is the
+synthesis of 5, 6, 7 and 8 — the combination worth pursuing if any of this
+goes further.
 
 **Production is untouched.** Nothing in `web/`, `oklahoma/`, `data/` or
 `worker/` was modified. These files are additive and self-contained.
@@ -20,6 +24,24 @@ tradeoff.
 | 6 | **Dial** | Position over ranking — two pickable axes, named quadrants, drag to select. |
 | 7 | **Focus** | Your twelve names, at a size readable without glasses. |
 | 8 | **Strata** | Browse by sector structure; compare by collecting names into an overlay tray. |
+| 9 | **Hybrid** | The synthesis: Focus as home, Brief's answers as the market view, Dial as the explorer, and Strata's tray reachable from every list. |
+
+### What the hybrid actually combines
+
+Three tabs and one persistent tray:
+
+- **Yours** — the watchlist at Focus's size and quiet, with a window lens
+  and a full-page detail view.
+- **Market** — Brief's answered questions over their evidence, then the
+  sector list. Tapping a sector hands off into Explore with that sector
+  isolated, so structure leads somewhere instead of dead-ending.
+- **Find** — search across all 503, or Explore: Dial's two-axis plot with
+  named quadrants and drag-to-select.
+- **Compare tray** — Strata's overlay, but not a screen. Every list in the
+  app carries a per-row `⊕`, so putting two names on one re-based chart
+  never requires navigating anywhere.
+
+The point of the synthesis is that comparison stops being a place you go.
 
 ## How to look at them
 
@@ -32,7 +54,7 @@ python3 -m http.server 8000 --directory prototypes/ui-exploration
 ```
 
 Each prototype also stands alone: `01-ledger.html`, `02-terminal.html`, and
-so on. All eight were designed and verified at 390 × 844.
+so on. All nine were designed and verified at 390 × 844.
 
 ## The data
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oklahoma — eight mobile directions</title>
+<title>Oklahoma — nine mobile directions</title>
 <meta name="color-scheme" content="light dark">
 <style>
 :root {
@@ -46,6 +46,8 @@ header .meta span { border: 1px solid var(--line-2); border-radius: 999px; paddi
   overflow: hidden; display: flex; flex-direction: column; }
 .item .head { padding: 16px 18px 12px; }
 .item .n { font: 600 11.5px/1 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); }
+.item.synth { border-color: var(--accent); }
+.item.synth .n { color: var(--accent); }
 .item h2 { margin: 8px 0 0; font: 700 22px/1.1 var(--sans); letter-spacing: -0.02em; }
 .item .thesis { margin: 8px 0 0; color: var(--fg-2); font-size: 14px; }
 .item .body { display: flex; gap: 16px; padding: 0 18px 16px; align-items: flex-start; }
@@ -100,9 +102,10 @@ footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
 <div class="wrap">
 <header>
   <p class="kicker">Rapid UI exploration · disposable prototypes</p>
-  <h1>Eight ways Oklahoma could look on a phone</h1>
+  <h1>Nine ways Oklahoma could look on a phone</h1>
   <p>Each direction is a complete, operable design system built on the real universe —
      503 S&amp;P 500 names, real closes, and the same metrics the production page computes.
+     The first eight each commit to one thesis; the ninth is the synthesis of four of them.
      They are throwaway design instruments, not implementation candidates: nothing in
      <code>web/</code>, <code>oklahoma/</code> or <code>data/</code> has been touched.</p>
   <div class="meta" id="meta"></div>
@@ -113,7 +116,7 @@ footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
   <button type="button" data-cols="2" aria-pressed="true">Compare grid</button>
   <button type="button" data-cols="1" aria-pressed="false">One at a time</button>
   <span class="lab" style="margin-left:10px">Previews</span>
-  <button type="button" id="loadall">Wake all eight</button>
+  <button type="button" id="loadall">Wake all nine</button>
   <button type="button" id="sleepall">Put them to sleep</button>
 </div>
 
@@ -186,6 +189,13 @@ footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
       gain: "Overlaid comparison — up to six names re-based on one chart — which the production app cannot do at all. Sector bands make structure the primary navigation instead of an afterthought.",
       cost: "More taps to a specific ticker, horizontal shelves hide most of a sector, and the tray eats a third of the screen once it is open.",
       tags: ["sector bands", "horizontal shelves", "compare tray", "overlay chart", "6-name limit"]
+    },
+    {
+      file: "09-hybrid.html", name: "Hybrid", synthesis: true,
+      thesis: "The synthesis: Focus as home, Brief\u2019s answers as the market view, Dial as the explorer, and Strata\u2019s tray reachable from every list.",
+      gain: "One altitude ladder instead of four apps. You open on your names, a second tab answers what happened, a third finds populations \u2014 and because <b>every list carries a \u2295</b>, \u201cput these two side by side\u201d never requires going anywhere. Tapping a sector in Market hands off into the plot with that sector isolated.",
+      cost: "The largest of the nine, and the only one with real navigation to learn. It gives up Focus\u2019s radical emptiness \u2014 a tab bar, a tray and a per-row \u2295 are three things the pure version refused \u2014 and it is the one that could not be built in an afternoon.",
+      tags: ["3 tabs + tray", "watchlist-first", "answered questions", "scatter + box select", "light + dark"]
     }
   ];
 
@@ -212,8 +222,9 @@ footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
 
   var grid = document.getElementById("grid");
   grid.innerHTML = DIRECTIONS.map(function (d, i) {
-    return '<article class="item">' +
-      '<div class="head"><p class="n">Direction ' + (i + 1) + '</p>' +
+    return '<article class="item' + (d.synthesis ? " synth" : "") + '">' +
+      '<div class="head"><p class="n">' +
+          (d.synthesis ? "Synthesis · 5 + 6 + 7 + 8" : "Direction " + (i + 1)) + '</p>' +
         '<h2>' + d.name + '</h2><p class="thesis">' + d.thesis + '</p></div>' +
       '<div class="body">' +
         '<div class="phone"><div class="screen" data-live="false" data-src="' + d.file + '">' +
