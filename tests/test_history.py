@@ -84,7 +84,7 @@ class SummarizeTests(unittest.TestCase):
         self.assertFalse(summary["sufficient"])
 
     def test_carries_no_derivable_numbers(self):
-        # Anything computable from the bars belongs to metrics/ui, so the
+        # Anything computable from the bars belongs to metrics/display, so the
         # index can never disagree with the data it points at.
         summary = history.summarize("TEST", self.bars, trading_days=5)
         self.assertEqual(

@@ -9,14 +9,14 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 
-# Where the universe file and the generated UI are written.
+# Where the data files are written. The page (web/index.html) fetches
+# universe.json and display.json from here at load; nothing is baked into it.
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNIVERSE_PATH = os.path.join(ROOT, "data", "universe.json")
 CHANGES_PATH = os.path.join(ROOT, "data", "changes.json")
 HISTORY_DIR = os.path.join(ROOT, "data", "history")
 HISTORY_INDEX_PATH = os.path.join(HISTORY_DIR, "index.json")
-UI_TEMPLATE_PATH = os.path.join(ROOT, "web", "template.html")
-UI_OUTPUT_PATH = os.path.join(ROOT, "web", "index.html")
+DISPLAY_PATH = os.path.join(ROOT, "data", "display.json")
 
 SCHEMA_VERSION = 2
 HISTORY_SCHEMA_VERSION = 2

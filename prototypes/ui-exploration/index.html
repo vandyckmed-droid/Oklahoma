@@ -213,8 +213,8 @@ footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
   ].map(function (t) { return "<span>" + t + "</span>"; }).join("");
 
   document.getElementById("foot").innerHTML =
-    "Shared fixture: <code>data.js</code>, extracted verbatim from the production build " +
-    "(<code>web/index.html</code>) — real tickers, sectors, market caps, adjusted closes and every " +
+    "Shared fixture: <code>data.js</code>, extracted verbatim from the production data " +
+    "(<code>data/universe.json</code>, <code>data/display.json</code>) — real tickers, sectors, market caps, adjusted closes and every " +
     "derived metric, with sparklines thinned from 60 points to 32. <code>kit.js</code> holds only " +
     "formatting and geometry, so no visual opinion is shared between directions. Each prototype " +
     "keeps its own watchlist in <code>localStorage</code>; none of them talk to a network, a build " +

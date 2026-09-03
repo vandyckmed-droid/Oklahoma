@@ -62,8 +62,9 @@ so on. All nine were designed and verified at 390 × 844.
 
 ## The data
 
-`data.js` is a shared fixture extracted **verbatim** from the production
-build (`web/index.html`) — real tickers, company names, sectors,
+`data.js` is a shared fixture extracted **verbatim** from the committed
+data files the production page fetches (`data/universe.json` and
+`data/display.json`) — real tickers, company names, sectors,
 industries, market caps, adjusted closes, and every derived metric the
 production page computes: 1/3/6/12-month returns, 12-1 and 6-1 momentum,
 off-high, 52-week range, log-trend slope, R² and quality momentum, plus the
@@ -79,19 +80,14 @@ collide with each other or with the production page's `oklahoma-watchlist`.
 
 ## Regenerating the fixture
 
-After a data refresh, re-extract from the rebuilt page:
+After a data refresh, re-extract from the data files:
 
 ```python
 # python3 - <<'PY'  (run from the repository root)
-import re, json
+import json
 
-src = open("web/index.html", encoding="utf-8").read()
-
-def block(name):
-    m = re.search(r'<script id="%s" type="application/json">(.*?)</script>' % name, src, re.S)
-    return json.loads(m.group(1).replace("<\\/", "</"))
-
-uni, hist = block("universe-data"), block("history-data")
+uni = json.load(open("data/universe.json", encoding="utf-8"))
+hist = json.load(open("data/display.json", encoding="utf-8"))
 cov = {c["ticker"]: c for c in hist["coverage"]}
 
 def thin(v, n):

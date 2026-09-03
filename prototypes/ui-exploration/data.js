@@ -1,5 +1,5 @@
 /* Shared fixture for the UI exploration prototypes.
-   Extracted verbatim from the production build (web/index.html) on
+   Extracted verbatim from the production data (data/universe.json, data/display.json) on
    2026-09-01. Real S&P 500 names, real prices, real computed metrics;
    sparklines thinned from 60 to 32 points. Nothing here is invented.
    Regenerate with the script in this folder's README. */

@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from oklahoma import config, history, metrics, ui, universe as universe_mod
+from oklahoma import config, display, history, metrics, universe as universe_mod
 
 
 def bars(*closes):
@@ -152,12 +152,12 @@ class LogTrendTests(unittest.TestCase):
 
 
 class DisplayPayloadTests(unittest.TestCase):
-    """What the page inlines must agree with the calculation it came from."""
+    """What the page fetches must agree with the calculation it came from."""
 
     @classmethod
     def setUpClass(cls):
         cls.index = history.load_index()
-        cls.display = ui._display(universe_mod.load(), cls.index)
+        cls.display = display.payload(universe_mod.load(), cls.index)
         cls.target = cls.index["criteria"]["trading_days_target"]
 
     def test_cross_section_uses_only_full_window_names(self):
@@ -187,7 +187,7 @@ class DisplayPayloadTests(unittest.TestCase):
             ],
         )
         with self.assertRaises(ValueError) as ctx:
-            ui._display(broken, self.index)
+            display.payload(broken, self.index)
         self.assertIn("AAPL", str(ctx.exception))
 
     def test_three_month_return_matches_the_bars(self):

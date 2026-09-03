@@ -80,8 +80,8 @@ jobs:
       - name: Verify live quotes
         working-directory: .
         run: |
-          url="$(grep -o 'var DEFAULT_QUOTES_URL = "[^"]*"' web/template.html | cut -d'"' -f2)"
-          [ -n "$url" ] || { echo "::error::DEFAULT_QUOTES_URL not found in web/template.html"; exit 1; }
+          url="$(grep -o 'var DEFAULT_QUOTES_URL = "[^"]*"' web/index.html | cut -d'"' -f2)"
+          [ -n "$url" ] || { echo "::error::DEFAULT_QUOTES_URL not found in web/index.html"; exit 1; }
           echo "Page default quotes URL: $url"
           for attempt in $(seq 1 12); do
             out="$(curl -sS -i --max-time 20 -H "Origin: $SITE_ORIGIN" \

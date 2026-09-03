@@ -67,7 +67,7 @@ def summarize(ticker: str, bars: list[dict], trading_days: int) -> dict:
     `sufficient` answers the question the universe actually cares about: is
     there enough history to run a `trading_days`-long calculation? Returns,
     ranges and display series are computed from the bar files on demand
-    (see oklahoma.metrics and oklahoma.ui), so the index cannot disagree
+    (see oklahoma.metrics and oklahoma.display), so the index cannot disagree
     with the data it points at.
     """
     return {
