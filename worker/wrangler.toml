@@ -21,3 +21,8 @@ keep_vars = true
 ALLOWED_ORIGINS = "https://vandyckmed-droid.github.io,http://localhost:8000,http://127.0.0.1:8000"
 # Seconds a batch of quotes is cached at the edge before FMP is asked again.
 CACHE_SECONDS = "60"
+
+# Refuse to deploy unless the FMP key is bound, so a missing secret fails
+# the build loudly instead of returning 500s at runtime.
+[secrets]
+required = ["FMP_API_KEY"]
