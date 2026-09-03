@@ -1,25 +1,55 @@
 # Oklahoma on a phone — Expo Go client
 
-An Expo app that runs in stock **Expo Go**, with no development build, no
-desktop setup, and no Expo account.
+An Expo app that runs in stock **Expo Go** — no development build and no Expo
+account. It does need a computer once, to run the dev server; the zero-setup
+Snack route is blocked by an SDK mismatch outside this repository's control,
+explained below.
 
-## Open it
+## Opening it — read this first
 
-Tap this on your phone, then choose **Open in Expo Go** (or scan the QR the
-page shows):
+**The Snack link does not work with a current Expo Go, and cannot be made to.**
+This was my mistake, and the cause is worth stating precisely.
+
+Snack pins its own SDK ceiling, independent of the Expo SDK released on npm.
+From `snack-content` 3.6.2, published 2026-04-01:
+
+```js
+defaultSdkVersion = '54.0.0'
+newestSdkVersion  = '54.0.0'
+```
+
+Expo Go from the app stores runs **only the newest SDK** — 57 at the time of
+writing. So a Snack is capped three SDKs below what Expo Go will load, and
+opening one raises *"Selected Snack uses unsupported SDK (54)"*. No query
+parameter fixes it: `sdkVersion=57.0.0` is not a version Snack can build. And
+because Expo Go ships a single SDK, there is no older Expo Go to install on
+iOS either.
+
+`snack-link.py` is kept — the mechanism is sound and free to carry, so the
+moment Snack ships SDK 57 the zero-setup path returns — but it now prints a
+warning saying the link will fail.
+
+### What does work
+
+**A development server.** Expo Go's supported path. Needs a computer once, on
+the same wifi as your phone:
 
 ```
-python3 mobile/snack-link.py        # prints the current link
+cd mobile
+npm install
+npx expo start           # scan the QR with Expo Go
+npx expo start --tunnel  # if the phone and computer are on different networks
 ```
 
-The link is a [Snack](https://snack.expo.dev) that loads `mobile/App.js`
-straight from this repository over HTTPS. Two consequences worth knowing:
+That serves SDK 57 — an exact match for current Expo Go. `@expo/ngrok` is
+already a devDependency, so `--tunnel` needs no extra install.
 
-- It works against an **unmerged branch**, so the app is testable while the
-  pull request is still open.
-- Snack re-fetches on every open, so the link **never goes stale**. Pushing to
-  the branch changes what Expo Go runs, with nothing to republish. After the
-  PR merges, regenerate the link with `--ref main`.
+**Or skip Expo entirely.** Because this app is a WebView shell, adding the page
+to your home screen gets you substantially the same thing, permanently, with no
+tooling at all: open
+`https://vandyckmed-droid.github.io/Oklahoma/web/` in Safari, then Share →
+Add to Home Screen. What you lose is the native shell's error handling and
+safe-area control; what you gain is that it just works and never expires.
 
 ## What it is
 
@@ -87,22 +117,19 @@ These are real, and worth weighing before anyone builds on this.
    inlined. Fine on wifi, noticeable on a poor connection, and it is fetched
    again whenever the cache expires.
 
-4. **I could not run it on a device.** I have no phone and no Expo account, so
-   what follows is what was actually checked, and what was not.
+4. **The Expo Go delivery path is the weak point, not the app.** The app itself
+   is verified further than a parse: `npx expo export` bundles it with Metro
+   against SDK 57 / React Native 0.86 — 598 modules, 1.5 MB of Hermes
+   bytecode, clean exit — so the code compiles and every native module
+   resolves. What is *not* verified is the app running on a device, because
+   every route to a phone from here is closed: Snack caps at SDK 54, and an
+   ngrok tunnel cannot establish through this environment's egress proxy. A
+   development server on your own machine is the shortest route to a first
+   real run.
 
-   Verified: `App.js` parses under Babel with the React preset; every import
-   resolves to a module bundled in Expo Go; `raw.githubusercontent.com` serves
-   the branch with `access-control-allow-origin: *` so Snack can fetch it; the
-   GitHub Pages URL the app loads returns 200; the generated Snack URL returns
-   200.
-
-   Not verified: the Expo Go handoff itself, on-device rendering, and the
-   gesture behaviour. Those need a phone.
-
-5. **The Expo SDK version is deliberately not pinned.** Snack then uses the
-   newest released SDK, which is what a freshly installed Expo Go speaks. If
-   your Expo Go is older, add `&sdkVersion=57.0.0` to the link, or set it in
-   `snack-link.py`.
+5. **The SDK is pinned to 57** in `package.json`, matching current Expo Go.
+   When Expo ships SDK 58, Expo Go will follow and this needs bumping —
+   `npx expo install --check` reports what to change.
 
 6. **No app icon or splash image.** Those are binary assets; Expo's defaults are
    used instead. Adding them is a small, separate change.
@@ -119,16 +146,6 @@ const APP_URL = 'https://vandyckmed-droid.github.io/Oklahoma/web/';
 Swap it for a branch preview, a local `python3 -m http.server` on your LAN, or
 one of the prototypes under `prototypes/ui-exploration/` — the shell does not
 care which.
-
-## Running it from a desktop instead
-
-Not required, and not exercised here, but the project is a standard Expo app:
-
-```
-cd mobile
-npm install
-npx expo start          # scan the QR with Expo Go on the same network
-```
 
 ## What this does not touch
 
