@@ -924,7 +924,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
        whenever it comes back into view after a minute; the daily window
        figures stay end-of-day and are never mixed with a live tick. */
 
-    var DEFAULT_QUOTES_URL = "";
+    var DEFAULT_QUOTES_URL = "https://oklahoma-quotes.vandyck-med.workers.dev";
     var live = {};
     var liveAsOf = null;
     var liveLastFetch = 0;
@@ -1123,7 +1123,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
-      if (typeof p.quotesUrl === "string") state.quotesUrl = p.quotesUrl;
+      if (typeof p.quotesUrl === "string" && p.quotesUrl.trim()) state.quotesUrl = p.quotesUrl;
     }
     function savePrefs() {
       try {

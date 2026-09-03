@@ -1,14 +1,13 @@
 # Oklahoma quotes proxy.
 #
 # Holds the Financial Modeling Prep key so the public GitHub Pages site
-# never ships it. Deploy from this directory:
+# never ships it. It is deployed by .github/workflows/deploy-worker.yml on
+# every push to main that touches worker/, using the FMP_API_KEY and
+# CLOUDFLARE_API_TOKEN repository secrets. To deploy by hand instead:
 #
 #   npx wrangler login
 #   npx wrangler secret put FMP_API_KEY
 #   npx wrangler deploy
-#
-# Then paste the printed URL (https://oklahoma-quotes.<you>.workers.dev)
-# into the page's Settings > Live prices.
 name = "oklahoma-quotes"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
@@ -23,6 +22,6 @@ ALLOWED_ORIGINS = "https://vandyckmed-droid.github.io,http://localhost:8000,http
 CACHE_SECONDS = "60"
 
 # Refuse to deploy unless the FMP key is bound, so a missing secret fails
-# the build loudly instead of returning 500s at runtime.
+# the deploy loudly instead of returning 500s at runtime.
 [secrets]
 required = ["FMP_API_KEY"]

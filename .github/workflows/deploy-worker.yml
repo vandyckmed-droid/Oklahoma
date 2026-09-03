@@ -1,0 +1,83 @@
+name: Deploy quotes Worker
+
+# Deploys worker/ to Cloudflare from GitHub, so the FMP key and the
+# Cloudflare token both live in this repository's Actions secrets and the
+# Cloudflare dashboard never has to be touched.
+#
+# Required repository secrets:
+#   FMP_API_KEY           Financial Modeling Prep key (shared with the
+#                         daily refresh workflow)
+#   CLOUDFLARE_API_TOKEN  Cloudflare API token created from the
+#                         "Edit Cloudflare Workers" template
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worker/**"
+      - ".github/workflows/deploy-worker.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-worker
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_ACCOUNT_ID: 8d3d52b624bad9ac26283d4d342e7bcb
+  WORKER_URL: https://oklahoma-quotes.vandyck-med.workers.dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: worker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check the secrets are configured
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$FMP_API_KEY" ] || missing="$missing FMP_API_KEY"
+          if [ -n "$missing" ]; then
+            echo "::error::Add these repository secrets under Settings > Secrets and variables > Actions:$missing"
+            exit 1
+          fi
+          echo "Both secrets are present."
+
+      # `secret put` binds the key to the Worker (creating a draft Worker
+      # first if none exists yet), so the deploy that follows passes the
+      # [secrets] required check in wrangler.toml.
+      - name: Bind the FMP key to the Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: printf '%s' "$FMP_API_KEY" | npx --yes wrangler@4 secret put FMP_API_KEY
+
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npx --yes wrangler@4 deploy
+
+      # Prove the deployed Worker answers with real quotes for the site's
+      # origin, not just that the upload succeeded.
+      - name: Verify live quotes
+        run: |
+          sleep 5
+          body="$(curl -sS --max-time 20 -H "Origin: https://vandyckmed-droid.github.io" \
+            "$WORKER_URL/quotes?symbols=AAPL,MSFT")"
+          echo "$body" | head -c 600; echo
+          echo "$body" | grep -q '"quotes":\[{' || { echo "::error::Worker did not return quotes"; exit 1; }
+          echo "Live quotes are working at $WORKER_URL"
