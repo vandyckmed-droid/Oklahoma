@@ -49,11 +49,13 @@ Projects → Oklahoma**. The run's summary also prints a tappable
 
 After that, every push to `mobile/` republishes automatically.
 
-How it stays compatible: `runtimeVersion` is deliberately left out of the app
-config, so EAS derives it from the SDK — `exposdk:57.0.0` — which is exactly
-what Expo Go for SDK 57 accepts. `eas update:configure` would write an
-`appVersion` policy and break that, so it is not run; `app.config.js` adds the
-project id and `updates.url` from the environment instead.
+How it stays compatible: `app.config.js` sets `runtimeVersion` to the
+`sdkVersion` policy, which resolves to `exposdk:57.0.0` — exactly what Expo Go
+for SDK 57 accepts. (Leaving the field out does *not* do this: EAS then falls
+back to the app version, `1.0.0`, which Expo Go rejects; the first real publish
+proved it.) `eas update:configure` would write an `appVersion` policy and break
+it the same way, so it is not run; `app.config.js` also adds the project id and
+`updates.url` from the environment.
 
 ### Other routes
 
