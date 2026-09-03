@@ -29,6 +29,12 @@ export default {
     if (url.pathname !== "/quotes") return reply({ error: "not found" }, 404, cors);
     if (!cors) return reply({ error: "origin not allowed" }, 403, null);
     if (!env.FMP_API_KEY) return reply({ error: "FMP_API_KEY is not set on the Worker" }, 500, cors);
+    // Per-IP rate limit (binding declared in wrangler.toml). A page load is
+    // six requests; anything scripted against the key's quota gets a 429.
+    if (env.LIMITER) {
+      const { success } = await env.LIMITER.limit({ key: request.headers.get("cf-connecting-ip") || "unknown" });
+      if (!success) return reply({ error: "rate limited" }, 429, cors);
+    }
 
     const symbols = Array.from(new Set(
       (url.searchParams.get("symbols") || "").toUpperCase().split(",")
@@ -47,8 +53,12 @@ export default {
         { headers: { accept: "application/json" } }
       );
       if (!upstream.ok) return reply({ error: "upstream " + upstream.status }, 502, cors);
-      const rows = await upstream.json();
-      const quotes = Array.isArray(rows) ? rows.map(trim).filter(Boolean) : [];
+      let rows;
+      try { rows = await upstream.json(); } catch (e) { return reply({ error: "upstream not json" }, 502, cors); }
+      // FMP answers quota and plan problems with a JSON object, not an
+      // array. Report it instead of caching an empty batch for a minute.
+      if (!Array.isArray(rows)) return reply({ error: "upstream shape" }, 502, cors);
+      const quotes = rows.map(trim).filter(Boolean);
       cached = new Response(JSON.stringify({ asOf: Date.now(), quotes }), {
         headers: { "content-type": "application/json", "cache-control": "public, max-age=" + ttl },
       });

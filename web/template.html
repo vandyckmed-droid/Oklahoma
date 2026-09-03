@@ -929,58 +929,105 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var liveAsOf = null;
     var liveLastFetch = 0;
     var liveError = null;
+    var livePartial = false;
+    var liveGen = 0;        // bumps per request so a late answer cannot overwrite a newer one
+    var liveInFlight = false;
+    var LIVE_FRESH_MS = 20 * 60000;
     var dpCurrent = null;
     var dpRepaint = null;
 
     function quoteBase() {
       return (state.quotesUrl || "").trim().replace(/\/+$/, "");
     }
+    function fetchChunk(url) {
+      var opts = { mode: "cors" };
+      if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+        opts.signal = AbortSignal.timeout(10000);
+      }
+      return fetch(url, opts).then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      }).then(function (v) { return { ok: true, value: v }; },
+              function (e) { return { ok: false, error: e }; });
+    }
     function loadQuotes(force) {
       var base = quoteBase();
-      if (!base || !/^https?:\/\//.test(base)) { live = {}; liveAsOf = null; liveError = null; paintLive(); return; }
+      if (!base || !/^https?:\/\//.test(base)) {
+        liveGen++; liveInFlight = false;
+        live = {}; liveAsOf = null; liveError = null; livePartial = false;
+        paintLive(); return;
+      }
+      if (liveInFlight && !force) return;
       if (!force && Date.now() - liveLastFetch < 60000) return;
-      liveLastFetch = Date.now();
+      var gen = ++liveGen;
+      liveInFlight = true;
       var symbols = rows.map(function (r) { return r.ticker; });
       var chunks = [];
       for (var i = 0; i < symbols.length; i += 100) chunks.push(symbols.slice(i, i + 100));
       Promise.all(chunks.map(function (chunk) {
-        return fetch(base + "/quotes?symbols=" + encodeURIComponent(chunk.join(",")), { mode: "cors" })
-          .then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            return res.json();
-          });
+        return fetchChunk(base + "/quotes?symbols=" + encodeURIComponent(chunk.join(",")));
       })).then(function (results) {
-        var next = {}, newest = 0;
-        results.forEach(function (payload) {
-          (payload.quotes || []).forEach(function (q) {
+        if (gen !== liveGen) return;   // a newer request (or "off") superseded this one
+        liveInFlight = false;
+        liveLastFetch = Date.now();
+        var next = {}, newest = 0, failed = null, okCount = 0;
+        results.forEach(function (r) {
+          if (!r.ok) { failed = r.error; return; }
+          okCount++;
+          ((r.value && r.value.quotes) || []).forEach(function (q) {
             if (!q || !rowByTicker[q.symbol] || typeof q.price !== "number") return;
             next[q.symbol] = q;
-            if (q.timestamp && q.timestamp > newest) newest = q.timestamp;
+            if (typeof q.timestamp === "number" && q.timestamp > newest) newest = q.timestamp;
           });
         });
-        live = next;
-        liveAsOf = newest ? new Date(newest * 1000) : new Date();
-        liveError = null;
-        paintLive();
-      }).catch(function (err) {
-        liveError = err && err.message ? err.message : "failed";
+        var n = Object.keys(next).length;
+        if (!n) {
+          // Nothing usable: keep whatever was showing and say why.
+          liveError = failed ? errText(failed) : okCount ? "no quotes returned" : "failed";
+          livePartial = false;
+        } else {
+          live = next;
+          liveAsOf = newest ? new Date(newest * 1000) : null;
+          liveError = failed ? errText(failed) : null;
+          livePartial = !!failed;
+        }
         paintLive();
       });
     }
+    function errText(err) {
+      if (err && err.name === "TimeoutError") return "timed out";
+      return err && err.message ? err.message : "failed";
+    }
     function clock(d) {
       return d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+    }
+    // Is the newest quote recent enough to call the page live?
+    function liveFresh() {
+      return !!liveAsOf && Date.now() - liveAsOf.getTime() < LIVE_FRESH_MS;
+    }
+    // "4:02 PM" today, "Fri 4:00 PM" on another day, or "time unknown".
+    function liveStamp() {
+      if (!liveAsOf) return "time unknown";
+      var now = new Date();
+      if (liveAsOf.toDateString() === now.toDateString()) return clock(liveAsOf);
+      return liveAsOf.toLocaleDateString(undefined, { weekday: "short" }) + " " + clock(liveAsOf);
     }
     function paintLive() {
       var status = document.getElementById("live-status");
       var n = Object.keys(live).length;
       var sub = document.getElementById("subtitle");
       if (n) {
-        status.textContent = "Live · " + n + " names · " + clock(liveAsOf);
+        var fresh = liveFresh();
+        var label = fresh ? "live " : "last trade ";
+        status.textContent = (fresh ? "Live · " : "Last trade · ") + n + " names · " + liveStamp() +
+          (livePartial ? " · partial" : "") + (liveError && !livePartial ? " · refresh failed" : "");
         sub.textContent = "";
-        var dot = el("span", "live-dot");
-        dot.setAttribute("aria-hidden", "true");
-        sub.appendChild(dot);
-        sub.appendChild(document.createTextNode(sourceName + " · live " + clock(liveAsOf)));
+        if (fresh) {
+          var dot = el("span", "live-dot");
+          dot.setAttribute("aria-hidden", "true");
+          sub.appendChild(dot);
+        }
+        sub.appendChild(document.createTextNode(sourceName + " · " + label + liveStamp()));
       } else {
         status.textContent = liveError ? "Failed: " + liveError : quoteBase() ? "Connecting…" : "Off";
         sub.textContent = sourceName + " · " + universe.count + " · " + asOf(lastBar || universe.generated_at);
@@ -995,6 +1042,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     document.addEventListener("visibilitychange", function () {
       if (document.visibilityState === "visible") loadQuotes(false);
     });
+    // Keep an open tab current; loadQuotes itself throttles to once a minute.
+    setInterval(function () {
+      if (document.visibilityState === "visible") loadQuotes(false);
+    }, 90000);
 
     /* ----- universe facts ----- */
 
@@ -1123,12 +1174,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
-      if (typeof p.quotesUrl === "string" && p.quotesUrl.trim()) state.quotesUrl = p.quotesUrl;
+      // v2 prefs store an empty URL to mean "off"; older prefs never saved one
+      // on purpose, so an empty legacy value keeps the default Worker.
+      if (typeof p.quotesUrl === "string" && (p.quotesUrl.trim() || p.v >= 2)) state.quotesUrl = p.quotesUrl.trim();
     }
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
-          view: state.view, display: state.display,
+          v: 2, view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
           grouped: state.grouped, showTrend: state.showTrend,
           theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
@@ -1204,7 +1257,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         value: anyWindow("last_adj_close"), fmt: price }
     };
     var METRIC_ORDER = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
+    var TABLE_COLUMNS = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
     function metricText(key, v, dense) {
       if (v == null) return "—";
@@ -1968,7 +2021,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
       today: ["Today's change",
-        "The live price against the previous close, from your own quotes Worker, refreshed when the page opens and whenever it comes back into view after a minute. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
+        "The live price against the previous close, from your own quotes Worker, refreshed about every minute and a half while the page is open. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
         "live price ÷ previous close − 1"],
       cap: ["Market cap",
         "Share price times shares outstanding, from the provider's quote — the market's total price for the whole company. It sets the default order and each name's share of the universe. This is full market cap, not the free-float weighting the index itself uses.",
