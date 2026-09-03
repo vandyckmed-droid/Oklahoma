@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"BAC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"BAC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":45.31,"volume":42683615},
 {"date":"2025-06-24","adj_close":45.66,"volume":45437600},
 {"date":"2025-06-25","adj_close":45.85,"volume":33532400},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":61.17,"volume":49432100},
 {"date":"2026-08-28","adj_close":62.32,"volume":33517994},
 {"date":"2026-08-31","adj_close":61.94,"volume":43470400},
-{"date":"2026-09-01","adj_close":61.99,"volume":24311481}
+{"date":"2026-09-01","adj_close":61.99,"volume":25056390},
+{"date":"2026-09-02","adj_close":62.6,"volume":27679770}
 ]}

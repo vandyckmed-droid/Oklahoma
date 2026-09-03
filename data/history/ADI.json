@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ADI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ADI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":227.23,"volume":3573500},
 {"date":"2025-06-24","adj_close":231.17,"volume":3636539},
 {"date":"2025-06-25","adj_close":230.87,"volume":3548885},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":373.38,"volume":3895042},
 {"date":"2026-08-28","adj_close":360.68,"volume":3350500},
 {"date":"2026-08-31","adj_close":361.04,"volume":2754855},
-{"date":"2026-09-01","adj_close":354.52,"volume":2908449}
+{"date":"2026-09-01","adj_close":354.52,"volume":3571975},
+{"date":"2026-09-02","adj_close":355.71,"volume":3186448}
 ]}

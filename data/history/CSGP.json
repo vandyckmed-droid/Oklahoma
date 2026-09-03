@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CSGP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CSGP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":80.04,"volume":2688643},
 {"date":"2025-06-24","adj_close":81.0,"volume":2415030},
 {"date":"2025-06-25","adj_close":81.26,"volume":3012900},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":31.34,"volume":5425507},
 {"date":"2026-08-28","adj_close":32.22,"volume":4336722},
 {"date":"2026-08-31","adj_close":32.07,"volume":33462504},
-{"date":"2026-09-01","adj_close":31.98,"volume":6088560}
+{"date":"2026-09-01","adj_close":31.98,"volume":6137600},
+{"date":"2026-09-02","adj_close":31.26,"volume":5169078}
 ]}

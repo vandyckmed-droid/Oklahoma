@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DLTR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DLTR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":100.51,"volume":5544323},
 {"date":"2025-06-24","adj_close":98.68,"volume":2900366},
 {"date":"2025-06-25","adj_close":99.45,"volume":2778693},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":127.0,"volume":5566519},
 {"date":"2026-08-28","adj_close":128.26,"volume":2502283},
 {"date":"2026-08-31","adj_close":126.59,"volume":3504239},
-{"date":"2026-09-01","adj_close":131.71,"volume":2114735}
+{"date":"2026-09-01","adj_close":131.71,"volume":2161471},
+{"date":"2026-09-02","adj_close":131.91,"volume":1250024}
 ]}

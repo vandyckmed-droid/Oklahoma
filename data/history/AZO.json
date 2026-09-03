@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AZO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AZO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":3709.54,"volume":214700},
 {"date":"2025-06-24","adj_close":3577.54,"volume":161492},
 {"date":"2025-06-25","adj_close":3489.54,"volume":227757},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":2932.33,"volume":211512},
 {"date":"2026-08-28","adj_close":2961.96,"volume":316259},
 {"date":"2026-08-31","adj_close":2991.24,"volume":378700},
-{"date":"2026-09-01","adj_close":2965.83,"volume":313407}
+{"date":"2026-09-01","adj_close":2965.83,"volume":315253},
+{"date":"2026-09-02","adj_close":2934.52,"volume":313679}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"YUM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"YUM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":138.72,"volume":1955864},
 {"date":"2025-06-24","adj_close":140.01,"volume":1629143},
 {"date":"2025-06-25","adj_close":144.41,"volume":3752130},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":150.75,"volume":1964399},
 {"date":"2026-08-28","adj_close":153.86,"volume":1545400},
 {"date":"2026-08-31","adj_close":153.31,"volume":1954500},
-{"date":"2026-09-01","adj_close":152.1,"volume":1595572}
+{"date":"2026-09-01","adj_close":152.03,"volume":1598600},
+{"date":"2026-09-02","adj_close":151.29,"volume":1450966}
 ]}

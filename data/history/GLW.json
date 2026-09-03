@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GLW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"GLW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":51.15,"volume":4234400},
 {"date":"2025-06-24","adj_close":50.77,"volume":4998180},
 {"date":"2025-06-25","adj_close":50.74,"volume":4268428},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":152.51,"volume":8200493},
 {"date":"2026-08-28","adj_close":148.7,"volume":6147214},
 {"date":"2026-08-31","adj_close":148.73,"volume":9546326},
-{"date":"2026-09-01","adj_close":145.54,"volume":10419532}
+{"date":"2026-09-01","adj_close":145.56,"volume":10685046},
+{"date":"2026-09-02","adj_close":144.16,"volume":7698903}
 ]}

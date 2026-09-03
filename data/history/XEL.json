@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"XEL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"XEL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":65.88,"volume":3405137},
 {"date":"2025-06-24","adj_close":66.19,"volume":4277162},
 {"date":"2025-06-25","adj_close":65.31,"volume":2445964},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":77.16,"volume":4390565},
 {"date":"2026-08-28","adj_close":76.45,"volume":4522192},
 {"date":"2026-08-31","adj_close":75.69,"volume":6701213},
-{"date":"2026-09-01","adj_close":75.89,"volume":7159512}
+{"date":"2026-09-01","adj_close":75.89,"volume":7564299},
+{"date":"2026-09-02","adj_close":75.51,"volume":5696767}
 ]}

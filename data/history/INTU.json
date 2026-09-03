@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"INTU","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"INTU","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":753.06,"volume":1223415},
 {"date":"2025-06-24","adj_close":749.58,"volume":1900553},
 {"date":"2025-06-25","adj_close":748.42,"volume":1531125},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":348.0,"volume":4750599},
 {"date":"2026-08-28","adj_close":358.06,"volume":4121260},
 {"date":"2026-08-31","adj_close":359.3,"volume":3083258},
-{"date":"2026-09-01","adj_close":344.93,"volume":2626242}
+{"date":"2026-09-01","adj_close":344.93,"volume":2673411},
+{"date":"2026-09-02","adj_close":342.94,"volume":3135304}
 ]}

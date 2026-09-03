@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AIG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AIG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":83.83,"volume":3886233},
 {"date":"2025-06-24","adj_close":83.47,"volume":3174900},
 {"date":"2025-06-25","adj_close":81.95,"volume":5057022},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":76.63,"volume":4239005},
 {"date":"2026-08-28","adj_close":76.93,"volume":1975124},
 {"date":"2026-08-31","adj_close":76.36,"volume":3670744},
-{"date":"2026-09-01","adj_close":75.88,"volume":3161514}
+{"date":"2026-09-01","adj_close":75.88,"volume":3335600},
+{"date":"2026-09-02","adj_close":76.13,"volume":5374194}
 ]}

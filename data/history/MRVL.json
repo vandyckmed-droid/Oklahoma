@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MRVL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"MRVL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":70.58,"volume":26862100},
 {"date":"2025-06-24","adj_close":74.99,"volume":26999800},
 {"date":"2025-06-25","adj_close":75.71,"volume":19426700},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":241.45,"volume":41014700},
 {"date":"2026-08-28","adj_close":216.62,"volume":48979929},
 {"date":"2026-08-31","adj_close":211.66,"volume":23650800},
-{"date":"2026-09-01","adj_close":210.39,"volume":21100940}
+{"date":"2026-09-01","adj_close":210.39,"volume":22284237},
+{"date":"2026-09-02","adj_close":206.48,"volume":15004161}
 ]}

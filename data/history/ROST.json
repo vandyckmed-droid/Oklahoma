@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ROST","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ROST","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":126.72,"volume":4898453},
 {"date":"2025-06-24","adj_close":127.18,"volume":4515800},
 {"date":"2025-06-25","adj_close":126.14,"volume":2017608},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":229.87,"volume":2318700},
 {"date":"2026-08-28","adj_close":228.55,"volume":2431608},
 {"date":"2026-08-31","adj_close":228.54,"volume":2478379},
-{"date":"2026-09-01","adj_close":229.24,"volume":2099220}
+{"date":"2026-09-01","adj_close":229.24,"volume":2152973},
+{"date":"2026-09-02","adj_close":230.85,"volume":2175674}
 ]}

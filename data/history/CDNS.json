@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CDNS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CDNS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":293.56,"volume":2134880},
 {"date":"2025-06-24","adj_close":296.8,"volume":1906386},
 {"date":"2025-06-25","adj_close":297.53,"volume":1736800},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":347.55,"volume":2716853},
 {"date":"2026-08-28","adj_close":340.39,"volume":1795091},
 {"date":"2026-08-31","adj_close":338.78,"volume":1607104},
-{"date":"2026-09-01","adj_close":313.04,"volume":2269396}
+{"date":"2026-09-01","adj_close":313.04,"volume":2284808},
+{"date":"2026-09-02","adj_close":306.67,"volume":2559756}
 ]}

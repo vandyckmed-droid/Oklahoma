@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AIZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"AIZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":196.09,"volume":390446},
 {"date":"2025-06-24","adj_close":194.46,"volume":290047},
 {"date":"2025-06-25","adj_close":191.1,"volume":324800},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":284.53,"volume":228837},
 {"date":"2026-08-28","adj_close":284.77,"volume":229376},
 {"date":"2026-08-31","adj_close":281.86,"volume":275500},
-{"date":"2026-09-01","adj_close":280.78,"volume":235251}
+{"date":"2026-09-01","adj_close":280.78,"volume":246000},
+{"date":"2026-09-02","adj_close":284.07,"volume":216600}
 ]}

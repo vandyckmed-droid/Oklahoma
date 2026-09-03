@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"INVH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"INVH","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":32.29,"volume":2971151},
 {"date":"2025-06-24","adj_close":32.11,"volume":4045700},
 {"date":"2025-06-25","adj_close":31.28,"volume":5981214},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":29.23,"volume":7097828},
 {"date":"2026-08-28","adj_close":29.24,"volume":4428246},
 {"date":"2026-08-31","adj_close":29.14,"volume":6067500},
-{"date":"2026-09-01","adj_close":29.13,"volume":3370190}
+{"date":"2026-09-01","adj_close":29.13,"volume":3432600},
+{"date":"2026-09-02","adj_close":28.84,"volume":2761852}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"WSM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"WSM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":155.09,"volume":1528500},
 {"date":"2025-06-24","adj_close":155.08,"volume":1150154},
 {"date":"2025-06-25","adj_close":156.08,"volume":1410139},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":238.4,"volume":1697437},
 {"date":"2026-08-28","adj_close":235.09,"volume":972389},
 {"date":"2026-08-31","adj_close":228.25,"volume":1786722},
-{"date":"2026-09-01","adj_close":222.11,"volume":1164238}
+{"date":"2026-09-01","adj_close":222.12,"volume":1186700},
+{"date":"2026-09-02","adj_close":221.64,"volume":1356254}
 ]}

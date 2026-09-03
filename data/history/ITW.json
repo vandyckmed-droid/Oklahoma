@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ITW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ITW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":236.73,"volume":668218},
 {"date":"2025-06-24","adj_close":238.28,"volume":1031427},
 {"date":"2025-06-25","adj_close":238.17,"volume":1165600},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":281.67,"volume":809864},
 {"date":"2026-08-28","adj_close":280.1,"volume":837039},
 {"date":"2026-08-31","adj_close":275.37,"volume":1251146},
-{"date":"2026-09-01","adj_close":269.88,"volume":1084028}
+{"date":"2026-09-01","adj_close":269.88,"volume":1086003},
+{"date":"2026-09-02","adj_close":269.09,"volume":1673843}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CTAS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"CTAS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":218.26,"volume":1238499},
 {"date":"2025-06-24","adj_close":220.53,"volume":1467713},
 {"date":"2025-06-25","adj_close":216.62,"volume":1280275},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":204.15,"volume":1282057},
 {"date":"2026-08-28","adj_close":204.18,"volume":1344090},
 {"date":"2026-08-31","adj_close":201.79,"volume":1726543},
-{"date":"2026-09-01","adj_close":200.59,"volume":1516339}
+{"date":"2026-09-01","adj_close":200.59,"volume":1522645},
+{"date":"2026-09-02","adj_close":198.09,"volume":2173170}
 ]}

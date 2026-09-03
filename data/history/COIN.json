@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"COIN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"COIN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":307.59,"volume":17553700},
 {"date":"2025-06-24","adj_close":344.82,"volume":29670921},
 {"date":"2025-06-25","adj_close":355.37,"volume":30154317},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":190.72,"volume":9240928},
 {"date":"2026-08-28","adj_close":178.64,"volume":10016500},
 {"date":"2026-08-31","adj_close":188.12,"volume":10710613},
-{"date":"2026-09-01","adj_close":176.82,"volume":8383513}
+{"date":"2026-09-01","adj_close":176.82,"volume":8429200},
+{"date":"2026-09-02","adj_close":174.96,"volume":5264054}
 ]}

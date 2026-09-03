@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DHR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"DHR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":194.59,"volume":3943216},
 {"date":"2025-06-24","adj_close":195.71,"volume":2739862},
 {"date":"2025-06-25","adj_close":199.21,"volume":4379798},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":215.68,"volume":2927605},
 {"date":"2026-08-28","adj_close":216.07,"volume":2860035},
 {"date":"2026-08-31","adj_close":213.56,"volume":3608445},
-{"date":"2026-09-01","adj_close":206.93,"volume":3144567}
+{"date":"2026-09-01","adj_close":206.93,"volume":3149240},
+{"date":"2026-09-02","adj_close":209.94,"volume":2898390}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"SJM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"SJM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":92.55,"volume":2012249},
 {"date":"2025-06-24","adj_close":92.42,"volume":2128786},
 {"date":"2025-06-25","adj_close":91.02,"volume":2337062},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":131.84,"volume":2132735},
 {"date":"2026-08-28","adj_close":132.34,"volume":1449222},
 {"date":"2026-08-31","adj_close":131.16,"volume":1246459},
-{"date":"2026-09-01","adj_close":131.42,"volume":1719969}
+{"date":"2026-09-01","adj_close":131.42,"volume":1720100},
+{"date":"2026-09-02","adj_close":131.44,"volume":1149590}
 ]}

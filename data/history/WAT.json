@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"WAT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"WAT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":342.83,"volume":443945},
 {"date":"2025-06-24","adj_close":346.8,"volume":403033},
 {"date":"2025-06-25","adj_close":350.01,"volume":363307},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":421.26,"volume":741689},
 {"date":"2026-08-28","adj_close":414.69,"volume":435144},
 {"date":"2026-08-31","adj_close":414.63,"volume":679237},
-{"date":"2026-09-01","adj_close":405.84,"volume":517101}
+{"date":"2026-09-01","adj_close":405.84,"volume":517208},
+{"date":"2026-09-02","adj_close":412.2,"volume":621465}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"OTIS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"OTIS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":93.5,"volume":2378500},
 {"date":"2025-06-24","adj_close":94.89,"volume":2929937},
 {"date":"2025-06-25","adj_close":94.14,"volume":2146500},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":71.48,"volume":2940665},
 {"date":"2026-08-28","adj_close":71.74,"volume":3502110},
 {"date":"2026-08-31","adj_close":71.13,"volume":5252309},
-{"date":"2026-09-01","adj_close":70.6,"volume":4584892}
+{"date":"2026-09-01","adj_close":70.6,"volume":4585420},
+{"date":"2026-09-02","adj_close":70.83,"volume":3914204}
 ]}

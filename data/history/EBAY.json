@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"EBAY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"EBAY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":75.65,"volume":5935100},
 {"date":"2025-06-24","adj_close":73.18,"volume":9152883},
 {"date":"2025-06-25","adj_close":73.35,"volume":4787800},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":101.96,"volume":3421604},
 {"date":"2026-08-28","adj_close":105.62,"volume":4277531},
 {"date":"2026-08-31","adj_close":103.56,"volume":7524630},
-{"date":"2026-09-01","adj_close":104.98,"volume":3322402}
+{"date":"2026-09-01","adj_close":104.98,"volume":3336353},
+{"date":"2026-09-02","adj_close":106.7,"volume":4216794}
 ]}

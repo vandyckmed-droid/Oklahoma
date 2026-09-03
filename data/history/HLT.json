@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HLT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HLT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":251.69,"volume":1828400},
 {"date":"2025-06-24","adj_close":255.27,"volume":2349908},
 {"date":"2025-06-25","adj_close":253.07,"volume":1785300},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":325.68,"volume":1367775},
 {"date":"2026-08-28","adj_close":321.85,"volume":1220081},
 {"date":"2026-08-31","adj_close":316.28,"volume":2467344},
-{"date":"2026-09-01","adj_close":311.99,"volume":1072224}
+{"date":"2026-09-01","adj_close":311.99,"volume":1072426},
+{"date":"2026-09-02","adj_close":311.51,"volume":1276076}
 ]}

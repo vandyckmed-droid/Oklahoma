@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ADBE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"ADBE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":380.12,"volume":3841800},
 {"date":"2025-06-24","adj_close":382.34,"volume":4797100},
 {"date":"2025-06-25","adj_close":387.55,"volume":3718800},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":289.15,"volume":6525257},
 {"date":"2026-08-28","adj_close":291.52,"volume":3650841},
 {"date":"2026-08-31","adj_close":292.79,"volume":5214252},
-{"date":"2026-09-01","adj_close":286.08,"volume":4380294}
+{"date":"2026-09-01","adj_close":286.08,"volume":4454523},
+{"date":"2026-09-02","adj_close":279.79,"volume":3777838}
 ]}

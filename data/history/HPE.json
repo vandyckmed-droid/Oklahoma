@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HPE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"HPE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":17.44,"volume":25782800},
 {"date":"2025-06-24","adj_close":17.78,"volume":12645900},
 {"date":"2025-06-25","adj_close":18.11,"volume":12015900},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":54.41,"volume":14949500},
 {"date":"2026-08-28","adj_close":52.31,"volume":13921600},
 {"date":"2026-08-31","adj_close":52.24,"volume":30315000},
-{"date":"2026-09-01","adj_close":50.85,"volume":18197560}
+{"date":"2026-09-01","adj_close":50.87,"volume":19454943},
+{"date":"2026-09-02","adj_close":51.86,"volume":53104493}
 ]}

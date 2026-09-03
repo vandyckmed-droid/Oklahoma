@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"COHR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"COHR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":80.64,"volume":2853600},
 {"date":"2025-06-24","adj_close":80.96,"volume":2656100},
 {"date":"2025-06-25","adj_close":85.63,"volume":5400200},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":295.39,"volume":4907600},
 {"date":"2026-08-28","adj_close":279.2,"volume":5240200},
 {"date":"2026-08-31","adj_close":277.83,"volume":5053376},
-{"date":"2026-09-01","adj_close":272.03,"volume":5323869}
+{"date":"2026-09-01","adj_close":272.03,"volume":5518428},
+{"date":"2026-09-02","adj_close":268.64,"volume":4189527}
 ]}

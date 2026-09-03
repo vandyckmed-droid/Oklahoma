@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PEG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"PEG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":80.67,"volume":2569005},
 {"date":"2025-06-24","adj_close":80.47,"volume":1982900},
 {"date":"2025-06-25","adj_close":80.1,"volume":2787900},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":73.33,"volume":1809333},
 {"date":"2026-08-28","adj_close":73.19,"volume":2284229},
 {"date":"2026-08-31","adj_close":73.33,"volume":6914300},
-{"date":"2026-09-01","adj_close":73.48,"volume":3444242}
+{"date":"2026-09-01","adj_close":73.48,"volume":3581500},
+{"date":"2026-09-02","adj_close":73.32,"volume":3577375}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MOS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"MOS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":34.82,"volume":6639000},
 {"date":"2025-06-24","adj_close":34.34,"volume":3808542},
 {"date":"2025-06-25","adj_close":34.27,"volume":3972710},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":23.76,"volume":5665377},
 {"date":"2026-08-28","adj_close":23.6,"volume":5385809},
 {"date":"2026-08-31","adj_close":24.12,"volume":6906452},
-{"date":"2026-09-01","adj_close":24.79,"volume":8992378}
+{"date":"2026-09-01","adj_close":24.78,"volume":9026671},
+{"date":"2026-09-02","adj_close":25.8,"volume":9780780}
 ]}

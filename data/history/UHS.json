@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UHS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":301,"bars":[
+{"schema_version":2,"ticker":"UHS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
 {"date":"2025-06-23","adj_close":172.57,"volume":1065295},
 {"date":"2025-06-24","adj_close":174.25,"volume":946603},
 {"date":"2025-06-25","adj_close":174.73,"volume":891900},
@@ -299,5 +299,6 @@
 {"date":"2026-08-27","adj_close":172.38,"volume":574996},
 {"date":"2026-08-28","adj_close":171.46,"volume":556222},
 {"date":"2026-08-31","adj_close":170.13,"volume":756650},
-{"date":"2026-09-01","adj_close":170.75,"volume":501964}
+{"date":"2026-09-01","adj_close":170.75,"volume":522700},
+{"date":"2026-09-02","adj_close":167.49,"volume":808869}
 ]}
