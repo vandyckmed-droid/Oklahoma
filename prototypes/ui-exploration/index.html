@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oklahoma — nine mobile directions</title>
+<meta name="color-scheme" content="light dark">
+<style>
+:root {
+  --bg: #f7f8fa; --card: #ffffff; --line: #e2e5ea; --line-2: #cdd2da;
+  --fg: #14171c; --fg-2: #545c68; --fg-3: #878e9a; --accent: #24457f;
+  --pos: #0f7a52; --neg: #b3341f;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0d0f12; --card: #16191e; --line: #242931; --line-2: #333a45;
+          --fg: #eef1f5; --fg-2: #a4acb8; --fg-3: #737b88; --accent: #9ab6f2;
+          --pos: #46c98c; --neg: #ff7a63; }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px 60px; }
+
+header { padding: 40px 0 8px; border-bottom: 1px solid var(--line); }
+header .kicker { font: 600 12px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); }
+header h1 { margin: 12px 0 0; font: 700 clamp(28px, 5vw, 40px)/1.1 var(--sans); letter-spacing: -0.03em; }
+header p { margin: 12px 0 0; max-width: 62ch; color: var(--fg-2); }
+header .meta { margin: 16px 0 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+header .meta span { border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 11px;
+  font-size: 12.5px; color: var(--fg-2); }
+
+.controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 18px 0 6px; }
+.controls .lab { font: 600 12px/1 var(--sans); letter-spacing: 0.09em; text-transform: uppercase; color: var(--fg-3); }
+.controls button { border: 1px solid var(--line-2); border-radius: 9px; padding: 7px 12px;
+  font-size: 13px; color: var(--fg-2); background: var(--card); }
+.controls button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+.grid { display: grid; gap: 22px; padding-top: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); }
+.grid[data-cols="1"] { grid-template-columns: minmax(0, 1fr); max-width: 820px; }
+
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  overflow: hidden; display: flex; flex-direction: column; }
+.item .head { padding: 16px 18px 12px; }
+.item .n { font: 600 11.5px/1 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); }
+.item.synth { border-color: var(--accent); }
+.item.synth .n { color: var(--accent); }
+.item h2 { margin: 8px 0 0; font: 700 22px/1.1 var(--sans); letter-spacing: -0.02em; }
+.item .thesis { margin: 8px 0 0; color: var(--fg-2); font-size: 14px; }
+.item .body { display: flex; gap: 16px; padding: 0 18px 16px; align-items: flex-start; }
+.grid[data-cols="1"] .item .body { align-items: stretch; }
+
+/* the phone */
+.phone { flex: none; width: 200px; }
+.grid[data-cols="1"] .phone { width: 300px; }
+.screen {
+  position: relative; width: 100%; aspect-ratio: 390 / 844;
+  border-radius: 26px; border: 1px solid var(--line-2); background: #000;
+  overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.14);
+}
+.screen iframe { position: absolute; top: 0; left: 0; width: 390px; height: 844px;
+  border: 0; transform-origin: 0 0; background: #fff; }
+.screen .veil { position: absolute; inset: 0; cursor: pointer;
+  display: grid; place-items: end center; padding-bottom: 14px;
+  background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0) 34%); }
+.screen .veil span { background: rgba(255,255,255,.94); color: #14171c; border-radius: 999px;
+  padding: 7px 14px; font: 600 12.5px/1 var(--sans); box-shadow: 0 3px 10px rgba(0,0,0,.3); }
+.screen[data-live="true"] .veil { display: none; }
+.livetag { display: block; margin-top: 8px; text-align: center; font-size: 11.5px; color: var(--fg-3); }
+
+/* the notes */
+.notes { flex: 1; min-width: 0; }
+.notes dl { margin: 0; }
+.notes dt { font: 600 10.5px/1 var(--sans); letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--fg-3); margin-top: 14px; }
+.notes dt:first-child { margin-top: 2px; }
+.notes dd { margin: 5px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--fg-2); }
+.notes dd b { color: var(--fg); font-weight: 600; }
+.notes .gain b { color: var(--pos); } .notes .cost b { color: var(--neg); }
+.acts { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.acts a, .acts button { border: 1px solid var(--line-2); border-radius: 9px; padding: 8px 13px;
+  font-size: 13px; font-weight: 500; text-decoration: none; color: var(--fg-2); display: inline-block; }
+.acts a.primary { background: var(--accent); border-color: var(--accent); color: var(--card); }
+@media (prefers-color-scheme: dark) { .acts a.primary { color: #0d0f12; } }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tags span { font-size: 11.5px; color: var(--fg-3); border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px; }
+
+footer { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--fg-3); font-size: 13px; }
+footer p { max-width: 78ch; }
+footer code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+
+@media (max-width: 560px) {
+  .item .body { flex-direction: column; }
+  .phone { width: 100%; max-width: 300px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="kicker">Rapid UI exploration · disposable prototypes</p>
+  <h1>Nine ways Oklahoma could look on a phone</h1>
+  <p>Each direction is a complete, operable design system built on the real universe —
+     503 S&amp;P 500 names, real closes, and the same metrics the production page computes.
+     The first eight each commit to one thesis; the ninth is the synthesis of four of them.
+     They are throwaway design instruments, not implementation candidates: nothing in
+     <code>web/</code>, <code>oklahoma/</code> or <code>data/</code> has been touched.</p>
+  <div class="meta" id="meta"></div>
+</header>
+
+<div class="controls">
+  <span class="lab">View</span>
+  <button type="button" data-cols="2" aria-pressed="true">Compare grid</button>
+  <button type="button" data-cols="1" aria-pressed="false">One at a time</button>
+  <span class="lab" style="margin-left:10px">Previews</span>
+  <button type="button" id="loadall">Wake all nine</button>
+  <button type="button" id="sleepall">Put them to sleep</button>
+</div>
+
+<div class="grid" id="grid" data-cols="2"></div>
+
+<footer>
+  <p id="foot"></p>
+</footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var OK = window.OK;
+
+  var DIRECTIONS = [
+    {
+      file: "01-ledger.html", name: "Ledger",
+      thesis: "The universe as a printed market page: you read it, you don’t trade off it.",
+      gain: "Highest comprehension per screen. Prose carries the meaning, so a figure is never a naked number, and the near-total absence of colour makes the few emphases land.",
+      cost: "Slowest to scan. Nothing is optimised for finding one ticker fast, and the restraint that makes it calm also makes rank and direction harder to spot at a glance.",
+      tags: ["serif", "editorial", "one column", "no coloured pills", "inline detail"]
+    },
+    {
+      file: "02-terminal.html", name: "Terminal",
+      thesis: "Every number on screen at once, filtered by expressions rather than chips.",
+      gain: "Genuine screening on a phone. Thirteen columns with heat in the cells, a frozen ticker rail, and a query line that takes <b>r2&gt;0.85 r12&gt;40</b> — the current app cannot express that at all.",
+      cost: "Intimidating and unforgiving. Small type, a syntax to learn, and horizontal scrolling that hides half the grid from anyone who does not know it is there.",
+      tags: ["monospace", "13 columns", "query DSL", "cell heatmap", "inline strip"]
+    },
+    {
+      file: "03-deck.html", name: "Deck",
+      thesis: "Screening 503 names is triage, so the app deals them one at a time.",
+      gain: "Forces a decision per name and makes the watchlist a by-product of reviewing rather than a separate chore. The deck picker turns the metric choice into a question you are answering.",
+      cost: "No cross-comparison whatsoever, and sixty cards is a long sitting. Bad for “where does this name rank”, good only for “do I want this one”.",
+      tags: ["swipe", "one name per screen", "card back", "deck picker", "undo"]
+    },
+    {
+      file: "04-heatmap.html", name: "Heatmap",
+      thesis: "Show the market’s shape before its list — size by cap, colour by any metric.",
+      gain: "The whole universe on one screen. Where the weight sits and where the performance sits become one picture, and switching the colouring metric re-reads the same map instantly.",
+      cost: "Small caps become unreadable slivers, and exact rank is impossible to recover. Two taps to any specific ticker, with no search at all.",
+      tags: ["squarified treemap", "drill-down", "9 colourings", "press to read", "bottom sheet"]
+    },
+    {
+      file: "05-brief.html", name: "Brief",
+      thesis: "The app answers the questions; the ranked list is demoted to an appendix.",
+      gain: "Fastest path to an actual insight — under a minute to know what led, what lagged, what climbed steadily and what turned. Every sentence is generated from the committed numbers and opens to the evidence behind it.",
+      cost: "Opinionated: it decides which questions matter. The long tail is behind a disclosure, and a name you care about may never be mentioned.",
+      tags: ["narrative", "answer-first", "evidence drawers", "light + dark", "appendix"]
+    },
+    {
+      file: "06-dial.html", name: "Dial",
+      thesis: "Position over ranking: two pickable axes, named quadrants, drag to select.",
+      gain: "Answers questions no list can — strong but chaotic, up and pressing its high, steady but small. Drag a box and the list below becomes exactly that population.",
+      cost: "Needs learning, and rank-space axes mean the plot shows order, not magnitude. Dense at phone size, and a single name is easier to find anywhere else.",
+      tags: ["scatter", "percentile axes", "quadrant names", "box select", "canvas"]
+    },
+    {
+      file: "07-focus.html", name: "Focus",
+      thesis: "Your twelve names, at a size readable without reaching for glasses.",
+      gain: "The best daily loop by a wide margin. Opens on what you hold, one number per row, every target over 56px, and the whole universe still one tap away.",
+      cost: "Discovery becomes secondary — sectors, the cross-section and most metrics are simply gone. It assumes you already know which names matter.",
+      tags: ["watchlist-first", "large type", "big targets", "full-page detail", "light + dark"]
+    },
+    {
+      file: "08-strata.html", name: "Strata",
+      thesis: "Browse by sector structure; compare by collecting names into a tray.",
+      gain: "Overlaid comparison — up to six names re-based on one chart — which the production app cannot do at all. Sector bands make structure the primary navigation instead of an afterthought.",
+      cost: "More taps to a specific ticker, horizontal shelves hide most of a sector, and the tray eats a third of the screen once it is open.",
+      tags: ["sector bands", "horizontal shelves", "compare tray", "overlay chart", "6-name limit"]
+    },
+    {
+      file: "09-hybrid.html", name: "Hybrid", synthesis: true,
+      thesis: "The synthesis: Focus as home, Brief\u2019s answers as the market view, Dial as the explorer, and Strata\u2019s tray reachable from every list.",
+      gain: "One altitude ladder instead of four apps. You open on your names, a second tab answers what happened, a third finds populations \u2014 and because <b>every list carries a \u2295</b>, \u201cput these two side by side\u201d never requires going anywhere. Tapping a sector in Market hands off into the plot with that sector isolated.",
+      cost: "The largest of the nine, and the only one with real navigation to learn. It gives up Focus\u2019s radical emptiness \u2014 a tab bar, a tray and a per-row \u2295 are three things the pure version refused \u2014 and it is the one that could not be built in an afternoon.",
+      tags: ["3 tabs + tray", "watchlist-first", "answered questions", "scatter + box select", "light + dark"]
+    }
+  ];
+
+  function asOf(iso) {
+    var d = new Date(iso + "T00:00:00");
+    return isNaN(d) ? iso
+      : d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  }
+  document.getElementById("meta").innerHTML = [
+    OK.count + " names",
+    OK.sufficient + " with a full 252-session year",
+    "closes to " + asOf(OK.as_of),
+    OK.sectors.length + " sectors",
+    "designed and checked at 390 × 844"
+  ].map(function (t) { return "<span>" + t + "</span>"; }).join("");
+
+  document.getElementById("foot").innerHTML =
+    "Shared fixture: <code>data.js</code>, extracted verbatim from the production build " +
+    "(<code>web/index.html</code>) — real tickers, sectors, market caps, adjusted closes and every " +
+    "derived metric, with sparklines thinned from 60 points to 32. <code>kit.js</code> holds only " +
+    "formatting and geometry, so no visual opinion is shared between directions. Each prototype " +
+    "keeps its own watchlist in <code>localStorage</code>; none of them talk to a network, a build " +
+    "step or the quotes Worker. Nothing here is a production candidate.";
+
+  var grid = document.getElementById("grid");
+  grid.innerHTML = DIRECTIONS.map(function (d, i) {
+    return '<article class="item' + (d.synthesis ? " synth" : "") + '">' +
+      '<div class="head"><p class="n">' +
+          (d.synthesis ? "Synthesis · 5 + 6 + 7 + 8" : "Direction " + (i + 1)) + '</p>' +
+        '<h2>' + d.name + '</h2><p class="thesis">' + d.thesis + '</p></div>' +
+      '<div class="body">' +
+        '<div class="phone"><div class="screen" data-live="false" data-src="' + d.file + '">' +
+          '<div class="veil"><span>Tap to wake</span></div></div>' +
+          '<span class="livetag">390 × 844</span></div>' +
+        '<div class="notes"><dl>' +
+          '<dt>What it gains</dt><dd class="gain">' + d.gain + '</dd>' +
+          '<dt>What it costs</dt><dd class="cost">' + d.cost + '</dd>' +
+        '</dl>' +
+        '<div class="tags">' + d.tags.map(function (t) { return "<span>" + t + "</span>"; }).join("") + '</div>' +
+        '<div class="acts"><a class="primary" href="' + d.file + '" target="_blank" rel="noopener">Open full screen</a>' +
+          '<button type="button" data-wake="' + d.file + '">Wake preview</button></div>' +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }).join("");
+
+  /* The previews are real, operable pages in an iframe, scaled to fit the
+     phone frame. They stay asleep until asked for so eight copies of a
+     300 KB fixture never load at once. */
+  function fit(screen) {
+    var f = screen.querySelector("iframe");
+    if (!f) return;
+    var scale = screen.clientWidth / 390;
+    f.style.transform = "scale(" + scale + ")";
+  }
+  function wake(screen) {
+    if (screen.getAttribute("data-live") === "true") return;
+    var f = document.createElement("iframe");
+    f.setAttribute("loading", "lazy");
+    f.setAttribute("title", "Preview of " + screen.getAttribute("data-src"));
+    f.src = screen.getAttribute("data-src");
+    screen.appendChild(f);
+    screen.setAttribute("data-live", "true");
+    fit(screen);
+  }
+  function sleep(screen) {
+    var f = screen.querySelector("iframe");
+    if (f) f.remove();
+    screen.setAttribute("data-live", "false");
+  }
+
+  grid.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-wake]");
+    if (btn) {
+      var s = grid.querySelector('[data-src="' + btn.getAttribute("data-wake") + '"]');
+      if (s.getAttribute("data-live") === "true") { sleep(s); btn.textContent = "Wake preview"; }
+      else { wake(s); btn.textContent = "Sleep preview"; }
+      return;
+    }
+    var veil = e.target.closest(".veil");
+    if (veil) wake(veil.parentNode);
+  });
+
+  document.getElementById("loadall").addEventListener("click", function () {
+    grid.querySelectorAll(".screen").forEach(wake);
+  });
+  document.getElementById("sleepall").addEventListener("click", function () {
+    grid.querySelectorAll(".screen").forEach(sleep);
+    grid.querySelectorAll("[data-wake]").forEach(function (b) { b.textContent = "Wake preview"; });
+  });
+
+  document.querySelectorAll("[data-cols]").forEach(function (b) {
+    if (b.tagName !== "BUTTON") return;
+    b.addEventListener("click", function () {
+      grid.setAttribute("data-cols", b.getAttribute("data-cols"));
+      document.querySelectorAll(".controls [data-cols]").forEach(function (x) {
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      requestAnimationFrame(function () { grid.querySelectorAll(".screen").forEach(fit); });
+    });
+  });
+  window.addEventListener("resize", function () { grid.querySelectorAll(".screen").forEach(fit); });
+
+  // The first two wake on their own so the page is never a wall of placeholders.
+  grid.querySelectorAll(".screen").forEach(function (s, i) { if (i < 2) wake(s); });
+})();
+</script>
+</body>
+</html>

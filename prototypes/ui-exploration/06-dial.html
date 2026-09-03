@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dial — Oklahoma direction 6</title>
+<meta name="color-scheme" content="dark">
+<style>
+/* ------------------------------------------------------------------
+   DIAL — position, not rank.
+   Thesis: the interesting questions in this data are two-dimensional —
+   strong but chaotic, steady but small, cheap because it broke. A list
+   can only ever answer one axis. So the primary surface is a plot with
+   two pickable axes, named quadrants, and a drag-to-select band; the
+   list is what falls out of a selection.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #0d0f14;
+  --panel: #161a21;
+  --panel-2: #1d222b;
+  --line: #242a34;
+  --line-2: #333b48;
+  --fg: #e9edf3;
+  --fg-2: #939cab;
+  --fg-3: #616b7a;
+  --pos: #3ddc97;
+  --neg: #ff6b6b;
+  --sel: #7aa2ff;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 14px/1.4 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+}
+button, select { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+
+header { flex: none; padding: 11px 16px 2px; }
+header h1 { margin: 0; font: 700 18px/1.2 var(--sans); letter-spacing: -0.02em; }
+header p { margin: 4px 0 0; font: 400 12.5px/1.4 var(--sans); color: var(--fg-2); }
+
+/* ---- axis pickers, framed as a sentence ---- */
+.axes { flex: none; padding: 8px 14px 2px; font: 400 12.5px/2.1 var(--sans); color: var(--fg-3); }
+.pick { position: relative; display: inline-block; }
+.pick select {
+  appearance: none; -webkit-appearance: none; border: 1px solid var(--line-2); border-radius: 8px;
+  padding: 5px 22px 5px 9px; color: var(--fg); font-weight: 600; font-size: 12.5px; background: var(--panel);
+}
+.pick::after {
+  content: "▾"; position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+  color: var(--fg-3); pointer-events: none; font-size: 11px;
+}
+
+/* ---- the plot ---- */
+.plotwrap { flex: 1; position: relative; margin: 8px 12px 0; min-height: 0;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; }
+/* A canvas is a replaced element: `inset:0` positions it but leaves it at
+   its intrinsic 300x150, so the CSS size has to be stated outright. */
+#plot { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  touch-action: none; }
+.qlab {
+  position: absolute; font: 600 10px/1.2 var(--sans); letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--fg-3); pointer-events: none; max-width: 44%;
+}
+.qlab.tl { left: 10px; top: 8px; } .qlab.tr { right: 10px; top: 8px; text-align: right; }
+.qlab.bl { left: 10px; bottom: 26px; } .qlab.br { right: 10px; bottom: 26px; text-align: right; }
+.axlab { position: absolute; font: 500 10.5px/1 var(--sans); color: var(--fg-3); pointer-events: none; }
+.axlab.x { left: 50%; transform: translateX(-50%); bottom: 6px; }
+.axlab.y { left: 6px; top: 50%; transform: rotate(-90deg) translateX(50%); transform-origin: left center; }
+
+/* ---- the readout ---- */
+.readout {
+  flex: none; margin: 8px 12px 0; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--panel); overflow: hidden; max-height: 42vh; display: flex; flex-direction: column;
+}
+.rhead { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 11px 14px; border-bottom: 1px solid var(--line); flex: none; }
+.rhead .n { font: 600 13.5px/1.2 var(--sans); white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; }
+.rhead .n span { color: var(--fg-3); font-weight: 400; }
+.rhead .acts { display: flex; gap: 6px; }
+.rhead .acts button { border: 1px solid var(--line-2); border-radius: 7px; padding: 5px 10px;
+  font-size: 12px; color: var(--fg-2); }
+.rhead .acts button[aria-pressed="true"] { border-color: var(--sel); color: var(--sel); }
+.rlist { list-style: none; margin: 0; padding: 0 14px; overflow: auto; flex: 1; overscroll-behavior: contain; }
+.rlist li { display: grid; grid-template-columns: 54px 1fr 44px 60px 60px; gap: 8px; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.rlist li:last-child { border-bottom: 0; }
+.rlist .t { font-weight: 650; }
+.rlist .nm { color: var(--fg-2); font-size: 12px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.rlist .sk { height: 16px; }
+.rlist .vx, .rlist .vy { text-align: right; font-weight: 600; font-size: 12.5px; }
+.rlist li.hot { background: rgba(122,162,255,.09); }
+.rempty { padding: 22px 14px; color: var(--fg-3); font-size: 13px; }
+
+/* ---- sector filter rail ---- */
+.rail { flex: none; display: flex; gap: 6px; overflow-x: auto; padding: 9px 12px calc(10px + env(safe-area-inset-bottom));
+  scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.rail button { flex: none; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line-2);
+  font-size: 12px; color: var(--fg-2); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.rail button i { width: 7px; height: 7px; border-radius: 50%; display: block; }
+.rail button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* ---- name card ---- */
+.pop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 20; display: none; }
+.pop[data-open="true"] { display: block; }
+.pc { position: absolute; left: 0; right: 0; bottom: 0; background: var(--panel);
+  border-radius: 20px 20px 0 0; border-top: 1px solid var(--line-2);
+  padding: 6px 16px calc(18px + env(safe-area-inset-bottom)); max-height: 84%; overflow: auto; }
+.grab { width: 36px; height: 4px; border-radius: 2px; background: var(--line-2); margin: 6px auto 12px; }
+.pc h2 { margin: 0; font: 700 24px/1 var(--sans); letter-spacing: -0.02em; }
+.pc .sub { margin: 6px 0 0; color: var(--fg-2); font-size: 13px; }
+.pc .chart { height: 100px; margin: 12px -4px 0; }
+.pc .chart svg { width: 100%; height: 100%; }
+.pc .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 12px; }
+.pc .kv div { background: var(--panel); padding: 9px 11px; }
+.pc .kv dt { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.pc .kv dd { margin: 4px 0 0; font: 600 16px/1 var(--sans); }
+.pc .acts { display: flex; gap: 8px; margin-top: 12px; }
+.pc .acts button { flex: 1; border: 1px solid var(--line-2); border-radius: 10px; padding: 12px; font-weight: 500; }
+.pc .acts button[aria-pressed="true"] { border-color: #ffd166; color: #ffd166; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Dial</h1>
+  <p id="hint">Drag a box across the plot to select. Tap a point to open it.</p>
+</header>
+<div class="axes">
+  Plot <span class="pick"><select id="ax" aria-label="Horizontal axis"></select></span>
+  against <span class="pick"><select id="ay" aria-label="Vertical axis"></select></span>,
+  sized by <span class="pick"><select id="az" aria-label="Point size"></select></span>.
+</div>
+<div class="plotwrap">
+  <canvas id="plot"></canvas>
+  <span class="qlab tl" id="q-tl"></span><span class="qlab tr" id="q-tr"></span>
+  <span class="qlab bl" id="q-bl"></span><span class="qlab br" id="q-br"></span>
+  <span class="axlab x" id="ax-lab"></span><span class="axlab y" id="ay-lab"></span>
+</div>
+<div class="readout">
+  <div class="rhead">
+    <span class="n" id="rn"></span>
+    <span class="acts">
+      <button type="button" id="clear">Clear</button>
+      <button type="button" id="watchbtn">Watch only</button>
+    </span>
+  </div>
+  <ul class="rlist" id="rlist"></ul>
+</div>
+<div class="rail" id="rail"></div>
+
+<div class="pop" id="pop"><div class="pc" id="pc"></div></div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("dial");
+  var AXES = ["r12", "m121", "r6", "r3", "r1", "m61", "off", "vsmed", "trend", "r2", "qual", "cap"];
+  var SIZE = ["cap", "r2", "px"];
+
+  /* Named quadrants, so a position on the plot reads as a sentence.
+     Keyed on the pair of axes; a default covers everything else. */
+  var QUADS = {
+    "m121|r2": ["Strong but chaotic", "Steady climbers", "Weak and chaotic", "Steady decliners"],
+    "r12|r2":  ["Strong but chaotic", "Steady climbers", "Weak and chaotic", "Steady decliners"],
+    "r12|r1":  ["Fading winners", "Winners still running", "Still falling", "Turning up"],
+    "m121|r1": ["Gave the month back", "Running", "Still falling", "Turning up"],
+    "r12|off": ["Up but well off its high", "Up and pressing its high",
+                "Down and well off its high", "Down but near its high"],
+    "trend|r2":["Steep but noisy", "Steep and orderly", "Sinking, noisy", "Sinking, orderly"]
+  };
+  function quadLabels() {
+    var key = state.x + "|" + state.y;
+    return QUADS[key] || QUADS[state.y + "|" + state.x] || [
+      "low " + K.METRICS[state.x].short + " · high " + K.METRICS[state.y].short,
+      "high " + K.METRICS[state.x].short + " · high " + K.METRICS[state.y].short,
+      "low · low", "high " + K.METRICS[state.x].short + " · low " + K.METRICS[state.y].short];
+  }
+
+  var state = { x: "m121", y: "r2", z: "cap", sector: null, watchOnly: false,
+                sel: null, hover: null };
+
+  ["ax", "ay", "az"].forEach(function (id, idx) {
+    var opts = idx === 2 ? SIZE : AXES;
+    var cur = idx === 0 ? state.x : idx === 1 ? state.y : state.z;
+    document.getElementById(id).innerHTML = opts.map(function (k) {
+      return '<option value="' + k + '"' + (k === cur ? " selected" : "") + '>' +
+        K.METRICS[k].label + '</option>';
+    }).join("");
+  });
+
+  var canvas = document.getElementById("plot"), ctx = canvas.getContext("2d");
+  var pts = [], box = null, dragging = null;
+
+  function pool() {
+    var list = state.watchOnly ? watch.list() : K.names;
+    if (state.sector) list = list.filter(function (r) { return r.s === state.sector; });
+    return list.filter(function (r) {
+      return K.METRICS[state.x].get(r) != null && K.METRICS[state.y].get(r) != null;
+    });
+  }
+
+  /* Percentile positioning: raw returns span −75% to +2900%, so a linear
+     axis would put 500 names in one pixel. Rank-space keeps every name
+     visible and makes the quadrants mean "top half / bottom half". */
+  function ranks(list, key) {
+    var vals = list.map(function (r) { return { t: r.t, v: K.METRICS[key].get(r) }; })
+      .sort(function (a, b) { return a.v - b.v; });
+    var out = {};
+    vals.forEach(function (e, i) { out[e.t] = vals.length < 2 ? 0.5 : i / (vals.length - 1); });
+    return out;
+  }
+
+  function layout() {
+    var dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var list = pool();
+    var rx = ranks(list, state.x), ry = ranks(list, state.y);
+    var zs = list.map(function (r) { return K.METRICS[state.z].get(r) || 0; });
+    var zmax = Math.max.apply(null, zs.concat([1]));
+    var pad = { l: 26, r: 14, t: 22, b: 26 };
+    pts = list.map(function (r) {
+      var z = K.METRICS[state.z].get(r) || 0;
+      return {
+        r: r,
+        px: pad.l + rx[r.t] * (w - pad.l - pad.r),
+        py: h - pad.b - ry[r.t] * (h - pad.t - pad.b),
+        rad: 1.9 + Math.sqrt(Math.max(0, z) / zmax) * 6.6
+      };
+    });
+    return { w: w, h: h, pad: pad };
+  }
+
+  function hue(sector) { return K.hue(sector); }
+
+  function draw() {
+    var L = layout(), w = L.w, h = L.h, pad = L.pad;
+    ctx.clearRect(0, 0, w, h);
+    // quadrant guides at the medians of rank space (0.5, 0.5)
+    var mx = pad.l + 0.5 * (w - pad.l - pad.r), my = h - pad.b - 0.5 * (h - pad.t - pad.b);
+    ctx.strokeStyle = "#2c333f"; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.moveTo(mx, pad.t - 8); ctx.lineTo(mx, h - pad.b + 6);
+    ctx.moveTo(pad.l - 8, my); ctx.lineTo(w - pad.r + 4, my); ctx.stroke();
+    ctx.setLineDash([]);
+
+    var selected = selectedSet();
+    var anySector = !!state.sector;
+    // Unselected points recede to near-invisible; selected ones carry their
+    // sector hue at low alpha so 500 marks read as density, not confetti.
+    pts.forEach(function (p) {
+      var inSel = !selected || selected[p.r.t];
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, p.rad, 0, Math.PI * 2);
+      if (!inSel) { ctx.fillStyle = "hsla(220,10%,42%,.10)"; ctx.fill(); return; }
+      var h0 = hue(p.r.s);
+      ctx.fillStyle = anySector ? "hsla(" + h0 + ",64%,60%,.42)" : "hsla(" + h0 + ",52%,62%,.30)";
+      ctx.fill();
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = "hsla(" + h0 + ",64%,70%,.55)";
+      ctx.stroke();
+    });
+    pts.forEach(function (p) {
+      if (!watch.has(p.r.t)) return;
+      if (selected && !selected[p.r.t]) return;
+      ctx.beginPath(); ctx.arc(p.px, p.py, p.rad + 3, 0, Math.PI * 2);
+      ctx.strokeStyle = "#ffd166"; ctx.lineWidth = 1.6; ctx.stroke();
+    });
+    // Name only the largest points in the selection, and only where the
+    // label has room; more than a handful and the plot stops being readable.
+    var labelled = pts.filter(function (p) { return !selected || selected[p.r.t]; })
+      .sort(function (a, b) { return b.rad - a.rad; }).slice(0, 6);
+    ctx.font = "600 9px system-ui, sans-serif";
+    ctx.textBaseline = "middle";
+    var placed = [];
+    labelled.forEach(function (p) {
+      var tw = ctx.measureText(p.r.t).width;
+      var tx = p.px + p.rad + 3, ty = p.py;
+      if (tx + tw > w - pad.r) tx = p.px - p.rad - 3 - tw;
+      var boxLab = { x: tx - 2, y: ty - 6, w: tw + 4, h: 12 };
+      // Drop a label rather than stack it on one already drawn.
+      var clash = placed.some(function (q) {
+        return boxLab.x < q.x + q.w && boxLab.x + boxLab.w > q.x &&
+               boxLab.y < q.y + q.h && boxLab.y + boxLab.h > q.y;
+      });
+      if (clash) return;
+      placed.push(boxLab);
+      ctx.fillStyle = "rgba(13,15,20,.72)";
+      ctx.fillRect(boxLab.x, boxLab.y, boxLab.w, boxLab.h);
+      ctx.fillStyle = "#dbe2ec";
+      ctx.fillText(p.r.t, tx, ty + 0.5);
+    });
+    ctx.textBaseline = "alphabetic";
+    if (box) {
+      ctx.fillStyle = "rgba(122,162,255,.12)";
+      ctx.strokeStyle = "rgba(122,162,255,.75)";
+      ctx.lineWidth = 1.2;
+      ctx.fillRect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0);
+      ctx.strokeRect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0);
+    }
+  }
+
+  function selectedSet() {
+    if (!box) return null;
+    var lo = { x: Math.min(box.x0, box.x1), y: Math.min(box.y0, box.y1) };
+    var hi = { x: Math.max(box.x0, box.x1), y: Math.max(box.y0, box.y1) };
+    if (hi.x - lo.x < 6 || hi.y - lo.y < 6) return null;
+    var out = {};
+    pts.forEach(function (p) {
+      if (p.px >= lo.x && p.px <= hi.x && p.py >= lo.y && p.py <= hi.y) out[p.r.t] = true;
+    });
+    return out;
+  }
+
+  function selectedRows() {
+    var s = selectedSet();
+    var list = pts.map(function (p) { return p.r; });
+    return s ? list.filter(function (r) { return s[r.t]; }) : list;
+  }
+
+  function renderReadout() {
+    var rows = selectedRows();
+    var mx = K.METRICS[state.x], my = K.METRICS[state.y];
+    var sel = selectedSet();
+    document.getElementById("rn").innerHTML = sel
+      ? rows.length + " selected"
+      : rows.length + ' in view <span>· drag to narrow</span>';
+    var sorted = K.sortBy(rows, state.y, true).slice(0, 80);
+    document.getElementById("rlist").innerHTML = sorted.length ? sorted.map(function (r) {
+      return '<li data-t="' + r.t + '"><span class="t">' + r.t +
+        (watch.has(r.t) ? ' <span style="color:#ffd166">★</span>' : "") + '</span>' +
+        '<span class="nm">' + K.esc(r.n) + '</span>' +
+        '<span class="sk">' + K.spark(r.sp, 44, 16,
+          { stroke: (r.r12 || 0) >= 0 ? "var(--pos)" : "var(--neg)", width: 1.1 }) + '</span>' +
+        '<span class="vx">' + mx.fmt(mx.get(r)) + '</span>' +
+        '<span class="vy">' + my.fmt(my.get(r)) + '</span></li>';
+    }).join("") : '<li class="rempty">Nothing in this selection.</li>';
+  }
+
+  function renderLabels() {
+    var q = quadLabels();
+    document.getElementById("q-tl").textContent = q[0];
+    document.getElementById("q-tr").textContent = q[1];
+    document.getElementById("q-bl").textContent = q[2];
+    document.getElementById("q-br").textContent = q[3];
+    document.getElementById("ax-lab").textContent = K.METRICS[state.x].label + " →";
+    document.getElementById("ay-lab").textContent = K.METRICS[state.y].label + " →";
+  }
+
+  function renderRail() {
+    document.getElementById("rail").innerHTML =
+      '<button type="button" data-s="" aria-pressed="' + (!state.sector) + '">All ' + K.OK.count + '</button>' +
+      K.OK.sectors.map(function (s) {
+        return '<button type="button" data-s="' + K.esc(s.sector) + '" aria-pressed="' +
+          (state.sector === s.sector) + '"><i style="background:hsl(' + K.hue(s.sector) + ',62%,58%)"></i>' +
+          K.abbr(s.sector) + ' ' + s.count + '</button>';
+      }).join("");
+  }
+
+  function all() { renderLabels(); draw(); renderReadout(); }
+
+  /* ---- drag to select ---- */
+  canvas.addEventListener("pointerdown", function (e) {
+    var b = canvas.getBoundingClientRect();
+    dragging = { x: e.clientX - b.left, y: e.clientY - b.top, moved: false };
+    box = { x0: dragging.x, y0: dragging.y, x1: dragging.x, y1: dragging.y };
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", function (e) {
+    if (!dragging) return;
+    var b = canvas.getBoundingClientRect();
+    box.x1 = e.clientX - b.left; box.y1 = e.clientY - b.top;
+    if (Math.abs(box.x1 - box.x0) > 5 || Math.abs(box.y1 - box.y0) > 5) dragging.moved = true;
+    draw();
+  });
+  canvas.addEventListener("pointerup", function (e) {
+    if (!dragging) return;
+    var wasTap = !dragging.moved;
+    dragging = null;
+    if (wasTap) {
+      var b = canvas.getBoundingClientRect();
+      var x = e.clientX - b.left, y = e.clientY - b.top;
+      var hit = null, bestD = 400;
+      pts.forEach(function (p) {
+        var d = (p.px - x) * (p.px - x) + (p.py - y) * (p.py - y);
+        if (d < Math.max(bestD, (p.rad + 8) * (p.rad + 8)) && d < bestD) { bestD = d; hit = p; }
+      });
+      box = null;
+      draw(); renderReadout();
+      if (hit) openName(hit.r);
+      return;
+    }
+    draw(); renderReadout();
+  });
+
+  ["ax", "ay", "az"].forEach(function (id, idx) {
+    document.getElementById(id).addEventListener("change", function (e) {
+      if (idx === 0) state.x = e.target.value;
+      else if (idx === 1) state.y = e.target.value;
+      else state.z = e.target.value;
+      box = null;
+      all();
+    });
+  });
+  document.getElementById("clear").addEventListener("click", function () { box = null; all(); });
+  document.getElementById("watchbtn").addEventListener("click", function () {
+    state.watchOnly = !state.watchOnly;
+    this.setAttribute("aria-pressed", String(state.watchOnly));
+    box = null; all();
+  });
+  document.getElementById("rail").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-s]");
+    if (!b) return;
+    var s = b.getAttribute("data-s");
+    state.sector = s ? (state.sector === s ? null : s) : null;
+    box = null; renderRail(); all();
+  });
+  document.getElementById("rlist").addEventListener("click", function (e) {
+    var li = e.target.closest("[data-t]");
+    if (li) openName(K.byTicker[li.getAttribute("data-t")]);
+  });
+
+  var pop = document.getElementById("pop"), pc = document.getElementById("pc");
+  function openName(r) {
+    if (!r) return;
+    var g = r.sp && r.sp.length > 1 ? K.pathFor(r.sp, 320, 100, { pad: 6, zero: true }) : null;
+    var stroke = (r.r12 || 0) >= 0 ? "var(--pos)" : "var(--neg)";
+    var mx = K.METRICS[state.x], my = K.METRICS[state.y];
+    function kv(dt, dd, v) {
+      return '<div><dt>' + dt + '</dt><dd style="color:' +
+        (v == null ? "var(--fg)" : v > 0 ? "var(--pos)" : v < 0 ? "var(--neg)" : "var(--fg)") +
+        '">' + dd + '</dd></div>';
+    }
+    pc.innerHTML = '<div class="grab"></div><h2>' + r.t + '</h2>' +
+      '<p class="sub">' + K.esc(r.n) + ' · ' + K.esc(r.s) + ' · ' + K.money(r.cap) + '</p>' +
+      (g ? '<div class="chart"><svg viewBox="0 0 320 100" preserveAspectRatio="none">' +
+        '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+        '" stroke="var(--line-2)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + g.d + '" fill="none" stroke="' + stroke + '" stroke-width="2" ' +
+        'vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>' : "") +
+      '<dl class="kv">' +
+        kv(mx.label + " (x)", mx.fmt(mx.get(r)), mx.neutral ? null : mx.get(r)) +
+        kv(my.label + " (y)", my.fmt(my.get(r)), my.neutral ? null : my.get(r)) +
+        kv("12 months", K.pct(r.r12), r.r12) + kv("1 month", K.pct(r.r1), r.r1) +
+        kv("Off high", K.METRICS.off.fmt(r.off), r.off == null ? null : (r.off > -0.5 ? 1 : r.off)) +
+        kv("Vs sector", K.METRICS.vsmed.fmt(K.METRICS.vsmed.get(r)), K.METRICS.vsmed.get(r)) +
+      '</dl>' +
+      '<div class="acts"><button type="button" data-w="' + r.t + '" aria-pressed="' + watch.has(r.t) + '">' +
+        (watch.has(r.t) ? "★ Watching" : "☆ Watch") + '</button>' +
+        '<button type="button" data-close="1">Close</button></div>';
+    pop.setAttribute("data-open", "true");
+  }
+  pop.addEventListener("click", function (e) {
+    var w = e.target.closest("[data-w]");
+    if (w) { var t = w.getAttribute("data-w"); watch.toggle(t); openName(K.byTicker[t]); draw(); renderReadout(); return; }
+    if (e.target.closest("[data-close]") || e.target === pop) pop.setAttribute("data-open", "false");
+  });
+
+  renderRail(); all();
+  // The readout below can grow and steal height from the plot, so redraw
+  // whenever the plot's box actually changes rather than only on resize.
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () { draw(); });
+    ro.observe(canvas.parentNode);
+  }
+  window.addEventListener("resize", function () { box = null; all(); });
+})();
+</script>
+</body>
+</html>

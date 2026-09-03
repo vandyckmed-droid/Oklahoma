@@ -6,6 +6,17 @@
 <title>Oklahoma Universe</title>
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#ffffff" id="theme-color">
+<!-- Home-screen app: Safari's Share → Add to Home Screen launches this page
+     standalone, with its own icon and without browser chrome. The manifest
+     covers Android and desktop; the apple-* tags cover iOS, which ignores
+     most of the manifest. Both are relative, so they work under /Oklahoma/. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Oklahoma">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -95,6 +106,13 @@ svg { display: block; }
 .down { color: var(--down-text); }
 
 .shell { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+/* Standalone (home-screen) launch: the status bar is translucent, so the page
+   draws under it. Push the shell down by the top inset; the fixed sheets and
+   the tab bar already handle their own edges. */
+@media (display-mode: standalone) {
+  .shell { padding-top: env(safe-area-inset-top); }
+  .band { margin-top: calc(-1 * env(safe-area-inset-top)); padding-top: calc(10px + env(safe-area-inset-top)); }
+}
 
 /* ----- stale band ----- */
 .band {

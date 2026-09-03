@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Terminal — Oklahoma direction 2</title>
+<meta name="color-scheme" content="dark">
+<style>
+/* ------------------------------------------------------------------
+   TERMINAL — every number on screen at once.
+   Thesis: the phone is a screener, not a brochure. Monospace grid,
+   frozen ticker column, thirteen metric columns on horizontal rails,
+   heat in the cell background, and a query line that filters with
+   expressions instead of chips.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #0b0e0d;
+  --bg-2: #121716;
+  --bg-3: #1a201e;
+  --line: #232b29;
+  --line-2: #33403c;
+  --fg: #d6e2de;
+  --fg-2: #7e918c;
+  --fg-3: #566662;
+  --pos: #35d07f;
+  --neg: #ff5f56;
+  --amber: #ffb454;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Roboto Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 12px/1.35 var(--mono); font-variant-numeric: tabular-nums;
+  overflow: hidden; display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+.pos { color: var(--pos); } .neg { color: var(--neg); } .dim { color: var(--fg-3); }
+
+/* ---- top: query line ---- */
+header { border-bottom: 1px solid var(--line-2); background: var(--bg-2); flex: none; }
+.bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px calc(10px) 12px; }
+.bar .caret { color: var(--pos); font-weight: 700; }
+.bar input { flex: 1; outline: none; caret-color: var(--pos); letter-spacing: 0.02em; }
+.bar input::placeholder { color: var(--fg-3); }
+.bar .clr { color: var(--fg-3); padding: 0 4px; }
+.hints { display: flex; gap: 6px; overflow-x: auto; padding: 0 12px 9px; scrollbar-width: none; }
+.hints::-webkit-scrollbar { display: none; }
+.hints button {
+  flex: none; border: 1px solid var(--line-2); border-radius: 3px; padding: 4px 8px;
+  color: var(--fg-2); font-size: 11px; white-space: nowrap;
+}
+.hints button:active { background: var(--bg-3); }
+.err { padding: 0 12px 9px; color: var(--amber); font-size: 11px; }
+
+/* ---- column head ---- */
+.gridwrap { flex: 1; overflow: auto; overscroll-behavior: contain; }
+table { border-collapse: separate; border-spacing: 0; width: max-content; min-width: 100%; }
+thead th {
+  position: sticky; top: 0; z-index: 3; background: var(--bg-2);
+  border-bottom: 1px solid var(--line-2); color: var(--fg-2);
+  font-weight: 400; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 7px 8px; text-align: right; white-space: nowrap; cursor: pointer;
+}
+thead th.tk { left: 0; z-index: 4; text-align: left; border-right: 1px solid var(--line-2); }
+thead th[aria-sort] { color: var(--pos); }
+thead th .ar { font-size: 9px; padding-left: 3px; }
+tbody td {
+  padding: 0 8px; height: 34px; text-align: right; white-space: nowrap;
+  border-bottom: 1px solid var(--line);
+}
+tbody td.tk {
+  position: sticky; left: 0; z-index: 2; background: var(--bg);
+  text-align: left; border-right: 1px solid var(--line-2); padding-right: 10px;
+}
+tbody tr.sel td { background: var(--bg-3); }
+tbody tr.sel td.tk { background: var(--bg-3); }
+tbody td.tk b { font-weight: 700; letter-spacing: 0.04em; }
+tbody td.tk .w { color: var(--amber); padding-left: 4px; }
+tbody td.tk .sub { display: block; color: var(--fg-3); font-size: 10px; line-height: 1;
+  overflow: hidden; text-overflow: ellipsis; max-width: 108px; }
+tbody td .cell { display: inline-block; padding: 2px 5px; border-radius: 2px; min-width: 54px; }
+tbody td.sk { padding: 0 6px; }
+tbody td.sk span { display: block; width: 54px; height: 18px; }
+
+/* ---- inline detail strip ---- */
+/* The strip breaks out of the horizontally-scrolled grid: it pins to the
+   left edge and re-establishes normal wrapping, which the dense cells above
+   deliberately turn off. */
+tr.detail td { padding: 0; background: var(--bg-2); border-bottom: 1px solid var(--line-2);
+  white-space: normal; }
+.strip { position: sticky; left: 0; width: 100vw; max-width: 100vw; padding: 12px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; text-align: left; }
+.strip .chart { height: 92px; border: 1px solid var(--line); border-radius: 3px;
+  background: var(--bg); padding: 6px; }
+.strip .chart svg { width: 100%; height: 100%; }
+.strip .kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: 3px; }
+.strip .kv div { background: var(--bg); padding: 6px 8px; }
+.strip .kv dt { color: var(--fg-3); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.strip .kv dt, .strip .kv dd { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.strip .kv dd { margin: 2px 0 0; font-size: 13px; }
+.strip .acts { display: flex; gap: 8px; }
+.strip .acts button { border: 1px solid var(--line-2); border-radius: 3px; padding: 8px 12px; color: var(--fg-2); }
+.strip .acts button[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); }
+.strip .desc { color: var(--fg-2); font-size: 11.5px; line-height: 1.5; }
+
+/* ---- status bar ---- */
+footer {
+  flex: none; border-top: 1px solid var(--line-2); background: var(--bg-2);
+  display: flex; align-items: center; gap: 10px; padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  font-size: 11px; color: var(--fg-2); white-space: nowrap; overflow-x: auto; scrollbar-width: none;
+}
+footer::-webkit-scrollbar { display: none; }
+footer .k { color: var(--fg-3); }
+footer button { border: 1px solid var(--line-2); border-radius: 3px; padding: 4px 8px; color: var(--fg-2); }
+footer button[aria-pressed="true"] { border-color: var(--pos); color: var(--pos); }
+.empty { padding: 40px 16px; color: var(--fg-3); text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <span class="caret">&gt;</span>
+    <input id="q" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+           placeholder="tech r12&gt;40 cap&gt;100b" aria-label="Query">
+    <button class="clr" id="clr" type="button" aria-label="Clear">esc</button>
+  </div>
+  <div class="hints" id="hints"></div>
+  <div class="err" id="err" hidden></div>
+</header>
+<div class="gridwrap" id="gridwrap">
+  <table id="grid">
+    <thead><tr id="head"></tr></thead>
+    <tbody id="body"></tbody>
+  </table>
+  <div class="empty" id="empty" hidden></div>
+</div>
+<footer id="status"></footer>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("terminal");
+  var COLS = ["r12", "r6", "r3", "r1", "m121", "m61", "off", "vsmed", "trend", "r2", "qual", "cap", "px"];
+  var state = { q: "", sort: "r12", desc: true, sel: null, heat: true, watchOnly: false };
+
+  var FIELDS = { r12: "r12", r6: "r6", r3: "r3", r1: "r1", m121: "m121", m61: "m61",
+                 off: "off", trend: "trend", r2: "r2", qual: "qual", cap: "cap", px: "px" };
+
+  /* ---- the query language: bare words search, comparisons filter ---- */
+  function parseQuery(q) {
+    var terms = q.trim().split(/\s+/).filter(Boolean);
+    var words = [], tests = [], bad = [];
+    terms.forEach(function (term) {
+      var m = /^([a-z0-9]+)(>=|<=|>|<|=)(-?[\d.]+)([kmbt%]?)$/i.exec(term);
+      if (!m) { words.push(term); return; }
+      var field = FIELDS[m[1].toLowerCase()];
+      if (!field) { bad.push(m[1]); return; }
+      var mult = { k: 1e3, m: 1e6, b: 1e9, t: 1e12 }[m[4].toLowerCase()] || 1;
+      var n = parseFloat(m[3]) * mult, op = m[2];
+      tests.push(function (r) {
+        var v = r[field];
+        if (v == null) return false;
+        return op === ">" ? v > n : op === "<" ? v < n :
+               op === ">=" ? v >= n : op === "<=" ? v <= n : Math.abs(v - n) < 1e-9;
+      });
+    });
+    return { words: words, tests: tests, bad: bad };
+  }
+  function run() {
+    var p = parseQuery(state.q);
+    var list = state.watchOnly ? watch.list() : K.names;
+    p.words.forEach(function (w) { list = K.search(list, w); });
+    p.tests.forEach(function (t) { list = list.filter(t); });
+    return { rows: K.sortBy(list, state.sort, state.desc), bad: p.bad, tests: p.tests.length };
+  }
+
+  /* ---- heat: a cell's background is its rank inside the column ---- */
+  function heatBg(key, v) {
+    if (!state.heat || v == null || K.METRICS[key].neutral) return "";
+    var scale = { r12: 60, r6: 40, r3: 25, r1: 15, m121: 55, m61: 35,
+                  off: 25, vsmed: 40, trend: 60, qual: 40 }[key] || 40;
+    var t = Math.max(-1, Math.min(1, v / scale));
+    if (key === "off") t = Math.max(-1, Math.min(0, (v + 4) / scale));
+    if (Math.abs(t) < 0.06) return "";
+    var a = (0.10 + Math.abs(t) * 0.30).toFixed(3);
+    return "background:" + (t > 0 ? "rgba(53,208,127," : "rgba(255,95,86,") + a + ")";
+  }
+
+  function head() {
+    var h = '<th class="tk">Ticker</th><th></th>';
+    COLS.forEach(function (k) {
+      var on = state.sort === k;
+      h += '<th data-k="' + k + '"' + (on ? ' aria-sort="' + (state.desc ? "descending" : "ascending") + '"' : "") +
+        '>' + K.METRICS[k].short + (on ? '<span class="ar">' + (state.desc ? "▼" : "▲") + '</span>' : "") + '</th>';
+    });
+    return h;
+  }
+
+  function bodyRows(rows) {
+    var out = "";
+    rows.forEach(function (r) {
+      var sel = state.sel === r.t;
+      out += '<tr class="' + (sel ? "sel" : "") + '" data-t="' + r.t + '">' +
+        '<td class="tk"><b>' + r.t + '</b>' + (watch.has(r.t) ? '<span class="w">*</span>' : "") +
+          (r.ok ? "" : '<span class="w" title="short history">!</span>') +
+          '<span class="sub">' + K.esc(r.n) + '</span></td>' +
+        '<td class="sk"><span>' + K.spark(r.sp, 54, 18,
+          { stroke: r.r12 >= 0 ? "var(--pos)" : "var(--neg)", width: 1 }) + '</span></td>';
+      COLS.forEach(function (k) {
+        var m = K.METRICS[k], v = m.get(r);
+        var cls = v == null ? "dim" : m.neutral ? "" : v > 0 ? "pos" : v < 0 ? "neg" : "";
+        out += '<td><span class="cell ' + cls + '" style="' + heatBg(k, v) + '">' + m.fmt(v) + '</span></td>';
+      });
+      out += '</tr>';
+      if (sel) out += stripRow(r);
+    });
+    return out;
+  }
+
+  function stripRow(r) {
+    var g = K.pathFor(r.sp, 320, 80, { pad: 4, zero: true, with: r.fit && r.fit.length ? r.fit : null });
+    var stroke = r.r12 >= 0 ? "var(--pos)" : "var(--neg)";
+    function kv(dt, dd, v) {
+      var cls = v == null ? "dim" : v > 0 ? "pos" : v < 0 ? "neg" : "";
+      return '<div><dt>' + dt + '</dt><dd class="' + cls + '">' + dd + '</dd></div>';
+    }
+    var med = K.medianBySector[r.s];
+    return '<tr class="detail"><td colspan="' + (COLS.length + 2) + '"><div class="strip">' +
+      '<div class="chart"><svg viewBox="0 0 320 80" preserveAspectRatio="none">' +
+        '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+          '" stroke="var(--line-2)" stroke-dasharray="2 3" vector-effect="non-scaling-stroke"/>' +
+        (r.fit && r.fit.length > 1 ? '<path d="' + g.line(r.fit) + '" fill="none" stroke="var(--fg-3)" ' +
+          'stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>' : "") +
+        '<path d="' + g.d + '" fill="none" stroke="' + stroke + '" stroke-width="1.4" ' +
+          'vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>' +
+      '<dl class="kv">' +
+        kv("52w range", r.lo != null ? K.price(r.lo) + " – " + K.price(r.hi) : "—", null) +
+        kv("Sector med", K.pct(med), null) +
+        kv("Vs sector", K.METRICS.vsmed.fmt(K.METRICS.vsmed.get(r)), K.METRICS.vsmed.get(r)) +
+        kv("Sessions", String(r.days), null) +
+        kv("Rank by cap", "#" + r.rank, null) +
+        kv("Industry", K.esc((r.i || "—").slice(0, 18)), null) +
+      '</dl>' +
+      '<p class="desc">' + K.esc(r.n) + ' · ' + K.esc(r.s) +
+        '. Dashed line is the least-squares fit through ln(close); R² ' +
+        (r.r2 == null ? "—" : r.r2.toFixed(2)) + '.</p>' +
+      '<div class="acts">' +
+        '<button type="button" data-w="' + r.t + '" aria-pressed="' + watch.has(r.t) + '">' +
+          (watch.has(r.t) ? "* watched" : "+ watch") + '</button>' +
+        '<button type="button" data-q="' + K.esc(r.s.toLowerCase().split(" ")[0]) + '">peers</button>' +
+        '<button type="button" data-close="1">close</button>' +
+      '</div>' +
+    '</div></td></tr>';
+  }
+
+  var HINTS = [
+    { l: "r12>50", q: "r12>50" }, { l: "off>-5", q: "off>-5" },
+    { l: "r2>0.8", q: "r2>0.8" }, { l: "cap>200b", q: "cap>200b" },
+    { l: "healthcare", q: "healthcare" }, { l: "m121>30 r1<0", q: "m121>30 r1<0" },
+    { l: "qual>25", q: "qual>25" }, { l: "energy r12>30", q: "energy r12>30" }
+  ];
+  document.getElementById("hints").innerHTML = HINTS.map(function (h) {
+    return '<button type="button" data-h="' + K.esc(h.q) + '">' + K.esc(h.l) + '</button>';
+  }).join("");
+
+  var headEl = document.getElementById("head"), bodyEl = document.getElementById("body");
+  var emptyEl = document.getElementById("empty"), errEl = document.getElementById("err");
+  var statusEl = document.getElementById("status");
+
+  function render(keepScroll) {
+    var wrap = document.getElementById("gridwrap");
+    var y = wrap.scrollTop, x = wrap.scrollLeft;
+    var res = run();
+    headEl.innerHTML = head();
+    bodyEl.innerHTML = bodyRows(res.rows.slice(0, 220));
+    emptyEl.hidden = res.rows.length > 0;
+    emptyEl.textContent = "no rows match " + (state.q || "the filter");
+    errEl.hidden = !res.bad.length;
+    errEl.textContent = res.bad.length ? "unknown field: " + res.bad.join(", ") +
+      " — try " + Object.keys(FIELDS).join(", ") : "";
+    var med = K.median(res.rows.map(function (r) { return r.r12; }));
+    var up = res.rows.filter(function (r) { return r.r12 > 0; }).length;
+    statusEl.innerHTML =
+      '<span><span class="k">rows</span> ' + res.rows.length + "/" + K.OK.count + '</span>' +
+      '<span><span class="k">med 12m</span> <span class="' + (med >= 0 ? "pos" : "neg") + '">' +
+        K.pct(med) + '</span></span>' +
+      '<span><span class="k">up</span> ' + up + '</span>' +
+      '<span><span class="k">sort</span> ' + K.METRICS[state.sort].short + (state.desc ? "▼" : "▲") + '</span>' +
+      '<button type="button" id="heat" aria-pressed="' + state.heat + '">heat</button>' +
+      '<button type="button" id="wo" aria-pressed="' + state.watchOnly + '">watch ' + watch.size + '</button>' +
+      '<span class="k">' + K.OK.as_of + '</span>';
+    if (keepScroll) { wrap.scrollTop = y; wrap.scrollLeft = x; }
+  }
+
+  headEl.addEventListener("click", function (e) {
+    var th = e.target.closest("[data-k]");
+    if (!th) return;
+    var k = th.getAttribute("data-k");
+    if (state.sort === k) state.desc = !state.desc;
+    else { state.sort = k; state.desc = true; }
+    state.sel = null;
+    render();
+    document.getElementById("gridwrap").scrollTop = 0;
+  });
+  bodyEl.addEventListener("click", function (e) {
+    var w = e.target.closest("[data-w]");
+    if (w) { watch.toggle(w.getAttribute("data-w")); render(true); return; }
+    var q = e.target.closest("[data-q]");
+    if (q) { state.q = q.getAttribute("data-q"); state.sel = null;
+             document.getElementById("q").value = state.q; render(); return; }
+    if (e.target.closest("[data-close]")) { state.sel = null; render(true); return; }
+    var tr = e.target.closest("tr[data-t]");
+    if (!tr) return;
+    var t = tr.getAttribute("data-t");
+    state.sel = state.sel === t ? null : t;
+    render(true);
+  });
+  document.getElementById("hints").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-h]");
+    if (!b) return;
+    state.q = b.getAttribute("data-h");
+    document.getElementById("q").value = state.q;
+    state.sel = null;
+    render();
+  });
+  document.getElementById("q").addEventListener("input", function (e) {
+    state.q = e.target.value; state.sel = null; render();
+  });
+  document.getElementById("clr").addEventListener("click", function () {
+    state.q = ""; document.getElementById("q").value = ""; state.sel = null; render();
+  });
+  statusEl.addEventListener("click", function (e) {
+    if (e.target.id === "heat") { state.heat = !state.heat; render(true); }
+    if (e.target.id === "wo") { state.watchOnly = !state.watchOnly; state.sel = null; render(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

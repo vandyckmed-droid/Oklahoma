@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brief — Oklahoma direction 5</title>
+<meta name="color-scheme" content="light dark">
+<style>
+/* ------------------------------------------------------------------
+   BRIEF — the app answers, the list is the appendix.
+   Thesis: someone checking between patients has ninety seconds. So the
+   first screen is a set of answered questions, each written from the
+   real numbers, each opening to the evidence that produced it. No
+   ranking to scan until you ask for one.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --card-2: #f1f3f6;
+  --line: #e3e6eb;
+  --line-2: #cfd4dc;
+  --fg: #14171c;
+  --fg-2: #545c68;
+  --fg-3: #858d9a;
+  --pos: #0f7a52;
+  --pos-bg: #e3f4ec;
+  --neg: #b3341f;
+  --neg-bg: #fbe9e5;
+  --accent: #2b4c8c;
+  --sans: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1114; --card: #171a1f; --card-2: #1e222a; --line: #262b33; --line-2: #333a45;
+    --fg: #eef1f5; --fg-2: #a2abb8; --fg-3: #6f7885;
+    --pos: #46c98c; --pos-bg: #10261e;
+    --neg: #ff7a63; --neg-bg: #2a1512; --accent: #8fb0ee;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 15px/1.5 var(--sans); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  padding: env(safe-area-inset-top) 0 calc(40px + env(safe-area-inset-bottom));
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+.wrap { max-width: 620px; margin: 0 auto; padding: 0 16px; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+
+/* ---- greeting ---- */
+.top { padding: 20px 0 4px; }
+.top .when { font: 500 12px/1 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); }
+.top h1 { margin: 8px 0 0; font: 700 27px/1.2 var(--sans); letter-spacing: -0.025em; }
+.top p { margin: 8px 0 0; font: 400 15px/1.5 var(--sans); color: var(--fg-2); }
+
+/* ---- the answered questions ---- */
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  margin-top: 12px; overflow: hidden;
+}
+.card > .q { width: 100%; text-align: left; padding: 16px 16px 14px; display: block; }
+.card .qlab {
+  font: 600 11.5px/1 var(--sans); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); display: flex; align-items: center; gap: 7px;
+}
+.card .qlab .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.card .answer { margin: 10px 0 0; font: 400 17px/1.45 var(--sans); letter-spacing: -0.008em; }
+.card .answer b { font-weight: 650; }
+.card .answer .fig { font-weight: 650; }
+.card .meta { margin: 9px 0 0; font: 400 13px/1.4 var(--sans); color: var(--fg-3);
+  display: flex; align-items: center; gap: 6px; }
+.card .meta .chev { transition: transform 160ms ease; }
+.card[data-open="true"] .meta .chev { transform: rotate(90deg); }
+
+/* headline strip inside a card */
+.strip { display: flex; gap: 10px; margin-top: 13px; }
+.strip .box { flex: 1; border-radius: 11px; padding: 10px 11px; background: var(--card-2); }
+.strip .box.up { background: var(--pos-bg); }
+.strip .box.down { background: var(--neg-bg); }
+.strip dt { font: 500 10.5px/1.2 var(--sans); letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-3); }
+.strip dd { margin: 5px 0 0; font: 650 19px/1 var(--sans); letter-spacing: -0.02em; }
+
+/* mini chart inside a card */
+.mini { height: 62px; margin-top: 13px; }
+.mini svg { width: 100%; height: 100%; }
+
+/* bars */
+.bars { margin-top: 12px; }
+.bars .b { display: grid; grid-template-columns: 88px 1fr 56px; gap: 9px; align-items: center;
+  padding: 5px 0; font-size: 13px; }
+.bars .b .lab { color: var(--fg-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bars .b .track { height: 7px; border-radius: 4px; background: var(--card-2); position: relative; }
+.bars .b .track i { position: absolute; top: 0; height: 7px; border-radius: 4px; }
+.bars .b .val { text-align: right; font-weight: 600; font-size: 13px; }
+
+/* the evidence drawer */
+.evidence { border-top: 1px solid var(--line); padding: 4px 16px 12px; display: none; }
+.card[data-open="true"] .evidence { display: block; }
+.evidence h3 { margin: 14px 0 2px; font: 600 12px/1 var(--sans); letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--fg-3); }
+.rows { list-style: none; margin: 4px 0 0; padding: 0; }
+.rows li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.rows li:last-child { border-bottom: 0; }
+.rows .t { font-weight: 650; width: 56px; letter-spacing: -0.01em; }
+.rows .n { flex: 1; min-width: 0; color: var(--fg-2); font-size: 13px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rows .sk { width: 46px; height: 18px; flex: none; }
+.rows .v { width: 62px; text-align: right; font-weight: 600; font-size: 13.5px; }
+.evidence .why { margin: 10px 0 0; font: 400 13px/1.5 var(--sans); color: var(--fg-3); }
+.evidence .why code { font: 400 12px/1.4 ui-monospace, Menlo, monospace; color: var(--fg-2);
+  background: var(--card-2); padding: 1px 5px; border-radius: 4px; }
+
+/* ---- the appendix ---- */
+.appendix { margin-top: 26px; }
+.appendix > button {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  font-weight: 600;
+}
+.appendix .body { display: none; margin-top: 10px; }
+.appendix[data-open="true"] .body { display: block; }
+.searchbar { display: flex; align-items: center; gap: 9px; background: var(--card);
+  border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; }
+.searchbar input { flex: 1; border: 0; background: none; outline: none; font: inherit; color: var(--fg); }
+.sortline { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
+.sortline::-webkit-scrollbar { display: none; }
+.sortline button { flex: none; padding: 6px 11px; border-radius: 8px; border: 1px solid var(--line-2);
+  color: var(--fg-2); font-size: 12.5px; white-space: nowrap; }
+.sortline button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.applist { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  margin-top: 10px; padding: 2px 14px; }
+.foot { margin-top: 22px; font: 400 12.5px/1.6 var(--sans); color: var(--fg-3); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="when" id="when"></p>
+    <h1 id="greeting"></h1>
+    <p id="stand"></p>
+  </header>
+  <main id="cards"></main>
+  <section class="appendix" id="appendix" data-open="false">
+    <button type="button" id="apptoggle">
+      <span>All 503 names</span>
+      <span style="color:var(--fg-3);font-weight:400">the appendix ›</span>
+    </button>
+    <div class="body">
+      <div class="searchbar">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+          stroke-width="1.6" style="color:var(--fg-3)"><circle cx="7" cy="7" r="4.6"/><path d="M10.5 10.5 14 14" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Ticker, company or sector" autocomplete="off" aria-label="Search">
+      </div>
+      <div class="sortline" id="sortline"></div>
+      <div class="applist"><ul class="rows" id="applist"></ul></div>
+    </div>
+  </section>
+  <p class="foot" id="foot"></p>
+</div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("brief");
+  var open = {}, appOpen = false, sortKey = "r12", q = "";
+
+  var all = K.names, full = all.filter(function (r) { return r.ok && r.r12 != null; });
+  var med12 = K.median(full.map(function (r) { return r.r12; }));
+  var med1 = K.median(all.map(function (r) { return r.r1; }));
+  var up12 = full.filter(function (r) { return r.r12 > 0; }).length;
+  var sectors = K.OK.sectors;
+  var best = sectors[0], worst = sectors[sectors.length - 1];
+
+  var hour = new Date().getHours();
+  document.getElementById("when").textContent =
+    "Closing data · " + K.asOf();
+  document.getElementById("greeting").textContent =
+    hour < 12 ? "Good morning." : hour < 18 ? "Good afternoon." : "Good evening.";
+  document.getElementById("stand").innerHTML =
+    "Here is where the S&P 500 stands, measured over the year to " + K.asOf() +
+    ". Every figure below is recomputed from committed daily closes.";
+  document.getElementById("foot").textContent =
+    K.OK.sufficient + " of " + K.OK.count + " names carry the full 252-session window beginning " +
+    K.OK.window_start + "; the rest are excluded from year figures rather than measured over less. " +
+    "Prices are split- and dividend-adjusted closes.";
+
+  function medianSeries(list) {
+    var sparks = list.map(function (r) { return r.sp; }).filter(function (s) { return s && s.length === 32; });
+    if (sparks.length < 2) return [];
+    var out = [];
+    for (var i = 0; i < 32; i++) out.push(K.median(sparks.map(function (s) { return s[i]; })));
+    return out;
+  }
+  var uniSeries = medianSeries(all);
+
+  function miniChart(series, colour) {
+    if (!series || series.length < 2) return "";
+    var g = K.pathFor(series, 320, 62, { pad: 5, zero: true });
+    return '<div class="mini"><svg viewBox="0 0 320 62" preserveAspectRatio="none">' +
+      '<defs><linearGradient id="g' + Math.random().toString(36).slice(2, 7) + '"></linearGradient></defs>' +
+      '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+        '" stroke="var(--line-2)" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>' +
+      '<path d="' + g.d + '" fill="none" stroke="' + colour + '" stroke-width="2" ' +
+        'stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+      '<circle cx="320" cy="' + g.y(series[series.length - 1]).toFixed(1) + '" r="3" fill="' + colour + '"/>' +
+      '</svg></div>';
+  }
+  function col(v) { return v == null ? "var(--fg-3)" : v > 0 ? "var(--pos)" : v < 0 ? "var(--neg)" : "var(--fg-3)"; }
+  function box(label, value, v) {
+    var cls = v == null ? "" : v > 0 ? " up" : v < 0 ? " down" : "";
+    return '<div class="box' + cls + '"><dt>' + label + '</dt><dd style="color:' + col(v) + '">' +
+      value + '</dd></div>';
+  }
+  function rowLi(r, metric) {
+    var m = K.METRICS[metric || "r12"], v = m.get(r);
+    return '<li><span class="t">' + r.t + '</span><span class="n">' + K.esc(r.n) + '</span>' +
+      '<span class="sk">' + K.spark(r.sp, 46, 18, { stroke: col(r.r12), width: 1.2 }) + '</span>' +
+      '<span class="v" style="color:' + (m.neutral ? "var(--fg)" : col(v)) + '">' + m.fmt(v) + '</span></li>';
+  }
+  function bars(items, scale) {
+    return '<div class="bars">' + items.map(function (it) {
+      var w = Math.min(100, Math.abs(it.value) / scale * 100);
+      return '<div class="b"><span class="lab">' + K.esc(it.label) + '</span>' +
+        '<span class="track"><i style="width:' + w.toFixed(1) + '%;left:0;background:' +
+          col(it.value) + '"></i></span>' +
+        '<span class="val" style="color:' + col(it.value) + '">' + K.signed(it.value, 1, "%") + '</span></div>';
+    }).join("") + '</div>';
+  }
+
+  /* ---- the questions, each answered from the data ---- */
+  var CARDS = [
+    {
+      id: "where",
+      label: "Where things stand",
+      answer: function () {
+        return "The median name " + (med12 >= 0 ? "gained " : "lost ") +
+          '<span class="fig ' + K.dir(med12) + '">' + Math.abs(med12).toFixed(1) + "%</span> over the year, and " +
+          "<b>" + up12 + " of " + full.length + "</b> names finished above where they started.";
+      },
+      body: function () {
+        return '<div class="strip">' +
+          box("Median 12M", K.pct(med12), med12) +
+          box("Median 1M", K.pct(med1), med1) +
+          box("Above water", Math.round(up12 / full.length * 100) + "%", null) +
+        '</div>' + miniChart(uniSeries, col(med12));
+      },
+      evidence: function () {
+        return '<h3>Widest gains</h3><ul class="rows">' +
+          K.sortBy(full, "r12", true).slice(0, 5).map(function (r) { return rowLi(r); }).join("") + '</ul>' +
+          '<h3>Deepest losses</h3><ul class="rows">' +
+          K.sortBy(full, "r12", false).slice(0, 5).map(function (r) { return rowLi(r); }).join("") + '</ul>' +
+          '<p class="why">The median, not the average: one 2,900% winner would drag a mean beyond ' +
+          'recognition. <code>close ÷ first close of the 252-session window − 1</code></p>';
+      }
+    },
+    {
+      id: "led",
+      label: "What led",
+      answer: function () {
+        return "<b>" + best.sector + "</b> led the year — its median name up " +
+          '<span class="fig pos">' + best.median_return_pct.toFixed(1) + "%</span> with " +
+          "<b>" + Math.round(best.breadth_pct) + "%</b> of its " + best.count +
+          " names above water. " + (best.breadth_pct >= 85
+            ? "That is broad, not a handful of winners."
+            : "Breadth is thinner than the median suggests.");
+      },
+      body: function () {
+        return bars(sectors.slice(0, 5).map(function (s) {
+          return { label: K.abbr(s.sector), value: s.median_return_pct };
+        }), Math.max.apply(null, sectors.map(function (s) { return Math.abs(s.median_return_pct); })));
+      },
+      evidence: function () {
+        var names = K.sortBy(all.filter(function (r) { return r.s === best.sector && r.ok; }), "r12", true);
+        return '<h3>' + K.esc(best.sector) + ' — strongest names</h3><ul class="rows">' +
+          names.slice(0, 6).map(function (r) { return rowLi(r); }).join("") + '</ul>' +
+          '<p class="why">Breadth guards the median: a sector can post a healthy middle on three ' +
+          'winners and twenty losers. <code>names with positive 12M return ÷ names in sector</code></p>';
+      }
+    },
+    {
+      id: "lagged",
+      label: "What lagged",
+      answer: function () {
+        return "<b>" + worst.sector + "</b> trailed at " +
+          '<span class="fig ' + K.dir(worst.median_return_pct) + '">' +
+          K.signed(worst.median_return_pct, 1, "%") + "</span>, with only " +
+          "<b>" + Math.round(worst.breadth_pct) + "%</b> of its " + worst.count +
+          " names above water.";
+      },
+      body: function () {
+        return bars(sectors.slice(-5).map(function (s) {
+          return { label: K.abbr(s.sector), value: s.median_return_pct };
+        }), Math.max.apply(null, sectors.map(function (s) { return Math.abs(s.median_return_pct); })));
+      },
+      evidence: function () {
+        var names = K.sortBy(all.filter(function (r) { return r.s === worst.sector && r.ok; }), "r12", false);
+        return '<h3>' + K.esc(worst.sector) + ' — weakest names</h3><ul class="rows">' +
+          names.slice(0, 6).map(function (r) { return rowLi(r); }).join("") + '</ul>';
+      }
+    },
+    {
+      id: "steady",
+      label: "What climbed steadily",
+      answer: function () {
+        var steady = all.filter(function (r) { return r.r2 != null && r.r2 >= 0.8 && r.qual > 0; });
+        var top = K.sortBy(steady, "qual", true)[0];
+        return "<b>" + steady.length + "</b> names climbed on a trend that explains 80% or more of " +
+          "their path. " + (top ? "<b>" + top.t + "</b> leads them at " +
+          '<span class="fig pos">' + K.signed(top.qual, 1, "%/yr") + "</span> quality-adjusted." : "");
+      },
+      body: function () {
+        var steady = K.sortBy(all.filter(function (r) { return r.r2 != null && r.r2 >= 0.8 && r.qual > 0; }), "qual", true);
+        var top = steady[0];
+        return '<div class="strip">' +
+          box("Steady names", String(steady.length), null) +
+          box("Best quality", top ? K.signed(top.qual, 0, "%/yr") : "—", top ? top.qual : null) +
+          box("Its R²", top ? top.r2.toFixed(2) : "—", null) +
+        '</div>' + (top ? miniChart(top.sp, col(top.r12)) : "");
+      },
+      evidence: function () {
+        var steady = K.sortBy(all.filter(function (r) { return r.r2 != null && r.r2 >= 0.8 && r.qual > 0; }), "qual", true);
+        return '<h3>Highest quality momentum</h3><ul class="rows">' +
+          steady.slice(0, 8).map(function (r) { return rowLi(r, "qual"); }).join("") + '</ul>' +
+          '<p class="why">Quality momentum damps the trend by how much of the path it actually ' +
+          'explains, so a steep but chaotic year scores below a patient climb. ' +
+          '<code>trend %/yr × R²</code></p>';
+      }
+    },
+    {
+      id: "turned",
+      label: "What turned",
+      answer: function () {
+        var turned = all.filter(function (r) { return r.m121 != null && r.r1 != null && r.m121 > 25 && r.r1 < -5; });
+        return "<b>" + turned.length + "</b> names were strong for eleven months and then gave ground " +
+          "in the last one — the pattern classic momentum deliberately skips.";
+      },
+      body: function () {
+        var turned = K.sortBy(all.filter(function (r) {
+          return r.m121 != null && r.r1 != null && r.m121 > 25 && r.r1 < -5; }), "r1", false);
+        var worstOne = turned[0];
+        return '<div class="strip">' +
+          box("Names", String(turned.length), null) +
+          box("Worst last month", worstOne ? K.pct(worstOne.r1) : "—", worstOne ? worstOne.r1 : null) +
+          box("Its 12-1", worstOne ? K.pct(worstOne.m121) : "—", worstOne ? worstOne.m121 : null) +
+        '</div>';
+      },
+      evidence: function () {
+        var turned = K.sortBy(all.filter(function (r) {
+          return r.m121 != null && r.r1 != null && r.m121 > 25 && r.r1 < -5; }), "r1", false);
+        return '<h3>Strong year, weak month</h3><ul class="rows">' +
+          turned.slice(0, 8).map(function (r) { return rowLi(r, "r1"); }).join("") + '</ul>' +
+          '<p class="why">12-1 momentum measures to a month ago because the freshest month tends ' +
+          'to reverse. <code>close 21 sessions ago ÷ first close of the 252-session window − 1</code></p>';
+      }
+    },
+    {
+      id: "yours",
+      label: "Your watchlist",
+      answer: function () {
+        var list = watch.list();
+        if (!list.length) return "Nothing on your watchlist yet. Open the appendix and star a few names.";
+        var m = K.median(list.map(function (r) { return r.r12; }));
+        var diff = m - med12;
+        return "Your <b>" + list.length + "</b> names have a median 12-month return of " +
+          '<span class="fig ' + K.dir(m) + '">' + K.signed(m, 1, "%") + "</span>, " +
+          '<b>' + K.signed(diff, 1, " points") + "</b> " + (diff >= 0 ? "ahead of" : "behind") +
+          " the universe.";
+      },
+      body: function () {
+        var list = watch.list();
+        if (!list.length) return "";
+        var m = K.median(list.map(function (r) { return r.r12; }));
+        var sectorsIn = {};
+        list.forEach(function (r) { sectorsIn[r.s] = (sectorsIn[r.s] || 0) + 1; });
+        var top = Object.keys(sectorsIn).sort(function (a, b) { return sectorsIn[b] - sectorsIn[a]; })[0];
+        return '<div class="strip">' +
+          box("Names", String(list.length), null) +
+          box("Median 12M", K.pct(m), m) +
+          box("Heaviest in", K.abbr(top), null) +
+        '</div>' + miniChart(medianSeries(list), col(m));
+      },
+      evidence: function () {
+        var list = K.sortBy(watch.list(), "r12", true);
+        if (!list.length) return '<p class="why">Star names in the appendix below and they appear here.</p>';
+        return '<h3>Your names</h3><ul class="rows">' +
+          list.map(function (r) { return rowLi(r); }).join("") + '</ul>';
+      }
+    }
+  ];
+
+  function render() {
+    document.getElementById("cards").innerHTML = CARDS.map(function (c) {
+      var isOpen = !!open[c.id];
+      return '<article class="card" data-card="' + c.id + '" data-open="' + isOpen + '">' +
+        '<button class="q" type="button" data-toggle="' + c.id + '">' +
+          '<span class="qlab"><span class="dot"></span>' + c.label + '</span>' +
+          '<p class="answer">' + c.answer() + '</p>' +
+          c.body() +
+          '<p class="meta"><svg class="chev" width="11" height="11" viewBox="0 0 12 12" fill="none" ' +
+            'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M4.5 3 7.5 6l-3 3"/></svg>' +
+            (isOpen ? "Hide the evidence" : "Show the evidence") + '</p>' +
+        '</button>' +
+        '<div class="evidence">' + (isOpen ? c.evidence() : "") + '</div>' +
+      '</article>';
+    }).join("");
+  }
+
+  document.getElementById("cards").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-toggle]");
+    if (!b) return;
+    var id = b.getAttribute("data-toggle");
+    open[id] = !open[id];
+    render();
+    var card = document.querySelector('[data-card="' + id + '"]');
+    if (open[id] && card) card.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  });
+
+  /* ---- the appendix ---- */
+  var SORTS = ["r12", "r6", "r3", "r1", "m121", "qual", "off", "cap"];
+  document.getElementById("sortline").innerHTML = SORTS.map(function (k) {
+    return '<button type="button" data-s="' + k + '" aria-pressed="' + (sortKey === k) + '">' +
+      K.METRICS[k].short + '</button>';
+  }).join("");
+  function renderApp() {
+    var list = K.sortBy(K.search(all, q), sortKey, sortKey !== "off").slice(0, 80);
+    document.getElementById("applist").innerHTML = list.map(function (r) {
+      var m = K.METRICS[sortKey], v = m.get(r);
+      return '<li data-t="' + r.t + '"><span class="t">' + r.t +
+        (watch.has(r.t) ? ' <span style="color:#e0a800">★</span>' : "") + '</span>' +
+        '<span class="n">' + K.esc(r.n) + '</span>' +
+        '<span class="sk">' + K.spark(r.sp, 46, 18, { stroke: col(r.r12), width: 1.2 }) + '</span>' +
+        '<span class="v" style="color:' + (m.neutral ? "var(--fg)" : col(v)) + '">' + m.fmt(v) + '</span></li>';
+    }).join("") || '<li><span class="n">Nothing matches that.</span></li>';
+  }
+  document.getElementById("apptoggle").addEventListener("click", function () {
+    appOpen = !appOpen;
+    document.getElementById("appendix").setAttribute("data-open", String(appOpen));
+    if (appOpen) renderApp();
+  });
+  document.getElementById("sortline").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-s]");
+    if (!b) return;
+    sortKey = b.getAttribute("data-s");
+    document.querySelectorAll("#sortline button").forEach(function (x) {
+      x.setAttribute("aria-pressed", String(x === b));
+    });
+    renderApp();
+  });
+  document.getElementById("q").addEventListener("input", function (e) { q = e.target.value; renderApp(); });
+  document.getElementById("applist").addEventListener("click", function (e) {
+    var li = e.target.closest("[data-t]");
+    if (!li) return;
+    watch.toggle(li.getAttribute("data-t"));
+    renderApp();
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

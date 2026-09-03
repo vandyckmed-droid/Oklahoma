@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ledger — Oklahoma direction 1</title>
+<meta name="color-scheme" content="light">
+<style>
+/* ------------------------------------------------------------------
+   LEDGER — the universe as a printed market page.
+   Thesis: a physician checking a portfolio is reading, not trading.
+   Serif type, hairline rules, no coloured pills, no chrome. Direction
+   is carried by the numeral and a single arrow, never by a green box.
+   ------------------------------------------------------------------ */
+:root {
+  --paper: #faf7f1;
+  --paper-2: #f3efe6;
+  --ink: #1a1714;
+  --ink-2: #575049;
+  --ink-3: #8a8177;
+  --rule: #ddd6c9;
+  --rule-2: #c3b9a8;
+  --oxblood: #8c2f22;
+  --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; background: var(--paper); }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 16px/1.5 var(--serif);
+  font-variant-numeric: oldstyle-nums;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 40px;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+svg { display: block; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+.num { font-variant-numeric: lining-nums tabular-nums; }
+.neg { color: var(--oxblood); }
+
+/* ---- masthead ---- */
+.masthead { padding: 22px 0 10px; border-bottom: 2px solid var(--ink); }
+.masthead h1 {
+  margin: 0; font: 400 40px/1 var(--serif); letter-spacing: 0.01em;
+  font-variant: small-caps; text-align: center;
+}
+.dateline {
+  display: flex; justify-content: space-between; margin-top: 8px;
+  font: 400 11px/1.4 var(--sans); letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+/* ---- section rail ---- */
+.rail { display: flex; gap: 20px; padding: 10px 0 0; border-bottom: 1px solid var(--rule); }
+.rail button {
+  padding: 6px 0 9px; font: 400 13px/1 var(--sans); letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3); border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.rail button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ---- the lede ---- */
+.lede { padding: 18px 0 14px; border-bottom: 1px solid var(--rule); }
+.lede p { margin: 0; font: 400 19px/1.45 var(--serif); }
+.lede p + p { margin-top: 10px; font-size: 16px; color: var(--ink-2); }
+.lede .drop::first-letter {
+  float: left; font-size: 52px; line-height: 0.82; padding: 4px 8px 0 0; font-weight: 400;
+}
+.figures { display: flex; gap: 0; margin: 16px 0 0; border-top: 1px solid var(--rule); }
+.figures div { flex: 1; padding: 10px 10px 2px 0; border-right: 1px solid var(--rule); }
+.figures div:last-child { border-right: 0; padding-right: 0; }
+.figures dt { font: 400 10px/1.3 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.figures dd { margin: 3px 0 0; font: 400 26px/1.1 var(--serif); }
+.bigchart { margin: 14px 0 2px; height: 96px; color: var(--ink); }
+.bigchart svg { width: 100%; height: 100%; }
+.caption { font: italic 400 13px/1.4 var(--serif); color: var(--ink-3); padding-bottom: 14px; }
+
+/* ---- column headings ---- */
+h2.head {
+  margin: 22px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--ink);
+  font: 400 13px/1 var(--sans); letter-spacing: 0.16em; text-transform: uppercase;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+h2.head span { font: italic 400 13px/1 var(--serif); letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+
+/* ---- the lens picker: a line of running text, not a control ---- */
+.lens { padding: 12px 0 4px; font: 400 15px/1.7 var(--serif); color: var(--ink-2); }
+.lens button {
+  font: inherit; color: var(--ink-3); text-decoration: underline;
+  text-decoration-color: var(--rule-2); text-underline-offset: 3px;
+}
+.lens button[aria-pressed="true"] { color: var(--ink); font-style: italic; text-decoration-color: var(--ink); }
+
+/* ---- the table ---- */
+.entries { list-style: none; margin: 0; padding: 0; }
+.entry { border-bottom: 1px solid var(--rule); }
+.entry > button {
+  display: grid; grid-template-columns: 26px 1fr 52px 78px; gap: 10px;
+  align-items: baseline; width: 100%; text-align: left; padding: 11px 0 10px;
+}
+.entry .rk { font: 400 12px/1 var(--sans); color: var(--ink-3); text-align: right; padding-top: 3px; }
+.entry .nm { min-width: 0; }
+.entry .tk { font: 400 17px/1.2 var(--serif); font-variant: small-caps; letter-spacing: 0.03em; }
+.entry .co {
+  display: block; font: 400 12px/1.4 var(--sans); color: var(--ink-3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px;
+}
+.entry .sk { height: 20px; align-self: center; color: var(--ink-3); opacity: .85; }
+.entry .fg { text-align: right; font: 400 18px/1.2 var(--serif); }
+.entry .fg .ar { font-size: 11px; vertical-align: 2px; padding-right: 2px; color: var(--ink-3); }
+.entry.open > button { background: var(--paper-2); }
+.entry[data-watched="true"] .tk::after { content: " ❧"; color: var(--oxblood); font-size: 13px; }
+
+/* ---- the expanded note: prose, in the flow, not a modal ---- */
+.note { padding: 2px 0 20px 36px; border-left: 0; }
+.note p { margin: 0 0 10px; font: 400 16px/1.55 var(--serif); }
+.note .stats { margin: 0 0 12px; padding: 0; border-top: 1px solid var(--rule); }
+.note .stats div {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 6px 0; border-bottom: 1px solid var(--rule);
+}
+.note .stats dt { font: 400 13px/1.4 var(--sans); color: var(--ink-2); }
+.note .stats dd { margin: 0; font: 400 15px/1.4 var(--serif); }
+.note .chart { height: 120px; margin: 4px 0 12px; color: var(--ink); }
+.note .chart svg { width: 100%; height: 100%; }
+.note .keep {
+  font: 400 13px/1 var(--sans); letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--ink); padding: 9px 16px; border-radius: 2px;
+}
+.note .keep[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* ---- sectors ---- */
+.sect { list-style: none; margin: 0; padding: 0; }
+.sect li { display: grid; grid-template-columns: 1fr 64px 74px; gap: 12px; align-items: baseline;
+  padding: 12px 0 11px; border-bottom: 1px solid var(--rule); }
+.sect .sn { font: 400 18px/1.2 var(--serif); }
+.sect .sm { display: block; font: 400 12px/1.5 var(--sans); color: var(--ink-3); margin-top: 2px; }
+.sect .bar { height: 3px; background: var(--rule); margin-top: 6px; }
+.sect .bar i { display: block; height: 3px; background: var(--ink-2); }
+.sect .sk { height: 22px; color: var(--ink-3); align-self: center; }
+.sect .sf { text-align: right; font: 400 18px/1.2 var(--serif); }
+.foot { padding: 24px 0 8px; font: italic 400 13px/1.6 var(--serif); color: var(--ink-3); border-top: 1px solid var(--rule); margin-top: 20px; }
+.searchline { display: flex; align-items: baseline; gap: 8px; padding: 12px 0 2px; border-bottom: 1px solid var(--rule); }
+.searchline label { font: 400 11px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.searchline input {
+  flex: 1; border: 0; background: none; font: 400 17px/1.5 var(--serif); color: var(--ink);
+  padding: 4px 0; outline: none;
+}
+.empty { padding: 30px 0; font: italic 400 16px/1.5 var(--serif); color: var(--ink-3); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <h1>Oklahoma</h1>
+    <div class="dateline"><span id="dl-left"></span><span id="dl-right"></span></div>
+  </header>
+  <nav class="rail" role="tablist" id="rail">
+    <button role="tab" data-view="market" aria-selected="true">The Market</button>
+    <button role="tab" data-view="sectors" aria-selected="false">By Sector</button>
+    <button role="tab" data-view="kept" aria-selected="false">Kept</button>
+  </nav>
+  <main id="main"></main>
+  <p class="foot" id="foot"></p>
+</div>
+
+<script src="data.js"></script>
+<script src="kit.js"></script>
+<script>
+(function () {
+  "use strict";
+  var K = KIT, watch = K.watchlist("ledger");
+  var state = { view: "market", lens: "r12", q: "", open: null };
+  var main = document.getElementById("main");
+
+  var LENSES = [
+    { key: "r12", word: "over the year" },
+    { key: "r6",  word: "over six months" },
+    { key: "r3",  word: "over the quarter" },
+    { key: "r1",  word: "over the month" },
+    { key: "qual", word: "by quality of trend" },
+    { key: "off", word: "by distance from their highs" },
+    { key: "cap", word: "by size" }
+  ];
+  function lensWindow() {
+    return { r12: "1Y", r6: "6M", r3: "3M", r1: "1M" }[state.lens] || "1Y";
+  }
+  function arrow(v) { return v == null ? "" : v > 0 ? "▲" : v < 0 ? "▼" : "—"; }
+
+  document.getElementById("dl-left").textContent = K.asOf();
+  document.getElementById("dl-right").textContent = K.OK.count + " companies · closing prices";
+  document.getElementById("foot").textContent =
+    "Every figure recomputed from committed daily bars, adjusted for splits and dividends. " +
+    "The year is the last 252 trading sessions, beginning " + K.OK.window_start + ". " +
+    K.OK.sufficient + " of " + K.OK.count + " names carry a full year.";
+
+  /* ---- the lede: the market in a sentence ---- */
+  function medianSeries(list) {
+    var sparks = list.map(function (r) { return r.sp; }).filter(function (s) { return s && s.length; });
+    if (sparks.length < 2) return [];
+    var n = sparks[0].length, out = [];
+    for (var i = 0; i < n; i++) {
+      out.push(K.median(sparks.map(function (s) { return s[i]; })));
+    }
+    return out;
+  }
+  var uniSeries = medianSeries(K.names);
+
+  function ledeHTML() {
+    var w = K.windowByKey(lensWindow()), field = w.field;
+    var vals = K.names.map(function (r) { return r.ok ? r[field] : null; });
+    var med = K.median(vals);
+    var up = vals.filter(function (v) { return v != null && v > 0; }).length;
+    var have = vals.filter(function (v) { return v != null; }).length;
+    var best = K.OK.sectors[0], worst = K.OK.sectors[K.OK.sectors.length - 1];
+    var series = K.rebase(uniSeries, w.points);
+    var g = K.pathFor(series, 320, 96, { pad: 6, zero: true });
+    return '' +
+      '<section class="lede">' +
+        '<p class="drop">The median name in the universe ' +
+          (med >= 0 ? "gained " : "lost ") + '<b class="num' + (med < 0 ? " neg" : "") + '">' +
+          Math.abs(med).toFixed(1) + '%</b> ' + w.label.replace("12 months", "over the past year")
+            .replace("6 months", "over six months").replace("3 months", "over the quarter")
+            .replace("1 month", "over the month") + ', with ' +
+          '<b class="num">' + up + '</b> of ' + have + ' names above water.</p>' +
+        '<p>' + best.sector + ' led, its median name up <span class="num">' +
+          best.median_return_pct.toFixed(1) + '%</span> with <span class="num">' +
+          Math.round(best.breadth_pct) + '%</span> of its ' + best.count + ' names positive over the year. ' +
+          worst.sector + ' trailed at <span class="num' + (worst.median_return_pct < 0 ? " neg" : "") + '">' +
+          K.signed(worst.median_return_pct, 1, "%") + '</span>.</p>' +
+        '<div class="figures">' +
+          fig("Median", K.pct(med, 1)) +
+          fig("Names up", up + " / " + have) +
+          fig("Leading", K.abbr(best.sector)) +
+        '</div>' +
+        '<div class="bigchart"><svg viewBox="0 0 320 96" preserveAspectRatio="none">' +
+          '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+            '" stroke="var(--rule-2)" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>' +
+          '<path d="' + g.d + '" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+            'vector-effect="non-scaling-stroke" stroke-linejoin="round"/>' +
+          '<circle cx="320" cy="' + g.y(series[series.length - 1]).toFixed(1) + '" r="3" fill="currentColor"/>' +
+        '</svg></div>' +
+        '<p class="caption">The median name’s cumulative total return, ' + w.label + ' to ' + K.asOf() + '.</p>' +
+      '</section>';
+  }
+  function fig(label, value) {
+    var neg = String(value).indexOf("−") === 0;
+    return '<div><dt>' + label + '</dt><dd class="num' + (neg ? " neg" : "") + '">' + value + '</dd></div>';
+  }
+
+  function lensHTML() {
+    var parts = LENSES.map(function (l) {
+      return '<button type="button" data-lens="' + l.key + '" aria-pressed="' +
+        (state.lens === l.key) + '">' + l.word + '</button>';
+    });
+    return '<p class="lens">Ranked ' + parts.join(", ") + '.</p>';
+  }
+
+  function entryHTML(r, i) {
+    var m = K.METRICS[state.lens], v = m.get(r);
+    var neg = v != null && v < 0 && !m.neutral;
+    var open = state.open === r.t;
+    return '<li class="entry' + (open ? " open" : "") + '" data-watched="' + watch.has(r.t) + '">' +
+      '<button type="button" data-t="' + r.t + '">' +
+        '<span class="rk num">' + (i + 1) + '</span>' +
+        '<span class="nm"><span class="tk">' + r.t + '</span>' +
+          '<span class="co">' + K.esc(r.n) + ' · ' + K.abbr(r.s) + '</span></span>' +
+        '<span class="sk">' + K.spark(K.rebase(r.sp, K.windowByKey(lensWindow()).points), 60, 20,
+          { stroke: "currentColor", width: 1.1 }) + '</span>' +
+        '<span class="fg num' + (neg ? " neg" : "") + '">' +
+          (m.neutral ? "" : '<span class="ar">' + arrow(v) + '</span>') + m.fmt(v) + '</span>' +
+      '</button>' + (open ? noteHTML(r) : "") + '</li>';
+  }
+
+  function noteHTML(r) {
+    var w = K.windowByKey(lensWindow());
+    var series = K.rebase(r.sp, w.points);
+    var g = K.pathFor(series, 320, 120, { pad: 8, zero: true });
+    var med = K.medianBySector[r.s];
+    var rel = (r.ok && r.r12 != null && med != null) ? r.r12 - med : null;
+    var sentence = "";
+    if (r.r12 != null) {
+      sentence = r.n + " " + (r.r12 >= 0 ? "returned " : "lost ") + Math.abs(r.r12).toFixed(1) +
+        "% over the year" + (rel != null ? ", " + (rel >= 0 ? "ahead of" : "behind") + " its sector’s median by " +
+        Math.abs(rel).toFixed(1) + " points" : "") + ". ";
+      if (r.r2 != null) {
+        sentence += r.r2 >= 0.75 ? "The path was orderly: a straight trend explains " + Math.round(r.r2 * 100) +
+          "% of it." : r.r2 >= 0.4 ? "A trend explains " + Math.round(r.r2 * 100) +
+          "% of the path — the rest was swing." : "Little of that came from a steady trend (R² " +
+          r.r2.toFixed(2) + "); the year was mostly swing.";
+      }
+      if (r.off != null && r.off < -15) sentence += " It sits " + Math.abs(r.off).toFixed(0) +
+        "% below its high for the year.";
+      else if (r.off != null && r.off > -2) sentence += " It is pressing its high for the year.";
+    } else {
+      sentence = r.n + " carries only " + r.days + " trading days of history — short of the full year the " +
+        "page measures, so the year’s figures are withheld.";
+    }
+    function row(dt, dd, neg) {
+      return '<div><dt>' + dt + '</dt><dd class="num' + (neg ? " neg" : "") + '">' + dd + '</dd></div>';
+    }
+    return '<div class="note">' +
+      '<div class="chart"><svg viewBox="0 0 320 120" preserveAspectRatio="none">' +
+        '<line x1="0" x2="320" y1="' + g.y(0).toFixed(1) + '" y2="' + g.y(0).toFixed(1) +
+          '" stroke="var(--rule-2)" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>' +
+        '<path d="' + g.d + '" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+          'vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg></div>' +
+      '<p>' + K.esc(sentence) + '</p>' +
+      '<dl class="stats">' +
+        row("Last close", K.price(r.px)) +
+        row("Market capitalisation", K.money(r.cap)) +
+        row("Twelve months", K.pct(r.r12), r.r12 < 0) +
+        row("Twelve less one", K.pct(r.m121), r.m121 < 0) +
+        row("Off the year’s high", K.METRICS.off.fmt(r.off), r.off < -0.5) +
+        row("Trend, annualised", K.METRICS.trend.fmt(r.trend), r.trend < 0) +
+        row("Range", r.lo != null ? K.price(r.lo) + " – " + K.price(r.hi) : "—") +
+        row("Industry", K.esc(r.i || "—")) +
+      '</dl>' +
+      '<button class="keep" type="button" data-keep="' + r.t + '" aria-pressed="' + watch.has(r.t) + '">' +
+        (watch.has(r.t) ? "Kept" : "Keep this name") + '</button>' +
+    '</div>';
+  }
+
+  function marketHTML() {
+    var list = K.sortBy(K.search(K.names, state.q), state.lens, state.lens !== "off");
+    var shown = list.slice(0, 60);
+    return ledeHTML() +
+      '<h2 class="head">The Universe<span>' + list.length + " of " + K.OK.count + '</span></h2>' +
+      lensHTML() +
+      '<div class="searchline"><label for="q">Find</label>' +
+        '<input id="q" type="search" value="' + K.esc(state.q) + '" placeholder="ticker, company or sector" autocomplete="off"></div>' +
+      (shown.length ? '<ul class="entries">' + shown.map(entryHTML).join("") + '</ul>' +
+        (list.length > shown.length ? '<p class="caption" style="padding-top:12px">' +
+          (list.length - shown.length) + ' further names follow the first sixty. Narrow the search to reach them.</p>' : "")
+        : '<p class="empty">Nothing matches that.</p>');
+  }
+
+  function sectorsHTML() {
+    var rows = K.OK.sectors.map(function (s) {
+      var series = medianSeries(K.names.filter(function (r) { return r.s === s.sector && r.ok; }));
+      return '<li><span><span class="sn">' + s.sector + '</span>' +
+        '<span class="sm">' + s.count + ' names · ' + Math.round(s.breadth_pct) + '% above water' +
+        '<span class="bar"><i style="width:' + s.breadth_pct + '%"></i></span></span></span>' +
+        '<span class="sk">' + K.spark(series, 64, 22, { stroke: "currentColor", width: 1.2 }) + '</span>' +
+        '<span class="sf num' + (s.median_return_pct < 0 ? " neg" : "") + '">' +
+          K.signed(s.median_return_pct, 1, "%") + '</span></li>';
+    }).join("");
+    return '<section class="lede"><p>Eleven sectors, ranked by the median twelve-month return of ' +
+      'their names. Breadth — the share of a sector’s names above water — sits under each, ' +
+      'because a healthy median can rest on three winners.</p></section>' +
+      '<h2 class="head">By Sector<span>median · 12 months</span></h2>' +
+      '<ul class="sect">' + rows + '</ul>' +
+      '<h2 class="head">Extremes<span>the year’s edges</span></h2>' +
+      '<ul class="entries">' +
+        K.OK.leaders.concat(K.OK.laggards).map(function (x, i) {
+          var r = K.byTicker[x.ticker];
+          return r ? entryHTML(r, i) : "";
+        }).join("") + '</ul>';
+  }
+
+  function keptHTML() {
+    var list = watch.list();
+    if (!list.length) {
+      return '<p class="empty">No names kept yet.<br>Open a name and press <i>Keep this name</i>.</p>';
+    }
+    var med = K.median(list.map(function (r) { return r.r12; }));
+    return '<section class="lede"><p class="drop">You are keeping <b class="num">' + list.length +
+      '</b> names. Their median twelve-month return is <b class="num' + (med < 0 ? " neg" : "") + '">' +
+      K.signed(med, 1, "%") + '</b>, against <span class="num">' +
+      K.signed(K.median(K.names.map(function (r) { return r.r12; })), 1, "%") +
+      '</span> for the universe.</p></section>' +
+      '<h2 class="head">Kept<span>' + list.length + ' names</span></h2>' + lensHTML() +
+      '<ul class="entries">' + K.sortBy(list, state.lens, state.lens !== "off").map(entryHTML).join("") + '</ul>';
+  }
+
+  function render(keepScroll) {
+    var y = window.scrollY;
+    main.innerHTML = state.view === "market" ? marketHTML()
+      : state.view === "sectors" ? sectorsHTML() : keptHTML();
+    if (keepScroll) window.scrollTo(0, y);
+  }
+
+  document.getElementById("rail").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-view]");
+    if (!b) return;
+    state.view = b.getAttribute("data-view");
+    state.open = null;
+    document.querySelectorAll("#rail button").forEach(function (x) {
+      x.setAttribute("aria-selected", String(x === b));
+    });
+    render();
+    window.scrollTo(0, 0);
+  });
+
+  main.addEventListener("click", function (e) {
+    var keep = e.target.closest("[data-keep]");
+    if (keep) { watch.toggle(keep.getAttribute("data-keep")); render(true); return; }
+    var lens = e.target.closest("[data-lens]");
+    if (lens) { state.lens = lens.getAttribute("data-lens"); state.open = null; render(true); return; }
+    var row = e.target.closest("[data-t]");
+    if (row) {
+      var t = row.getAttribute("data-t");
+      state.open = state.open === t ? null : t;
+      render(true);
+    }
+  });
+  main.addEventListener("input", function (e) {
+    if (e.target.id !== "q") return;
+    state.q = e.target.value;
+    state.open = null;
+    render(true);
+    var f = document.getElementById("q");
+    if (f) { f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
