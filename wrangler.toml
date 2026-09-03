@@ -4,6 +4,8 @@
 name = "oklahoma-quotes"
 main = "worker/src/index.js"
 compatibility_date = "2026-09-01"
+# Keep variables and secrets set in the dashboard across deploys.
+keep_vars = true
 
 [vars]
 ALLOWED_ORIGINS = "https://vandyckmed-droid.github.io,http://localhost:8000,http://127.0.0.1:8000"
