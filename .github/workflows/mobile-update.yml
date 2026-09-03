@@ -83,13 +83,15 @@ jobs:
         if: steps.gate.outputs.ready == 'true'
         id: project
         run: |
-          # `eas whoami` prints the username first, then a bulleted list of
-          # accounts with roles. Take the first plain line; if it does not look
-          # like a username, fall back to the repository owner, which is the
-          # same person here. A repository variable EXPO_ACCOUNT overrides both.
-          WHO="$(eas whoami 2>/dev/null | grep -vE '^\s*$|•|\(' | head -n1 | tr -d '[:space:]')"
-          ACCOUNT="${EXPO_ACCOUNT:-${WHO:-$GITHUB_REPOSITORY_OWNER}}"
-          echo "eas whoami says: ${WHO:-<nothing usable>}; publishing as @$ACCOUNT"
+          # `eas whoami` is not a stable source for the account slug: across
+          # two runs it led with a bulleted role list and then with the
+          # sign-in email, and EAS rejects both. The GitHub repository owner is
+          # the Expo account here, so that is the default; a repository
+          # variable EXPO_ACCOUNT overrides it for anyone whose slugs differ.
+          # whoami is kept purely as a breadcrumb in the log.
+          echo "eas whoami: $(eas whoami 2>/dev/null | head -n1)"
+          ACCOUNT="${EXPO_ACCOUNT:-$GITHUB_REPOSITORY_OWNER}"
+          echo "Publishing as @$ACCOUNT"
           OUT="$(eas init --account "$ACCOUNT" --force --json --non-interactive)"
           echo "$OUT"
           ID="$(echo "$OUT" | node -e '
