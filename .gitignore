@@ -10,8 +10,11 @@ venv/
 .impeccable/review/
 .impeccable/build/
 
-# Local Claude tooling (skills, agents) stays out of the published repo
-.claude/
+# Local Claude tooling stays out of the published repo, except skills that
+# belong to this repository. Git cannot re-include a path under an ignored
+# directory, so ignore .claude's contents rather than the directory itself.
+.claude/*
+!.claude/skills/
 .impeccable/
 
 # Cloudflare Worker tooling
