@@ -83,8 +83,13 @@ jobs:
         if: steps.gate.outputs.ready == 'true'
         id: project
         run: |
-          ACCOUNT="$(eas whoami 2>/dev/null | tail -n1 | tr -d '[:space:]')"
-          echo "Publishing as @$ACCOUNT"
+          # `eas whoami` prints the username first, then a bulleted list of
+          # accounts with roles. Take the first plain line; if it does not look
+          # like a username, fall back to the repository owner, which is the
+          # same person here. A repository variable EXPO_ACCOUNT overrides both.
+          WHO="$(eas whoami 2>/dev/null | grep -vE '^\s*$|•|\(' | head -n1 | tr -d '[:space:]')"
+          ACCOUNT="${EXPO_ACCOUNT:-${WHO:-$GITHUB_REPOSITORY_OWNER}}"
+          echo "eas whoami says: ${WHO:-<nothing usable>}; publishing as @$ACCOUNT"
           OUT="$(eas init --account "$ACCOUNT" --force --json --non-interactive)"
           echo "$OUT"
           ID="$(echo "$OUT" | node -e '
