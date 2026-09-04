@@ -338,8 +338,8 @@ class PercentileTests(unittest.TestCase):
         self.assertEqual(metrics.percentiles({}), {})
 
 
-class RelativeStrengthTests(unittest.TestCase):
-    """The series is a cross-section, so it is tested across names."""
+class MomentumBlendTests(unittest.TestCase):
+    """The score is a cross-section, so it is tested across names."""
 
     @staticmethod
     def universe_of(rates, length=80):
@@ -348,89 +348,83 @@ class RelativeStrengthTests(unittest.TestCase):
             for name, rate in rates.items()
         }
 
-    def series(self, rates, **overrides):
-        book = self.universe_of(rates)
-        calendar = sorted({bar["date"] for b in book.values() for bar in b})
-        options = dict(
-            trading_days=40, half=20, skip=5, points=3, step=5, min_names=2
-        )
+    def blend(self, rates, **overrides):
+        options = dict(trading_days=40, half=20, skip=5, min_names=2)
         options.update(overrides)
-        return metrics.relative_strength(book, calendar, **options)
+        return metrics.momentum_blend(self.universe_of(rates), **options)
 
     def test_the_strongest_name_ranks_top_and_the_weakest_bottom(self):
-        out = self.series({"up": 1.006, "mid": 1.002, "down": 0.996})
-        self.assertEqual(len(out["dates"]), 3)
-        for i in range(3):
-            self.assertGreater(out["series"]["up"][i], out["series"]["mid"][i])
-            self.assertGreater(out["series"]["mid"][i], out["series"]["down"][i])
+        out = self.blend({"up": 1.006, "mid": 1.002, "down": 0.996})
+        self.assertGreater(out["up"], out["mid"])
+        self.assertGreater(out["mid"], out["down"])
 
-    def test_every_value_sits_on_the_fixed_scale(self):
-        out = self.series({"a": 1.006, "b": 1.002, "c": 0.996, "d": 1.004})
-        for values in out["series"].values():
-            for value in values:
-                if value is not None:
-                    self.assertGreaterEqual(value, 0.0)
-                    self.assertLessEqual(value, 100.0)
+    def test_every_score_sits_on_the_fixed_scale(self):
+        out = self.blend({"a": 1.006, "b": 1.002, "c": 0.996, "d": 1.004})
+        for value in out.values():
+            self.assertGreaterEqual(value, 0.0)
+            self.assertLessEqual(value, 100.0)
 
-    def test_dates_come_from_the_shared_calendar_newest_last(self):
-        out = self.series({"a": 1.006, "b": 1.002, "c": 0.996})
-        self.assertEqual(out["dates"], sorted(out["dates"]))
-        self.assertEqual(len(set(out["dates"])), len(out["dates"]))
+    def test_an_outlier_ranks_first_without_stretching_the_scale(self):
+        # The point of ranking before blending: a name up thirty-fold
+        # tops the list and stops there, leaving the scale where it was.
+        rates = {"a": 1.006, "b": 1.002, "c": 0.996, "d": 1.004}
+        ordinary = self.blend(rates)
+        book = self.universe_of(rates)
+        book["moon"] = bars(*[100 * 1.05 ** i for i in range(80)])
+        wild = metrics.momentum_blend(book, trading_days=40, half=20, skip=5, min_names=2)
+        self.assertEqual(wild["moon"], max(wild.values()))
+        self.assertLessEqual(max(wild.values()), 100.0)
+        # The others keep their order; only the new name joins the ranking.
+        self.assertEqual(
+            sorted(ordinary, key=ordinary.get),
+            sorted(ordinary, key=lambda t: wild[t]),
+        )
 
-    def test_a_name_without_a_full_window_has_no_bar(self):
+    def test_a_name_without_a_full_window_has_no_score(self):
         book = self.universe_of({"a": 1.006, "b": 1.002, "c": 0.996})
         book["young"] = bars(*[100 * 1.01 ** i for i in range(10)])
-        calendar = sorted({bar["date"] for b in book.values() for bar in b})
-        out = metrics.relative_strength(
-            book, calendar, trading_days=40, half=20, skip=5,
-            points=3, step=5, min_names=2,
-        )
-        self.assertTrue(all(v is None for v in out["series"]["young"]))
-        self.assertTrue(all(v is not None for v in out["series"]["a"]))
+        out = metrics.momentum_blend(book, trading_days=40, half=20, skip=5, min_names=2)
+        self.assertNotIn("young", out)
+        self.assertIn("a", out)
 
-    def test_a_thin_cross_section_is_left_out_entirely(self):
-        out = self.series({"a": 1.006, "b": 1.002}, min_names=3)
-        self.assertEqual(out["dates"], [])
+    def test_a_thin_cross_section_scores_nothing(self):
+        self.assertEqual(self.blend({"a": 1.006, "b": 1.002}, min_names=3), {})
 
 
-class RelativeStrengthPayloadTests(unittest.TestCase):
-    """The page's bars must match the series and stay on the scale."""
+class MomentumBlendPayloadTests(unittest.TestCase):
+    """The page's score must match the calculation it came from."""
 
     @classmethod
     def setUpClass(cls):
         cls.display = ui._display(universe_mod.load(), history.load_index())
-        cls.meta = cls.display.get("relative_strength")
+        cls.scored = [r for r in cls.display["coverage"] if "blend_pct" in r]
 
-    def test_the_payload_carries_the_snapshot_dates(self):
-        self.assertIsNotNone(self.meta)
-        self.assertEqual(self.meta["dates"], sorted(self.meta["dates"]))
-        self.assertLessEqual(len(self.meta["dates"]), config.RS_POINTS)
+    def test_every_full_window_name_is_scored(self):
+        full = [r for r in self.display["coverage"] if r["sufficient"]]
+        self.assertEqual(len(self.scored), len(full))
 
-    def test_every_bar_is_a_percentile_on_the_fixed_scale(self):
-        for row in self.display["coverage"]:
-            for value in row.get("rs_spark", []):
-                with self.subTest(ticker=row["ticker"]):
-                    self.assertTrue(value is None or 0.0 <= value <= 100.0)
-
-    def test_each_series_is_one_value_per_snapshot_date(self):
-        for row in self.display["coverage"]:
-            if "rs_spark" in row:
-                self.assertEqual(len(row["rs_spark"]), len(self.meta["dates"]))
-
-    def test_the_stated_standing_is_the_newest_bar(self):
-        for row in self.display["coverage"]:
-            if "rs_spark" in row:
-                self.assertEqual(row["rs_now"], row["rs_spark"][-1])
+    def test_every_score_is_a_percentile_on_the_fixed_scale(self):
+        for row in self.scored:
+            with self.subTest(ticker=row["ticker"]):
+                self.assertGreaterEqual(row["blend_pct"], 0.0)
+                self.assertLessEqual(row["blend_pct"], 100.0)
 
     def test_names_are_spread_across_the_scale(self):
-        # A percentile that clusters would mean the ranking collapsed.
-        latest = [
-            row["rs_now"] for row in self.display["coverage"]
-            if row.get("rs_now") is not None
-        ]
-        self.assertGreater(len(latest), 100)
-        self.assertLess(min(latest), 10)
-        self.assertGreater(max(latest), 90)
+        # A score that clusters would mean the ranking collapsed.
+        values = [row["blend_pct"] for row in self.scored]
+        self.assertGreater(len(values), 100)
+        self.assertLess(min(values), 10)
+        self.assertGreater(max(values), 90)
+
+    def test_the_payload_matches_a_direct_recomputation(self):
+        bars_by_ticker = {
+            row["ticker"]: history.load_series(row["ticker"])["bars"]
+            for row in self.display["coverage"]
+        }
+        expected = metrics.momentum_blend(bars_by_ticker)
+        self.assertEqual(
+            {row["ticker"]: row["blend_pct"] for row in self.scored}, expected
+        )
 
 
 if __name__ == "__main__":
