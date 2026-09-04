@@ -138,8 +138,10 @@ svg { display: block; }
    cross-sectional percentile a name must reach to stay in the list. */
 .screen { padding: 10px 0 6px; border-bottom: 1px solid var(--line); }
 .screen-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 400 13px/18px var(--sans); color: var(--text-2); }
-.screen-head .xl { font: inherit; }
-.screen-head .n { white-space: nowrap; text-align: right; }
+.screen-head .xl { font: inherit; text-align: left; }
+/* Offered, never applied on its own: it appears when the screen leaves
+   too little to compare and widens both cutoffs a notch when tapped. */
+.relax { flex: none; height: 28px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 14px; font: 500 13px/26px var(--sans); color: var(--up-text); background: var(--bg); white-space: nowrap; }
 .slider { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 12px; padding: 8px 0 0; }
 .slider label { font: 600 15px/20px var(--sans); white-space: nowrap; }
 .slider output { font: 400 13px/20px var(--sans); color: var(--text-2); white-space: nowrap; text-align: right; }
@@ -553,16 +555,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     </header>
 
     <div class="screen" id="screen" hidden>
-      <div class="screen-head"><button type="button" class="xl" data-explain="screen">Momentum screen</button><span class="n" id="screen-n" aria-live="polite"></span></div>
+      <div class="screen-head"><button type="button" class="xl" id="screen-n" data-explain="screen" aria-live="polite"></button><button type="button" class="relax" id="screen-relax" hidden>Relax filters</button></div>
       <div class="slider">
         <label for="mom121Min">12–1 Momentum</label>
         <output id="mom121Out" for="mom121Min"></output>
-        <input id="mom121Min" type="range" min="0" max="95" step="5" value="0">
+        <input id="mom121Min" type="range" min="0" max="95" step="5" value="90">
       </div>
       <div class="slider">
         <label for="mom61Min">6–1 Momentum</label>
         <output id="mom61Out" for="mom61Min"></output>
-        <input id="mom61Min" type="range" min="0" max="95" step="5" value="0">
+        <input id="mom61Min" type="range" min="0" max="95" step="5" value="90">
       </div>
     </div>
 
@@ -1206,7 +1208,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       // display "sort" means the row figure follows the sort key.
       view: "cards", display: "sort", tab: "universe", theme: "system", range: "1Y",
       // Momentum screen: the lowest percentile a name must reach; 0 is off.
-      mom121Min: 0, mom61Min: 0,
+      // Both open at the 90th percentile — Top 10% on each, and a name
+      // must clear both — so the page opens on the short list, not all 503.
+      mom121Min: 90, mom61Min: 90,
       quotesUrl: DEFAULT_QUOTES_URL
     };
     var collapsedSectors = new Set();
@@ -1229,7 +1233,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
-      SCREENS.forEach(function (s) {
+      // Before v4 both sliders defaulted to All and were written on every
+      // save, so a stored 0 rarely meant a deliberate choice; only v4
+      // values are a viewer's own and override the Top 10% default.
+      if (p.v >= 4) SCREENS.forEach(function (s) {
         var v = p[s.pref];
         if (typeof v === "number" && v >= 0 && v <= 95 && v % 5 === 0) state[s.pref] = v;
       });
@@ -1240,7 +1247,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
-          v: 3, view: state.view, display: state.display,
+          v: 4, view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
           grouped: state.grouped, showTrend: state.showTrend,
           theme: state.theme, range: state.range, quotesUrl: state.quotesUrl,
@@ -1433,40 +1440,50 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       }
       return true;
     }
-    // The lowest figure that clears a slider: the first sorted value whose
-    // rank reaches the threshold.
-    function screenCutoff(s) {
-      var rk = ranked[s.key], min = state[s.pref];
-      var k = Math.ceil(rk.sorted.length * min / 100);
-      return k < rk.sorted.length ? rk.sorted[k] : null;
-    }
+    // Too few survivors to compare is a screen worth widening; the offer
+    // appears at this many and never acts on its own.
+    var RELAX_AT = 10;
 
     var screenEl = document.getElementById("screen");
     var screenN = document.getElementById("screen-n");
+    var relaxBtn = document.getElementById("screen-relax");
     function renderScreen() {
       var any = SCREENS.some(function (s) { return ranked[s.key].sorted.length > 1; });
       screenEl.hidden = !any;
       if (!any) return;
+      var live = [];
       SCREENS.forEach(function (s) {
         var input = document.getElementById(s.pref);
         var out = document.getElementById(s.key + "Out");
         var min = state[s.pref];
+        // Only the relative bar: a percentile is comparable across the
+        // two figures and across days, where a return cutoff is neither.
         var label = min ? "Top " + (100 - min) + "%" : "All";
+        var full = min ? label + " (≥" + min + "th percentile)" : label;
+        if (min) live.push(METRICS[s.key].short);
         input.value = String(min);
-        input.setAttribute("aria-valuetext", label);
+        input.setAttribute("aria-valuetext", full);
         out.textContent = "";
         out.classList.toggle("on", min > 0);
         out.appendChild(el("b", null, label));
-        var cut = min ? screenCutoff(s) : null;
-        if (cut != null) out.appendChild(document.createTextNode(" · from " + pct1(cut)));
+        if (min) out.appendChild(document.createTextNode(" (≥" + min + "th percentile)"));
       });
-      if (screenOn()) {
-        var pass = rows.filter(passesScreen).length;
-        screenN.textContent = pass + " of " + rows.length + " names clear the screen";
-      } else {
-        screenN.textContent = "All " + rows.length + " names · slide to screen";
-      }
+      var pass = screenOn() ? rows.filter(passesScreen).length : rows.length;
+      screenN.textContent = screenOn()
+        ? pass + " of " + rows.length + " qualify · " +
+          (live.length > 1 ? "both filters required" : live[0] + " filter only")
+        : "All " + rows.length + " names · slide to screen";
+      relaxBtn.hidden = !screenOn() || pass >= RELAX_AT;
     }
+    // Widens every live cutoff by one notch, on the tap and not before.
+    relaxBtn.addEventListener("click", function () {
+      SCREENS.forEach(function (s) {
+        if (state[s.pref] > 0) state[s.pref] = Math.max(0, state[s.pref] - 5);
+      });
+      savePrefs();
+      renderScreen();
+      renderList();
+    });
     SCREENS.forEach(function (s) {
       var input = document.getElementById(s.pref);
       // `input` fires through the drag, so the list follows the thumb;
@@ -2165,7 +2182,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
       screen: ["Momentum screen",
-        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 20% keeps only names whose 12–1 or 6–1 momentum is higher than at least 80% of the universe. A name must clear both sliders. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. The figure beside each slider is the lowest return that clears it.",
+        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 10% keeps only names whose 12–1 or 6–1 momentum is higher than at least 90% of the universe. Both sliders open at Top 10% and a name must clear both, so the page opens on the names strong in either window rather than all of them. Each cutoff is shown only as that relative bar, never as the return it happens to fall at today: a percentile compares across both figures and across days, a return does not. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. When fewer than ten names qualify the head offers to relax the filters; it widens both cutoffs a notch only when tapped.",
         "rank = names with a lower value ÷ names with the figure · keep if rank ≥ slider"],
       today: ["Today's change",
         "The live price against the previous close, from your own quotes Worker, refreshed about every minute and a half while the page is open. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
