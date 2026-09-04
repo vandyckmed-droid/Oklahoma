@@ -238,7 +238,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .list > li { border-bottom: 1px solid var(--line); }
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 64px auto;
+  grid-template-columns: minmax(0, 1fr) 72px auto;
   align-items: center;
   column-gap: 14px;
   width: 100%;
@@ -257,9 +257,9 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .company { display: flex; gap: 4px; min-width: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
 .company-name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cap-sub { flex: none; }
-.spark { width: 64px; height: 26px; }
+.spark { width: 72px; height: 26px; }
 .spark svg { width: 100%; height: 100%; overflow: visible; }
-.spark-empty { width: 64px; height: 26px; border-bottom: 1px dashed var(--line-2); }
+.spark-empty { width: 72px; height: 26px; border-bottom: 1px dashed var(--line-2); }
 .figure { text-align: right; min-width: 88px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .figure .price { font: 500 15px/20px var(--sans); white-space: nowrap; }
 .figure .price.none { color: var(--text-3); }
@@ -296,7 +296,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
 /* The listing's legend shares the row grid so each label sits over the
    column it names: names, the year's path, then the price and figure. */
-.legend { display: grid; grid-template-columns: minmax(0, 1fr) 64px 88px; column-gap: 14px; align-items: baseline; }
+.legend { display: grid; grid-template-columns: minmax(0, 1fr) 72px 88px; column-gap: 14px; align-items: baseline; }
 .legend .fig-head { display: flex; justify-content: flex-end; min-width: 0; }
 .legend .fig-head > * { flex: none; text-align: right; }
 .legend .xl, .legend .xl-static { font: inherit; }
@@ -580,7 +580,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><span class="spark-head xl-static" id="sparkfig" title="Cumulative return over the past 12 months">1Y path</span><span class="fig-head" id="listfig"></span></div>
+        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><button type="button" class="spark-head xl" id="sparkfig" data-explain="rs">RS 0–100</button><span class="fig-head" id="listfig"></span></div>
         <ul class="list" id="list" tabindex="-1"></ul>
         <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
           <table class="grid" aria-label="Universe table">
@@ -855,6 +855,54 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     // opts: width, height, big (zero line, end dot, draw-in), overlay
     // (a second dashed series), dashed (short history), stroke colour.
+    /* One bar a month of the name's standing in the whole universe, on a
+       0-100 scale that never rescales: the bar's height is the position
+       itself, so heights compare across names and across the year the way
+       a price sparkline — every one of them scaled to its own range —
+       cannot. Above the midline is the stronger half of the S&P 500. */
+    function rsBars(series, opts) {
+      opts = opts || {};
+      var w = opts.width || 72, h = opts.height || 26;
+      var svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+      svg.setAttribute("aria-hidden", "true");
+      if (!series || !series.length) return svg;
+      // Every name shares the payload's snapshot dates, so one slot per
+      // value fills the cell whether the page carries three months or
+      // thirteen; a name too young for the early ones leaves them empty.
+      var slots = opts.slots || series.length;
+      var gap = slots > 1 ? Math.min(1.5, w / slots / 3) : 0;
+      var bw = (w - gap * (slots - 1)) / slots;
+      // Right-aligned: the newest month is the rightmost slot, so a short
+      // series reads as history yet to accumulate, not as a recent gap.
+      var offset = Math.max(0, slots - series.length);
+
+      var mid = document.createElementNS(SVG, "line");
+      mid.setAttribute("x1", "0"); mid.setAttribute("x2", String(w));
+      mid.setAttribute("y1", (h / 2).toFixed(2)); mid.setAttribute("y2", (h / 2).toFixed(2));
+      mid.setAttribute("vector-effect", "non-scaling-stroke");
+      mid.style.stroke = "var(--line-2)";
+      svg.appendChild(mid);
+
+      series.forEach(function (v, i) {
+        if (v == null) return;
+        var last = i === series.length - 1;
+        var bh = Math.max(1, (v / 100) * h);
+        var rect = document.createElementNS(SVG, "rect");
+        rect.setAttribute("x", ((offset + i) * (bw + gap)).toFixed(2));
+        rect.setAttribute("y", (h - bh).toFixed(2));
+        rect.setAttribute("width", bw.toFixed(2));
+        rect.setAttribute("height", bh.toFixed(2));
+        // Colour says which half of the universe the month sat in; only
+        // the newest bar is at full strength, so "where it stands now"
+        // reads first and the months behind it read as context.
+        rect.style.fill = v >= 50 ? "var(--up)" : "var(--down)";
+        rect.style.opacity = last ? "1" : "0.35";
+        svg.appendChild(rect);
+      });
+      return svg;
+    }
+
     function lineChart(series, opts) {
       opts = opts || {};
       var w = opts.width || 64, h = opts.height || 26, pad = opts.big ? 6 : 1.5;
@@ -1813,6 +1861,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (cov && cov.mom_6_1_pct != null) {
         grid.appendChild(stat("mom61", "6–1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct), "skips the last month"));
       }
+      if (cov && cov.rs_now != null) {
+        var months = (cov.rs_spark || []).filter(function (v) { return v != null; });
+        var first = months.length > 1 ? months[0] : null;
+        grid.appendChild(stat("rs", "Relative strength", Math.round(cov.rs_now) + " / 100",
+          cov.rs_now >= 50 ? "up" : "down",
+          first == null ? "vs the universe" : signed(cov.rs_now - first, 0, " pts") + " over " + months.length + " months"));
+      }
       var med = medianBySector[r.sector];
       if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
         grid.appendChild(stat("vsmedian", "Relative to sector", signed(cov.window_return_pct - med, 1, " pts"),
@@ -1901,10 +1956,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       main.appendChild(company);
       button.appendChild(main);
 
-      if (cov && cov.cum_return_spark && cov.cum_return_spark.length > 1) {
+      if (cov && cov.rs_spark && cov.rs_spark.length) {
         var sp = el("span", "spark");
-        sp.appendChild(lineChart(cov.cum_return_spark, { width: 64, height: 26, dashed: !cov.sufficient,
-          stroke: colorFor(cov.window_return_pct) }));
+        sp.appendChild(rsBars(cov.rs_spark));
         button.appendChild(sp);
       } else {
         button.appendChild(el("span", "spark-empty"));
@@ -2181,6 +2235,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       chart: ["How the charts are drawn",
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
+      rs: ["Relative strength",
+        "The bars beside each name are where it stood in the S&P 500, one bar a month over the past year. Each month both its 12–1 and 6–1 momentum are divided by how much the name moved day to day over that same window — the same return per unit of daily volatility, so a steady climb outranks an equal one taken through twice the swing — then each figure is ranked against every other name carrying both that month, and the two ranks are averaged. The result is a percentile: 80 means the name stood above four fifths of the universe. The scale is fixed at 0 to 100 for every name and every month, unlike a price sparkline that rescales to its own range, so heights compare directly. The midline is the 50th percentile; bars above it are the stronger half of the index, and the newest month is the solid bar on the right. Rising bars are a name gaining ground on the rest of the index, which is not the same as a rising price — a name can fall and still climb here if the index fell harder.",
+        "rank(12–1 ÷ daily vol) and rank(6–1 ÷ daily vol), averaged, each month"],
       screen: ["Momentum screen",
         "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 10% keeps only names whose 12–1 or 6–1 momentum is higher than at least 90% of the universe. Both sliders open at Top 10% and a name must clear both, so the page opens on the names strong in either window rather than all of them. Each cutoff is shown only as that relative bar, never as the return it happens to fall at today: a percentile compares across both figures and across days, a return does not. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. When fewer than ten names qualify the head offers to relax the filters; it widens both cutoffs a notch only when tapped.",
         "rank = names with a lower value ÷ names with the figure · keep if rank ≥ slider"],

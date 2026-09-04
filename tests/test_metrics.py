@@ -1,6 +1,7 @@
 """Offline tests for calculations over the price history."""
 
 import os
+import statistics
 import sys
 import unittest
 
@@ -282,6 +283,154 @@ class DisplayPayloadTests(unittest.TestCase):
                     row["window_return_pct"],
                     round(series[-1]["cum_return_pct"], 2),
                 )
+
+
+class VolatilityAdjustedMomentumTests(unittest.TestCase):
+    def test_steadier_of_two_equal_climbs_scores_higher(self):
+        # Identical at both ends the return is measured from (index 0 and
+        # index 25 of a 30-bar window skipping 5), so only the path
+        # between them differs — and the choppier path must divide by the
+        # larger deviation.
+        smooth_closes = [100 * 1.01 ** i for i in range(30)]
+        rough_closes = [
+            close if i in (0, 25) else close * (1.05 if i % 2 else 0.95)
+            for i, close in enumerate(smooth_closes)
+        ]
+        steady, choppy = bars(*smooth_closes), bars(*rough_closes)
+        self.assertEqual(
+            metrics.skip_month_return(steady, 30, 5),
+            metrics.skip_month_return(choppy, 30, 5),
+        )
+        self.assertGreater(
+            metrics.vol_adjusted_momentum(steady, 30, skip=5),
+            metrics.vol_adjusted_momentum(choppy, 30, skip=5),
+        )
+
+    def test_is_the_return_divided_by_the_windows_deviation(self):
+        series = bars(*[100 * 1.004 ** i * (1.01 if i % 3 else 0.99) for i in range(40)])
+        rets = metrics.log_returns(series)
+        deviation = statistics.stdev(rets[len(series) - 30:len(series) - 1])
+        self.assertAlmostEqual(
+            metrics.vol_adjusted_momentum(series, 30, skip=5),
+            metrics.skip_month_return(series, 30, 5) / (deviation * 100),
+            places=9,
+        )
+
+    def test_flat_series_has_no_volatility_to_divide_by(self):
+        self.assertIsNone(metrics.vol_adjusted_momentum(bars(*([100] * 30)), 30, skip=5))
+
+    def test_short_series_yields_none(self):
+        self.assertIsNone(metrics.vol_adjusted_momentum(bars(100, 110), 30, skip=5))
+
+
+class PercentileTests(unittest.TestCase):
+    def test_lowest_is_zero_and_highest_is_all_but_its_own_share(self):
+        ranks = metrics.percentiles({"a": 1.0, "b": 2.0, "c": 3.0, "d": 4.0})
+        self.assertEqual(ranks["a"], 0.0)
+        self.assertEqual(ranks["d"], 75.0)
+
+    def test_ties_share_the_lower_rank(self):
+        ranks = metrics.percentiles({"a": 5.0, "b": 5.0, "c": 9.0})
+        self.assertEqual(ranks["a"], ranks["b"])
+        self.assertEqual(ranks["a"], 0.0)
+
+    def test_empty_cross_section(self):
+        self.assertEqual(metrics.percentiles({}), {})
+
+
+class RelativeStrengthTests(unittest.TestCase):
+    """The series is a cross-section, so it is tested across names."""
+
+    @staticmethod
+    def universe_of(rates, length=80):
+        return {
+            name: bars(*[100 * rate ** i * (1.01 if i % 2 else 0.99) for i in range(length)])
+            for name, rate in rates.items()
+        }
+
+    def series(self, rates, **overrides):
+        book = self.universe_of(rates)
+        calendar = sorted({bar["date"] for b in book.values() for bar in b})
+        options = dict(
+            trading_days=40, half=20, skip=5, points=3, step=5, min_names=2
+        )
+        options.update(overrides)
+        return metrics.relative_strength(book, calendar, **options)
+
+    def test_the_strongest_name_ranks_top_and_the_weakest_bottom(self):
+        out = self.series({"up": 1.006, "mid": 1.002, "down": 0.996})
+        self.assertEqual(len(out["dates"]), 3)
+        for i in range(3):
+            self.assertGreater(out["series"]["up"][i], out["series"]["mid"][i])
+            self.assertGreater(out["series"]["mid"][i], out["series"]["down"][i])
+
+    def test_every_value_sits_on_the_fixed_scale(self):
+        out = self.series({"a": 1.006, "b": 1.002, "c": 0.996, "d": 1.004})
+        for values in out["series"].values():
+            for value in values:
+                if value is not None:
+                    self.assertGreaterEqual(value, 0.0)
+                    self.assertLessEqual(value, 100.0)
+
+    def test_dates_come_from_the_shared_calendar_newest_last(self):
+        out = self.series({"a": 1.006, "b": 1.002, "c": 0.996})
+        self.assertEqual(out["dates"], sorted(out["dates"]))
+        self.assertEqual(len(set(out["dates"])), len(out["dates"]))
+
+    def test_a_name_without_a_full_window_has_no_bar(self):
+        book = self.universe_of({"a": 1.006, "b": 1.002, "c": 0.996})
+        book["young"] = bars(*[100 * 1.01 ** i for i in range(10)])
+        calendar = sorted({bar["date"] for b in book.values() for bar in b})
+        out = metrics.relative_strength(
+            book, calendar, trading_days=40, half=20, skip=5,
+            points=3, step=5, min_names=2,
+        )
+        self.assertTrue(all(v is None for v in out["series"]["young"]))
+        self.assertTrue(all(v is not None for v in out["series"]["a"]))
+
+    def test_a_thin_cross_section_is_left_out_entirely(self):
+        out = self.series({"a": 1.006, "b": 1.002}, min_names=3)
+        self.assertEqual(out["dates"], [])
+
+
+class RelativeStrengthPayloadTests(unittest.TestCase):
+    """The page's bars must match the series and stay on the scale."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.display = ui._display(universe_mod.load(), history.load_index())
+        cls.meta = cls.display.get("relative_strength")
+
+    def test_the_payload_carries_the_snapshot_dates(self):
+        self.assertIsNotNone(self.meta)
+        self.assertEqual(self.meta["dates"], sorted(self.meta["dates"]))
+        self.assertLessEqual(len(self.meta["dates"]), config.RS_POINTS)
+
+    def test_every_bar_is_a_percentile_on_the_fixed_scale(self):
+        for row in self.display["coverage"]:
+            for value in row.get("rs_spark", []):
+                with self.subTest(ticker=row["ticker"]):
+                    self.assertTrue(value is None or 0.0 <= value <= 100.0)
+
+    def test_each_series_is_one_value_per_snapshot_date(self):
+        for row in self.display["coverage"]:
+            if "rs_spark" in row:
+                self.assertEqual(len(row["rs_spark"]), len(self.meta["dates"]))
+
+    def test_the_stated_standing_is_the_newest_bar(self):
+        for row in self.display["coverage"]:
+            if "rs_spark" in row:
+                self.assertEqual(row["rs_now"], row["rs_spark"][-1])
+
+    def test_names_are_spread_across_the_scale(self):
+        # A percentile that clusters would mean the ranking collapsed.
+        latest = [
+            row["rs_now"] for row in self.display["coverage"]
+            if row.get("rs_now") is not None
+        ]
+        self.assertGreater(len(latest), 100)
+        self.assertLess(min(latest), 10)
+        self.assertGreater(max(latest), 90)
 
 
 if __name__ == "__main__":
