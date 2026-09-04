@@ -1,26 +1,23 @@
 """Render the universe and its history into web/index.html.
 
 `web/template.html` is a complete HTML document with two JSON placeholders;
-rendering is a straight substitution. The page inlines per-name coverage
-and thinned series, not the full history — enough to inspect what loaded
-without shipping every bar.
+rendering is a straight substitution. The page inlines the figures it
+shows and nothing else: no series, since it draws no charts.
 """
 
 from __future__ import annotations
 
 import json
 import os
-from math import exp
 
 from .config import (
-    SPARKLINE_POINTS,
     TRADING_DAYS_HALF,
     TRADING_DAYS_MONTH,
     TRADING_DAYS_QUARTER,
     UI_OUTPUT_PATH,
     UI_TEMPLATE_PATH,
 )
-from .history import load_series, thin, thin_indices
+from .history import load_series
 from .universe import load_changes
 from .metrics import (
     cumulative_returns,
@@ -76,11 +73,6 @@ def _display(universe: dict, history_index: dict) -> dict:
             row["window_return_pct"] = round(values[-1], 2)
             row["window_low"] = min(bar["adj_close"] for bar in closes)
             row["window_high"] = max(bar["adj_close"] for bar in closes)
-            # Two decimals is below visual resolution for an 18px chart
-            # and keeps half a megabyte of page from growing further.
-            row["cum_return_spark"] = [
-                round(value, 2) for value in thin(values, SPARKLINE_POINTS)
-            ]
             # Each shorter lens exists only where its full window of bars
             # does; measuring 6, 3 or 1 months over less would not be
             # that number, so the field is absent instead.
@@ -106,18 +98,6 @@ def _display(universe: dict, history_index: dict) -> dict:
                 row["trend_ann_pct"] = trend["trend_ann_pct"]
                 row["trend_r2"] = trend["r2"]
                 row["quality_pct"] = trend["quality_pct"]
-                # The fitted line, mapped into the chart's cumulative-return
-                # space at the same thinned indices as the price series, so
-                # the two curves align point for point. Straight in
-                # log-price space, gently curved here — that is the honest
-                # geometry of an exponential trend on a linear axis.
-                window = bars[-len(series):]
-                base = window[0]["adj_close"]
-                row["fit_spark"] = [
-                    round((exp(trend["intercept"] + trend["slope_daily"] * i)
-                           / base - 1) * 100, 2)
-                    for i in thin_indices(len(series), SPARKLINE_POINTS)
-                ]
         payload["coverage"].append(row)
 
     # The score the list ranks by. Computed after the loop because a

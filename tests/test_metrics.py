@@ -235,35 +235,16 @@ class DisplayPayloadTests(unittest.TestCase):
             trend = metrics.log_trend(bars, self.target)
             if trend is None:
                 self.assertNotIn("trend_ann_pct", row)
-                self.assertNotIn("fit_spark", row)
                 continue
             self.assertEqual(row["trend_ann_pct"], trend["trend_ann_pct"])
             self.assertEqual(row["trend_r2"], trend["r2"])
             self.assertEqual(row["quality_pct"], trend["quality_pct"])
-            self.assertEqual(
-                len(row["fit_spark"]), len(row["cum_return_spark"])
-            )
 
-    def test_fit_spark_is_the_fitted_curve_in_chart_space(self):
-        import math
-        row = next(
-            r for r in self.display["coverage"] if r["ticker"] == "AAPL"
-        )
-        bars = history.load_series("AAPL")["bars"]
-        trend = metrics.log_trend(bars, self.target)
-        window = bars[-self.target:]
-        base = window[0]["adj_close"]
-        indices = history.thin_indices(self.target, len(row["fit_spark"]))
-        for got, i in zip(row["fit_spark"], indices):
-            expected = (
-                math.exp(trend["intercept"] + trend["slope_daily"] * i)
-                / base - 1
-            ) * 100
-            self.assertEqual(got, round(expected, 2))
-
-    def test_every_covered_name_gets_a_series(self):
+    def test_the_page_carries_no_series(self):
+        # The page draws no charts, so it ships figures and nothing else.
         for row in self.display["coverage"]:
-            self.assertGreater(len(row.get("cum_return_spark", [])), 1)
+            for key in row:
+                self.assertNotIn("spark", key)
 
     def test_display_matches_the_metric(self):
         for row in self.display["coverage"]:
@@ -273,12 +254,6 @@ class DisplayPayloadTests(unittest.TestCase):
             with self.subTest(ticker=row["ticker"]):
                 self.assertEqual(len(series), row["window_trading_days"])
                 self.assertEqual(series[0]["date"], row["window_start_date"])
-                self.assertEqual(row["cum_return_spark"][0], 0.0)
-                self.assertAlmostEqual(
-                    row["cum_return_spark"][-1],
-                    series[-1]["cum_return_pct"],
-                    places=2,
-                )
                 self.assertEqual(
                     row["window_return_pct"],
                     round(series[-1]["cum_return_pct"], 2),

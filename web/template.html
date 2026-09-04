@@ -193,7 +193,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .list > li { border-bottom: 1px solid var(--line); }
 .row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   column-gap: 14px;
   width: 100%;
@@ -212,9 +212,6 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .company { display: flex; gap: 4px; min-width: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
 .company-name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cap-sub { flex: none; }
-.spark { width: 72px; height: 26px; }
-.spark svg { width: 100%; height: 100%; overflow: visible; }
-.spark-empty { width: 72px; height: 26px; border-bottom: 1px dashed var(--line-2); }
 .figure { text-align: right; min-width: 88px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .figure .price { font: 500 15px/20px var(--sans); white-space: nowrap; }
 .figure .price.none { color: var(--text-3); }
@@ -235,43 +232,6 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
 /* The listing's legend shares the row grid so each label sits over the
    column it names: names, the year's path, then the price and figure. */
-.legend { display: grid; grid-template-columns: minmax(0, 1fr) 72px 88px; column-gap: 14px; align-items: baseline; }
-.legend .fig-head { display: flex; justify-content: flex-end; min-width: 0; }
-.legend .fig-head > * { flex: none; text-align: right; }
-.legend .xl, .legend .xl-static { font: inherit; }
-
-/* ----- sectors ----- */
-.sector-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 64px auto;
-  column-gap: 14px;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-}
-.sector-row .sname { font: 600 15px/20px var(--sans); }
-.sector-row .smeta { font: 400 12px/18px var(--sans); color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; white-space: nowrap; }
-.breadth { display: inline-flex; align-items: center; gap: 6px; }
-.breadth .track { width: 44px; height: 6px; border-radius: 3px; background: var(--bg-3); overflow: hidden; flex: none; }
-@media (max-width: 400px) { .breadth .track { width: 36px; } .sector-row { column-gap: 10px; } }
-.breadth .track i { display: block; height: 100%; background: var(--up); }
-.xtreme { display: grid; grid-template-columns: 76px 1fr; column-gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.xlabel { font: 600 13px/18px var(--sans); color: var(--text-2); }
-.xchips { display: flex; flex-wrap: wrap; gap: 8px; }
-.xchip {
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-  height: 32px;
-  padding: 0 10px;
-  border-radius: 16px;
-  background: var(--bg-2);
-  font: 600 13px/30px var(--sans);
-  color: var(--text);
-  transition: background-color 120ms var(--ease-out);
-}
-.xchip span:last-child { font-weight: 500; }
-@media (hover: hover) { .xchip:hover { background: var(--bg-3); } }
 
 /* ----- watchlist ----- */
 .watch-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 4px 0 12px; }
@@ -401,11 +361,6 @@ input.ctl:focus { outline: none; border-color: var(--up); }
 .xl:hover { color: var(--text); text-decoration-color: var(--text-2); }
 .xl-static { color: var(--text-2); }
 
-.fit-toggle { font: 500 13px/18px var(--sans); color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; min-height: 32px; }
-.fit-toggle .swatch { display: inline-block; width: 16px; height: 0; border-top: 2px dashed var(--text-3); }
-.fit-toggle[aria-pressed="true"] { color: var(--text); }
-.chart-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 6px; font: 400 12px/16px var(--sans); color: var(--text-3); }
-.chart-foot span { white-space: nowrap; }
 
 .watch-btn {
   width: 100%;
@@ -486,21 +441,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><button type="button" class="spark-head xl" id="sparkfig" data-explain="blend">Standing</button><span class="fig-head" id="listfig"></span></div>
+        <div class="resultline"><span id="resultcount" aria-live="polite"></span><button type="button" class="xl" data-explain="blend">Standing</button></div>
         <ul class="list" id="list" tabindex="-1"></ul>
       </div>
     </div>
-  </section>
-
-  <section class="tab-panel" id="tab-sectors" role="tabpanel" aria-labelledby="tabbtn-sectors" hidden>
-    <header class="titlebar"><h1>Sectors</h1><span id="cross-title"></span></header>
-    <section id="cross" hidden aria-label="12-month cross-section">
-      <div class="resultline"><span>Names up over the year</span><span>Median 12-month return</span></div>
-      <ul class="list" id="xs-sectors"></ul>
-      <div class="xtreme"><span class="xlabel">Leaders</span><span id="xs-leaders" class="xchips"></span></div>
-      <div class="xtreme"><span class="xlabel">Laggards</span><span id="xs-laggards" class="xchips"></span></div>
-    </section>
-    <p class="empty" id="cross-empty">The cross-section appears once names carry a full year of history.</p>
   </section>
 
   <section class="tab-panel" id="tab-watch" role="tabpanel" aria-labelledby="tabbtn-watch" hidden>
@@ -538,7 +482,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     <div class="sgroup">
       <h2 class="sgroup-title">Explain</h2>
       <button id="columnsHelp" type="button" class="srow srow-btn">What the figures mean <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
-      <button id="chartHelp" type="button" class="srow srow-btn" data-explain="chart">How the charts are drawn <svg class="chev" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
     </div>
     <div class="sgroup">
       <h2 class="sgroup-title">Data</h2>
@@ -554,10 +497,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     <button type="button" role="tab" id="tabbtn-universe" data-tab="universe" aria-selected="true" aria-controls="tab-universe">
       <svg aria-hidden="true"><use href="#i-stocks"/></svg>
       Stocks
-    </button>
-    <button type="button" role="tab" id="tabbtn-sectors" data-tab="sectors" aria-selected="false" aria-controls="tab-sectors" tabindex="-1">
-      <svg aria-hidden="true"><use href="#i-sectors"/></svg>
-      Sectors
     </button>
     <button type="button" role="tab" id="tabbtn-watch" data-tab="watch" aria-selected="false" aria-controls="tab-watch" tabindex="-1">
       <svg aria-hidden="true"><use href="#i-star"/></svg>
@@ -693,203 +632,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       });
     }
 
-    /* ----- charts -----
-       The series are thinned cumulative returns (percent) over the
-       full window. A shorter window re-bases the tail of the same
-       series to its own start, so the chart and the headline figure
-       agree on what zero means. */
-
-    var WINDOWS = [
-      { key: "1M", label: "1 month", points: 5, field: "return_1m_pct", metric: "ret1", sessions: 21 },
-      { key: "3M", label: "3 months", points: 15, field: "return_3m_pct", metric: "ret3", sessions: 63 },
-      { key: "6M", label: "6 months", points: 30, field: "return_6m_pct", metric: "ret6", sessions: 126 },
-      { key: "1Y", label: "12 months", points: null, field: "window_return_pct", metric: "ret12", sessions: 252 }
-    ];
-    function windowByKey(key) {
-      for (var i = 0; i < WINDOWS.length; i++) if (WINDOWS[i].key === key) return WINDOWS[i];
-      return WINDOWS[3];
-    }
-    function rebase(series, points) {
-      if (!points || points >= series.length) return series.slice();
-      var tail = series.slice(series.length - points);
-      var base = 1 + tail[0] / 100;
-      return tail.map(function (v) { return ((1 + v / 100) / base - 1) * 100; });
-    }
-
-    // Calendar dates for the thinned points are interpolated between the
-    // window's first and last bar, so a scrubbed date is approximate.
-    function windowStart(w) {
-      if (!lastBar) return null;
-      var days = Math.round(w.sessions * 365 / 252);
-      return new Date(new Date(lastBar).getTime() - days * 86400000).toISOString().slice(0, 10);
-    }
-    function approxDate(start, end, i, n) {
-      if (!start || !end) return null;
-      var a = new Date(start).getTime(), b = new Date(end).getTime();
-      var t = new Date(a + (b - a) * (i / (n - 1)));
-      return "≈ " + t.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-    }
-    function colorFor(value) {
-      var d = direction(value);
-      return d === "up" ? "var(--up)" : d === "down" ? "var(--down)" : "var(--text-3)";
-    }
-
-    // opts: width, height, big (zero line, end dot, draw-in), overlay
-    // (a second dashed series), dashed (short history), stroke colour.
-    /* One bar, the name's standing among all 503, on a scale fixed at
-       0-100 for every row. The height is the position itself, so heights
-       compare down the whole list the way a price sparkline — each one
-       scaled to its own range — never could. The midline is the 50th
-       percentile: above it is the stronger half of the index. */
-    function blendBar(value, opts) {
-      opts = opts || {};
-      var w = opts.width || 72, h = opts.height || 26, t = opts.thickness || 8;
-      var y = (h - t) / 2;
-      var svg = document.createElementNS(SVG, "svg");
-      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-      svg.setAttribute("aria-hidden", "true");
-      if (value == null) return svg;
-
-      function bar(width, fill, opacity) {
-        var rect = document.createElementNS(SVG, "rect");
-        rect.setAttribute("x", "0"); rect.setAttribute("y", y.toFixed(2));
-        rect.setAttribute("width", Math.max(0, width).toFixed(2));
-        rect.setAttribute("height", String(t));
-        rect.setAttribute("rx", (t / 2).toFixed(2));
-        rect.style.fill = fill;
-        if (opacity) rect.style.opacity = opacity;
-        return rect;
-      }
-      svg.appendChild(bar(w, "var(--bg-3)"));
-      svg.appendChild(bar(Math.max(t, (value / 100) * w), Math.round(value) >= 50 ? "var(--up)" : "var(--down)"));
-
-      // The 50th percentile, notched through the meter so the eye has a
-      // fixed reference to read every row against.
-      var mid = document.createElementNS(SVG, "line");
-      mid.setAttribute("x1", (w / 2).toFixed(2)); mid.setAttribute("x2", (w / 2).toFixed(2));
-      mid.setAttribute("y1", (y - 2).toFixed(2)); mid.setAttribute("y2", (y + t + 2).toFixed(2));
-      mid.setAttribute("vector-effect", "non-scaling-stroke");
-      mid.style.stroke = "var(--text-3)";
-      mid.style.opacity = "0.45";
-      svg.appendChild(mid);
-      return svg;
-    }
-
-    function lineChart(series, opts) {
-      opts = opts || {};
-      var w = opts.width || 64, h = opts.height || 26, pad = opts.big ? 6 : 1.5;
-      var all = opts.overlay ? series.concat(opts.overlay) : series;
-      var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all);
-      if (opts.big) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
-      var span = hi - lo || 1;
-      function y(v) { return pad + (1 - (v - lo) / span) * (h - pad * 2); }
-      function x(i, n) { return (i / (n - 1)) * w; }
-      function d(s) {
-        return s.map(function (v, i) {
-          return (i ? "L" : "M") + x(i, s.length).toFixed(2) + " " + y(v).toFixed(2);
-        }).join(" ");
-      }
-      var svg = document.createElementNS(SVG, "svg");
-      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-      svg.setAttribute("preserveAspectRatio", "none");
-      svg.setAttribute("aria-hidden", "true");
-      if (!series || series.length < 2) return svg;
-
-      if (opts.big) {
-        var zero = document.createElementNS(SVG, "line");
-        zero.setAttribute("x1", "0"); zero.setAttribute("x2", String(w));
-        zero.setAttribute("y1", y(0).toFixed(2)); zero.setAttribute("y2", y(0).toFixed(2));
-        zero.setAttribute("stroke-dasharray", "2 4");
-        zero.setAttribute("vector-effect", "non-scaling-stroke");
-        zero.style.stroke = "var(--line-2)";
-        svg.appendChild(zero);
-      }
-      if (opts.overlay && opts.overlay.length > 1) {
-        var fit = document.createElementNS(SVG, "path");
-        fit.setAttribute("d", d(opts.overlay));
-        fit.setAttribute("fill", "none");
-        fit.setAttribute("stroke-width", "1.5");
-        fit.setAttribute("stroke-dasharray", "4 4");
-        fit.setAttribute("vector-effect", "non-scaling-stroke");
-        fit.style.stroke = "var(--text-3)";
-        svg.appendChild(fit);
-      }
-      var line = document.createElementNS(SVG, "path");
-      line.setAttribute("d", d(series));
-      line.setAttribute("fill", "none");
-      line.setAttribute("stroke-width", opts.big ? "2" : "1.6");
-      line.setAttribute("stroke-linejoin", "round");
-      line.setAttribute("stroke-linecap", "round");
-      line.setAttribute("vector-effect", "non-scaling-stroke");
-      if (opts.dashed) line.setAttribute("stroke-dasharray", "3 3");
-      line.style.stroke = opts.stroke || colorFor(series[series.length - 1] - series[0]);
-      svg.appendChild(line);
-      if (opts.big) {
-        var dot = document.createElementNS(SVG, "circle");
-        dot.setAttribute("cx", String(w));
-        dot.setAttribute("cy", y(series[series.length - 1]).toFixed(2));
-        dot.setAttribute("r", "3.5");
-        dot.style.fill = line.style.stroke;
-        svg.appendChild(dot);
-      }
-      // The line draws in once it is on the page; a viewer who asked
-      // for less motion gets the finished chart outright.
-      svg.draw = function () {
-        if (REDUCED.matches) return;
-        line.style.setProperty("--len", line.getTotalLength().toFixed(1));
-        line.setAttribute("class", "draw");
-      };
-      if (opts.big && opts.scrub) attachScrub(svg, series, x, y, w, h, opts.scrub);
-      return svg;
-    }
-
-    // Drag across a chart to read it: a cursor follows the pointer, the
-    // headline shows the value at that point, and letting go restores
-    // the window's own figure.
-    function attachScrub(svg, series, x, y, w, h, scrub) {
-      var n = series.length;
-      var cursor = document.createElementNS(SVG, "g");
-      cursor.style.display = "none";
-      var vline = document.createElementNS(SVG, "line");
-      vline.setAttribute("y1", "0"); vline.setAttribute("y2", String(h));
-      vline.setAttribute("vector-effect", "non-scaling-stroke");
-      vline.style.stroke = "var(--text-2)";
-      var pt = document.createElementNS(SVG, "circle");
-      pt.setAttribute("r", "4");
-      pt.style.fill = "var(--text)";
-      cursor.appendChild(vline);
-      cursor.appendChild(pt);
-      svg.appendChild(cursor);
-      svg.style.touchAction = "none";
-      svg.style.cursor = "crosshair";
-      var active = false;
-      function at(event) {
-        var box = svg.getBoundingClientRect();
-        var frac = Math.min(1, Math.max(0, (event.clientX - box.left) / box.width));
-        var i = Math.round(frac * (n - 1));
-        var cx = x(i, n).toFixed(2), cy = y(series[i]).toFixed(2);
-        vline.setAttribute("x1", cx); vline.setAttribute("x2", cx);
-        pt.setAttribute("cx", cx); pt.setAttribute("cy", cy);
-        cursor.style.display = "";
-        scrub.onScrub(i, series[i], approxDate(scrub.start, scrub.end, i, n) || ("point " + (i + 1) + " of " + n));
-      }
-      function stop() {
-        if (!active) return;
-        active = false;
-        cursor.style.display = "none";
-        scrub.onScrub(null);
-      }
-      svg.addEventListener("pointerdown", function (event) {
-        active = true;
-        try { svg.setPointerCapture(event.pointerId); } catch (e) { /* not needed */ }
-        at(event);
-      });
-      svg.addEventListener("pointermove", function (event) { if (active) at(event); });
-      svg.addEventListener("pointerup", stop);
-      svg.addEventListener("pointercancel", stop);
-      svg.addEventListener("lostpointercapture", stop);
-    }
-
     /* ----- live prices -----
        Optional. A Cloudflare Worker the owner deploys (worker/ in the
        repository) holds the data key and answers /quotes?symbols=...
@@ -907,7 +649,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var liveInFlight = false;
     var LIVE_FRESH_MS = 20 * 60000;
     var dpCurrent = null;
-    var dpRepaint = null;
 
     function quoteBase() {
       return (state.quotesUrl || "").trim().replace(/\/+$/, "");
@@ -1006,7 +747,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         sub.textContent = sourceName + " · " + universe.count + " · " + asOf(lastBar || universe.generated_at);
       }
       renderList();
-      if (!dpPop.hidden && dpRepaint) dpRepaint();
     }
     function livePrice(r) {
       var q = live[r.ticker];
@@ -1095,37 +835,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       medianBySector[row.sector] = row.median_return_pct;
     });
 
-    // Median cumulative-return series per sector, at each point of the
-    // thinned series over full-window names.
-    var sectorSeries = {};
-    if (hasHistory) {
-      var bySector = {};
-      history.coverage.forEach(function (cov) {
-        var r = rowByTicker[cov.ticker];
-        if (!r || !cov.sufficient || !cov.cum_return_spark) return;
-        (bySector[r.sector] = bySector[r.sector] || []).push(cov.cum_return_spark);
-      });
-      function medianSeries(sparks) {
-        var lengths = {};
-        sparks.forEach(function (sp) { lengths[sp.length] = (lengths[sp.length] || 0) + 1; });
-        var modal = +Object.keys(lengths).sort(function (a, b) { return lengths[b] - lengths[a]; })[0];
-        var same = sparks.filter(function (sp) { return sp.length === modal; });
-        if (same.length < 2) return null;
-        var out = [];
-        for (var i = 0; i < modal; i++) {
-          out.push(median(same.map(function (sp) { return sp[i]; })));
-        }
-        return out;
-      }
-      Object.keys(bySector).forEach(function (s) { sectorSeries[s] = medianSeries(bySector[s]); });
-    }
-
     /* ----- state ----- */
 
     var state = {
       query: "", sector: null, grouped: false,
       sortKey: "blend", watchOnly: false,
-      tab: "universe", theme: "system", range: "1Y",
+      tab: "universe", theme: "system",
       quotesUrl: DEFAULT_QUOTES_URL
     };
 
@@ -1139,7 +854,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (SORT_KEYS.indexOf(p.sortKey) !== -1) state.sortKey = p.sortKey;
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
-      if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
       // v2 prefs store an empty URL to mean "off"; older prefs never saved one
       // on purpose, so an empty legacy value keeps the default Worker.
       if (typeof p.quotesUrl === "string" && (p.quotesUrl.trim() || p.v >= 2)) state.quotesUrl = p.quotesUrl.trim();
@@ -1148,7 +862,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
           v: 5, sortKey: state.sortKey, tab: state.tab,
-          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
+          theme: state.theme, quotesUrl: state.quotesUrl
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
@@ -1280,91 +994,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var filtersEl = document.getElementById("filters");
     var listEl = document.getElementById("list");
     var resultEl = document.getElementById("resultcount");
-    var listFig = document.getElementById("listfig");
-    var legendEl = document.getElementById("legend");
     var sortSelect = document.getElementById("sortKey");
     var columnsBtn = document.getElementById("columnsHelp");
     var watchMix = document.getElementById("watch-mix");
 
-    // The window buttons on a name's page: 1M/3M/6M/1Y with each
-    // window's own return under it.
-    function renderRanges(container, valuesByKey, onChange) {
-      container.textContent = "";
-      container.classList.toggle("tall", Boolean(valuesByKey));
-      WINDOWS.forEach(function (w) {
-        var b = el("button", null);
-        b.type = "button";
-        var on = w.key === state.range;
-        b.setAttribute("aria-pressed", String(on));
-        b.appendChild(document.createTextNode(w.key));
-        if (valuesByKey) {
-          var v = valuesByKey[w.key];
-          b.appendChild(el("span", "rv", v == null ? "—" : pct1(v)));
-          if (on && direction(v) === "down") b.classList.add("neg");
-        }
-        b.addEventListener("click", function () {
-          state.range = w.key;
-          savePrefs();
-          onChange();
-        });
-        container.appendChild(b);
-      });
-    }
-
-    /* ----- sectors ----- */
-
-    if (cross) {
-      document.getElementById("cross").hidden = false;
-      document.getElementById("cross-empty").hidden = true;
-      document.getElementById("cross-title").textContent =
-        cross.names_used + " of " + rows.length + " names · full year";
-      var list = document.getElementById("xs-sectors");
-      cross.sectors.forEach(function (row) {
-        var li = el("li", "sector-row");
-        var left = el("div", "name-cell");
-        left.appendChild(el("div", "sname", row.sector));
-        var meta = el("div", "smeta");
-        meta.appendChild(document.createTextNode(row.count + " names"));
-        var breadth = el("span", "breadth");
-        var track = el("span", "track");
-        var fill = document.createElement("i");
-        fill.style.width = row.breadth_pct + "%";
-        track.appendChild(fill);
-        breadth.appendChild(track);
-        breadth.appendChild(el("span", null, Math.round(row.breadth_pct) + "% up"));
-        breadth.title = row.breadth_pct + "% of names positive over 12 months";
-        meta.appendChild(breadth);
-        left.appendChild(meta);
-        li.appendChild(left);
-        var sp = el("div", "spark");
-        var series = sectorSeries[row.sector];
-        if (series) sp.appendChild(lineChart(series, { width: 64, height: 26, stroke: colorFor(row.median_return_pct) }));
-        li.appendChild(sp);
-        var fig = el("div", "figure");
-        fig.appendChild(el("span", "pill " + direction(row.median_return_pct), pct(row.median_return_pct)));
-        li.appendChild(fig);
-        list.appendChild(li);
-      });
-      function chipRow(container, names) {
-        names.forEach(function (row) {
-          var chip = el("button", "xchip");
-          chip.type = "button";
-          chip.appendChild(el("span", null, row.ticker));
-          chip.appendChild(el("span", direction(row.return_pct), pct1(row.return_pct)));
-          chip.addEventListener("click", function () {
-            var r = rowByTicker[row.ticker];
-            if (r) openDetail(r, chip);
-          });
-          container.appendChild(chip);
-        });
-      }
-      chipRow(document.getElementById("xs-leaders"), cross.leaders);
-      chipRow(document.getElementById("xs-laggards"), cross.laggards);
-    }
-
     /* ----- tabs ----- */
 
-    var TABS = ["universe", "sectors", "watch", "settings"];
+    var TABS = ["universe", "watch", "settings"];
     var listing = document.getElementById("listing");
     function setTab(tab) {
       if (TABS.indexOf(tab) === -1) tab = "universe";
@@ -1503,80 +1139,17 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function detailBody(r) {
       var body = el("div", "detail");
       var cov = coverage[r.ticker];
-      var cum = cov && cov.cum_return_spark;
-      var hasSeries = cum && cum.length > 1;
-      var hasFit = cov && cov.fit_spark && cov.fit_spark.length > 1;
 
-      var line = el("p", "dp-line");
-      var holder = el("div", "chart");
-      var foot = el("div", "chart-foot");
-      var ranges = el("div", "ranges");
-      ranges.setAttribute("role", "group");
-      ranges.setAttribute("aria-label", "Window");
-      var toggle = null;
-      if (hasFit) {
-        toggle = el("button", "fit-toggle");
-        toggle.type = "button";
-      }
-
-      function windowValue(w) {
-        if (!cov) return null;
-        if (w.key === "1Y") return cov.window_return_pct;
-        return cov[w.field];
-      }
-      function paint(animate) {
-        var w = windowByKey(state.range);
-        var v = windowValue(w);
-        var full = cov && cov.sufficient;
-        var label = (w.key === "1Y" && !full && cov
+      // The headline is the year, stated rather than drawn. The shorter
+      // windows are figures like any other, below.
+      var v = cov ? cov.window_return_pct : null;
+      var line = el("p", "dp-line " + direction(v));
+      line.appendChild(document.createTextNode(v == null ? "—" : pct(v)));
+      line.appendChild(el("span", null,
+        (cov && !cov.sufficient
           ? " · past " + cov.window_trading_days + " sessions"
-          : " · past " + w.label) + priceTail(r, cov);
-        function paintLine(value, text) {
-          line.textContent = "";
-          line.className = "dp-line " + direction(value);
-          line.appendChild(document.createTextNode(value == null ? "—" : pct(value)));
-          line.appendChild(el("span", null, text));
-        }
-        paintLine(v, label);
-        holder.textContent = "";
-        if (hasSeries) {
-          var series = rebase(cum, w.points);
-          var overlay = null;
-          if (hasFit && w.key === "1Y") overlay = cov.fit_spark;
-          var startDate = w.key === "1Y" ? (cov.window_start_date || cov.start_date) : windowStart(w);
-          var chart = lineChart(series, {
-            width: 358, height: 140, big: true, overlay: overlay,
-            dashed: !full, stroke: colorFor(v == null ? series[series.length - 1] : v),
-            scrub: { start: startDate, end: cov.end_date, onScrub: function (i, value, when) {
-              if (i == null) { paintLine(v, label); return; }
-              paintLine(value, " · " + when + " · from the window's start");
-            } }
-          });
-          holder.appendChild(chart);
-          if (animate) chart.draw();
-        }
-        foot.textContent = "";
-        if (cov) {
-          foot.appendChild(el("span", null, w.key === "1Y" ? (cov.window_start_date || cov.start_date) : w.sessions + " sessions"));
-          if (toggle) {
-            toggle.textContent = "";
-            toggle.appendChild(el("span", "swatch"));
-            toggle.appendChild(document.createTextNode("Trend line"));
-            toggle.hidden = w.key !== "1Y";
-            foot.appendChild(toggle);
-          }
-          foot.appendChild(el("span", null, cov.end_date));
-        }
-        var vals = {};
-        WINDOWS.forEach(function (ww) { vals[ww.key] = windowValue(ww); });
-        renderRanges(ranges, vals, function () { paint(false); });
-      }
-      dpRepaint = function () { paint(false); };
-      paint(true);
+          : " · past 12 months") + priceTail(r, cov)));
       body.appendChild(line);
-      body.appendChild(holder);
-      body.appendChild(foot);
-      body.appendChild(ranges);
 
       var h = el("h2", "section", "Key stats");
       body.appendChild(h);
@@ -1590,6 +1163,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           off > -0.5 ? "At high" : signed(off, 1, "%"), off > -0.5 ? "up" : direction(off),
           "high " + price(cov.window_high)));
       }
+      [["ret6", "6-month return", "return_6m_pct"],
+       ["ret3", "3-month return", "return_3m_pct"],
+       ["ret1", "1-month return", "return_1m_pct"]].forEach(function (w) {
+        if (cov && cov[w[2]] != null) {
+          grid.appendChild(stat(w[0], w[1], pct(cov[w[2]]), direction(cov[w[2]])));
+        }
+      });
       if (cov && cov.mom_12_1_pct != null) {
         grid.appendChild(stat("mom121", "12–1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct), "skips the last month"));
       }
@@ -1611,7 +1191,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
           price(cov.window_low) + " – " + price(cov.window_high)));
       }
-      if (hasFit) {
+      if (cov && cov.trend_ann_pct != null && cov.trend_r2 != null) {
         grid.appendChild(stat("trend", "Trend (log slope)", signed(cov.trend_ann_pct, 1, "% /yr"), direction(cov.trend_ann_pct)));
         grid.appendChild(stat("r2", "R² of trend", cov.trend_r2.toFixed(2), null, "0 to 1"));
         grid.appendChild(stat("quality", "Trend quality", signed(cov.quality_pct, 1, "% /yr"), direction(cov.quality_pct), "trend × R²"));
@@ -1688,14 +1268,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       main.appendChild(company);
       button.appendChild(main);
 
-      var standing = metricValue("blend", r);
-      if (standing != null) {
-        var sp = el("span", "spark");
-        sp.appendChild(blendBar(standing));
-        button.appendChild(sp);
-      } else {
-        button.appendChild(el("span", "spark-empty"));
-      }
 
       var figure = el("span", "figure");
       var q = livePrice(r);
@@ -1800,9 +1372,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     /* ----- tap-to-explain ----- */
 
     var EXPLAIN = {
-      chart: ["How the charts are drawn",
-        "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The bar on each row is not this chart: it is the name's standing among all 503, explained under Momentum standing.",
-        "value = close ÷ first close of the window − 1"],
       blend: ["Momentum standing",
         "Where the name stands among all 503, 0 to 100. Its 12–1 and 6–1 momentum are each divided by how much it moved day to day over that same window — the conventional volatility adjustment, so an equal climb taken through twice the swing does not read as equal strength — then each figure is ranked against every other name carrying both, and the two ranks are averaged. 80 means it stands above four fifths of the index. Ranking before blending stops the wider-spread figure from deciding the score, and it is what makes the number immune to an outlier: a name up thirty-fold ranks first and stops there, where a raw blend would stretch every scale drawn from it. The bar on each row is this number, on a 0–100 scale fixed for every row, and its midline is the 50th percentile. A name without a full year for both windows has no standing rather than a partial one.",
         "rank(12–1 ÷ daily vol) and rank(6–1 ÷ daily vol), averaged"],
@@ -1943,7 +1512,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       dpPop.hidden = true;
       dpBody.textContent = "";
       dpCurrent = null;
-      dpRepaint = null;
       lockScroll();
       var back = dpOpener; dpOpener = null;
       returnFocus(back);
