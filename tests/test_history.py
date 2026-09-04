@@ -9,7 +9,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from oklahoma import history, universe as universe_mod
-from oklahoma.config import HistoryConfig, calendar_days_for
+from oklahoma.config import RS_POINTS, RS_STEP, HistoryConfig, calendar_days_for
 
 
 def bar(date, adj_close, volume=1000):
@@ -25,10 +25,21 @@ class CalendarWindowTests(unittest.TestCase):
     def test_scales_with_the_target(self):
         self.assertGreater(calendar_days_for(504), calendar_days_for(252))
 
-    def test_config_exposes_the_window(self):
+    def test_config_fetches_the_analysis_window_plus_the_year_behind_it(self):
+        # The files must reach back far enough that the oldest relative
+        # strength point has its own full window, so the fetch depth is
+        # the analysis window plus a year of monthly snapshots.
+        config = HistoryConfig(trading_days=252)
         self.assertEqual(
-            HistoryConfig(trading_days=252).calendar_days, calendar_days_for(252)
+            config.stored_trading_days, 252 + RS_POINTS * RS_STEP
         )
+        self.assertEqual(
+            config.calendar_days, calendar_days_for(config.stored_trading_days)
+        )
+
+    def test_the_analysis_window_is_unchanged_by_the_deeper_fetch(self):
+        # `sufficient`, and every figure keyed to it, still means one year.
+        self.assertEqual(HistoryConfig(trading_days=252).trading_days, 252)
 
 
 class NormalizeTests(unittest.TestCase):
