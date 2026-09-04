@@ -73,10 +73,6 @@ TRADING_DAYS_HALF = 126
 # before the quarter and the year have their say.
 TRADING_DAYS_MONTH = 21
 
-# How many points the UI carries per name. The full series lives in
-# data/history/; the page only needs enough to show a shape.
-SPARKLINE_POINTS = 60
-
 # --- momentum blend ----------------------------------------------------
 
 # The one score the list ranks by: each name's volatility-adjusted 12-1
