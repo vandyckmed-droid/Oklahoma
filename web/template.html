@@ -167,9 +167,14 @@ h2.section {
   gap: 12px;
 }
 h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
+.sortctl { display: inline-flex; align-items: center; gap: 6px; }
 .sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 0 0 8px; font: 500 13px/20px var(--sans); color: var(--up-text); }
 .sortwrap svg { width: 12px; height: 12px; }
 .sortwrap select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+/* Direction sits beside the sort menu so ordering is one control, not a
+   menu here and a switch in Settings. */
+.sortdir { width: 28px; height: 28px; border: 1px solid var(--line-2); border-radius: 14px; display: inline-grid; place-items: center; color: var(--up-text); background: var(--bg); }
+.sortdir svg { width: 12px; height: 12px; transition: transform 160ms var(--ease-out); }
 
 /* ----- search ----- */
 .search {
@@ -269,6 +274,13 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 
 .empty { padding: 40px 0; font: 400 15px/22px var(--sans); color: var(--text-2); text-align: center; }
 .resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
+/* The listing's legend shares the row grid so each label sits over the
+   column it names: names, the year's path, then the price and figure. */
+.legend { display: grid; grid-template-columns: minmax(0, 1fr) 64px 88px; column-gap: 14px; align-items: baseline; }
+.legend .fig-head { display: flex; justify-content: flex-end; min-width: 0; }
+.legend .fig-head > * { flex: none; white-space: nowrap; }
+.legend .xl, .legend .xl-static { font: inherit; }
+.legend.table .spark-head, .legend.table .fig-head { visibility: hidden; }
 
 /* ----- table view ----- */
 .table-wrap { overflow: auto; max-height: calc(100dvh - 200px); margin: 0 -16px; padding: 0 16px; }
@@ -535,14 +547,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
     </label>
 
-    <h2 class="section">Stocks <span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span></h2>
+    <h2 class="section">Stocks <span class="sortctl"><span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span><button id="sortDir" type="button" class="sortdir" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></span></h2>
     <div class="chips" id="filters" role="group" aria-label="Filter by sector"></div>
 
     <div id="universe-slot">
       <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline"><span id="resultcount" aria-live="polite"></span><span id="listfig"></span></div>
+        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><span class="spark-head xl-static" id="sparkfig" title="Cumulative return over the past 12 months">1Y path</span><span class="fig-head" id="listfig"></span></div>
         <ul class="list" id="list" tabindex="-1"></ul>
         <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
           <table class="grid" aria-label="Universe table">
@@ -598,13 +610,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           <button type="button" data-view="table" aria-pressed="false">Table</button>
         </span>
       </div>
-      <div class="srow" id="display-row">
+      <div class="srow stack" id="display-row">
         <label class="slabel" for="displayKey">Figure on each row</label>
         <select id="displayKey" class="ctl"></select>
-      </div>
-      <div class="srow">
-        <span class="slabel">Sort direction</span>
-        <button id="sortDir" type="button" class="icon-btn" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <p class="note" style="margin:0">By default the figure follows whatever the list is sorted by. Market cap and last close already sit on every row, so those sorts keep the 12-month return. Pick a figure here to pin it instead.</p>
       </div>
       <div class="srow" id="group-row">
         <span class="slabel" id="group-label">Group by sector</span>
@@ -1173,7 +1182,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var state = {
       query: "", sector: null, grouped: false,
       sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
-      view: "cards", display: "ret12", tab: "universe", theme: "system", range: "1Y",
+      // display "sort" means the row figure follows the sort key.
+      view: "cards", display: "sort", tab: "universe", theme: "system", range: "1Y",
       quotesUrl: DEFAULT_QUOTES_URL
     };
     var collapsedSectors = new Set();
@@ -1184,7 +1194,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       try { p = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch (e) { return; }
       if (!p || typeof p !== "object") return;
       if (p.view === "table" || p.view === "cards") state.view = p.view;
-      if (METRICS[p.display]) state.display = p.display;
+      // Before v3 the figure was its own setting that defaulted to the
+      // 12-month return; v3 ties it to the sort unless deliberately pinned.
+      if (p.v >= 3 && (p.display === "sort" || METRICS[p.display])) state.display = p.display;
       if (METRICS[p.sortKey]) state.sortKey = p.sortKey;
       if (typeof p.sortDesc === "boolean") state.sortDesc = p.sortDesc;
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
@@ -1199,7 +1211,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
-          v: 2, view: state.view, display: state.display,
+          v: 3, view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
           grouped: state.grouped, showTrend: state.showTrend,
           theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
@@ -1277,6 +1289,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var METRIC_ORDER = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
     var TABLE_COLUMNS = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
+    // The figure on each row follows the sort unless pinned in Settings.
+    // Market cap and last close already sit on the row (the sub-line and
+    // the price), so sorting by either keeps the 12-month return.
+    function rowFigureKey() {
+      if (!hasHistory) return "cap";
+      if (state.display !== "sort") return state.display;
+      return state.sortKey === "cap" || state.sortKey === "last" ? "ret12" : state.sortKey;
+    }
     function metricText(key, v, dense) {
       if (v == null) return "—";
       var m = METRICS[key];
@@ -1322,6 +1342,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var listEl = document.getElementById("list");
     var resultEl = document.getElementById("resultcount");
     var listFig = document.getElementById("listfig");
+    var legendEl = document.getElementById("legend");
     var groupBtn = document.getElementById("groupToggle");
     var tableWrap = document.getElementById("table-wrap");
     var gridHead = document.getElementById("grid-head");
@@ -1786,8 +1807,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var q = livePrice(r);
       figure.appendChild(el("span", "price" + (q || (cov && cov.last_adj_close != null) ? "" : " none"),
         q ? price(q.price) : cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
-      var v = metricValue(state.display, r);
-      figure.appendChild(el("span", "pill " + metricClass(state.display, v), metricText(state.display, v)));
+      var key = rowFigureKey();
+      var v = metricValue(key, r);
+      figure.appendChild(el("span", "pill " + metricClass(key, v), metricText(key, v)));
       button.appendChild(figure);
 
       button.addEventListener("click", function () { openDetail(r, button); });
@@ -1834,7 +1856,14 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         ? shown.length + " on your watchlist"
         : shown.length === rows.length ? "All " + rows.length + " names"
         : shown.length + " of " + rows.length + " names";
-      listFig.textContent = isTable ? "" : (Object.keys(live).length ? "live price · " : "last close · ") + METRICS[state.display].label.toLowerCase();
+      // The legend names the figure column; tapping it explains the metric.
+      // Freshness (live or last close) is already in the page's top bar.
+      legendEl.classList.toggle("table", isTable);
+      listFig.textContent = "";
+      if (!isTable) {
+        var fk = rowFigureKey();
+        listFig.appendChild(explainLabel(METRICS[fk].explain, METRICS[fk].label));
+      }
       if (isTable) renderTable(shown); else renderCards(shown);
     }
     function renderTable(shown) {
@@ -2203,6 +2232,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     /* ----- init ----- */
 
+    var oSort = document.createElement("option");
+    oSort.value = "sort"; oSort.textContent = "Same as sort";
+    displaySelect.appendChild(oSort);
     METRIC_ORDER.forEach(function (key) {
       var o1 = document.createElement("option");
       o1.value = key; o1.textContent = "By " + METRICS[key].label.toLowerCase();
