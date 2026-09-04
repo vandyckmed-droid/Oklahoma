@@ -77,22 +77,13 @@ TRADING_DAYS_MONTH = 21
 # data/history/; the page only needs enough to show a shape.
 SPARKLINE_POINTS = 60
 
-# --- relative strength -------------------------------------------------
+# --- momentum blend ----------------------------------------------------
 
-# The row chart is a year of cross-sectional standing, one bar a month.
-RS_POINTS = 13
-RS_STEP = TRADING_DAYS_MONTH
-
-# A percentile taken across a handful of names is not a cross-section;
-# a snapshot with fewer than this many ranked names is left out.
-RS_MIN_NAMES = 20
-
-# Sessions the stored files must reach back. Every point on the relative
-# strength series needs its own full 252-session window behind it, so the
-# oldest point — a year back — sits on a second year of bars. This is the
-# fetch depth only: `sufficient`, and every figure keyed to it, still
-# means one full year (TRADING_DAYS_TARGET).
-TRADING_DAYS_STORED = TRADING_DAYS_TARGET + RS_POINTS * RS_STEP
+# The one score the list ranks by: each name's volatility-adjusted 12-1
+# and 6-1 momentum, each ranked across the universe, the two ranks
+# averaged. A percentile taken across a handful of names is not a
+# cross-section, so the score is withheld below this many ranked names.
+BLEND_MIN_NAMES = 20
 
 # Concurrent history requests. Enough to make 50 names quick, low enough
 # to stay polite to the API.
@@ -123,17 +114,11 @@ class HistoryConfig:
         return cfg
 
     @property
-    def stored_trading_days(self) -> int:
-        """Sessions to fetch: the analysis window plus the year behind it."""
-        return self.trading_days + RS_POINTS * RS_STEP
-
-    @property
     def calendar_days(self) -> int:
-        return calendar_days_for(self.stored_trading_days)
+        return calendar_days_for(self.trading_days)
 
     def as_dict(self) -> dict:
         return {
             "trading_days_target": self.trading_days,
-            "stored_trading_days": self.stored_trading_days,
             "calendar_days_requested": self.calendar_days,
         }

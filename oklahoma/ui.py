@@ -13,9 +13,6 @@ import os
 from math import exp
 
 from .config import (
-    RS_MIN_NAMES,
-    RS_POINTS,
-    RS_STEP,
     SPARKLINE_POINTS,
     TRADING_DAYS_HALF,
     TRADING_DAYS_MONTH,
@@ -28,8 +25,8 @@ from .universe import load_changes
 from .metrics import (
     cumulative_returns,
     log_trend,
+    momentum_blend,
     rank_by_return,
-    relative_strength,
     sector_summary,
     skip_month_return,
 )
@@ -123,23 +120,12 @@ def _display(universe: dict, history_index: dict) -> dict:
                 ]
         payload["coverage"].append(row)
 
-    # Relative strength: one bar a month of where each name stood in the
-    # whole universe. Computed after the loop because a percentile needs
-    # every name's figures for the same date, not one name's history.
-    calendar = sorted({bar["date"] for bars in bars_by_ticker.values() for bar in bars})
-    strength = relative_strength(bars_by_ticker, calendar)
-    if strength["dates"]:
-        payload["relative_strength"] = {
-            "dates": strength["dates"],
-            "points": RS_POINTS,
-            "step_sessions": RS_STEP,
-            "min_names": RS_MIN_NAMES,
-        }
-        for row in payload["coverage"]:
-            values = strength["series"].get(row["ticker"]) or []
-            if any(value is not None for value in values):
-                row["rs_spark"] = values
-                row["rs_now"] = values[-1]
+    # The score the list ranks by. Computed after the loop because a
+    # percentile needs every name's figures, not one name's history.
+    blend = momentum_blend(bars_by_ticker)
+    for row in payload["coverage"]:
+        if row["ticker"] in blend:
+            row["blend_pct"] = blend[row["ticker"]]
 
     # Cross-section over names with a full window: mixing a 55-day return
     # into 252-day sector medians would quietly corrupt the comparison.

@@ -133,48 +133,6 @@ svg { display: block; }
 .titlebar h1 { margin: 0; font: 700 17px/24px var(--sans); letter-spacing: -0.01em; }
 .titlebar span { font: 400 13px/20px var(--sans); color: var(--text-2); }
 
-/* ----- momentum screen -----
-   Two sliders in the space the market chart held. Each sets the lowest
-   cross-sectional percentile a name must reach to stay in the list. */
-.screen { padding: 10px 0 6px; border-bottom: 1px solid var(--line); }
-.screen-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 400 13px/18px var(--sans); color: var(--text-2); }
-.screen-head .xl { font: inherit; text-align: left; }
-/* Offered, never applied on its own: it appears when the screen leaves
-   too little to compare and widens both cutoffs a notch when tapped. */
-.relax { flex: none; height: 28px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 14px; font: 500 13px/26px var(--sans); color: var(--up-text); background: var(--bg); white-space: nowrap; }
-.slider { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 12px; padding: 8px 0 0; }
-.slider label { font: 600 15px/20px var(--sans); white-space: nowrap; }
-.slider output { font: 400 13px/20px var(--sans); color: var(--text-2); white-space: nowrap; text-align: right; }
-.slider output b { color: var(--text-2); }
-.slider output.on b { color: var(--text); }
-.slider input {
-  grid-column: 1 / -1;
-  width: 100%;
-  height: 32px;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  accent-color: var(--up);
-  cursor: pointer;
-  touch-action: pan-y;
-}
-.chart { position: relative; width: 100%; aspect-ratio: 358 / 140; margin-top: 8px; }
-@media (min-width: 720px) { .chart { aspect-ratio: 728 / 220; } }
-.chart svg { width: 100%; height: 100%; overflow: visible; }
-.ranges { display: flex; gap: 4px; padding: 10px 0 4px; border-bottom: 1px solid var(--line); }
-.ranges button {
-  flex: 1;
-  height: 40px;
-  border-radius: 20px;
-  font: 600 13px/40px var(--sans);
-  color: var(--text-2);
-  transition: background-color 120ms var(--ease-out), color 120ms var(--ease-out);
-}
-.ranges button[aria-pressed="true"] { background: var(--up); color: var(--on-pill); }
-.ranges button[aria-pressed="true"].neg { background: var(--down); color: var(--on-pill-down); }
-.ranges button .rv { display: block; font: 500 12px/14px var(--sans); margin-top: -8px; padding-bottom: 8px; }
-.ranges.tall button { height: 52px; line-height: 44px; }
-
 /* ----- section heads ----- */
 h2.section {
   margin: 0;
@@ -187,14 +145,11 @@ h2.section {
   gap: 12px;
 }
 h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
-.sortctl { display: inline-flex; align-items: center; gap: 6px; }
 .sortwrap { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 0 0 8px; font: 500 13px/20px var(--sans); color: var(--up-text); }
 .sortwrap svg { width: 12px; height: 12px; }
 .sortwrap select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 /* Direction sits beside the sort menu so ordering is one control, not a
    menu here and a switch in Settings. */
-.sortdir { width: 28px; height: 28px; border: 1px solid var(--line-2); border-radius: 14px; display: inline-grid; place-items: center; color: var(--up-text); background: var(--bg); }
-.sortdir svg { width: 12px; height: 12px; transition: transform 160ms var(--ease-out); }
 
 /* ----- search ----- */
 .search {
@@ -276,22 +231,6 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .pill.flat { background: var(--bg-3); color: var(--text); }
 .pill.none { background: transparent; color: var(--text-3); border: 1px solid var(--line-2); }
 
-.group-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 14px 0 6px;
-  text-align: left;
-  color: var(--text);
-  font: 600 13px/18px var(--sans);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.group-head .chev { width: 12px; height: 12px; color: var(--text-3); transition: transform 160ms var(--ease-out); }
-.group-head[aria-expanded="false"] .chev { transform: rotate(-90deg); }
-.group-head .n { margin-left: auto; font: 400 13px/18px var(--sans); color: var(--text-2); text-transform: none; letter-spacing: 0; }
-
 .empty { padding: 40px 0; font: 400 15px/22px var(--sans); color: var(--text-2); text-align: center; }
 .resultline { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0 4px; font: 400 13px/18px var(--sans); color: var(--text-2); }
 /* The listing's legend shares the row grid so each label sits over the
@@ -300,25 +239,6 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
 .legend .fig-head { display: flex; justify-content: flex-end; min-width: 0; }
 .legend .fig-head > * { flex: none; text-align: right; }
 .legend .xl, .legend .xl-static { font: inherit; }
-.legend.table .spark-head, .legend.table .fig-head { visibility: hidden; }
-
-/* ----- table view ----- */
-.table-wrap { overflow: auto; max-height: calc(100dvh - 200px); margin: 0 -16px; padding: 0 16px; }
-.grid { border-collapse: collapse; width: 100%; min-width: 780px; font: 400 13px/18px var(--sans); }
-.grid th, .grid td { padding: 0 8px; height: 40px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-.grid th { position: sticky; top: 0; background: var(--bg); text-align: right; font: 500 12px/16px var(--sans); color: var(--text-2); z-index: 1; box-shadow: inset 0 -1px 0 var(--line-2); }
-.grid th:first-child, .grid td:first-child { text-align: left; padding-left: 0; position: sticky; left: 0; background: var(--bg); }
-.grid th:nth-child(2), .grid td:nth-child(2) { text-align: left; }
-.grid td { text-align: right; }
-.grid td.none { color: var(--text-3); }
-.grid tbody tr { cursor: pointer; }
-@media (hover: hover) { .grid tbody tr:hover td { background: var(--bg-2); } }
-.grid .th-sort { display: inline-flex; gap: 4px; align-items: center; color: inherit; font: inherit; }
-.grid th[aria-sort] .th-sort { color: var(--text); }
-.grid .th-arrow { width: 10px; height: 10px; }
-.grid .tcell { font: 600 13px/18px var(--sans); color: var(--text); text-align: left; }
-.grid .tsector { color: var(--text-2); }
-.grid .tsector abbr { text-decoration: none; }
 
 /* ----- sectors ----- */
 .sector-row {
@@ -522,7 +442,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 @media (prefers-reduced-motion: reduce) {
   .sheet, .sheet-card { animation: none; }
   path.draw { animation: none; stroke-dashoffset: 0; }
-  .group-head .chev, .switch .knob { transition: none; }
+  .switch .knob { transition: none; }
 }
 </style>
 </head>
@@ -554,40 +474,20 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <span id="subtitle"></span>
     </header>
 
-    <div class="screen" id="screen" hidden>
-      <div class="screen-head"><button type="button" class="xl" id="screen-n" data-explain="screen" aria-live="polite"></button><button type="button" class="relax" id="screen-relax" hidden>Relax filters</button></div>
-      <div class="slider">
-        <label for="mom121Min">12–1 Momentum</label>
-        <output id="mom121Out" for="mom121Min"></output>
-        <input id="mom121Min" type="range" min="0" max="95" step="5" value="90">
-      </div>
-      <div class="slider">
-        <label for="mom61Min">6–1 Momentum</label>
-        <output id="mom61Out" for="mom61Min"></output>
-        <input id="mom61Min" type="range" min="0" max="95" step="5" value="90">
-      </div>
-    </div>
-
     <label class="search">
       <svg aria-hidden="true"><use href="#i-search"/></svg>
       <input id="search" type="search" placeholder="Search ticker, company or sector" autocomplete="off" aria-label="Search the universe">
     </label>
 
-    <h2 class="section">Stocks <span class="sortctl"><span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span><button id="sortDir" type="button" class="sortdir" aria-label="Sort direction: descending"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></span></h2>
+    <h2 class="section">Stocks <span class="sortwrap"><span id="sortLabel" aria-hidden="true"></span><svg aria-hidden="true"><use href="#i-chev"/></svg><select id="sortKey" aria-label="Sort by"></select></span></h2>
     <div class="chips" id="filters" role="group" aria-label="Filter by sector"></div>
 
     <div id="universe-slot">
       <!-- One listing serves the Stocks and Watchlist tabs; the script
            moves it under whichever is open. -->
       <div id="listing">
-        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><button type="button" class="spark-head xl" id="sparkfig" data-explain="rs">RS 0–100</button><span class="fig-head" id="listfig"></span></div>
+        <div class="resultline legend" id="legend"><span id="resultcount" aria-live="polite"></span><button type="button" class="spark-head xl" id="sparkfig" data-explain="blend">Standing</button><span class="fig-head" id="listfig"></span></div>
         <ul class="list" id="list" tabindex="-1"></ul>
-        <div class="table-wrap" id="table-wrap" hidden tabindex="-1">
-          <table class="grid" aria-label="Universe table">
-            <thead><tr id="grid-head"></tr></thead>
-            <tbody id="grid-body"></tbody>
-          </table>
-        </div>
       </div>
     </div>
   </section>
@@ -625,25 +525,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           <button type="button" data-theme="light" aria-pressed="false">Light</button>
           <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
         </span>
-      </div>
-    </div>
-    <div class="sgroup">
-      <h2 class="sgroup-title">List</h2>
-      <div class="srow">
-        <span class="slabel">View</span>
-        <span class="seg" role="group" aria-label="View" id="viewSeg">
-          <button type="button" data-view="cards" aria-pressed="true">List</button>
-          <button type="button" data-view="table" aria-pressed="false">Table</button>
-        </span>
-      </div>
-      <div class="srow stack" id="display-row">
-        <label class="slabel" for="displayKey">Figure on each row</label>
-        <select id="displayKey" class="ctl"></select>
-        <p class="note" style="margin:0">By default the figure follows whatever the list is sorted by. Market cap and last close already sit on every row, so those sorts keep the 12-month return. Pick a figure here to pin it instead.</p>
-      </div>
-      <div class="srow" id="group-row">
-        <span class="slabel" id="group-label">Group by sector</span>
-        <button id="groupToggle" type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="group-label"><span class="knob"></span></button>
       </div>
     </div>
     <div class="sgroup">
@@ -855,51 +736,42 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     // opts: width, height, big (zero line, end dot, draw-in), overlay
     // (a second dashed series), dashed (short history), stroke colour.
-    /* One bar a month of the name's standing in the whole universe, on a
-       0-100 scale that never rescales: the bar's height is the position
-       itself, so heights compare across names and across the year the way
-       a price sparkline — every one of them scaled to its own range —
-       cannot. Above the midline is the stronger half of the S&P 500. */
-    function rsBars(series, opts) {
+    /* One bar, the name's standing among all 503, on a scale fixed at
+       0-100 for every row. The height is the position itself, so heights
+       compare down the whole list the way a price sparkline — each one
+       scaled to its own range — never could. The midline is the 50th
+       percentile: above it is the stronger half of the index. */
+    function blendBar(value, opts) {
       opts = opts || {};
-      var w = opts.width || 72, h = opts.height || 26;
+      var w = opts.width || 72, h = opts.height || 26, t = opts.thickness || 8;
+      var y = (h - t) / 2;
       var svg = document.createElementNS(SVG, "svg");
       svg.setAttribute("viewBox", "0 0 " + w + " " + h);
       svg.setAttribute("aria-hidden", "true");
-      if (!series || !series.length) return svg;
-      // Every name shares the payload's snapshot dates, so one slot per
-      // value fills the cell whether the page carries three months or
-      // thirteen; a name too young for the early ones leaves them empty.
-      var slots = opts.slots || series.length;
-      var gap = slots > 1 ? Math.min(1.5, w / slots / 3) : 0;
-      var bw = (w - gap * (slots - 1)) / slots;
-      // Right-aligned: the newest month is the rightmost slot, so a short
-      // series reads as history yet to accumulate, not as a recent gap.
-      var offset = Math.max(0, slots - series.length);
+      if (value == null) return svg;
 
-      var mid = document.createElementNS(SVG, "line");
-      mid.setAttribute("x1", "0"); mid.setAttribute("x2", String(w));
-      mid.setAttribute("y1", (h / 2).toFixed(2)); mid.setAttribute("y2", (h / 2).toFixed(2));
-      mid.setAttribute("vector-effect", "non-scaling-stroke");
-      mid.style.stroke = "var(--line-2)";
-      svg.appendChild(mid);
-
-      series.forEach(function (v, i) {
-        if (v == null) return;
-        var last = i === series.length - 1;
-        var bh = Math.max(1, (v / 100) * h);
+      function bar(width, fill, opacity) {
         var rect = document.createElementNS(SVG, "rect");
-        rect.setAttribute("x", ((offset + i) * (bw + gap)).toFixed(2));
-        rect.setAttribute("y", (h - bh).toFixed(2));
-        rect.setAttribute("width", bw.toFixed(2));
-        rect.setAttribute("height", bh.toFixed(2));
-        // Colour says which half of the universe the month sat in; only
-        // the newest bar is at full strength, so "where it stands now"
-        // reads first and the months behind it read as context.
-        rect.style.fill = v >= 50 ? "var(--up)" : "var(--down)";
-        rect.style.opacity = last ? "1" : "0.35";
-        svg.appendChild(rect);
-      });
+        rect.setAttribute("x", "0"); rect.setAttribute("y", y.toFixed(2));
+        rect.setAttribute("width", Math.max(0, width).toFixed(2));
+        rect.setAttribute("height", String(t));
+        rect.setAttribute("rx", (t / 2).toFixed(2));
+        rect.style.fill = fill;
+        if (opacity) rect.style.opacity = opacity;
+        return rect;
+      }
+      svg.appendChild(bar(w, "var(--bg-3)"));
+      svg.appendChild(bar(Math.max(t, (value / 100) * w), Math.round(value) >= 50 ? "var(--up)" : "var(--down)"));
+
+      // The 50th percentile, notched through the meter so the eye has a
+      // fixed reference to read every row against.
+      var mid = document.createElementNS(SVG, "line");
+      mid.setAttribute("x1", (w / 2).toFixed(2)); mid.setAttribute("x2", (w / 2).toFixed(2));
+      mid.setAttribute("y1", (y - 2).toFixed(2)); mid.setAttribute("y2", (y + t + 2).toFixed(2));
+      mid.setAttribute("vector-effect", "non-scaling-stroke");
+      mid.style.stroke = "var(--text-3)";
+      mid.style.opacity = "0.45";
+      svg.appendChild(mid);
       return svg;
     }
 
@@ -1252,42 +1124,22 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     var state = {
       query: "", sector: null, grouped: false,
-      sortKey: "mom121", sortDesc: true, watchOnly: false, showTrend: false,
-      // display "sort" means the row figure follows the sort key.
-      view: "cards", display: "sort", tab: "universe", theme: "system", range: "1Y",
-      // Momentum screen: the lowest percentile a name must reach; 0 is off.
-      // Both open at the 90th percentile — Top 10% on each, and a name
-      // must clear both — so the page opens on the short list, not all 503.
-      mom121Min: 90, mom61Min: 90,
+      sortKey: "blend", watchOnly: false,
+      tab: "universe", theme: "system", range: "1Y",
       quotesUrl: DEFAULT_QUOTES_URL
     };
-    var collapsedSectors = new Set();
 
     var PREFS_KEY = "oklahoma-prefs";
     function loadPrefs() {
       var p;
       try { p = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); } catch (e) { return; }
       if (!p || typeof p !== "object") return;
-      if (p.view === "table" || p.view === "cards") state.view = p.view;
-      // Before v3 the figure was its own setting that defaulted to the
-      // 12-month return; v3 ties it to the sort unless deliberately pinned.
-      if (p.v >= 3 && (p.display === "sort" || METRICS[p.display])) state.display = p.display;
-      // Sorts that left the menu (market cap, the plain windows, price)
-      // fall back to the default rather than surviving as a hidden order.
+      // Sorts that left the menu fall back to the default rather than
+      // surviving as a hidden order.
       if (SORT_KEYS.indexOf(p.sortKey) !== -1) state.sortKey = p.sortKey;
-      if (typeof p.sortDesc === "boolean") state.sortDesc = p.sortDesc;
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
-      if (typeof p.grouped === "boolean") state.grouped = p.grouped;
-      if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
-      // Before v4 both sliders defaulted to All and were written on every
-      // save, so a stored 0 rarely meant a deliberate choice; only v4
-      // values are a viewer's own and override the Top 10% default.
-      if (p.v >= 4) SCREENS.forEach(function (s) {
-        var v = p[s.pref];
-        if (typeof v === "number" && v >= 0 && v <= 95 && v % 5 === 0) state[s.pref] = v;
-      });
       // v2 prefs store an empty URL to mean "off"; older prefs never saved one
       // on purpose, so an empty legacy value keeps the default Worker.
       if (typeof p.quotesUrl === "string" && (p.quotesUrl.trim() || p.v >= 2)) state.quotesUrl = p.quotesUrl.trim();
@@ -1295,11 +1147,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function savePrefs() {
       try {
         localStorage.setItem(PREFS_KEY, JSON.stringify({
-          v: 4, view: state.view, display: state.display,
-          sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
-          grouped: state.grouped, showTrend: state.showTrend,
-          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl,
-          mom121Min: state.mom121Min, mom61Min: state.mom61Min
+          v: 5, sortKey: state.sortKey, tab: state.tab,
+          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
@@ -1369,21 +1218,20 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         value: anyWindow("quality_pct"), head: "Quality %/yr",
         fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
       last: { label: "Last close", short: "Last", neutral: true,
-        value: anyWindow("last_adj_close"), fmt: price }
+        value: anyWindow("last_adj_close"), fmt: price },
+      // The score the list ranks by, and the only figure on a row.
+      blend: { label: "Momentum standing", short: "Standing", explain: "blend",
+        value: function (r, cov) { return cov && cov.blend_pct != null ? cov.blend_pct : null; },
+        fmt: function (v) { return Math.round(v) + " / 100"; },
+        tfmt: function (v) { return String(Math.round(v)); } }
     };
-    // The sort menu asks one question — which names lead on durable
-    // momentum — so it offers the five figures that answer it. Market
-    // cap, price, today's change and the plain windows stay on the row,
-    // in the table and on the name page, but no longer order the list.
-    var SORT_KEYS = ["mom121", "mom61", "quality", "offhigh", "vsmedian"];
-    var METRIC_ORDER = ["mom121", "mom61", "quality", "offhigh", "vsmedian", "cap", "today", "ret12", "ret6", "ret3", "ret1", "trend", "r2", "last"];
-    var TABLE_COLUMNS = ["mom121", "mom61", "quality", "offhigh", "vsmedian", "cap", "today", "ret12", "ret6", "ret3", "ret1", "trend", "r2"];
+    // Two ways to order 503 names: by standing, or by size. Every other
+    // figure still lives on the name's own page — none of them orders the
+    // list, and none of them is a control on the way to it.
+    var SORT_KEYS = ["blend", "cap"];
+    // The order the name page explains its figures in.
+    var METRIC_ORDER = ["blend", "cap", "today", "mom121", "mom61", "offhigh", "vsmedian", "ret12", "ret6", "ret3", "ret1", "trend", "r2", "quality", "last"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
-    // The figure on each row follows the sort unless pinned in Settings.
-    function rowFigureKey() {
-      if (!hasHistory) return "cap";
-      return state.display === "sort" ? state.sortKey : state.display;
-    }
     function metricText(key, v, dense) {
       if (v == null) return "—";
       var m = METRICS[key];
@@ -1392,12 +1240,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     function metricClass(key, v) {
       if (v == null) return "none";
       if (METRICS[key].neutral) return "flat";
+      // A percentile is not a return: what makes it good is standing above
+      // the universe's midpoint, not above zero. Rounded so the colour can
+      // never disagree with the number printed beside it.
+      if (key === "blend") return Math.round(v) >= 50 ? "up" : "down";
       if (key === "offhigh") return v > -0.5 ? "up" : direction(v);
       return direction(v);
     }
 
     function ordered(rows_) {
-      var key = state.sortKey, sign = state.sortDesc ? -1 : 1, vals = {};
+      var key = state.sortKey, sign = -1, vals = {};
       rows_.forEach(function (r) { vals[r.ticker] = metricValue(key, r); });
       return rows_.slice().sort(function (a, b) {
         var ra = vals[a.ticker], rb = vals[b.ticker];
@@ -1430,119 +1282,12 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var resultEl = document.getElementById("resultcount");
     var listFig = document.getElementById("listfig");
     var legendEl = document.getElementById("legend");
-    var groupBtn = document.getElementById("groupToggle");
-    var tableWrap = document.getElementById("table-wrap");
-    var gridHead = document.getElementById("grid-head");
-    var gridBody = document.getElementById("grid-body");
     var sortSelect = document.getElementById("sortKey");
-    var sortDirBtn = document.getElementById("sortDir");
-    var displaySelect = document.getElementById("displayKey");
-    var displayRow = document.getElementById("display-row");
-    var groupRow = document.getElementById("group-row");
     var columnsBtn = document.getElementById("columnsHelp");
     var watchMix = document.getElementById("watch-mix");
 
-    /* ----- momentum screen: two sliders in place of the market chart -----
-       Each slider sets the lowest cross-sectional percentile a name must
-       reach. A name's percentile is the share of the universe — every
-       name carrying the figure — whose value is strictly lower, so Top
-       20% keeps the names higher than at least 80% of the universe. The
-       rank is taken against the whole universe, never the sector or
-       search in view, so a chip narrows the survivors without moving the
-       bar. Names without the figure cannot be ranked and drop out once a
-       slider is off All. */
-
-    var SCREENS = [
-      { key: "mom121", pref: "mom121Min" },
-      { key: "mom61", pref: "mom61Min" }
-    ];
-    var ranked = {};
-    SCREENS.forEach(function (s) {
-      var sorted = [], below = {};
-      rows.forEach(function (r) {
-        var v = metricValue(s.key, r);
-        if (v != null) sorted.push(v);
-      });
-      sorted.sort(function (a, b) { return a - b; });
-      rows.forEach(function (r) {
-        var v = metricValue(s.key, r);
-        if (v == null) return;
-        // Lower bound: how many names sit strictly below this one.
-        var lo = 0, hi = sorted.length;
-        while (lo < hi) { var mid = (lo + hi) >> 1; if (sorted[mid] < v) lo = mid + 1; else hi = mid; }
-        below[r.ticker] = lo;
-      });
-      ranked[s.key] = { sorted: sorted, below: below };
-    });
-    function screenOn() {
-      return SCREENS.some(function (s) { return state[s.pref] > 0; });
-    }
-    // Integer arithmetic, so a name exactly on the bar is judged the same
-    // way the cutoff below is computed.
-    function passesScreen(r) {
-      for (var i = 0; i < SCREENS.length; i++) {
-        var s = SCREENS[i], min = state[s.pref];
-        if (!min) continue;
-        var rk = ranked[s.key], lo = rk.below[r.ticker];
-        if (lo == null || lo * 100 < min * rk.sorted.length) return false;
-      }
-      return true;
-    }
-    // Too few survivors to compare is a screen worth widening; the offer
-    // appears at this many and never acts on its own.
-    var RELAX_AT = 10;
-
-    var screenEl = document.getElementById("screen");
-    var screenN = document.getElementById("screen-n");
-    var relaxBtn = document.getElementById("screen-relax");
-    function renderScreen() {
-      var any = SCREENS.some(function (s) { return ranked[s.key].sorted.length > 1; });
-      screenEl.hidden = !any;
-      if (!any) return;
-      var live = [];
-      SCREENS.forEach(function (s) {
-        var input = document.getElementById(s.pref);
-        var out = document.getElementById(s.key + "Out");
-        var min = state[s.pref];
-        // Only the relative bar: a percentile is comparable across the
-        // two figures and across days, where a return cutoff is neither.
-        var label = min ? "Top " + (100 - min) + "%" : "All";
-        var full = min ? label + " (≥" + min + "th percentile)" : label;
-        if (min) live.push(METRICS[s.key].short);
-        input.value = String(min);
-        input.setAttribute("aria-valuetext", full);
-        out.textContent = "";
-        out.classList.toggle("on", min > 0);
-        out.appendChild(el("b", null, label));
-        if (min) out.appendChild(document.createTextNode(" (≥" + min + "th percentile)"));
-      });
-      var pass = screenOn() ? rows.filter(passesScreen).length : rows.length;
-      screenN.textContent = screenOn()
-        ? pass + " of " + rows.length + " qualify · " +
-          (live.length > 1 ? "both filters required" : live[0] + " filter only")
-        : "All " + rows.length + " names · slide to screen";
-      relaxBtn.hidden = !screenOn() || pass >= RELAX_AT;
-    }
-    // Widens every live cutoff by one notch, on the tap and not before.
-    relaxBtn.addEventListener("click", function () {
-      SCREENS.forEach(function (s) {
-        if (state[s.pref] > 0) state[s.pref] = Math.max(0, state[s.pref] - 5);
-      });
-      savePrefs();
-      renderScreen();
-      renderList();
-    });
-    SCREENS.forEach(function (s) {
-      var input = document.getElementById(s.pref);
-      // `input` fires through the drag, so the list follows the thumb;
-      // the preference is written once the thumb settles.
-      input.addEventListener("input", function (event) {
-        state[s.pref] = +event.target.value || 0;
-        renderScreen();
-        renderList();
-      });
-      input.addEventListener("change", savePrefs);
-    });
+    // The window buttons on a name's page: 1M/3M/6M/1Y with each
+    // window's own return under it.
     function renderRanges(container, valuesByKey, onChange) {
       container.textContent = "";
       container.classList.toggle("tall", Boolean(valuesByKey));
@@ -1639,8 +1384,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       }
       if (tab === "watch") paintWatchMix();
       savePrefs();
-      if (state.view === "table" && !tableWrap.hidden) tableWrap.scrollIntoView({ block: "start" });
-      else window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     }
     var tabbar = document.getElementById("tabbar");
     tabbar.addEventListener("click", function (event) {
@@ -1700,7 +1444,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var r = rowByTicker[ticker];
       if (!r) return;
       document.querySelectorAll('[data-ticker="' + CSS.escape(ticker) + '"]').forEach(function (node) {
-        node.replaceWith(node.tagName === "TR" ? tableRow(r) : rowItem(r));
+        node.replaceWith(rowItem(r));
       });
     }
 
@@ -1730,7 +1474,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var q = state.query.trim().toLowerCase();
       return rows.filter(function (r) {
         if (state.sector && r.sector !== state.sector) return false;
-        if (!passesScreen(r)) return false;
         if (!q) return true;
         return r.ticker.toLowerCase().indexOf(q) !== -1 ||
           r.name.toLowerCase().indexOf(q) !== -1 ||
@@ -1799,7 +1542,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         if (hasSeries) {
           var series = rebase(cum, w.points);
           var overlay = null;
-          if (hasFit && state.showTrend && w.key === "1Y") overlay = cov.fit_spark;
+          if (hasFit && w.key === "1Y") overlay = cov.fit_spark;
           var startDate = w.key === "1Y" ? (cov.window_start_date || cov.start_date) : windowStart(w);
           var chart = lineChart(series, {
             width: 358, height: 140, big: true, overlay: overlay,
@@ -1818,8 +1561,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           if (toggle) {
             toggle.textContent = "";
             toggle.appendChild(el("span", "swatch"));
-            toggle.appendChild(document.createTextNode(state.showTrend ? "Trend line on" : "Show trend line"));
-            toggle.setAttribute("aria-pressed", String(state.showTrend));
+            toggle.appendChild(document.createTextNode("Trend line"));
             toggle.hidden = w.key !== "1Y";
             foot.appendChild(toggle);
           }
@@ -1828,13 +1570,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         var vals = {};
         WINDOWS.forEach(function (ww) { vals[ww.key] = windowValue(ww); });
         renderRanges(ranges, vals, function () { paint(false); });
-      }
-      if (toggle) {
-        toggle.addEventListener("click", function () {
-          state.showTrend = !state.showTrend;
-          savePrefs();
-          paint(false);
-        });
       }
       dpRepaint = function () { paint(false); };
       paint(true);
@@ -1861,12 +1596,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (cov && cov.mom_6_1_pct != null) {
         grid.appendChild(stat("mom61", "6–1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct), "skips the last month"));
       }
-      if (cov && cov.rs_now != null) {
-        var months = (cov.rs_spark || []).filter(function (v) { return v != null; });
-        var first = months.length > 1 ? months[0] : null;
-        grid.appendChild(stat("rs", "Relative strength", Math.round(cov.rs_now) + " / 100",
-          cov.rs_now >= 50 ? "up" : "down",
-          first == null ? "vs the universe" : signed(cov.rs_now - first, 0, " pts") + " over " + months.length + " months"));
+      if (cov && cov.blend_pct != null) {
+        grid.appendChild(stat("blend", "Momentum standing", Math.round(cov.blend_pct) + " / 100",
+          metricClass("blend", cov.blend_pct), "among all " + rows.length + " names"));
       }
       var med = medianBySector[r.sector];
       if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
@@ -1956,9 +1688,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       main.appendChild(company);
       button.appendChild(main);
 
-      if (cov && cov.rs_spark && cov.rs_spark.length) {
+      var standing = metricValue("blend", r);
+      if (standing != null) {
         var sp = el("span", "spark");
-        sp.appendChild(rsBars(cov.rs_spark));
+        sp.appendChild(blendBar(standing));
         button.appendChild(sp);
       } else {
         button.appendChild(el("span", "spark-empty"));
@@ -1968,9 +1701,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var q = livePrice(r);
       figure.appendChild(el("span", "price" + (q || (cov && cov.last_adj_close != null) ? "" : " none"),
         q ? price(q.price) : cov && cov.last_adj_close != null ? price(cov.last_adj_close) : "—"));
-      var key = rowFigureKey();
-      var v = metricValue(key, r);
-      figure.appendChild(el("span", "pill " + metricClass(key, v), metricText(key, v)));
+      var v = metricValue("blend", r);
+      figure.appendChild(el("span", "pill " + metricClass("blend", v), metricText("blend", v)));
       button.appendChild(figure);
 
       button.addEventListener("click", function () { openDetail(r, button); });
@@ -1979,159 +1711,26 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       return li;
     }
 
-    function sectorHeader(name, count) {
-      var li = document.createElement("li");
-      var btn = el("button", "group-head");
-      btn.type = "button";
-      var collapsed = collapsedSectors.has(name);
-      btn.setAttribute("aria-expanded", String(!collapsed));
-      btn.setAttribute("data-sector", name);
-      btn.appendChild(icon("i-chev", "chev"));
-      btn.appendChild(document.createTextNode(name));
-      btn.appendChild(el("span", "n", count + " names"));
-      btn.addEventListener("click", function () {
-        if (collapsedSectors.has(name)) collapsedSectors.delete(name); else collapsedSectors.add(name);
-        afterPaint = function () {
-          var again = listEl.querySelector('.group-head[data-sector="' + CSS.escape(name) + '"]');
-          if (again) again.focus();
-        };
-        renderList();
-      });
-      li.appendChild(btn);
-      return li;
-    }
-
     function emptyMessage() {
       return state.watchOnly && !watch.size
         ? "Your watchlist is empty. Open a name and add it."
         : state.watchOnly ? "No watchlist name matches."
-        : state.query.trim() ? "Nothing matches “" + state.query.trim() + "”" +
-          (screenOn() ? " and clears the momentum screen." : ". Try a ticker or sector.")
-        : "Nothing here clears the momentum screen. Loosen a slider or pick another sector.";
+        : state.query.trim() ? "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector."
+        : "Nothing here. Pick another sector.";
     }
 
     function renderList() {
-      var isTable = state.view === "table";
-      listEl.hidden = isTable;
-      tableWrap.hidden = !isTable;
       var shown = ordered(visible());
       resultEl.textContent = state.watchOnly
         ? shown.length + " on your watchlist"
         : shown.length === rows.length ? "All " + rows.length + " names"
         : shown.length + " of " + rows.length + " names";
-      // The legend names the figure column; tapping it explains the metric.
-      // Freshness (live or last close) is already in the page's top bar.
-      legendEl.classList.toggle("table", isTable);
-      listFig.textContent = "";
-      if (!isTable) {
-        var fk = rowFigureKey();
-        listFig.appendChild(explainLabel(METRICS[fk].explain, METRICS[fk].label));
-      }
-      if (isTable) renderTable(shown); else renderCards(shown);
-    }
-    function renderTable(shown) {
-      tableWrap.scrollTop = 0;
-      if (!shown.length) {
-        gridBody.textContent = "";
-        var tr = document.createElement("tr");
-        var td = el("td", "empty", emptyMessage());
-        td.colSpan = TABLE_COLUMNS.length + 2;
-        tr.appendChild(td);
-        gridBody.appendChild(tr);
-        return;
-      }
-      paintInto(gridBody, shown, tableRow);
+      renderCards(shown);
     }
     function renderCards(shown) {
       listEl.textContent = "";
       if (!shown.length) { listEl.appendChild(el("li", "empty", emptyMessage())); return; }
-      var items = [];
-      if (state.grouped) {
-        sectors.forEach(function (s) {
-          var group = shown.filter(function (r) { return r.sector === s; });
-          if (!group.length) return;
-          items.push({ header: s, count: group.length });
-          if (collapsedSectors.has(s)) return;
-          group.forEach(function (r) { items.push({ row: r }); });
-        });
-      } else {
-        shown.forEach(function (r) { items.push({ row: r }); });
-      }
-      paintInto(listEl, items, function (item) {
-        return item.header ? sectorHeader(item.header, item.count) : rowItem(item.row);
-      });
-    }
-
-    /* ----- table view ----- */
-
-    function renderTableHead() {
-      gridHead.textContent = "";
-      var first = document.createElement("th");
-      first.scope = "col"; first.textContent = "Ticker";
-      gridHead.appendChild(first);
-      var sectorTh = document.createElement("th");
-      sectorTh.scope = "col"; sectorTh.textContent = "Sector";
-      gridHead.appendChild(sectorTh);
-      TABLE_COLUMNS.forEach(function (key) {
-        var th = document.createElement("th");
-        th.scope = "col";
-        var text = METRICS[key].head || METRICS[key].short;
-        if (SORT_KEYS.indexOf(key) === -1) {
-          th.textContent = text;
-        } else {
-          var b = el("button", "th-sort");
-          b.type = "button";
-          b.setAttribute("data-sort", key);
-          b.appendChild(document.createTextNode(text));
-          b.appendChild(icon("i-arrow", "th-arrow"));
-          th.appendChild(b);
-        }
-        gridHead.appendChild(th);
-      });
-      paintTableSortState();
-    }
-    function paintTableSortState() {
-      gridHead.querySelectorAll("th").forEach(function (th) {
-        var b = th.querySelector(".th-sort");
-        if (!b) return;
-        var active = b.getAttribute("data-sort") === state.sortKey;
-        if (active) th.setAttribute("aria-sort", state.sortDesc ? "descending" : "ascending");
-        else th.removeAttribute("aria-sort");
-        var arrow = b.querySelector(".th-arrow");
-        arrow.style.visibility = active ? "visible" : "hidden";
-        arrow.style.transform = active && !state.sortDesc ? "rotate(180deg)" : "";
-      });
-    }
-    gridHead.addEventListener("click", function (event) {
-      var b = event.target.closest ? event.target.closest(".th-sort") : null;
-      if (!b) return;
-      var key = b.getAttribute("data-sort");
-      setSort(key, key === state.sortKey ? !state.sortDesc : true);
-    });
-    function tableRow(r) {
-      var tr = document.createElement("tr");
-      tr.setAttribute("data-ticker", r.ticker);
-      var nameCell = document.createElement("td");
-      var open = el("button", "tcell");
-      open.type = "button";
-      open.setAttribute("aria-haspopup", "dialog");
-      open.appendChild(tickerSpan(r));
-      nameCell.appendChild(open);
-      tr.appendChild(nameCell);
-      var sectorCell = el("td", "tsector");
-      var code = document.createElement("abbr");
-      code.title = r.sector;
-      code.setAttribute("aria-label", r.sector);
-      code.textContent = sectorCode(r.sector);
-      sectorCell.appendChild(code);
-      tr.appendChild(sectorCell);
-      TABLE_COLUMNS.forEach(function (key) {
-        var v = metricValue(key, r);
-        var cls = metricClass(key, v);
-        tr.appendChild(el("td", cls === "flat" ? "" : cls, metricText(key, v, true)));
-      });
-      tr.addEventListener("click", function () { openDetail(r, open); });
-      return tr;
+      paintInto(listEl, shown, rowItem);
     }
 
     /* ----- controls ----- */
@@ -2168,37 +1767,17 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (unknown.length) window.alert("Added " + added + ". Not in the universe: " + unknown.join(", "));
     });
 
-    function setSort(key, desc) {
+    // Both sorts answer "most first" — the strongest standing, the
+    // largest company — so there is no direction to choose.
+    function setSort(key) {
       state.sortKey = key;
-      state.sortDesc = desc;
       sortSelect.value = key;
       document.getElementById("sortLabel").textContent = METRICS[key].label;
-      sortDirBtn.firstElementChild.style.transform = desc ? "" : "rotate(180deg)";
-      sortDirBtn.setAttribute("aria-label", "Sort direction: " + (desc ? "descending" : "ascending"));
-      paintTableSortState();
       savePrefs();
       renderList();
     }
-    sortSelect.addEventListener("change", function (event) { setSort(event.target.value, state.sortDesc); });
-    sortDirBtn.addEventListener("click", function () { setSort(state.sortKey, !state.sortDesc); });
+    sortSelect.addEventListener("change", function (event) { setSort(event.target.value); });
 
-    function paintSettingsRows() {
-      var isTable = state.view === "table";
-      displayRow.hidden = isTable;
-      groupRow.hidden = isTable;
-    }
-    function setView(view) {
-      state.view = view;
-      document.querySelectorAll("#viewSeg button").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === view));
-      });
-      paintSettingsRows();
-      savePrefs();
-      renderList();
-    }
-    document.querySelectorAll("#viewSeg button").forEach(function (b) {
-      b.addEventListener("click", function () { setView(b.getAttribute("data-view")); });
-    });
     document.querySelectorAll("#themeSeg button").forEach(function (b) {
       b.addEventListener("click", function () {
         state.theme = b.getAttribute("data-theme");
@@ -2208,11 +1787,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     });
     (DARK_MQ.addEventListener ? DARK_MQ.addEventListener("change", function () { applyTheme(state.theme); })
       : DARK_MQ.addListener(function () { applyTheme(state.theme); }));
-    displaySelect.addEventListener("change", function (event) {
-      state.display = event.target.value;
-      savePrefs();
-      renderList();
-    });
     columnsBtn.addEventListener("click", function () { openColumns(columnsBtn); });
     var quotesInput = document.getElementById("quotesUrl");
     var quotesTimer;
@@ -2222,25 +1796,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       clearTimeout(quotesTimer);
       quotesTimer = setTimeout(function () { loadQuotes(true); }, 500);
     });
-    groupBtn.addEventListener("click", function () {
-      state.grouped = !state.grouped;
-      groupBtn.setAttribute("aria-checked", String(state.grouped));
-      savePrefs();
-      renderList();
-    });
 
     /* ----- tap-to-explain ----- */
 
     var EXPLAIN = {
       chart: ["How the charts are drawn",
-        "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
+        "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The bar on each row is not this chart: it is the name's standing among all 503, explained under Momentum standing.",
         "value = close ÷ first close of the window − 1"],
-      rs: ["Relative strength",
-        "The bars beside each name are where it stood in the S&P 500, one bar a month over the past year. Each month both its 12–1 and 6–1 momentum are divided by how much the name moved day to day over that same window — the same return per unit of daily volatility, so a steady climb outranks an equal one taken through twice the swing — then each figure is ranked against every other name carrying both that month, and the two ranks are averaged. The result is a percentile: 80 means the name stood above four fifths of the universe. The scale is fixed at 0 to 100 for every name and every month, unlike a price sparkline that rescales to its own range, so heights compare directly. The midline is the 50th percentile; bars above it are the stronger half of the index, and the newest month is the solid bar on the right. Rising bars are a name gaining ground on the rest of the index, which is not the same as a rising price — a name can fall and still climb here if the index fell harder.",
-        "rank(12–1 ÷ daily vol) and rank(6–1 ÷ daily vol), averaged, each month"],
-      screen: ["Momentum screen",
-        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 10% keeps only names whose 12–1 or 6–1 momentum is higher than at least 90% of the universe. Both sliders open at Top 10% and a name must clear both, so the page opens on the names strong in either window rather than all of them. Each cutoff is shown only as that relative bar, never as the return it happens to fall at today: a percentile compares across both figures and across days, a return does not. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. When fewer than ten names qualify the head offers to relax the filters; it widens both cutoffs a notch only when tapped.",
-        "rank = names with a lower value ÷ names with the figure · keep if rank ≥ slider"],
+      blend: ["Momentum standing",
+        "Where the name stands among all 503, 0 to 100. Its 12–1 and 6–1 momentum are each divided by how much it moved day to day over that same window — the conventional volatility adjustment, so an equal climb taken through twice the swing does not read as equal strength — then each figure is ranked against every other name carrying both, and the two ranks are averaged. 80 means it stands above four fifths of the index. Ranking before blending stops the wider-spread figure from deciding the score, and it is what makes the number immune to an outlier: a name up thirty-fold ranks first and stops there, where a raw blend would stretch every scale drawn from it. The bar on each row is this number, on a 0–100 scale fixed for every row, and its midline is the 50th percentile. A name without a full year for both windows has no standing rather than a partial one.",
+        "rank(12–1 ÷ daily vol) and rank(6–1 ÷ daily vol), averaged"],
       today: ["Today's change",
         "The live price against the previous close, from your own quotes Worker, refreshed about every minute and a half while the page is open. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
         "live price ÷ previous close − 1"],
@@ -2317,7 +1882,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function returnFocus(opener) {
       if (opener && document.body.contains(opener)) { opener.focus(); return; }
-      (state.view === "table" ? tableWrap : listEl).focus();
+      listEl.focus();
     }
     function openExplain(key, opener) {
       var entry = EXPLAIN[key];
@@ -2333,14 +1898,13 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function openColumns(opener) {
       document.getElementById("ep-title").textContent = "What the figures mean";
-      epBody.textContent = "The list sorts by one of five figures — the two momentum windows, " +
-        "trend quality, distance from the 1-year high and the return relative to the sector; in " +
-        "the table, tap one of their headings to sort by it, and again to flip the direction. " +
-        "The other columns are context, not an order. A dash means the figure would need more history than " +
+      epBody.textContent = "The list orders by momentum standing or by market cap, and every row " +
+        "carries its standing. Everything else here is on the name's own page, a tap away, where it is " +
+        "context rather than another way to sort. A dash means the figure would need more history than " +
         "the name has, so it is left out rather than measured over less.";
       epBody.hidden = false; epFormula.hidden = true;
       epList.textContent = "";
-      TABLE_COLUMNS.forEach(function (key) {
+      METRIC_ORDER.forEach(function (key) {
         var m = METRICS[key], entry = m.explain && EXPLAIN[m.explain];
         if (!entry) return;
         epList.appendChild(el("dt", null, m.label));
@@ -2408,38 +1972,21 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     /* ----- init ----- */
 
-    var oSort = document.createElement("option");
-    oSort.value = "sort"; oSort.textContent = "Same as sort";
-    displaySelect.appendChild(oSort);
     SORT_KEYS.forEach(function (key) {
       var o = document.createElement("option");
       o.value = key; o.textContent = METRICS[key].label;
       sortSelect.appendChild(o);
     });
-    METRIC_ORDER.forEach(function (key) {
-      var o = document.createElement("option");
-      o.value = key; o.textContent = METRICS[key].label;
-      displaySelect.appendChild(o);
-    });
     loadPrefs();
     applyTheme(state.theme);
-    if (!hasHistory) state.display = "cap";
-    displaySelect.value = state.display;
+    // With no history there is no standing to rank by, only size.
+    if (!hasHistory) state.sortKey = "cap";
     sortSelect.value = state.sortKey;
     document.getElementById("sortLabel").textContent = METRICS[state.sortKey].label;
-    sortDirBtn.firstElementChild.style.transform = state.sortDesc ? "" : "rotate(180deg)";
-    sortDirBtn.setAttribute("aria-label", "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
-    document.querySelectorAll("#viewSeg button").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === state.view));
-    });
-    groupBtn.setAttribute("aria-checked", String(state.grouped));
-    renderTableHead();
     renderFilters();
     paintWatchCount();
     paintWatchMix();
-    paintSettingsRows();
     quotesInput.value = state.quotesUrl || "";
-    renderScreen();
     renderList();
     setTab(state.tab);
     loadQuotes(true);

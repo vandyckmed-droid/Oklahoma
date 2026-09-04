@@ -7,14 +7,12 @@ demand so there is no second copy to drift.
 
 from __future__ import annotations
 
-from bisect import bisect_left, bisect_right
+from bisect import bisect_left
 from math import exp, log
 from statistics import median, stdev
 
 from .config import (
-    RS_MIN_NAMES,
-    RS_POINTS,
-    RS_STEP,
+    BLEND_MIN_NAMES,
     TRADING_DAYS_HALF,
     TRADING_DAYS_MONTH,
     TRADING_DAYS_TARGET,
@@ -138,79 +136,46 @@ def percentiles(values: dict[str, float]) -> dict[str, float]:
     }
 
 
-def relative_strength(
+def momentum_blend(
     bars_by_ticker: dict[str, list[dict]],
-    calendar: list[str],
     trading_days: int = TRADING_DAYS_TARGET,
     half: int = TRADING_DAYS_HALF,
     skip: int = TRADING_DAYS_MONTH,
-    points: int = RS_POINTS,
-    step: int = RS_STEP,
-    min_names: int = RS_MIN_NAMES,
-) -> dict:
-    """Each name's cross-sectional standing, sampled back through the year.
+    min_names: int = BLEND_MIN_NAMES,
+) -> dict[str, float]:
+    """Each name's standing in the universe, 0-100, as one score.
 
-    At every snapshot date each name's volatility-adjusted 12-1 and 6-1
-    momentum is ranked against every other name carrying both figures that
-    day, and the two percentiles are averaged. Ranking each figure before
-    blending keeps the wider-spread one from dominating the pair, and a
-    percentile puts every name and every date on one fixed 0-100 scale:
-    the bar says where the name stood among the S&P 500 that month, so the
-    row reads as position now and direction over time.
+    A name's volatility-adjusted 12-1 and 6-1 momentum are each ranked
+    against every other name carrying both, and the two ranks averaged.
 
-    The dates come from the shared trading calendar rather than each
-    name's own bars, so one column means one date across the whole
-    universe. A name without a full window on a date has no bar there.
+    Ranking before blending is what makes the pair meaningful: the two
+    figures have different spreads, so averaging them raw would let the
+    wider one decide the score. Ranking is also what makes the score
+    immune to an outlier — a name up thirty-fold ranks first and stops
+    there, where a raw blend would stretch every scale drawn from it.
+
+    A name missing either figure has no score rather than a partial one,
+    and below `min_names` rankable names there is no cross-section to
+    stand in, so nothing is scored at all.
     """
-    snapshots = [
-        calendar[i]
-        for i in sorted(
-            index
-            for index in (len(calendar) - 1 - k * step for k in range(points))
-            if index >= 0
-        )
-    ]
-    if not snapshots:
-        return {"dates": [], "series": {}}
-
-    returns = {t: log_returns(bars) for t, bars in bars_by_ticker.items()}
-    dates = {t: [bar["date"] for bar in bars] for t, bars in bars_by_ticker.items()}
-
-    kept: list[str] = []
-    series: dict[str, list[float | None]] = {t: [] for t in bars_by_ticker}
-    for date in snapshots:
-        long_figures: dict[str, float] = {}
-        short_figures: dict[str, float] = {}
-        for ticker, bars in bars_by_ticker.items():
-            # The name's own last session on or before the snapshot date:
-            # a name that did not trade that day is measured to its most
-            # recent close, never to a future one.
-            end = bisect_right(dates[ticker], date) - 1
-            if end < trading_days - 1:
-                continue
-            prefix = bars[: end + 1]
-            # Return indices are absolute, so the whole list serves every
-            # snapshot: rets[i] is the move into bar i + 1 either way.
-            rets = returns[ticker]
-            long_value = vol_adjusted_momentum(prefix, trading_days, skip, rets)
-            short_value = vol_adjusted_momentum(prefix, half, skip, rets)
-            if long_value is None or short_value is None:
-                continue
-            long_figures[ticker] = long_value
-            short_figures[ticker] = short_value
-        if len(long_figures) < min_names:
+    long_figures: dict[str, float] = {}
+    short_figures: dict[str, float] = {}
+    for ticker, bars in bars_by_ticker.items():
+        rets = log_returns(bars)
+        long_value = vol_adjusted_momentum(bars, trading_days, skip, rets)
+        short_value = vol_adjusted_momentum(bars, half, skip, rets)
+        if long_value is None or short_value is None:
             continue
-        long_rank = percentiles(long_figures)
-        short_rank = percentiles(short_figures)
-        kept.append(date)
-        for ticker in bars_by_ticker:
-            blended = (
-                round((long_rank[ticker] + short_rank[ticker]) / 2, 1)
-                if ticker in long_rank
-                else None
-            )
-            series[ticker].append(blended)
-    return {"dates": kept, "series": series}
+        long_figures[ticker] = long_value
+        short_figures[ticker] = short_value
+    if len(long_figures) < min_names:
+        return {}
+    long_rank = percentiles(long_figures)
+    short_rank = percentiles(short_figures)
+    return {
+        ticker: round((long_rank[ticker] + short_rank[ticker]) / 2, 1)
+        for ticker in long_figures
+    }
 
 
 def sector_summary(rows: list[dict]) -> list[dict]:
