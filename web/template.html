@@ -133,11 +133,29 @@ svg { display: block; }
 .titlebar h1 { margin: 0; font: 700 17px/24px var(--sans); letter-spacing: -0.01em; }
 .titlebar span { font: 400 13px/20px var(--sans); color: var(--text-2); }
 
-/* ----- hero ----- */
-.hero { padding: 12px 0 0; }
-.hero-big { margin: 0; font: 700 34px/40px var(--sans); letter-spacing: -0.02em; }
-.hero-line { margin: 2px 0 0; font: 500 14px/20px var(--sans); }
-.hero-sub { margin: 0; font: 400 13px/18px var(--sans); color: var(--text-2); }
+/* ----- momentum screen -----
+   Two sliders in the space the market chart held. Each sets the lowest
+   cross-sectional percentile a name must reach to stay in the list. */
+.screen { padding: 10px 0 6px; border-bottom: 1px solid var(--line); }
+.screen-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 400 13px/18px var(--sans); color: var(--text-2); }
+.screen-head .xl { font: inherit; }
+.screen-head .n { white-space: nowrap; text-align: right; }
+.slider { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 12px; padding: 8px 0 0; }
+.slider label { font: 600 15px/20px var(--sans); white-space: nowrap; }
+.slider output { font: 400 13px/20px var(--sans); color: var(--text-2); white-space: nowrap; text-align: right; }
+.slider output b { color: var(--text-2); }
+.slider output.on b { color: var(--text); }
+.slider input {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  accent-color: var(--up);
+  cursor: pointer;
+  touch-action: pan-y;
+}
 .chart { position: relative; width: 100%; aspect-ratio: 358 / 140; margin-top: 8px; }
 @media (min-width: 720px) { .chart { aspect-ratio: 728 / 220; } }
 .chart svg { width: 100%; height: 100%; overflow: visible; }
@@ -534,12 +552,18 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       <span id="subtitle"></span>
     </header>
 
-    <div class="hero" id="hero" hidden>
-      <p class="hero-big" id="hero-big"></p>
-      <p class="hero-line" id="hero-line"></p>
-      <p class="hero-sub" id="hero-sub"></p>
-      <div class="chart" id="hero-chart"></div>
-      <div class="ranges" id="hero-ranges" role="group" aria-label="Window"></div>
+    <div class="screen" id="screen" hidden>
+      <div class="screen-head"><button type="button" class="xl" data-explain="screen">Momentum screen</button><span class="n" id="screen-n" aria-live="polite"></span></div>
+      <div class="slider">
+        <label for="mom121Min">12–1 Momentum</label>
+        <output id="mom121Out" for="mom121Min"></output>
+        <input id="mom121Min" type="range" min="0" max="95" step="5" value="0">
+      </div>
+      <div class="slider">
+        <label for="mom61Min">6–1 Momentum</label>
+        <output id="mom61Out" for="mom61Min"></output>
+        <input id="mom61Min" type="range" min="0" max="95" step="5" value="0">
+      </div>
     </div>
 
     <label class="search">
@@ -1149,17 +1173,15 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       medianBySector[row.sector] = row.median_return_pct;
     });
 
-    // Median cumulative-return series, for the universe and per sector,
-    // at each point of the thinned series over full-window names.
-    var universeSeries = null;
+    // Median cumulative-return series per sector, at each point of the
+    // thinned series over full-window names.
     var sectorSeries = {};
     if (hasHistory) {
-      var bySector = {}, allSparks = [];
+      var bySector = {};
       history.coverage.forEach(function (cov) {
         var r = rowByTicker[cov.ticker];
         if (!r || !cov.sufficient || !cov.cum_return_spark) return;
         (bySector[r.sector] = bySector[r.sector] || []).push(cov.cum_return_spark);
-        allSparks.push(cov.cum_return_spark);
       });
       function medianSeries(sparks) {
         var lengths = {};
@@ -1173,7 +1195,6 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         }
         return out;
       }
-      universeSeries = medianSeries(allSparks);
       Object.keys(bySector).forEach(function (s) { sectorSeries[s] = medianSeries(bySector[s]); });
     }
 
@@ -1184,6 +1205,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
       // display "sort" means the row figure follows the sort key.
       view: "cards", display: "sort", tab: "universe", theme: "system", range: "1Y",
+      // Momentum screen: the lowest percentile a name must reach; 0 is off.
+      mom121Min: 0, mom61Min: 0,
       quotesUrl: DEFAULT_QUOTES_URL
     };
     var collapsedSectors = new Set();
@@ -1204,6 +1227,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (typeof p.showTrend === "boolean") state.showTrend = p.showTrend;
       if (p.theme === "light" || p.theme === "dark" || p.theme === "system") state.theme = p.theme;
       if (WINDOWS.some(function (w) { return w.key === p.range; })) state.range = p.range;
+      SCREENS.forEach(function (s) {
+        var v = p[s.pref];
+        if (typeof v === "number" && v >= 0 && v <= 95 && v % 5 === 0) state[s.pref] = v;
+      });
       // v2 prefs store an empty URL to mean "off"; older prefs never saved one
       // on purpose, so an empty legacy value keeps the default Worker.
       if (typeof p.quotesUrl === "string" && (p.quotesUrl.trim() || p.v >= 2)) state.quotesUrl = p.quotesUrl.trim();
@@ -1214,7 +1241,8 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
           v: 3, view: state.view, display: state.display,
           sortKey: state.sortKey, sortDesc: state.sortDesc, tab: state.tab,
           grouped: state.grouped, showTrend: state.showTrend,
-          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl
+          theme: state.theme, range: state.range, quotesUrl: state.quotesUrl,
+          mom121Min: state.mom121Min, mom61Min: state.mom61Min
         }));
       } catch (e) { /* per-viewer convenience only */ }
     }
@@ -1355,40 +1383,97 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var columnsBtn = document.getElementById("columnsHelp");
     var watchMix = document.getElementById("watch-mix");
 
-    /* ----- hero: the universe as one line ----- */
+    /* ----- momentum screen: two sliders in place of the market chart -----
+       Each slider sets the lowest cross-sectional percentile a name must
+       reach. A name's percentile is the share of the universe — every
+       name carrying the figure — whose value is strictly lower, so Top
+       20% keeps the names higher than at least 80% of the universe. The
+       rank is taken against the whole universe, never the sector or
+       search in view, so a chip narrows the survivors without moving the
+       bar. Names without the figure cannot be ranked and drop out once a
+       slider is off All. */
 
-    var heroEl = document.getElementById("hero");
-    function renderHero(animate) {
-      if (!universeSeries) { heroEl.hidden = true; return; }
-      heroEl.hidden = false;
-      var w = windowByKey(state.range);
-      var values = history.coverage.map(function (cov) {
-        return cov.sufficient ? cov[w.field] : null;
+    var SCREENS = [
+      { key: "mom121", pref: "mom121Min" },
+      { key: "mom61", pref: "mom61Min" }
+    ];
+    var ranked = {};
+    SCREENS.forEach(function (s) {
+      var sorted = [], below = {};
+      rows.forEach(function (r) {
+        var v = metricValue(s.key, r);
+        if (v != null) sorted.push(v);
       });
-      var have = values.filter(function (v) { return v != null; }).length;
-      var med = median(values);
-      var series = rebase(universeSeries, w.points);
-      var big = document.getElementById("hero-big");
-      var line = document.getElementById("hero-line");
-      function headline(value, label) {
-        big.textContent = pct(value);
-        big.className = "hero-big " + direction(value);
-        line.textContent = label;
-        line.className = "hero-line " + direction(value);
-      }
-      headline(med, "Median name, past " + w.label);
-      document.getElementById("hero-sub").textContent = have + " of " + rows.length + " names, full window";
-      var holder = document.getElementById("hero-chart");
-      holder.textContent = "";
-      var chart = lineChart(series, { width: 358, height: 140, big: true, stroke: colorFor(med),
-        scrub: { start: windowStart(w), end: lastBar, onScrub: function (i, value, when) {
-          if (i == null) headline(med, "Median name, past " + w.label);
-          else headline(value, "Median name · " + when);
-        } } });
-      holder.appendChild(chart);
-      if (animate) chart.draw();
-      renderRanges(document.getElementById("hero-ranges"), null, function () { renderHero(false); });
+      sorted.sort(function (a, b) { return a - b; });
+      rows.forEach(function (r) {
+        var v = metricValue(s.key, r);
+        if (v == null) return;
+        // Lower bound: how many names sit strictly below this one.
+        var lo = 0, hi = sorted.length;
+        while (lo < hi) { var mid = (lo + hi) >> 1; if (sorted[mid] < v) lo = mid + 1; else hi = mid; }
+        below[r.ticker] = lo;
+      });
+      ranked[s.key] = { sorted: sorted, below: below };
+    });
+    function screenOn() {
+      return SCREENS.some(function (s) { return state[s.pref] > 0; });
     }
+    // Integer arithmetic, so a name exactly on the bar is judged the same
+    // way the cutoff below is computed.
+    function passesScreen(r) {
+      for (var i = 0; i < SCREENS.length; i++) {
+        var s = SCREENS[i], min = state[s.pref];
+        if (!min) continue;
+        var rk = ranked[s.key], lo = rk.below[r.ticker];
+        if (lo == null || lo * 100 < min * rk.sorted.length) return false;
+      }
+      return true;
+    }
+    // The lowest figure that clears a slider: the first sorted value whose
+    // rank reaches the threshold.
+    function screenCutoff(s) {
+      var rk = ranked[s.key], min = state[s.pref];
+      var k = Math.ceil(rk.sorted.length * min / 100);
+      return k < rk.sorted.length ? rk.sorted[k] : null;
+    }
+
+    var screenEl = document.getElementById("screen");
+    var screenN = document.getElementById("screen-n");
+    function renderScreen() {
+      var any = SCREENS.some(function (s) { return ranked[s.key].sorted.length > 1; });
+      screenEl.hidden = !any;
+      if (!any) return;
+      SCREENS.forEach(function (s) {
+        var input = document.getElementById(s.pref);
+        var out = document.getElementById(s.key + "Out");
+        var min = state[s.pref];
+        var label = min ? "Top " + (100 - min) + "%" : "All";
+        input.value = String(min);
+        input.setAttribute("aria-valuetext", label);
+        out.textContent = "";
+        out.classList.toggle("on", min > 0);
+        out.appendChild(el("b", null, label));
+        var cut = min ? screenCutoff(s) : null;
+        if (cut != null) out.appendChild(document.createTextNode(" · from " + pct1(cut)));
+      });
+      if (screenOn()) {
+        var pass = rows.filter(passesScreen).length;
+        screenN.textContent = pass + " of " + rows.length + " names clear the screen";
+      } else {
+        screenN.textContent = "All " + rows.length + " names · slide to screen";
+      }
+    }
+    SCREENS.forEach(function (s) {
+      var input = document.getElementById(s.pref);
+      // `input` fires through the drag, so the list follows the thumb;
+      // the preference is written once the thumb settles.
+      input.addEventListener("input", function (event) {
+        state[s.pref] = +event.target.value || 0;
+        renderScreen();
+        renderList();
+      });
+      input.addEventListener("change", savePrefs);
+    });
     function renderRanges(container, valuesByKey, onChange) {
       container.textContent = "";
       container.classList.toggle("tall", Boolean(valuesByKey));
@@ -1576,6 +1661,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       var q = state.query.trim().toLowerCase();
       return rows.filter(function (r) {
         if (state.sector && r.sector !== state.sector) return false;
+        if (!passesScreen(r)) return false;
         if (!q) return true;
         return r.ticker.toLowerCase().indexOf(q) !== -1 ||
           r.name.toLowerCase().indexOf(q) !== -1 ||
@@ -1672,7 +1758,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         }
         var vals = {};
         WINDOWS.forEach(function (ww) { vals[ww.key] = windowValue(ww); });
-        renderRanges(ranges, vals, function () { paint(false); renderHero(false); });
+        renderRanges(ranges, vals, function () { paint(false); });
       }
       if (toggle) {
         toggle.addEventListener("click", function () {
@@ -1844,7 +1930,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       return state.watchOnly && !watch.size
         ? "Your watchlist is empty. Open a name and add it."
         : state.watchOnly ? "No watchlist name matches."
-        : "Nothing matches “" + state.query.trim() + "”. Try a ticker or sector.";
+        : state.query.trim() ? "Nothing matches “" + state.query.trim() + "”" +
+          (screenOn() ? " and clears the momentum screen." : ". Try a ticker or sector.")
+        : "Nothing here clears the momentum screen. Loosen a slider or pick another sector.";
     }
 
     function renderList() {
@@ -2067,6 +2155,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       chart: ["How the charts are drawn",
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
+      screen: ["Momentum screen",
+        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 20% keeps only names whose 12-1 or 6-1 momentum is higher than at least 80% of the universe. A name must clear both sliders. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. The figure beside each slider is the lowest return that clears it.",
+        "rank = names with a lower value ÷ names with the figure · keep if rank ≥ slider"],
       today: ["Today's change",
         "The live price against the previous close, from your own quotes Worker, refreshed about every minute and a half while the page is open. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
         "live price ÷ previous close − 1"],
@@ -2261,7 +2352,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     paintWatchMix();
     paintSettingsRows();
     quotesInput.value = state.quotesUrl || "";
-    renderHero(true);
+    renderScreen();
     renderList();
     setTab(state.tab);
     loadQuotes(true);
