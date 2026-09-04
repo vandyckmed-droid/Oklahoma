@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AWK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"AWK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":139.36,"volume":861730},
 {"date":"2025-06-24","adj_close":137.61,"volume":990849},
 {"date":"2025-06-25","adj_close":135.55,"volume":1077940},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":138.3,"volume":1908242},
 {"date":"2026-08-31","adj_close":138.23,"volume":2420143},
 {"date":"2026-09-01","adj_close":137.4,"volume":1662028},
-{"date":"2026-09-02","adj_close":139.49,"volume":2386680}
+{"date":"2026-09-02","adj_close":139.49,"volume":2386739},
+{"date":"2026-09-03","adj_close":140.89,"volume":1835739}
 ]}

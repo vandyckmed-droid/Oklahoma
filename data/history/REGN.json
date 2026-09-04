@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"REGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"REGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":508.53,"volume":1076307},
 {"date":"2025-06-24","adj_close":518.81,"volume":970600},
 {"date":"2025-06-25","adj_close":516.84,"volume":639648},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":794.19,"volume":488305},
 {"date":"2026-08-31","adj_close":799.08,"volume":894268},
 {"date":"2026-09-01","adj_close":823.82,"volume":682806},
-{"date":"2026-09-02","adj_close":852.03,"volume":749453}
+{"date":"2026-09-02","adj_close":852.03,"volume":749453},
+{"date":"2026-09-03","adj_close":843.47,"volume":496173}
 ]}

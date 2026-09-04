@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PPG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PPG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":108.73,"volume":2697545},
 {"date":"2025-06-24","adj_close":110.23,"volume":2025742},
 {"date":"2025-06-25","adj_close":109.63,"volume":1308348},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":114.22,"volume":1051942},
 {"date":"2026-08-31","adj_close":112.17,"volume":1593036},
 {"date":"2026-09-01","adj_close":109.7,"volume":1441300},
-{"date":"2026-09-02","adj_close":111.35,"volume":1482071}
+{"date":"2026-09-02","adj_close":111.31,"volume":1500600},
+{"date":"2026-09-03","adj_close":110.75,"volume":1232336}
 ]}

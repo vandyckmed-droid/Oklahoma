@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"TGT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"TGT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":91.77,"volume":6887215},
 {"date":"2025-06-24","adj_close":92.72,"volume":6406142},
 {"date":"2025-06-25","adj_close":91.93,"volume":4372035},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":163.18,"volume":3644518},
 {"date":"2026-08-31","adj_close":160.88,"volume":3911760},
 {"date":"2026-09-01","adj_close":163.75,"volume":3982974},
-{"date":"2026-09-02","adj_close":163.43,"volume":2738187}
+{"date":"2026-09-02","adj_close":163.36,"volume":2805256},
+{"date":"2026-09-03","adj_close":164.01,"volume":1986084}
 ]}

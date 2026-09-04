@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PLTR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PLTR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":139.92,"volume":70501100},
 {"date":"2025-06-24","adj_close":143.23,"volume":58574200},
 {"date":"2025-06-25","adj_close":142.9,"volume":61435300},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":186.29,"volume":25060206},
 {"date":"2026-08-31","adj_close":186.38,"volume":25941200},
 {"date":"2026-09-01","adj_close":179.92,"volume":24567200},
-{"date":"2026-09-02","adj_close":169.46,"volume":39578542}
+{"date":"2026-09-02","adj_close":169.46,"volume":39874000},
+{"date":"2026-09-03","adj_close":182.53,"volume":38010148}
 ]}

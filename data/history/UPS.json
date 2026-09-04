@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UPS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"UPS","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":92.46,"volume":5077200},
 {"date":"2025-06-24","adj_close":92.66,"volume":3686816},
 {"date":"2025-06-25","adj_close":91.51,"volume":6058102},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":105.33,"volume":2346933},
 {"date":"2026-08-31","adj_close":104.23,"volume":5031433},
 {"date":"2026-09-01","adj_close":102.66,"volume":3659414},
-{"date":"2026-09-02","adj_close":103.03,"volume":3086921}
+{"date":"2026-09-02","adj_close":103.01,"volume":3132819},
+{"date":"2026-09-03","adj_close":103.49,"volume":4796486}
 ]}

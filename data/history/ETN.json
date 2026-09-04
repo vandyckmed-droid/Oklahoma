@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ETN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"ETN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":328.34,"volume":1397853},
 {"date":"2025-06-24","adj_close":338.51,"volume":2977934},
 {"date":"2025-06-25","adj_close":337.61,"volume":1930200},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":402.78,"volume":1824615},
 {"date":"2026-08-31","adj_close":401.88,"volume":2166669},
 {"date":"2026-09-01","adj_close":390.71,"volume":2022777},
-{"date":"2026-09-02","adj_close":390.85,"volume":1630880}
+{"date":"2026-09-02","adj_close":390.85,"volume":1631294},
+{"date":"2026-09-03","adj_close":397.12,"volume":1477441}
 ]}

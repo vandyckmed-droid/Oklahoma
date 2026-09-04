@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PSKY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PSKY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":12.1,"volume":6341000},
 {"date":"2025-06-24","adj_close":12.15,"volume":4993100},
 {"date":"2025-06-25","adj_close":12.01,"volume":5850400},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":10.88,"volume":10029641},
 {"date":"2026-08-31","adj_close":10.91,"volume":11113062},
 {"date":"2026-09-01","adj_close":10.55,"volume":10433353},
-{"date":"2026-09-02","adj_close":10.97,"volume":11983920}
+{"date":"2026-09-02","adj_close":10.97,"volume":11984713},
+{"date":"2026-09-03","adj_close":11.04,"volume":9272583}
 ]}

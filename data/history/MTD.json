@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MTD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"MTD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":1163.61,"volume":138424},
 {"date":"2025-06-24","adj_close":1185.18,"volume":129637},
 {"date":"2025-06-25","adj_close":1192.85,"volume":143314},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":1398.58,"volume":202023},
 {"date":"2026-08-31","adj_close":1405.14,"volume":221200},
 {"date":"2026-09-01","adj_close":1375.96,"volume":168552},
-{"date":"2026-09-02","adj_close":1367.74,"volume":178279}
+{"date":"2026-09-02","adj_close":1367.74,"volume":179000},
+{"date":"2026-09-03","adj_close":1356.23,"volume":168344}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"LYV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"LYV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":150.69,"volume":2525329},
 {"date":"2025-06-24","adj_close":147.78,"volume":2579222},
 {"date":"2025-06-25","adj_close":146.19,"volume":1251823},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":181.65,"volume":1279396},
 {"date":"2026-08-31","adj_close":179.89,"volume":1789706},
 {"date":"2026-09-01","adj_close":177.2,"volume":1623919},
-{"date":"2026-09-02","adj_close":179.59,"volume":1810931}
+{"date":"2026-09-02","adj_close":179.59,"volume":1810933},
+{"date":"2026-09-03","adj_close":177.49,"volume":1435342}
 ]}

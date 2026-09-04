@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"STT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"STT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":97.99,"volume":2868162},
 {"date":"2025-06-24","adj_close":99.6,"volume":2552200},
 {"date":"2025-06-25","adj_close":101.0,"volume":2168021},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":193.33,"volume":627434},
 {"date":"2026-08-31","adj_close":191.38,"volume":1843418},
 {"date":"2026-09-01","adj_close":187.79,"volume":1179100},
-{"date":"2026-09-02","adj_close":190.04,"volume":1126444}
+{"date":"2026-09-02","adj_close":190.04,"volume":1126588},
+{"date":"2026-09-03","adj_close":193.94,"volume":1524863}
 ]}

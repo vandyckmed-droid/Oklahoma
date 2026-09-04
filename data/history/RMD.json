@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"RMD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"RMD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":251.33,"volume":591314},
 {"date":"2025-06-24","adj_close":252.71,"volume":994030},
 {"date":"2025-06-25","adj_close":254.68,"volume":945226},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":240.33,"volume":1386748},
 {"date":"2026-08-31","adj_close":240.1,"volume":1722128},
 {"date":"2026-09-01","adj_close":231.36,"volume":987078},
-{"date":"2026-09-02","adj_close":230.87,"volume":1156198}
+{"date":"2026-09-02","adj_close":230.87,"volume":1156476},
+{"date":"2026-09-03","adj_close":229.19,"volume":782985}
 ]}

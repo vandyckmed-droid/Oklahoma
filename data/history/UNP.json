@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UNP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"UNP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":219.85,"volume":2665300},
 {"date":"2025-06-24","adj_close":221.82,"volume":2777100},
 {"date":"2025-06-25","adj_close":220.75,"volume":2005400},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":305.99,"volume":1717830},
 {"date":"2026-08-31","adj_close":300.67,"volume":3706315},
 {"date":"2026-09-01","adj_close":290.62,"volume":3043165},
-{"date":"2026-09-02","adj_close":289.73,"volume":1891342}
+{"date":"2026-09-02","adj_close":289.73,"volume":1892673},
+{"date":"2026-09-03","adj_close":289.15,"volume":2041388}
 ]}

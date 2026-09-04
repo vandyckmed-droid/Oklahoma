@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PHM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PHM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":104.02,"volume":2007064},
 {"date":"2025-06-24","adj_close":104.65,"volume":2578353},
 {"date":"2025-06-25","adj_close":102.74,"volume":1667930},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":130.86,"volume":950400},
 {"date":"2026-08-26","adj_close":130.03,"volume":954300},
 {"date":"2026-08-27","adj_close":126.75,"volume":1206871},
-{"date":"2026-08-28","adj_close":128.55,"volume":1066998},
+{"date":"2026-08-28","adj_close":128.55,"volume":1067000},
 {"date":"2026-08-31","adj_close":126.32,"volume":1650449},
 {"date":"2026-09-01","adj_close":123.13,"volume":1502603},
-{"date":"2026-09-02","adj_close":123.7,"volume":1136924}
+{"date":"2026-09-02","adj_close":123.7,"volume":1138821},
+{"date":"2026-09-03","adj_close":124.31,"volume":1066131}
 ]}

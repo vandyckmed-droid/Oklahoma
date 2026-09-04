@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"TMO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"TMO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":398.76,"volume":2486234},
 {"date":"2025-06-24","adj_close":402.9,"volume":2083000},
 {"date":"2025-06-25","adj_close":409.16,"volume":3100914},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":622.18,"volume":1016629},
 {"date":"2026-08-31","adj_close":617.1,"volume":1429100},
 {"date":"2026-09-01","adj_close":600.5,"volume":1385067},
-{"date":"2026-09-02","adj_close":608.54,"volume":1616965}
+{"date":"2026-09-02","adj_close":608.54,"volume":1617006},
+{"date":"2026-09-03","adj_close":618.43,"volume":1804922}
 ]}

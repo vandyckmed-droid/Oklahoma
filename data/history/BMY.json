@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"BMY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"BMY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":44.19,"volume":9508300},
 {"date":"2025-06-24","adj_close":44.29,"volume":14585014},
 {"date":"2025-06-25","adj_close":43.97,"volume":9013136},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":66.58,"volume":5543592},
 {"date":"2026-08-31","adj_close":66.81,"volume":12682245},
 {"date":"2026-09-01","adj_close":66.92,"volume":6933599},
-{"date":"2026-09-02","adj_close":67.66,"volume":7818379}
+{"date":"2026-09-02","adj_close":67.66,"volume":7825377},
+{"date":"2026-09-03","adj_close":68.09,"volume":6217643}
 ]}

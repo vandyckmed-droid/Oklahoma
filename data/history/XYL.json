@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"XYL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"XYL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":123.41,"volume":1257148},
 {"date":"2025-06-24","adj_close":125.04,"volume":1136132},
 {"date":"2025-06-25","adj_close":125.37,"volume":1386419},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":111.31,"volume":1458976},
 {"date":"2026-08-31","adj_close":110.11,"volume":2009430},
 {"date":"2026-09-01","adj_close":106.89,"volume":1882208},
-{"date":"2026-09-02","adj_close":106.74,"volume":1983029}
+{"date":"2026-09-02","adj_close":106.74,"volume":1983183},
+{"date":"2026-09-03","adj_close":107.89,"volume":1637809}
 ]}

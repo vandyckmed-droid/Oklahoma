@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"NVR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"NVR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":7339.17,"volume":21910},
 {"date":"2025-06-24","adj_close":7277.59,"volume":41310},
 {"date":"2025-06-25","adj_close":7193.18,"volume":19343},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":6433.74,"volume":31800},
 {"date":"2026-08-26","adj_close":6368.12,"volume":29600},
 {"date":"2026-08-27","adj_close":6365.45,"volume":37100},
-{"date":"2026-08-28","adj_close":6396.27,"volume":23767},
+{"date":"2026-08-28","adj_close":6396.27,"volume":23800},
 {"date":"2026-08-31","adj_close":6315.23,"volume":40900},
 {"date":"2026-09-01","adj_close":6275.82,"volume":46300},
-{"date":"2026-09-02","adj_close":6326.95,"volume":36568}
+{"date":"2026-09-02","adj_close":6326.95,"volume":36600},
+{"date":"2026-09-03","adj_close":6373.95,"volume":38108}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"IDXX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"IDXX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":524.65,"volume":399879},
 {"date":"2025-06-24","adj_close":530.5,"volume":391007},
 {"date":"2025-06-25","adj_close":530.4,"volume":520491},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":550.01,"volume":385739},
 {"date":"2026-08-26","adj_close":553.44,"volume":349441},
 {"date":"2026-08-27","adj_close":545.08,"volume":340584},
-{"date":"2026-08-28","adj_close":554.99,"volume":340987},
+{"date":"2026-08-28","adj_close":554.99,"volume":341000},
 {"date":"2026-08-31","adj_close":556.69,"volume":698426},
 {"date":"2026-09-01","adj_close":545.16,"volume":458300},
-{"date":"2026-09-02","adj_close":538.99,"volume":655414}
+{"date":"2026-09-02","adj_close":538.99,"volume":655552},
+{"date":"2026-09-03","adj_close":529.29,"volume":590134}
 ]}

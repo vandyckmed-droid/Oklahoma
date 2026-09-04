@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"FOX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"FOX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":50.89,"volume":925625},
 {"date":"2025-06-24","adj_close":50.8,"volume":1237077},
 {"date":"2025-06-25","adj_close":50.87,"volume":633784},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":62.38,"volume":739025},
 {"date":"2026-08-26","adj_close":61.92,"volume":671273},
 {"date":"2026-08-27","adj_close":60.1,"volume":1701608},
-{"date":"2026-08-28","adj_close":61.02,"volume":943294},
+{"date":"2026-08-28","adj_close":61.02,"volume":943300},
 {"date":"2026-08-31","adj_close":59.92,"volume":1871821},
 {"date":"2026-09-01","adj_close":58.74,"volume":1228517},
-{"date":"2026-09-02","adj_close":60.27,"volume":1390657}
+{"date":"2026-09-02","adj_close":60.27,"volume":1390878},
+{"date":"2026-09-03","adj_close":60.47,"volume":988731}
 ]}

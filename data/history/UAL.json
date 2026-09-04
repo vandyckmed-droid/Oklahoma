@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"UAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"UAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":76.97,"volume":11985207},
 {"date":"2025-06-24","adj_close":79.02,"volume":7187821},
 {"date":"2025-06-25","adj_close":76.73,"volume":5483200},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":110.6,"volume":2303039},
 {"date":"2026-08-31","adj_close":107.99,"volume":3395026},
 {"date":"2026-09-01","adj_close":104.63,"volume":5274962},
-{"date":"2026-09-02","adj_close":108.35,"volume":4183992}
+{"date":"2026-09-02","adj_close":108.35,"volume":4187988},
+{"date":"2026-09-03","adj_close":108.66,"volume":3047100}
 ]}

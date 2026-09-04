@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"NEE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"NEE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":68.22,"volume":8671300},
 {"date":"2025-06-24","adj_close":68.87,"volume":9001465},
 {"date":"2025-06-25","adj_close":67.85,"volume":12839260},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":81.84,"volume":13956225},
 {"date":"2026-08-31","adj_close":82.34,"volume":14054472},
 {"date":"2026-09-01","adj_close":82.93,"volume":11159131},
-{"date":"2026-09-02","adj_close":83.1,"volume":12712990}
+{"date":"2026-09-02","adj_close":83.1,"volume":12714632},
+{"date":"2026-09-03","adj_close":84.06,"volume":11537631}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"SYK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"SYK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":374.53,"volume":1281800},
 {"date":"2025-06-24","adj_close":381.74,"volume":1746009},
 {"date":"2025-06-25","adj_close":387.44,"volume":1916019},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":330.69,"volume":2227794},
 {"date":"2026-08-31","adj_close":323.8,"volume":2041060},
 {"date":"2026-09-01","adj_close":317.4,"volume":2138400},
-{"date":"2026-09-02","adj_close":312.19,"volume":2185442}
+{"date":"2026-09-02","adj_close":312.19,"volume":2185661},
+{"date":"2026-09-03","adj_close":307.99,"volume":2655862}
 ]}

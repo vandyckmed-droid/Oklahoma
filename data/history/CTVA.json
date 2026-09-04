@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CTVA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CTVA","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":73.57,"volume":4927130},
 {"date":"2025-06-24","adj_close":72.43,"volume":4629435},
 {"date":"2025-06-25","adj_close":72.38,"volume":4961778},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":83.72,"volume":3130245},
 {"date":"2026-08-31","adj_close":84.45,"volume":5751044},
 {"date":"2026-09-01","adj_close":87.73,"volume":5567678},
-{"date":"2026-09-02","adj_close":89.96,"volume":8677973}
+{"date":"2026-09-02","adj_close":89.97,"volume":8788078},
+{"date":"2026-09-03","adj_close":88.64,"volume":5325568}
 ]}

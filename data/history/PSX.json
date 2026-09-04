@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":116.4,"volume":4503100},
 {"date":"2025-06-24","adj_close":114.89,"volume":4171302},
 {"date":"2025-06-25","adj_close":115.05,"volume":2866900},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":244.01,"volume":1729184},
 {"date":"2026-08-31","adj_close":246.58,"volume":4441200},
 {"date":"2026-09-01","adj_close":252.02,"volume":3099713},
-{"date":"2026-09-02","adj_close":256.09,"volume":2886583}
+{"date":"2026-09-02","adj_close":256.09,"volume":2890743},
+{"date":"2026-09-03","adj_close":254.66,"volume":2718116}
 ]}

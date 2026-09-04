@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CDW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CDW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":169.68,"volume":1268131},
 {"date":"2025-06-24","adj_close":175.61,"volume":1340718},
 {"date":"2025-06-25","adj_close":173.65,"volume":1022437},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":147.69,"volume":1637372},
 {"date":"2026-08-31","adj_close":151.58,"volume":2230349},
 {"date":"2026-09-01","adj_close":150.3,"volume":1655300},
-{"date":"2026-09-02","adj_close":148.67,"volume":1440613}
+{"date":"2026-09-02","adj_close":148.67,"volume":1440666},
+{"date":"2026-09-03","adj_close":153.92,"volume":1700674}
 ]}

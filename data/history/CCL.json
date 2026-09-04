@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":23.66,"volume":43972135},
 {"date":"2025-06-24","adj_close":25.29,"volume":70082442},
 {"date":"2025-06-25","adj_close":25.07,"volume":27543737},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":24.76,"volume":19188000},
 {"date":"2026-08-31","adj_close":23.89,"volume":31286000},
 {"date":"2026-09-01","adj_close":23.23,"volume":25367200},
-{"date":"2026-09-02","adj_close":23.74,"volume":22752501}
+{"date":"2026-09-02","adj_close":23.74,"volume":22804105},
+{"date":"2026-09-03","adj_close":23.48,"volume":19918897}
 ]}

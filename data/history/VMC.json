@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VMC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"VMC","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":258.67,"volume":930400},
 {"date":"2025-06-24","adj_close":262.08,"volume":907300},
 {"date":"2025-06-25","adj_close":252.33,"volume":1434500},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":274.09,"volume":633753},
 {"date":"2026-08-26","adj_close":273.74,"volume":874828},
 {"date":"2026-08-27","adj_close":273.85,"volume":1168906},
-{"date":"2026-08-28","adj_close":274.51,"volume":714779},
+{"date":"2026-08-28","adj_close":274.51,"volume":714800},
 {"date":"2026-08-31","adj_close":269.58,"volume":996100},
 {"date":"2026-09-01","adj_close":259.69,"volume":1672613},
-{"date":"2026-09-02","adj_close":263.93,"volume":1254567}
+{"date":"2026-09-02","adj_close":263.93,"volume":1254700},
+{"date":"2026-09-03","adj_close":260.23,"volume":1029408}
 ]}

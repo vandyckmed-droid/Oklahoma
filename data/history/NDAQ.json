@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"NDAQ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"NDAQ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":85.65,"volume":3940500},
 {"date":"2025-06-24","adj_close":87.03,"volume":3628343},
 {"date":"2025-06-25","adj_close":86.96,"volume":2885805},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":99.31,"volume":2528957},
 {"date":"2026-08-31","adj_close":98.61,"volume":3599233},
 {"date":"2026-09-01","adj_close":97.54,"volume":3275857},
-{"date":"2026-09-02","adj_close":95.72,"volume":4640442}
+{"date":"2026-09-02","adj_close":95.72,"volume":4658833},
+{"date":"2026-09-03","adj_close":98.71,"volume":1933405}
 ]}

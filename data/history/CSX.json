@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CSX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":31.88,"volume":12350480},
 {"date":"2025-06-24","adj_close":31.94,"volume":12913900},
 {"date":"2025-06-25","adj_close":31.95,"volume":11235100},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":51.14,"volume":6722319},
 {"date":"2026-08-31","adj_close":50.51,"volume":11822825},
 {"date":"2026-09-01","adj_close":48.7,"volume":15946254},
-{"date":"2026-09-02","adj_close":48.65,"volume":9864244}
+{"date":"2026-09-02","adj_close":48.65,"volume":9864873},
+{"date":"2026-09-03","adj_close":48.99,"volume":9896170}
 ]}

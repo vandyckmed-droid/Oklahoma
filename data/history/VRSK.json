@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VRSK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"VRSK","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":305.62,"volume":786538},
 {"date":"2025-06-24","adj_close":307.13,"volume":863530},
 {"date":"2025-06-25","adj_close":301.42,"volume":823700},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":191.77,"volume":942326},
 {"date":"2026-08-31","adj_close":193.78,"volume":1362305},
 {"date":"2026-09-01","adj_close":194.35,"volume":984000},
-{"date":"2026-09-02","adj_close":188.16,"volume":1014262}
+{"date":"2026-09-02","adj_close":188.16,"volume":1014925},
+{"date":"2026-09-03","adj_close":190.6,"volume":922154}
 ]}

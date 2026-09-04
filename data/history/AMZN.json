@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AMZN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"AMZN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":208.47,"volume":37311725},
 {"date":"2025-06-24","adj_close":212.77,"volume":38378800},
 {"date":"2025-06-25","adj_close":211.99,"volume":31755700},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":266.43,"volume":49547427},
 {"date":"2026-08-31","adj_close":259.77,"volume":46089422},
 {"date":"2026-09-01","adj_close":254.92,"volume":31700100},
-{"date":"2026-09-02","adj_close":254.98,"volume":23785257}
+{"date":"2026-09-02","adj_close":254.98,"volume":24013334},
+{"date":"2026-09-03","adj_close":258.9,"volume":26891531}
 ]}

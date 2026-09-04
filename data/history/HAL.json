@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"HAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"HAL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":20.21,"volume":22918200},
 {"date":"2025-06-24","adj_close":20.22,"volume":19642700},
 {"date":"2025-06-25","adj_close":19.72,"volume":14342600},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":36.01,"volume":9451000},
 {"date":"2026-08-31","adj_close":36.68,"volume":17787467},
 {"date":"2026-09-01","adj_close":36.63,"volume":9248783},
-{"date":"2026-09-02","adj_close":37.63,"volume":11068396}
+{"date":"2026-09-02","adj_close":37.63,"volume":11084107},
+{"date":"2026-09-03","adj_close":37.29,"volume":10103697}
 ]}

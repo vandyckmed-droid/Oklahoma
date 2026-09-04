@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"NDSN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"NDSN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":210.26,"volume":429800},
 {"date":"2025-06-24","adj_close":210.59,"volume":415804},
 {"date":"2025-06-25","adj_close":209.96,"volume":488100},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":324.59,"volume":343010},
 {"date":"2026-08-31","adj_close":321.72,"volume":435000},
 {"date":"2026-09-01","adj_close":314.4,"volume":390600},
-{"date":"2026-09-02","adj_close":316.63,"volume":322299}
+{"date":"2026-09-02","adj_close":316.63,"volume":322303},
+{"date":"2026-09-03","adj_close":317.49,"volume":213311}
 ]}

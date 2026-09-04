@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AMGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"AMGN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":262.95,"volume":5764900},
 {"date":"2025-06-24","adj_close":267.83,"volume":3687106},
 {"date":"2025-06-25","adj_close":270.59,"volume":2740300},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":432.42,"volume":1739954},
 {"date":"2026-08-31","adj_close":429.88,"volume":2343377},
 {"date":"2026-09-01","adj_close":438.12,"volume":2359102},
-{"date":"2026-09-02","adj_close":442.84,"volume":2286291}
+{"date":"2026-09-02","adj_close":442.84,"volume":2286291},
+{"date":"2026-09-03","adj_close":444.12,"volume":1842232}
 ]}

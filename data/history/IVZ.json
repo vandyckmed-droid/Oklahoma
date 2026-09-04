@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"IVZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"IVZ","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":14.33,"volume":4608404},
 {"date":"2025-06-24","adj_close":14.67,"volume":5239538},
 {"date":"2025-06-25","adj_close":14.63,"volume":3253900},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":32.86,"volume":2777146},
 {"date":"2026-08-31","adj_close":32.78,"volume":4394801},
 {"date":"2026-09-01","adj_close":31.99,"volume":4820899},
-{"date":"2026-09-02","adj_close":31.72,"volume":3021421}
+{"date":"2026-09-02","adj_close":31.72,"volume":3021421},
+{"date":"2026-09-03","adj_close":32.71,"volume":3470192}
 ]}

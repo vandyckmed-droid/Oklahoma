@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AMP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"AMP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":510.53,"volume":504816},
 {"date":"2025-06-24","adj_close":512.87,"volume":537115},
 {"date":"2025-06-25","adj_close":515.5,"volume":357000},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":559.32,"volume":271200},
 {"date":"2026-08-31","adj_close":553.11,"volume":481800},
 {"date":"2026-09-01","adj_close":542.64,"volume":468000},
-{"date":"2026-09-02","adj_close":551.85,"volume":495300}
+{"date":"2026-09-02","adj_close":551.85,"volume":495300},
+{"date":"2026-09-03","adj_close":565.08,"volume":470138}
 ]}

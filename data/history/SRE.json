@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"SRE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"SRE","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":73.02,"volume":5506220},
 {"date":"2025-06-24","adj_close":73.31,"volume":3358737},
 {"date":"2025-06-25","adj_close":72.28,"volume":2443600},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":84.31,"volume":4959532},
 {"date":"2026-08-31","adj_close":81.7,"volume":9467030},
 {"date":"2026-09-01","adj_close":84.26,"volume":6415050},
-{"date":"2026-09-02","adj_close":83.8,"volume":6491411}
+{"date":"2026-09-02","adj_close":83.79,"volume":6581544},
+{"date":"2026-09-03","adj_close":84.56,"volume":3421000}
 ]}

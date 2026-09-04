@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VRT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"VRT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":116.41,"volume":9121401},
 {"date":"2025-06-24","adj_close":122.18,"volume":7544700},
 {"date":"2025-06-25","adj_close":121.5,"volume":5324500},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":257.08,"volume":3849764},
 {"date":"2026-08-31","adj_close":258.72,"volume":4085717},
 {"date":"2026-09-01","adj_close":255.97,"volume":4283966},
-{"date":"2026-09-02","adj_close":256.7,"volume":3007714}
+{"date":"2026-09-02","adj_close":256.7,"volume":3014437},
+{"date":"2026-09-03","adj_close":268.83,"volume":4239493}
 ]}

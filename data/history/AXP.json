@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"AXP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"AXP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":295.72,"volume":3101700},
 {"date":"2025-06-24","adj_close":304.36,"volume":2806220},
 {"date":"2025-06-25","adj_close":304.56,"volume":2467383},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":333.2,"volume":1945882},
 {"date":"2026-08-31","adj_close":330.17,"volume":2513696},
 {"date":"2026-09-01","adj_close":324.19,"volume":2562052},
-{"date":"2026-09-02","adj_close":329.98,"volume":2285049}
+{"date":"2026-09-02","adj_close":329.98,"volume":2288699},
+{"date":"2026-09-03","adj_close":329.82,"volume":2165954}
 ]}

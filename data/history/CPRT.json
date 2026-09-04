@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CPRT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CPRT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":47.72,"volume":7425727},
 {"date":"2025-06-24","adj_close":48.65,"volume":6268200},
 {"date":"2025-06-25","adj_close":48.14,"volume":4288534},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":32.99,"volume":6773345},
 {"date":"2026-08-31","adj_close":32.99,"volume":9723403},
 {"date":"2026-09-01","adj_close":32.47,"volume":5553198},
-{"date":"2026-09-02","adj_close":32.16,"volume":6511570}
+{"date":"2026-09-02","adj_close":32.16,"volume":6512861},
+{"date":"2026-09-03","adj_close":33.58,"volume":8395856}
 ]}

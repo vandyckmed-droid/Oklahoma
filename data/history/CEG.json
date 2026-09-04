@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CEG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CEG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":313.09,"volume":2314517},
 {"date":"2025-06-24","adj_close":318.5,"volume":2385000},
 {"date":"2025-06-25","adj_close":313.02,"volume":2263908},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":276.75,"volume":1773877},
 {"date":"2026-08-31","adj_close":274.77,"volume":2575285},
 {"date":"2026-09-01","adj_close":280.31,"volume":2413708},
-{"date":"2026-09-02","adj_close":290.04,"volume":2875561}
+{"date":"2026-09-02","adj_close":290.04,"volume":2930844},
+{"date":"2026-09-03","adj_close":285.05,"volume":3138973}
 ]}

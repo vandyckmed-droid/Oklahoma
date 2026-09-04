@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"EOG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"EOG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":116.92,"volume":5080000},
 {"date":"2025-06-24","adj_close":115.66,"volume":3981320},
 {"date":"2025-06-25","adj_close":114.84,"volume":2799001},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":143.35,"volume":2688407},
 {"date":"2026-08-31","adj_close":144.96,"volume":3263485},
 {"date":"2026-09-01","adj_close":148.35,"volume":3783611},
-{"date":"2026-09-02","adj_close":148.96,"volume":3295693}
+{"date":"2026-09-02","adj_close":148.96,"volume":3575229},
+{"date":"2026-09-03","adj_close":145.96,"volume":2911496}
 ]}

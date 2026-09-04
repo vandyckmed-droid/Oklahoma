@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"SPGI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"SPGI","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":509.16,"volume":2134794},
 {"date":"2025-06-24","adj_close":517.46,"volume":1023756},
 {"date":"2025-06-25","adj_close":515.8,"volume":1059922},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":442.89,"volume":1288927},
 {"date":"2026-08-31","adj_close":435.84,"volume":2030976},
 {"date":"2026-09-01","adj_close":440.21,"volume":3291399},
-{"date":"2026-09-02","adj_close":431.71,"volume":2024568}
+{"date":"2026-09-02","adj_close":431.71,"volume":2025196},
+{"date":"2026-09-03","adj_close":450.58,"volume":2554991}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GPN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"GPN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":75.35,"volume":3423635},
 {"date":"2025-06-24","adj_close":77.95,"volume":4397223},
 {"date":"2025-06-25","adj_close":76.71,"volume":3312061},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":91.82,"volume":1869285},
 {"date":"2026-08-31","adj_close":91.05,"volume":3341600},
 {"date":"2026-09-01","adj_close":90.06,"volume":1921222},
-{"date":"2026-09-02","adj_close":92.81,"volume":1968216}
+{"date":"2026-09-02","adj_close":92.81,"volume":1968232},
+{"date":"2026-09-03","adj_close":91.77,"volume":1685806}
 ]}

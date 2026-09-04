@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"SOLV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"SOLV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":73.25,"volume":878528},
 {"date":"2025-06-24","adj_close":74.98,"volume":848649},
 {"date":"2025-06-25","adj_close":74.95,"volume":554000},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":91.12,"volume":678865},
 {"date":"2026-08-31","adj_close":91.06,"volume":926440},
 {"date":"2026-09-01","adj_close":90.95,"volume":1112751},
-{"date":"2026-09-02","adj_close":91.9,"volume":824344}
+{"date":"2026-09-02","adj_close":91.9,"volume":826107},
+{"date":"2026-09-03","adj_close":92.44,"volume":784227}
 ]}

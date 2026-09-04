@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PNW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PNW","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":85.46,"volume":1082428},
 {"date":"2025-06-24","adj_close":85.95,"volume":950642},
 {"date":"2025-06-25","adj_close":84.59,"volume":1289606},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":97.64,"volume":753647},
 {"date":"2026-08-31","adj_close":97.64,"volume":949000},
 {"date":"2026-09-01","adj_close":97.66,"volume":1012640},
-{"date":"2026-09-02","adj_close":97.35,"volume":748064}
+{"date":"2026-09-02","adj_close":97.38,"volume":748100},
+{"date":"2026-09-03","adj_close":97.99,"volume":921388}
 ]}

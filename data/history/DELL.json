@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DELL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"DELL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":116.05,"volume":5987400},
 {"date":"2025-06-24","adj_close":118.58,"volume":5034500},
 {"date":"2025-06-25","adj_close":118.45,"volume":3977600},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":456.24,"volume":3954914},
 {"date":"2026-08-31","adj_close":456.01,"volume":7686500},
 {"date":"2026-09-01","adj_close":425.0,"volume":15948000},
-{"date":"2026-09-02","adj_close":492.0,"volume":36275418}
+{"date":"2026-09-02","adj_close":492.2,"volume":36720200},
+{"date":"2026-09-03","adj_close":515.01,"volume":19592272}
 ]}

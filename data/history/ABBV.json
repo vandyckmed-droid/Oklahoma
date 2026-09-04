@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"ABBV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"ABBV","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":176.71,"volume":5157900},
 {"date":"2025-06-24","adj_close":178.43,"volume":4074609},
 {"date":"2025-06-25","adj_close":178.27,"volume":4471108},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":255.48,"volume":3224862},
 {"date":"2026-08-31","adj_close":256.42,"volume":4315487},
 {"date":"2026-09-01","adj_close":259.99,"volume":3866739},
-{"date":"2026-09-02","adj_close":261.7,"volume":4220755}
+{"date":"2026-09-02","adj_close":261.72,"volume":4225524},
+{"date":"2026-09-03","adj_close":260.3,"volume":2751345}
 ]}

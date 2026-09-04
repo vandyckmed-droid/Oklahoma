@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"PNR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"PNR","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":98.13,"volume":1395900},
 {"date":"2025-06-24","adj_close":99.78,"volume":1083844},
 {"date":"2025-06-25","adj_close":99.61,"volume":1038907},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":61.67,"volume":3592525},
 {"date":"2026-08-31","adj_close":60.46,"volume":21395034},
 {"date":"2026-09-01","adj_close":60.45,"volume":6153028},
-{"date":"2026-09-02","adj_close":59.84,"volume":3256696}
+{"date":"2026-09-02","adj_close":59.84,"volume":3256917},
+{"date":"2026-09-03","adj_close":60.02,"volume":2439996}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GILD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"GILD","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":103.49,"volume":8173400},
 {"date":"2025-06-24","adj_close":104.48,"volume":7917040},
 {"date":"2025-06-25","adj_close":103.24,"volume":6053550},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":145.68,"volume":3946913},
 {"date":"2026-08-31","adj_close":146.34,"volume":6594700},
 {"date":"2026-09-01","adj_close":149.92,"volume":4870766},
-{"date":"2026-09-02","adj_close":149.61,"volume":4922963}
+{"date":"2026-09-02","adj_close":149.61,"volume":4923290},
+{"date":"2026-09-03","adj_close":151.22,"volume":4498099}
 ]}

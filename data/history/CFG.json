@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CFG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CFG","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":40.9,"volume":4511418},
 {"date":"2025-06-24","adj_close":41.31,"volume":5068900},
 {"date":"2025-06-25","adj_close":41.5,"volume":3008918},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":69.83,"volume":2056957},
 {"date":"2026-08-26","adj_close":70.49,"volume":1530717},
 {"date":"2026-08-27","adj_close":70.18,"volume":2289361},
-{"date":"2026-08-28","adj_close":69.71,"volume":2393194},
+{"date":"2026-08-28","adj_close":69.71,"volume":2393200},
 {"date":"2026-08-31","adj_close":68.87,"volume":4775841},
 {"date":"2026-09-01","adj_close":68.16,"volume":3504933},
-{"date":"2026-09-02","adj_close":69.78,"volume":4221311}
+{"date":"2026-09-02","adj_close":69.78,"volume":5055435},
+{"date":"2026-09-03","adj_close":70.83,"volume":2870716}
 ]}

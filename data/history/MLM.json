@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"MLM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"MLM","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":548.15,"volume":438426},
 {"date":"2025-06-24","adj_close":548.55,"volume":548000},
 {"date":"2025-06-25","adj_close":530.73,"volume":489900},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":530.88,"volume":577100},
 {"date":"2026-08-26","adj_close":531.32,"volume":587400},
 {"date":"2026-08-27","adj_close":527.73,"volume":514948},
-{"date":"2026-08-28","adj_close":530.19,"volume":559072},
+{"date":"2026-08-28","adj_close":530.19,"volume":559100},
 {"date":"2026-08-31","adj_close":517.86,"volume":708609},
 {"date":"2026-09-01","adj_close":504.92,"volume":902453},
-{"date":"2026-09-02","adj_close":517.07,"volume":1124516}
+{"date":"2026-09-02","adj_close":517.07,"volume":1124519},
+{"date":"2026-09-03","adj_close":508.94,"volume":643887}
 ]}

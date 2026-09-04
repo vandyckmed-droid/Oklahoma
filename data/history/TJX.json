@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"TJX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"TJX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":122.86,"volume":4073068},
 {"date":"2025-06-24","adj_close":122.7,"volume":4546246},
 {"date":"2025-06-25","adj_close":120.62,"volume":4669739},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":135.12,"volume":6801149},
 {"date":"2026-08-31","adj_close":133.91,"volume":11954232},
 {"date":"2026-09-01","adj_close":133.27,"volume":7178115},
-{"date":"2026-09-02","adj_close":131.32,"volume":6990026}
+{"date":"2026-09-02","adj_close":131.31,"volume":7000085},
+{"date":"2026-09-03","adj_close":132.22,"volume":7770118}
 ]}

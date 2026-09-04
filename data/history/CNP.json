@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CNP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CNP","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":35.26,"volume":4652900},
 {"date":"2025-06-24","adj_close":35.47,"volume":4427100},
 {"date":"2025-06-25","adj_close":35.29,"volume":6636600},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":39.24,"volume":7258852},
 {"date":"2026-08-31","adj_close":39.6,"volume":9266118},
 {"date":"2026-09-01","adj_close":39.47,"volume":5945700},
-{"date":"2026-09-02","adj_close":39.51,"volume":5072231}
+{"date":"2026-09-02","adj_close":39.51,"volume":5072234},
+{"date":"2026-09-03","adj_close":39.98,"volume":5524597}
 ]}

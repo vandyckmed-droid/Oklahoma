@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"VLTO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"VLTO","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":97.81,"volume":1556720},
 {"date":"2025-06-24","adj_close":99.65,"volume":1490330},
 {"date":"2025-06-25","adj_close":99.52,"volume":1342200},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":98.56,"volume":1201513},
 {"date":"2026-08-31","adj_close":98.57,"volume":2761000},
 {"date":"2026-09-01","adj_close":97.05,"volume":1803033},
-{"date":"2026-09-02","adj_close":97.21,"volume":1762875}
+{"date":"2026-09-02","adj_close":97.21,"volume":1762900},
+{"date":"2026-09-03","adj_close":97.88,"volume":2032148}
 ]}

@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"DGX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"DGX","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":175.82,"volume":1201926},
 {"date":"2025-06-24","adj_close":176.0,"volume":713600},
 {"date":"2025-06-25","adj_close":174.77,"volume":747546},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":242.76,"volume":639937},
 {"date":"2026-08-31","adj_close":240.3,"volume":1358258},
 {"date":"2026-09-01","adj_close":236.22,"volume":813400},
-{"date":"2026-09-02","adj_close":240.8,"volume":1144114}
+{"date":"2026-09-02","adj_close":240.8,"volume":1144114},
+{"date":"2026-09-03","adj_close":239.4,"volume":1043286}
 ]}

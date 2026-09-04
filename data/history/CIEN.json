@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"CIEN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"CIEN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":75.44,"volume":2061647},
 {"date":"2025-06-24","adj_close":79.35,"volume":2945300},
 {"date":"2025-06-25","adj_close":79.43,"volume":1821743},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":378.44,"volume":1318585},
 {"date":"2026-08-31","adj_close":382.8,"volume":1830228},
 {"date":"2026-09-01","adj_close":360.33,"volume":2261311},
-{"date":"2026-09-02","adj_close":354.16,"volume":2870265}
+{"date":"2026-09-02","adj_close":354.16,"volume":2870300},
+{"date":"2026-09-03","adj_close":317.46,"volume":7520270}
 ]}

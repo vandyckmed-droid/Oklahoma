@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"LIN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"LIN","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":452.16,"volume":1611036},
 {"date":"2025-06-24","adj_close":455.51,"volume":1470666},
 {"date":"2025-06-25","adj_close":452.6,"volume":1608900},
@@ -289,7 +289,7 @@
 {"date":"2026-08-13","adj_close":476.63,"volume":2197600},
 {"date":"2026-08-14","adj_close":481.16,"volume":1365254},
 {"date":"2026-08-17","adj_close":472.77,"volume":1745849},
-{"date":"2026-08-18","adj_close":477.14,"volume":2401070},
+{"date":"2026-08-18","adj_close":477.13,"volume":2401070},
 {"date":"2026-08-19","adj_close":479.55,"volume":2847100},
 {"date":"2026-08-20","adj_close":479.71,"volume":1811426},
 {"date":"2026-08-21","adj_close":485.97,"volume":2048442},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":487.9,"volume":1240846},
 {"date":"2026-08-31","adj_close":487.97,"volume":2109628},
 {"date":"2026-09-01","adj_close":485.16,"volume":1641885},
-{"date":"2026-09-02","adj_close":487.45,"volume":1153614}
+{"date":"2026-09-02","adj_close":485.85,"volume":1154314},
+{"date":"2026-09-03","adj_close":482.19,"volume":1829239}
 ]}

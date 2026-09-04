@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"RCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"RCL","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":269.08,"volume":3017833},
 {"date":"2025-06-24","adj_close":275.76,"volume":2397000},
 {"date":"2025-06-25","adj_close":279.57,"volume":2785800},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":279.41,"volume":1110967},
 {"date":"2026-08-31","adj_close":268.74,"volume":2772151},
 {"date":"2026-09-01","adj_close":265.7,"volume":2011605},
-{"date":"2026-09-02","adj_close":265.6,"volume":1761400}
+{"date":"2026-09-02","adj_close":265.6,"volume":1763753},
+{"date":"2026-09-03","adj_close":265.55,"volume":2317355}
 ]}

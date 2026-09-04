@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"GDDY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"GDDY","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":177.2,"volume":1093026},
 {"date":"2025-06-24","adj_close":179.49,"volume":1275571},
 {"date":"2025-06-25","adj_close":177.37,"volume":998827},
@@ -297,8 +297,9 @@
 {"date":"2026-08-25","adj_close":99.79,"volume":1016092},
 {"date":"2026-08-26","adj_close":95.54,"volume":2620824},
 {"date":"2026-08-27","adj_close":96.98,"volume":1960126},
-{"date":"2026-08-28","adj_close":97.7,"volume":2044679},
+{"date":"2026-08-28","adj_close":97.7,"volume":2044700},
 {"date":"2026-08-31","adj_close":97.88,"volume":1546506},
 {"date":"2026-09-01","adj_close":100.55,"volume":1981419},
-{"date":"2026-09-02","adj_close":101.87,"volume":1777608}
+{"date":"2026-09-02","adj_close":101.87,"volume":1777649},
+{"date":"2026-09-03","adj_close":103.63,"volume":1895761}
 ]}

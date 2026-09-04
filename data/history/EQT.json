@@ -1,4 +1,4 @@
-{"schema_version":2,"ticker":"EQT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":302,"bars":[
+{"schema_version":2,"ticker":"EQT","source":{"provider":"Financial Modeling Prep","endpoint":"stable/historical-price-eod/dividend-adjusted","adjustment":"splits and dividends"},"price_field":"adj_close","count":303,"bars":[
 {"date":"2025-06-23","adj_close":58.51,"volume":8520722},
 {"date":"2025-06-24","adj_close":59.46,"volume":6717091},
 {"date":"2025-06-25","adj_close":57.39,"volume":7702743},
@@ -300,5 +300,6 @@
 {"date":"2026-08-28","adj_close":54.57,"volume":3646554},
 {"date":"2026-08-31","adj_close":54.18,"volume":5802707},
 {"date":"2026-09-01","adj_close":55.59,"volume":5815700},
-{"date":"2026-09-02","adj_close":55.75,"volume":6191166}
+{"date":"2026-09-02","adj_close":55.75,"volume":6191166},
+{"date":"2026-09-03","adj_close":55.61,"volume":5499097}
 ]}
