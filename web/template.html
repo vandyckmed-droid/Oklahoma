@@ -296,7 +296,7 @@ h2.section .n { font: 400 14px/20px var(--sans); color: var(--text-2); }
    column it names: names, the year's path, then the price and figure. */
 .legend { display: grid; grid-template-columns: minmax(0, 1fr) 64px 88px; column-gap: 14px; align-items: baseline; }
 .legend .fig-head { display: flex; justify-content: flex-end; min-width: 0; }
-.legend .fig-head > * { flex: none; white-space: nowrap; }
+.legend .fig-head > * { flex: none; text-align: right; }
 .legend .xl, .legend .xl-static { font: inherit; }
 .legend.table .spark-head, .legend.table .fig-head { visibility: hidden; }
 
@@ -1202,7 +1202,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
 
     var state = {
       query: "", sector: null, grouped: false,
-      sortKey: "cap", sortDesc: true, watchOnly: false, showTrend: false,
+      sortKey: "mom121", sortDesc: true, watchOnly: false, showTrend: false,
       // display "sort" means the row figure follows the sort key.
       view: "cards", display: "sort", tab: "universe", theme: "system", range: "1Y",
       // Momentum screen: the lowest percentile a name must reach; 0 is off.
@@ -1220,7 +1220,9 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       // Before v3 the figure was its own setting that defaulted to the
       // 12-month return; v3 ties it to the sort unless deliberately pinned.
       if (p.v >= 3 && (p.display === "sort" || METRICS[p.display])) state.display = p.display;
-      if (METRICS[p.sortKey]) state.sortKey = p.sortKey;
+      // Sorts that left the menu (market cap, the plain windows, price)
+      // fall back to the default rather than surviving as a hidden order.
+      if (SORT_KEYS.indexOf(p.sortKey) !== -1) state.sortKey = p.sortKey;
       if (typeof p.sortDesc === "boolean") state.sortDesc = p.sortDesc;
       if (TABS.indexOf(p.tab) !== -1) state.tab = p.tab;
       if (typeof p.grouped === "boolean") state.grouped = p.grouped;
@@ -1285,17 +1287,17 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       today: { label: "Today's change", short: "Today", explain: "today",
         value: function (r) { var q = live[r.ticker]; return q && q.changePct != null ? q.changePct : null; },
         fmt: pct, tfmt: pct1 },
-      mom121: { label: "12-1 momentum", short: "12-1", explain: "mom121",
+      mom121: { label: "12–1 momentum", short: "12–1", explain: "mom121",
         value: anyWindow("mom_12_1_pct"), fmt: pct, tfmt: pct1 },
-      mom61: { label: "6-1 momentum", short: "6-1", explain: "mom61",
+      mom61: { label: "6–1 momentum", short: "6–1", explain: "mom61",
         value: anyWindow("mom_6_1_pct"), fmt: pct, tfmt: pct1 },
-      offhigh: { label: "Off 1-year high", short: "Off high", explain: "offhigh",
+      offhigh: { label: "Distance from 1-year high", short: "Off high", explain: "offhigh",
         value: function (r, cov) {
           if (!cov || !cov.sufficient || cov.window_high == null || cov.last_adj_close == null) return null;
           return (cov.last_adj_close / cov.window_high - 1) * 100;
         },
         fmt: function (v) { return v > -0.5 ? "At high" : signed(v, 1, "%"); } },
-      vsmedian: { label: "Vs sector median", short: "Vs sector", explain: "vsmedian",
+      vsmedian: { label: "Relative to sector", short: "Vs sector", explain: "vsmedian",
         value: function (r, cov) {
           var med = medianBySector[r.sector];
           if (med == null || !cov || !cov.sufficient || cov.window_return_pct == null) return null;
@@ -1308,22 +1310,24 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
       r2: { label: "R² of trend", short: "R²", explain: "r2", neutral: true,
         value: anyWindow("trend_r2"), fmt: function (v) { return v.toFixed(2); } },
-      quality: { label: "Quality momentum", short: "Quality", explain: "quality",
+      quality: { label: "Trend quality", short: "Quality", explain: "quality",
         value: anyWindow("quality_pct"), head: "Quality %/yr",
         fmt: function (v) { return signed(v, 1, "% /yr"); }, tfmt: pct1 },
       last: { label: "Last close", short: "Last", neutral: true,
         value: anyWindow("last_adj_close"), fmt: price }
     };
-    var METRIC_ORDER = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality", "last"];
-    var TABLE_COLUMNS = ["cap", "today", "ret12", "ret6", "ret3", "ret1", "mom121", "mom61", "offhigh", "vsmedian", "trend", "r2", "quality"];
+    // The sort menu asks one question — which names lead on durable
+    // momentum — so it offers the five figures that answer it. Market
+    // cap, price, today's change and the plain windows stay on the row,
+    // in the table and on the name page, but no longer order the list.
+    var SORT_KEYS = ["mom121", "mom61", "quality", "offhigh", "vsmedian"];
+    var METRIC_ORDER = ["mom121", "mom61", "quality", "offhigh", "vsmedian", "cap", "today", "ret12", "ret6", "ret3", "ret1", "trend", "r2", "last"];
+    var TABLE_COLUMNS = ["mom121", "mom61", "quality", "offhigh", "vsmedian", "cap", "today", "ret12", "ret6", "ret3", "ret1", "trend", "r2"];
     function metricValue(key, r) { return METRICS[key].value(r, coverage[r.ticker]); }
     // The figure on each row follows the sort unless pinned in Settings.
-    // Market cap and last close already sit on the row (the sub-line and
-    // the price), so sorting by either keeps the 12-month return.
     function rowFigureKey() {
       if (!hasHistory) return "cap";
-      if (state.display !== "sort") return state.display;
-      return state.sortKey === "cap" || state.sortKey === "last" ? "ret12" : state.sortKey;
+      return state.display === "sort" ? state.sortKey : state.display;
     }
     function metricText(key, v, dense) {
       if (v == null) return "—";
@@ -1782,22 +1786,22 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (cov && cov.window_high != null && cov.last_adj_close != null) {
         var off = (cov.last_adj_close / cov.window_high - 1) * 100;
         grid.appendChild(stat(cov.sufficient ? "offhigh" : null,
-          cov.sufficient ? "Off 1-year high" : "Off " + cov.window_trading_days + "-day high",
+          cov.sufficient ? "Distance from 1-year high" : "Off " + cov.window_trading_days + "-day high",
           off > -0.5 ? "At high" : signed(off, 1, "%"), off > -0.5 ? "up" : direction(off),
           "high " + price(cov.window_high)));
       }
       if (cov && cov.mom_12_1_pct != null) {
-        grid.appendChild(stat("mom121", "12-1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct), "skips the last month"));
+        grid.appendChild(stat("mom121", "12–1 momentum", pct(cov.mom_12_1_pct), direction(cov.mom_12_1_pct), "skips the last month"));
       }
       if (cov && cov.mom_6_1_pct != null) {
-        grid.appendChild(stat("mom61", "6-1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct), "skips the last month"));
+        grid.appendChild(stat("mom61", "6–1 momentum", pct(cov.mom_6_1_pct), direction(cov.mom_6_1_pct), "skips the last month"));
       }
       var med = medianBySector[r.sector];
       if (med != null && cov && cov.sufficient && cov.window_return_pct != null) {
-        grid.appendChild(stat("vsmedian", "Vs sector median", signed(cov.window_return_pct - med, 1, " pts"),
+        grid.appendChild(stat("vsmedian", "Relative to sector", signed(cov.window_return_pct - med, 1, " pts"),
           direction(cov.window_return_pct - med), "sector median " + pct(med)));
       } else {
-        grid.appendChild(stat(null, "Vs sector median", "—", "none", "needs a full year"));
+        grid.appendChild(stat(null, "Relative to sector", "—", "none", "needs a full year"));
       }
       if (cov && cov.window_low != null) {
         grid.appendChild(stat(null, cov.sufficient ? "52-week range" : cov.window_trading_days + "-day range",
@@ -1806,7 +1810,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       if (hasFit) {
         grid.appendChild(stat("trend", "Trend (log slope)", signed(cov.trend_ann_pct, 1, "% /yr"), direction(cov.trend_ann_pct)));
         grid.appendChild(stat("r2", "R² of trend", cov.trend_r2.toFixed(2), null, "0 to 1"));
-        grid.appendChild(stat("quality", "Quality momentum", signed(cov.quality_pct, 1, "% /yr"), direction(cov.quality_pct), "trend × R²"));
+        grid.appendChild(stat("quality", "Trend quality", signed(cov.quality_pct, 1, "% /yr"), direction(cov.quality_pct), "trend × R²"));
       }
       if (r.share_classes && r.share_classes.length > 1) {
         grid.appendChild(stat(null, "Share classes", r.share_classes.join(" + ")));
@@ -2000,12 +2004,17 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       TABLE_COLUMNS.forEach(function (key) {
         var th = document.createElement("th");
         th.scope = "col";
-        var b = el("button", "th-sort");
-        b.type = "button";
-        b.setAttribute("data-sort", key);
-        b.appendChild(document.createTextNode(METRICS[key].head || METRICS[key].short));
-        b.appendChild(icon("i-arrow", "th-arrow"));
-        th.appendChild(b);
+        var text = METRICS[key].head || METRICS[key].short;
+        if (SORT_KEYS.indexOf(key) === -1) {
+          th.textContent = text;
+        } else {
+          var b = el("button", "th-sort");
+          b.type = "button";
+          b.setAttribute("data-sort", key);
+          b.appendChild(document.createTextNode(text));
+          b.appendChild(icon("i-arrow", "th-arrow"));
+          th.appendChild(b);
+        }
         gridHead.appendChild(th);
       });
       paintTableSortState();
@@ -2092,7 +2101,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       state.sortKey = key;
       state.sortDesc = desc;
       sortSelect.value = key;
-      document.getElementById("sortLabel").textContent = "By " + METRICS[key].label.toLowerCase();
+      document.getElementById("sortLabel").textContent = METRICS[key].label;
       sortDirBtn.firstElementChild.style.transform = desc ? "" : "rotate(180deg)";
       sortDirBtn.setAttribute("aria-label", "Sort direction: " + (desc ? "descending" : "ascending"));
       paintTableSortState();
@@ -2156,7 +2165,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
         "Every line is the name's cumulative total return, adjusted for splits and dividends, over the past 252 trading sessions, thinned to sixty points for the page. Choosing a shorter window keeps the tail of the same line and re-bases it to zero at the window's start, so the chart and the headline figure agree. The dotted line is zero. Green means the window ended above where it started, red below. A dashed line means the name has less than a full year of history. The sparkline on each row is the same line at small size.",
         "value = close ÷ first close of the window − 1"],
       screen: ["Momentum screen",
-        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 20% keeps only names whose 12-1 or 6-1 momentum is higher than at least 80% of the universe. A name must clear both sliders. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. The figure beside each slider is the lowest return that clears it.",
+        "Each slider sets the lowest cross-sectional rank a name must reach to stay in the list. A name's rank is the share of the universe — every name carrying that figure — whose value is lower, so Top 20% keeps only names whose 12–1 or 6–1 momentum is higher than at least 80% of the universe. A name must clear both sliders. The bar is set against the whole universe, so a sector chip or a search narrows the survivors without moving it. Names without the full window for a figure cannot be ranked and drop out once that slider is off All. The figure beside each slider is the lowest return that clears it.",
         "rank = names with a lower value ÷ names with the figure · keep if rank ≥ slider"],
       today: ["Today's change",
         "The live price against the previous close, from your own quotes Worker, refreshed about every minute and a half while the page is open. Everything else on the page is still end-of-day, split- and dividend-adjusted, so a live price and a window return will not match tick for tick. With no Worker configured the page shows the last adjusted close instead.",
@@ -2176,16 +2185,16 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       ret1: ["1-month return",
         "Total change in the adjusted close over the last 21 trading days — about one month. The shortest lens: what the name did lately, before the quarter and the year have their say.",
         "close today ÷ first close of the 21-session window − 1"],
-      mom121: ["12-1 momentum",
+      mom121: ["12–1 momentum",
         "The 12-month return with the most recent month left out: from the first close of the 252-session window to the close 21 sessions ago. The freshest month tends to reverse, so classic momentum skips it. A name can look flat on 12-month return yet strong here when the last month gave gains back.",
         "close 21 sessions ago ÷ first close of the 252-session window − 1"],
-      mom61: ["6-1 momentum",
+      mom61: ["6–1 momentum",
         "The 6-month return with the most recent month left out: from the first close of the 126-session window to the close 21 sessions ago. The shorter momentum lens, same reversal skip.",
         "close 21 sessions ago ÷ first close of the 126-session window − 1"],
-      offhigh: ["Off 1-year high",
+      offhigh: ["Distance from 1-year high",
         "How far today's adjusted close sits below the highest close of the past year. Near zero means the name is pressing its high; a deep number means a drawdown.",
         "close today ÷ year's highest close − 1"],
-      vsmedian: ["Vs sector median",
+      vsmedian: ["Relative to sector",
         "This name's 12-month return minus the median 12-month return of its sector, in percentage points. Separates a genuine standout from a name merely riding a strong sector.",
         "name's 12m return − sector median 12m return"],
       trend: ["12-month log trend",
@@ -2194,7 +2203,7 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
       r2: ["R²",
         "How much of the year's path the straight trend line explains, from 0 to 1. Near 1: the name ground steadily along its trend. Near 0: the outcome came from swings the trend does not describe.",
         "1 − variance of residuals ÷ variance of ln(close)"],
-      quality: ["Quality momentum",
+      quality: ["Trend quality",
         "The trend's growth rate damped by how reliable the trend was. A steep but chaotic year scores lower than a steady climb — the classic quality-adjusted momentum score.",
         "trend %/yr × R²"],
       median: ["Median return",
@@ -2250,8 +2259,10 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     }
     function openColumns(opener) {
       document.getElementById("ep-title").textContent = "What the figures mean";
-      epBody.textContent = "In the table, tap a column heading to sort by it; tap again to flip " +
-        "the direction. A dash means the figure would need more history than " +
+      epBody.textContent = "The list sorts by one of five figures — the two momentum windows, " +
+        "trend quality, distance from the 1-year high and the return relative to the sector; in " +
+        "the table, tap one of their headings to sort by it, and again to flip the direction. " +
+        "The other columns are context, not an order. A dash means the figure would need more history than " +
         "the name has, so it is left out rather than measured over less.";
       epBody.hidden = false; epFormula.hidden = true;
       epList.textContent = "";
@@ -2326,20 +2337,22 @@ path.draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animati
     var oSort = document.createElement("option");
     oSort.value = "sort"; oSort.textContent = "Same as sort";
     displaySelect.appendChild(oSort);
+    SORT_KEYS.forEach(function (key) {
+      var o = document.createElement("option");
+      o.value = key; o.textContent = METRICS[key].label;
+      sortSelect.appendChild(o);
+    });
     METRIC_ORDER.forEach(function (key) {
-      var o1 = document.createElement("option");
-      o1.value = key; o1.textContent = "By " + METRICS[key].label.toLowerCase();
-      sortSelect.appendChild(o1);
-      var o2 = document.createElement("option");
-      o2.value = key; o2.textContent = METRICS[key].label;
-      displaySelect.appendChild(o2);
+      var o = document.createElement("option");
+      o.value = key; o.textContent = METRICS[key].label;
+      displaySelect.appendChild(o);
     });
     loadPrefs();
     applyTheme(state.theme);
     if (!hasHistory) state.display = "cap";
     displaySelect.value = state.display;
     sortSelect.value = state.sortKey;
-    document.getElementById("sortLabel").textContent = "By " + METRICS[state.sortKey].label.toLowerCase();
+    document.getElementById("sortLabel").textContent = METRICS[state.sortKey].label;
     sortDirBtn.firstElementChild.style.transform = state.sortDesc ? "" : "rotate(180deg)";
     sortDirBtn.setAttribute("aria-label", "Sort direction: " + (state.sortDesc ? "descending" : "ascending"));
     document.querySelectorAll("#viewSeg button").forEach(function (b) {
